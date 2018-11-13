@@ -1,0 +1,58 @@
+/*
+ *  Desenvolvido pela equipe Super-Bits.com CNPJ 20.019.971/0001-90
+
+ */
+package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
+
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ *
+ * @author SalvioF
+ */
+public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComunicacao, Serializable {
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
+    private int id;
+    private final Date dataHoraCriou;
+    private boolean foiSelado;
+    private String codigoSelo;
+
+    public ComunicacaoAbstrata() {
+        dataHoraCriou = new Date();
+    }
+
+    @Override
+    public void selarComunicacao() {
+        if (!foiSelado) {
+            String usuario = getUsuarioRemetente().getEmail();
+            String destinatario = getDestinatario().getEmailsConcatenados();
+            Long idDataHora = dataHoraCriou.getTime();
+            id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
+            codigoSelo = String.valueOf(id);
+        }
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isFoiSelado() {
+        return foiSelado;
+    }
+
+    @Override
+    public String getCodigoSelo() {
+        return codigoSelo;
+    }
+}
