@@ -24,6 +24,14 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         return pTexto.replaceAll("[0-9]", "");
     }
 
+    public static String getNuloEmEmpty(String pString) {
+        if (pString == null) {
+            return "";
+        } else {
+            return pString;
+        }
+    }
+
     public static String getLTRIMRemoveEspacosAesquerda(String pParametro) {
         if (pParametro == null) {
             return null;

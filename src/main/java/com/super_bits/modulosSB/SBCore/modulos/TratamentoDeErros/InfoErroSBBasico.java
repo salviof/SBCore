@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 
+import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfInfoErroSB;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;

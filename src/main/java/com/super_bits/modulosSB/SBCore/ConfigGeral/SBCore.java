@@ -26,7 +26,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ItfInfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
@@ -47,6 +46,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfCentralDados;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
+import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 
 /**
  *
@@ -315,6 +316,7 @@ public class SBCore {
             ignorarConfigurcoesDeAcoes = configurador.isIgnorarConfiguracaoAcoesDoSistema();
             ignorarConfigurcoesDePermissao = configurador.isIgnorarConfiguracaoPermissoes();
             infoAplicacao = configuracoes;
+            LogPadraoSB.registrarClasseErro(infoAplicacao.getClasseErro());
             estadoAplicativo = configuracoes.getEstadoApp();
             arquivoConfigBase = configurador.getArquivoConfiguradorBase();
             arquivoConfigCliente = configurador.getArquivoConfiguradorCliente();
@@ -438,7 +440,7 @@ public class SBCore {
 
                 fecharSistemaCasoNaoCOnfigurado();
             }
-            ItfInfoErroSBComAcoes erro = (InfoErroSBComAcoes) infoAplicacao.getClasseErro().newInstance();
+            ItfErroSBServico erro = (InfoErroSBComAcoes) infoAplicacao.getClasseErro().newInstance();
 
             erro.configurar(FabMensagens.ERRO.getMsgDesenvolvedor(pMensagem), pTipoErro, pErroJava);
 
@@ -466,7 +468,7 @@ public class SBCore {
                 System.out.println("a classe de erro não foi definida no core, utilizando classe de erro padrao");
 
             }
-            ItfInfoErroSBComAcoes erro = (InfoErroSBComAcoes) infoAplicacao.getClasseErro().newInstance();
+            ItfErroSBServico erro = (InfoErroSBComAcoes) infoAplicacao.getClasseErro().newInstance();
 
             erro.configurar(FabMensagens.ERRO.getMsgUsuario(pMensagem), pTipoErro, pErroJava);
 

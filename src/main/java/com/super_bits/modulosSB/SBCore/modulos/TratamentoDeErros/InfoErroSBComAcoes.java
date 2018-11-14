@@ -8,6 +8,7 @@ package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
+import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 
 /**
  *
@@ -17,7 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
  * @since 24/05/2014
  *
  */
-public abstract class InfoErroSBComAcoes extends InfoErroSBBasico implements ItfInfoErroSBComAcoes {
+public abstract class InfoErroSBComAcoes extends InfoErroSBBasico implements ItfErroSBServico {
 
     public InfoErroSBComAcoes(String pMensagem, Throwable t) {
         super(pMensagem, FabErro.SOLICITAR_REPARO, t);

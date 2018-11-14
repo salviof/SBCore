@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 
+import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfInfoErroSB;
 import java.util.List;
 
 /**

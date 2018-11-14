@@ -15,6 +15,7 @@ import org.apache.xerces.impl.xpath.regex.Match;
  *
  *
  *
+ *
  * @author desenvolvedor
  */
 public enum FabRegraReconhecimentoRegex implements ItfFabrica {
