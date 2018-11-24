@@ -19,6 +19,7 @@ public enum FabTipoAcessoArquivo implements ItfFabrica {
     @Override
     public TipoAcessoArquivo getRegistro() {
         TipoAcessoArquivo tipoAcesso = new TipoAcessoArquivo();
+        tipoAcesso.setEnumVinculado(this);
         switch (this) {
             case VISUALIZAR:
                 tipoAcesso.setId(1);

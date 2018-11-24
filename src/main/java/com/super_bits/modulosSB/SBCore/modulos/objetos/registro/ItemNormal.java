@@ -1,6 +1,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador.TIPO_LOREN;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsperado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -29,7 +31,7 @@ public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, I
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO, null));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, null));
 
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_DESCRITIVO, UtilSBCoreStringValidador.getLorenIpsilum(UtilSBCoreStringValidador.TIPO_LOREN.PARAGRAFO)));
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_DESCRITIVO, UtilSBCoreStringGerador.getLorenIpsilum(TIPO_LOREN.PARAGRAFO)));
 
     }
 

@@ -50,7 +50,7 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
 
     @Override
     public String getEmail() {
-        return "anonimo@naoTenhoEmail.com.br";
+        return "suporte@casanovadigital.com.br";
     }
 
     @Override

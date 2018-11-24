@@ -6,7 +6,6 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import testesFW.TesteJunit;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import org.junit.Test;
  *
  * @author desenvolvedor
  */
-public class UtilSBCoreCEPTest extends TesteJunit {
+public class UtilSBCoreCEPTest {
 
     @Before
     public void setUp() {
@@ -24,13 +23,11 @@ public class UtilSBCoreCEPTest extends TesteJunit {
     public void testConfiguraEndereco() {
 
         // ItemLocalizacao local = new ItemLocalizacao();
-    //    UtilSBCoreCEP.configuraEndereco("31110600", local);
-
-    //    System.out.println("Loca=" + local.getNome());
-     //   System.out.println("Estado" + local.getBairro().getCidade().getUnidadeFederativa().getNome());
-    //    System.out.println("Bairro" + local.getBairro().getNome());
-    //    System.out.println("Cidade" + local.getBairro().getCidade().getNome());
-
+        //    UtilSBCoreCEP.configuraEndereco("31110600", local);
+        //    System.out.println("Loca=" + local.getNome());
+        //   System.out.println("Estado" + local.getBairro().getCidade().getUnidadeFederativa().getNome());
+        //    System.out.println("Bairro" + local.getBairro().getNome());
+        //    System.out.println("Cidade" + local.getBairro().getCidade().getNome());
     }
 
     @Test
@@ -38,7 +35,6 @@ public class UtilSBCoreCEPTest extends TesteJunit {
 
     }
 
-    @Override
     protected void configAmbienteDesevolvimento() {
         SBCore.configurar(new ConfiguradorProjetoSBCore(), SBCore.ESTADO_APP.DESENVOLVIMENTO);
     }

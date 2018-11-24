@@ -50,16 +50,16 @@ public interface ItfCentralComunicacao {
             FabTipoComunicacao tipocomunicacao,
             ItfUsuario pUsuario,
             String mensagem,
-            ItffabricaTrasporteCominicacao... tiposTransporte
+            ItffabricaTrasporteComunicacao... tiposTransporte
     );
 
     public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(
             FabTipoComunicacao tipocomunicacao,
             String mensagem,
-            ItffabricaTrasporteCominicacao... tiposTransporte
+            ItffabricaTrasporteComunicacao... tiposTransporte
     );
 
-    public ItffabricaTrasporteCominicacao getFabricaTransportePadrao();
+    public ItffabricaTrasporteComunicacao getFabricaTransportePadrao();
 
     /**
      * 1
@@ -82,7 +82,7 @@ public interface ItfCentralComunicacao {
             ItfUsuario pRemetente,
             ItfDestinatario pDestinatario,
             String mensagem,
-            ItffabricaTrasporteCominicacao... tiposTransporte
+            ItffabricaTrasporteComunicacao... tiposTransporte
     );
 
     /**
@@ -99,7 +99,7 @@ public interface ItfCentralComunicacao {
             ItfUsuario pRemetente,
             ItfDestinatario pDestinatario,
             ItfModeloMensagem mensagem,
-            ItffabricaTrasporteCominicacao... tiposTransporte
+            ItffabricaTrasporteComunicacao... tiposTransporte
     );
 
     public List<ItfComunicacao> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario);

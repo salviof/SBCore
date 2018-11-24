@@ -16,7 +16,7 @@ public class CentramMensagemProgramadorMsgStop extends CentralDeMensagemAbstrata
     @Override
     public void enviaMensagem(ItfMensagem pMensagem) {
         if (SBCore.getEstadoAPP() == SBCore.ESTADO_APP.DESENVOLVIMENTO) {
-            if (pMensagem.getTipoDestinatario() == FabTipoAgenteDoSistema.USUARIO) {
+            if (pMensagem.getTipoDestinatario() == FabTipoAgenteDoSistema.USUARIO && !pMensagem.getTipoDeMensagem().equals(FabMensagens.ERRO)) {
                 String jogoDaVelhinhaCega = "#####################";
 
                 System.out.println(jogoDaVelhinhaCega + jogoDaVelhinhaCega + jogoDaVelhinhaCega);

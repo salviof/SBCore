@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import testesFW.TesteJunit;
+
 import java.text.Normalizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +20,7 @@ import org.junit.Test;
  *
  * @author Salvio
  */
-public class UtilSBCoreStringsTest extends TesteJunit {
+public class UtilSBCoreStringsTest {
 
     // @Test
     public void testarRetiradaDeEspaco() {
@@ -256,7 +256,7 @@ public class UtilSBCoreStringsTest extends TesteJunit {
         }
     }
 
-    @Override
+    @Before
     protected void configAmbienteDesevolvimento() {
         SBCore.configurar(new ConfiguradorProjetoSBCore(), SBCore.ESTADO_APP.DESENVOLVIMENTO);
     }
@@ -288,7 +288,7 @@ public class UtilSBCoreStringsTest extends TesteJunit {
 
     // @Test
     public void testaRandomico() {
-        JOptionPane.showMessageDialog(null, UtilSBCoreStringValidador.getStringRandomica(8));
+        JOptionPane.showMessageDialog(null, UtilSBCoreStringGerador.getStringRandomica(8));
     }
 
     @Test

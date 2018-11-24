@@ -44,7 +44,7 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class SessaoMenuSB implements ItfAcaoSessaoCategoria, Serializable {
+public class SessaoMenuSB implements ItfSessaoDeMenuSB, Serializable {
 
     private ItfAcaoDoSistema acaoSessao;
     private final List<ItfAcaoDoSistema> acoes;

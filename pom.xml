@@ -7,7 +7,7 @@
 
     <groupId>br.org.coletivoJava.fw</groupId>
     <artifactId>SBCore</artifactId>
-    <version>1.0RC-SNAPSHOT</version>
+    <version>1.0.0-RC-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SBCore</name>
     <properties>
@@ -20,16 +20,17 @@
         <dependency>
             <groupId>br.org.coletivoJava.fw</groupId>
             <artifactId>SBApiCore</artifactId>
-            <version>1.0RC-SNAPSHOT</version>
+            <version>1.0.0-RC-SNAPSHOT</version>
         </dependency>
 
 
         <dependency>
-            <groupId>br.org.coletivoJava.fw</groupId>
-            <artifactId>SBTestes</artifactId>
-            <version>1.0RC-SNAPSHOT</version>
-            <scope>test</scope>
+            <groupId>br.org.coletivoJava.fw.api.erp.comunicacao</groupId>
+            <artifactId>apiComunicacao</artifactId>
+            <version>1.0.0-RC-SNAPSHOT</version>
         </dependency>
+
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -46,7 +47,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.6-Final</version>
-            
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -96,7 +97,11 @@
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0-jre</version>
+        </dependency>
 
 
         <dependency>

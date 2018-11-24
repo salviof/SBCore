@@ -8,12 +8,10 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
-import testesFW.TesteJunit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -23,9 +21,9 @@ import org.junit.Test;
  * @since 20/07/2014
  *
  */
-public class TestesCore extends TesteJunit {
+public class TestesCore {
 
-    @Override
+    @Before
     protected void configAmbienteDesevolvimento() {
         System.out.println("Teste relato de Erro");
         SBCore.configurar(new ConfiguradorProjetoSBCore(), SBCore.ESTADO_APP.DESENVOLVIMENTO);

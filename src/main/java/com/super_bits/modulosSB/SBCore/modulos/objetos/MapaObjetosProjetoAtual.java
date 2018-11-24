@@ -68,6 +68,10 @@ public class MapaObjetosProjetoAtual {
             if (pIgnorarErro) {
                 return null;
             }
+
+            if (pNome.startsWith("Itf")) {
+                return null;
+            }
             throw new UnsupportedOperationException("O Objeto do sistema, representado pela classe" + pNome + "nao foi encontrada, certifique que o Objeto esteja devidamente cadastrado no sistema");
         }
         return classe;

@@ -20,7 +20,7 @@ public class CentralAdministrativaPadrao implements ItfCentralAdministrativa, Se
         paginaInicialAnonimo = pPaginaInicialAnon;
         paginaInicialAdmin = pPaginaAdministrativa;
         // ATENCAO-> Nao instanciar ações aqui, o mapa de ações pode estar vazio, nesta etapa..
-        if (paginaInicialAdmin.toString().contains("_MB_")) {
+        if (!paginaInicialAdmin.toString().contains("_MB_")) {
             throw new UnsupportedOperationException("A pagina adminstrativa precisa ser do tipo gestão.");
         }
     }

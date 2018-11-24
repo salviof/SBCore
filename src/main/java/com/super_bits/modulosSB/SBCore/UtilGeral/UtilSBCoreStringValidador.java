@@ -1,37 +1,21 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import de.svenjacobs.loremipsum.LoremIpsum;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
  * @author Salvio
  */
 public abstract class UtilSBCoreStringValidador {
-
-    public enum TIPO_LOREN {
-
-        PARAGRAFO, PALAVRAS
-    }
 
     public enum TIPO_SINALIZADOR {
 
@@ -228,55 +212,6 @@ public abstract class UtilSBCoreStringValidador {
     public static String localizarParte(String linha, int posicaoInicial, int posicaoFinal, Integer pQuantidaCaracteres, String descarte, String confirma, String regex) {
         return UtilSBCoreStringBuscaTrecho.localizarParte(linha, 0, 0, pQuantidaCaracteres, descarte, confirma, regex);
 
-    }
-
-    /**
-     * Gera Loren Ipsum para utilização em textos
-     *
-     * @param pQuantidade
-     * @param pTipoLTipo_loren
-     * @return
-     */
-    public static String GetLorenIpsilum(int pQuantidade, TIPO_LOREN pTipoLTipo_loren) {
-        if (pQuantidade == 0) {
-            pQuantidade = 3;
-        }
-
-        LoremIpsum lorem = new LoremIpsum();
-        switch (pTipoLTipo_loren) {
-            case PALAVRAS:
-
-                return lorem.getWords(pQuantidade);
-            case PARAGRAFO:
-                return lorem.getParagraphs(pQuantidade);
-
-        }
-        return lorem.getWords(3);
-
-    }
-
-    /**
-     * Gera Lorem ipsulum de 3 palavras
-     *
-     * @param pTipoLTipo_loren
-     * @return Loren ipsulum de 3 palavras ou pragrafos de acordo com o campo
-     * escolhido
-     */
-    public static String getLorenIpsilum(TIPO_LOREN pTipoLTipo_loren) {
-        return GetLorenIpsilum(0, pTipoLTipo_loren);
-    }
-
-    /**
-     *
-     *
-     *
-     * @param pQuantidade quantidade de caracteres retornados
-     * @return Retorna uma String randomica de acordo com o n de caracteres
-     */
-    public static String getStringRandomica(int pQuantidade) {
-        UUID uuid = UUID.randomUUID();
-        String myRandom = uuid.toString();
-        return myRandom.substring(0, pQuantidade);
     }
 
     /**

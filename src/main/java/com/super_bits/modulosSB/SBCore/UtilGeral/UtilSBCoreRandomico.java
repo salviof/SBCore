@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador.TIPO_LOREN;
 import java.util.Date;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
@@ -38,7 +38,7 @@ public abstract class UtilSBCoreRandomico {
                 if (tamanho > 30) {
                     numeropalavras = tamanho;
                 }
-                String palavra = UtilSBCoreStringValidador.GetLorenIpsilum(numeropalavras, UtilSBCoreStringValidador.TIPO_LOREN.PALAVRAS);
+                String palavra = UtilSBCoreStringGerador.GetLorenIpsilum(numeropalavras, TIPO_LOREN.PALAVRAS);
                 int metade = (int) Math.ceil((palavra.length() - 1) / 2);
                 int tamanhoGerado = palavra.length() - 1;
                 int fimAleatorio = RandomUtils.nextInt(metade, tamanhoGerado);

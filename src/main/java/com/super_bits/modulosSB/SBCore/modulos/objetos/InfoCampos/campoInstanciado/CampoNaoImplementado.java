@@ -85,22 +85,22 @@ public class CampoNaoImplementado extends CampoInstanciadoGenerico implements It
 
     @Override
     public void setNomeClasseAtributoDeclarado(String pObjetoEntidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public String getNomeClasseOrigemAtributo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String getCaminhoListagem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public GrupoCampos getGrupoSubCamposExibicao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override

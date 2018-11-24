@@ -326,11 +326,18 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     protected final void adcionaCampoEsperado(CampoEsperado pCampo, boolean pObrigatorio) {
 
         try {
-            Field campo;
-            if (this instanceof HibernateProxy) {
-                Class classe = UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
-                campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
-            } else {
+            Field campo = null;
+            try {
+                if (this instanceof HibernateProxy) {
+                    Class classe = UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
+                    campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
+                } else {
+
+                }
+            } catch (Throwable t) {
+                // Caso não tenha o objeto HibernateProxy ignora o erro
+            }
+            if (campo == null) {
                 campo = getCampoByAnotacao(pCampo.getTipoCampo());
             }
             pCampo.setAnotacaoObrigatoria(pObrigatorio);

@@ -11,6 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.view.menu.ItfMenusDeSessao;
 
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.MenusDaSessao;
 import java.io.File;
@@ -37,14 +38,14 @@ public class SessaoOffline implements ItfSessao {
 
     protected String pastaTempDeSessao;
 
-    private MenusDaSessao menusDaSessao;
+    private ItfMenusDeSessao menusDaSessao;
 
     @Override
-    public MenusDaSessao getMenusDaSessao() {
+    public ItfMenusDeSessao getMenusDaSessao() {
         return menusDaSessao;
     }
 
-    public void setMenusDaSessao(MenusDaSessao menusDaSessao) {
+    public void setMenusDaSessao(ItfMenusDeSessao menusDaSessao) {
         this.menusDaSessao = menusDaSessao;
     }
 

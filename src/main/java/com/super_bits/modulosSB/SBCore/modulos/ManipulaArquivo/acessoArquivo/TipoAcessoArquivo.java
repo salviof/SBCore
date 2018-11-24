@@ -10,6 +10,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEstatico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 
 /**
@@ -17,7 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Tipo Acesso Arquivo"}, plural = "tipos de acesso a arquivos", fabricaVinculada = FabTipoAcessoArquivo.class)
-public class TipoAcessoArquivo extends ItemSimples implements ItfBeanEstatico {
+public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
@@ -51,8 +52,17 @@ public class TipoAcessoArquivo extends ItemSimples implements ItfBeanEstatico {
         return UtilSBCoreStringFiltros.gerarUrlAmigavel(nome);
     }
 
-    @Override
     public ItfFabrica getFabricaObjeto() {
+        return tipoAcessoArquivo;
+    }
+
+    @Override
+    public void setEnumVinculado(ItfFabrica pFabrica) {
+        tipoAcessoArquivo = (FabTipoAcessoArquivo) pFabrica;
+    }
+
+    @Override
+    public ItfFabrica getEnumVinculado() {
         return tipoAcessoArquivo;
     }
 

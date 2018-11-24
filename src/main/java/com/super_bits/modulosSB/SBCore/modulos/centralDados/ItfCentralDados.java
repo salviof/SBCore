@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.centralDados;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.FabTipoSelecaoRegistro;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfTokenAcessoDados;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -21,5 +22,7 @@ public interface ItfCentralDados {
     public long getQuantidadeRegistros(ItfTokenAcessoDados pToken, Class pClasseObjeto);
 
     public ItfTokenAcessoDados getAcessoDadosDoContexto();
+
+    public EntityManager gerarNovoEntityManagerPadrao();
 
 }
