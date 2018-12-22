@@ -16,7 +16,7 @@ public interface ItfFabConfigModulo {
 
     public default String getNomePropriedade() {
 
-        return UtilSBCoreStringsCammelCase.getCammelByTexto(this.toString());
+        return UtilSBCoreStringsCammelCase.getCamelByTextoPrimeiraLetraMinuscula(this.toString());
     }
 
     public default String getNomeModulo() {

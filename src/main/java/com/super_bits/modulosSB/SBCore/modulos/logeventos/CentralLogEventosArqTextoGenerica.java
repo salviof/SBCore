@@ -29,7 +29,7 @@ public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
     }
 
     private String diretorioArquivoLog() {
-        String diretorio = SBCore.getDiretorioBase();
+        String diretorio = SBCore.getCentralDeArquivos().getEndrLocalResourcesObjeto() + "/logs";
         if (SBCore.getEstadoAPP() == SBCore.ESTADO_APP.DESENVOLVIMENTO) {
             diretorio = SBCore.getCaminhoDesenvolvimento();
         }
@@ -44,7 +44,12 @@ public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
 
     @Override
     public void registrarLogDeEvento(FabMensagens pTipoEvento, String mensagem, int pCodErro) {
-        String codigoErro = UtilSBCoreNumeros.getLpadZero(pCodErro, 4).toString();
+        String codigoErro = "não informado";
+        try {
+            codigoErro = UtilSBCoreNumeros.getLpadZero(pCodErro, 4).toString();
+        } catch (Throwable t) {
+
+        }
         String diretorio = diretorioArquivoLog();
         UtilSBCoreArquivoTexto.escreverEmArquivo(diretorio
                 + "/logAplicacao" + pTipoEvento + ".txt", codigoErro + "|" + new Date().toString() + "..|" + mensagem

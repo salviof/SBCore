@@ -25,6 +25,7 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
     protected final FieldComSerializacao campoReflection;
     protected int indiceValorLista = -1;
     private ItfValidacao validacao;
+    private boolean bloquearProximaTentativaDeAlteracao = false;
 
     public CampoInstanciadoBase(Field pCampoReflection) {
         try {
@@ -35,7 +36,17 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
 
     }
 
+    @Override
+    public void bloquearProximaAlteracao() {
+        bloquearProximaTentativaDeAlteracao = true;
+    }
+
     protected void aplicarValor(Object pInstancia, Object pValor) {
+
+        if (bloquearProximaTentativaDeAlteracao) {
+            bloquearProximaTentativaDeAlteracao = false;
+            return;
+        }
 
         try {
 

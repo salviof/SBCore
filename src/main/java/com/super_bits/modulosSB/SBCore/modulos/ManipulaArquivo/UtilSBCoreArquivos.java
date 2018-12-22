@@ -97,10 +97,22 @@ public abstract class UtilSBCoreArquivos {
             return true;
         } catch (IOException e) {
 
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"Erro compactando arquivos" + arqSaida, e);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro compactando arquivos" + arqSaida, e);
             return false;
 
         }
+    }
+
+    public static boolean removerArquivoLocal(String pCaminhoLocal) {
+        try {
+            File arquivo = new File(pCaminhoLocal);
+            if (arquivo.exists()) {
+                return arquivo.delete();
+            }
+        } catch (Throwable t) {
+            return false;
+        }
+        return false;
     }
 
     public static boolean descompactar(String arquivoZip, String pastaDestino) {
@@ -149,7 +161,7 @@ public abstract class UtilSBCoreArquivos {
             return true;
         } catch (IOException ex) {
 
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"Erro descompactando arquivo" + pastaDestino, ex);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro descompactando arquivo" + pastaDestino, ex);
             return false;
         }
     }
@@ -196,7 +208,7 @@ public abstract class UtilSBCoreArquivos {
 
                 System.out.println("Arquivo copiado de " + src + " para " + dest);
             } catch (Exception ex) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"Erro copiando arquivo de" + src + "para " + dest, ex);
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro copiando arquivo de" + src + "para " + dest, ex);
 
                 return false;
             }
@@ -232,7 +244,7 @@ public abstract class UtilSBCoreArquivos {
                 }
             }
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"Erro lendo arquivos do diretorio:" + pDiretorio, t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro lendo arquivos do diretorio:" + pDiretorio, t);
         }
         return arquivos;
     }

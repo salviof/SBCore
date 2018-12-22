@@ -49,6 +49,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             return true;
 
         } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "erro Gravando arquivo " + caminhoArquivo, t);
             return false;
         }
 

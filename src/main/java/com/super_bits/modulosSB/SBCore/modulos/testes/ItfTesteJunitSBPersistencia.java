@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
  */
 public interface ItfTesteJunitSBPersistencia {
 
-    public EntityManager getEmTeste();
+    public EntityManager getEMTeste();
 
     public EntityManager renovarConexao();
 

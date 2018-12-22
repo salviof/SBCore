@@ -39,7 +39,7 @@ public abstract class UtilSBcoreModulos {
     public static String getCaminhoAbsolutoPastaDesenvolvimento(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         String caminhoRelativo = getCaminhoRelativoConfigModulo(pFabricaConfig);
 
-        return getCaminhoBaseContextoAtual() + caminhoRelativo;
+        return "/home/superBits/desenvolvedor/configModuloTestes/" + caminhoRelativo;
     }
 
     public static String getCaminhoAbsolutoDoContextoAtual(Class<? extends ItfFabConfigModulo> pFabricaConfig) {

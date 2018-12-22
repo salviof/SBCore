@@ -33,8 +33,11 @@ public abstract class UtilSBCoreValidacao {
 
         switch (pCampo.getFabricaTipoAtributo()) {
             case ARQUIVO_DE_ENTIDADE:
-                return UtilSBCoreValidadorGoverno.validaCNPJ(pValor.toString());
+                if (pCampo.isObrigatorio()) {
+                    return pValor != null;
+                }
             case CNPJ:
+
                 if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor.toString())) {
                     return !pCampo.isObrigatorio();
                 }
@@ -53,7 +56,7 @@ public abstract class UtilSBCoreValidacao {
     public static String getPrimeiraInconsistenciaDeValidacao(ItfBeanSimples pObjeto) {
         Optional<ItfCampoInstanciado> cpEncontrado = pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo())).findFirst();
         if (cpEncontrado.isPresent()) {
-            return gerarMensagensValidacao(cpEncontrado.get(), pObjeto, pObjeto.getId() == 0).get(0);
+            return gerarMensagensValidacao(cpEncontrado.get(), pObjeto, pObjeto.getId() == 0, true).get(0);
         } else {
             return null;
         }
@@ -64,7 +67,7 @@ public abstract class UtilSBCoreValidacao {
         List<String> lista = new ArrayList<>();
 
         pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo()))
-                .forEach(cp -> lista.add(gerarMensagensValidacao(cp, pObjeto, pObjeto.getId() == 0).get(0)));
+                .forEach(cp -> lista.add(gerarMensagensValidacao(cp, pObjeto, pObjeto.getId() == 0, true).get(0)));
         return lista;
 
     }
@@ -87,7 +90,7 @@ public abstract class UtilSBCoreValidacao {
         }
     }
 
-    public static List<String> gerarMensagensValidacao(ItfAtributoObjetoSB pCampo, Object pValor, boolean pUmaNovaEntidade) {
+    public static List<String> gerarMensagensValidacao(ItfAtributoObjetoSB pCampo, Object pValor, boolean pUmaNovaEntidade, boolean imporMensagemPadrao) {
         List<String> resp = new ArrayList<>();
         try {
 
@@ -131,6 +134,11 @@ public abstract class UtilSBCoreValidacao {
             }
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro validando" + pCampo, t);
+        }
+        if (imporMensagemPadrao) {
+            if (resp.isEmpty()) {
+                resp.add("Valor inválido para " + pCampo.getLabel());
+            }
         }
         return resp;
 

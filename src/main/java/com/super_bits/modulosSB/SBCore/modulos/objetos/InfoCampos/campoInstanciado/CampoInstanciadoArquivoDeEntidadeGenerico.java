@@ -29,6 +29,17 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     public CampoInstanciadoArquivoDeEntidadeGenerico(ItfCampoInstanciado pCampoInstanciado) {
         this.campoInstanciado = pCampoInstanciado;
+        configuracoesIniciais();
+
+    }
+
+    private void configuracoesIniciais() {
+        ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
+        if (entidadeVinculada.getId() == 0) {
+            if (isExisteArquivo()) {
+                excluirArquivo();
+            }
+        }
     }
 
     @Override

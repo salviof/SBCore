@@ -30,4 +30,28 @@ public class UtilSBCoreStringsCammelCaseTest {
         String teste = UtilSBCoreStringsCammelCase.getCammelByTexto("asdkfjalskdfjalksdjf sdklafjalksdfj asdf lkajsdfklajsd");
         System.out.println(UtilSBCoreStringsCammelCase.getCammelByTexto("as-dkfj_alskdfjalksdjf uuuuuuuuuuuuuuuuuu sdklafjalksdfj asdf lkajsdfklajsd"));
     }
+
+    @Test
+    public void testGetCammelByTextoSemCaractersEspeciais() {
+    }
+
+    @Test
+    public void testGetCammelByTexto() {
+    }
+
+    @Test
+    public void testGetTextoByCammelMinusculo() {
+    }
+
+    @Test
+    public void testGetCamelByTextoPrimeiraLetraMaiuscula() {
+    }
+
+    @Test
+    public void testGetCamelByTextoPrimeiraLetraMaiusculaSemCaracterEspecial() {
+    }
+
+    @Test
+    public void testGetTextoByCammelPrimeiraLetraMaiuscula() {
+    }
 }

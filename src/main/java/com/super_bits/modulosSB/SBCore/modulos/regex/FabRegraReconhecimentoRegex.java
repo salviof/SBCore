@@ -4,10 +4,10 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.regex;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.xerces.impl.xpath.regex.Match;
 
 /**
  *

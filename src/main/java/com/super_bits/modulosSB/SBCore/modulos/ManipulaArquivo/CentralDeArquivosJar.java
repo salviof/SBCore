@@ -26,6 +26,7 @@ public class CentralDeArquivosJar extends CentralDeArquivosAbstrata {
 
     private static final String TEXTOPADRAO = "Central de arquivos em Jars ainda não foi implementado";
     private final String PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT = SBCore.getCaminhoGrupoProjetoSource() + "/arquivosDeEntidade";
+    private final String PASTA_ARQUIVOS_DE_ENTIDADE_PRODUCAO = "/home/servidorSBFW/arquivosDeEntidade/" + SBCore.getGrupoProjeto();
     private final String PASTA_ARQUIVOS_ENTIDADE = "arquivos";
 
     public CentralDeArquivosJar() {
@@ -35,17 +36,29 @@ public class CentralDeArquivosJar extends CentralDeArquivosAbstrata {
 
     @Override
     public String getEndrLocalResources() {
-        return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        if (SBCore.isEmModoProducao()) {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_PRODUCAO;
+        } else {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        }
     }
 
     @Override
     public String getEndrLocalImagens() {
-        return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        if (SBCore.isEmModoProducao()) {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_PRODUCAO;
+        } else {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        }
     }
 
     @Override
     public String getEndrRemotoImagens() {
-        return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        if (SBCore.isEmModoProducao()) {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_PRODUCAO;
+        } else {
+            return PASTA_ARQUIVOS_DE_ENTIDADE_JUNIT;
+        }
     }
 
     @Override
@@ -209,7 +222,25 @@ public class CentralDeArquivosJar extends CentralDeArquivosAbstrata {
 
     @Override
     public String getEndrLocalImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo, ItfSessao pSessao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String diretorioBase = "ERRO";
+        if (item.getId() == 0) {
+            diretorioBase = pSessao.getPastaTempDeSessao() + "/" + item.getClass().getSimpleName() + "/0/";
+        } else {
+            diretorioBase = getEndrLocalImagens() + "/" + item.getClass().getSimpleName() + "/" + item.getId() + "/";
+        }
+        switch (tipo) {
+
+            case IMG_PEQUENA:
+                return diretorioBase + "imagemLogoPequeno.jpg";
+
+            case IMG_MEDIA:
+                return diretorioBase + "imagemLogoMedio.jpg";
+            case IMG_GRANDE:
+                return diretorioBase + "imagemLogoGrande.jpg";
+            default:
+                return diretorioBase + "imagemLogoPequeno.jpg";
+
+        }
     }
 
 }

@@ -239,8 +239,9 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                                 case LC_LOGRADOURO:
                                 case LC_BAIRRO:
                                 case LC_CIDADE:
-                                case LC_LOCALIDADE:
+                                case LC_LOCALIZACAO:
                                 case LC_UNIDADE_FEDERATIVA:
+                                    pCampo.setFabricaTipoAtributo(pCampo.getFabricaTipoAtributo());
                                     // Mantem tipo do campo como tipo Especial
                                     break;
                                 default:

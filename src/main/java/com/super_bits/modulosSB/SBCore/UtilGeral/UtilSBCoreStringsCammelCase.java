@@ -58,12 +58,16 @@ public abstract class UtilSBCoreStringsCammelCase extends UtilSBCoreStringsCamme
         return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(getCammelByTexto(pString));
     }
 
-    public static String getCamelByTextoPrimeiraLetraMaiusculaSemCaracterEspecial(String pString) {
-        return UtilSBCoreStringSlugs.gerarSlugSimples(UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(getCammelByTexto(pString)));
+    public static String getCamelByTextoPrimeiraLetraMinuscula(String pString) {
+        return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(getCammelByTexto(pString));
     }
 
     public static String getTextoByCammelPrimeiraLetraMaiuscula(String pString) {
         return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(getTextoByCammel(pString));
+    }
+
+    public static String getCamelByTextoPrimeiraLetraMaiusculaSemCaracterEspecial(String pString) {
+        return UtilSBCoreStringSlugs.gerarSlugSimples(UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(getCammelByTexto(pString)));
     }
 
 }

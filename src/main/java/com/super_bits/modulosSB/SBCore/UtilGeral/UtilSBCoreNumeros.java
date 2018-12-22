@@ -38,7 +38,6 @@ public class UtilSBCoreNumeros {
             return Integer.parseInt(String.format("%" + pCasas + "s", pValor.toString()).replace(" ", "0"));
 
         } catch (Exception e) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"Erro ao formatar Lpad", e);
 
             return pValor;
         }

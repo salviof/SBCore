@@ -71,9 +71,6 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     protected final ItfAtributoObjetoEditavel atributoAssociado;
     private final PropriedadesReflexaoCampo propriedadesReflexao;
     private ItfValidacao validacaoLogica;
-    private boolean umaListaDinamica;
-    private boolean temValidadorLogico;
-    private boolean umValorLogico;
 
     // TODO, Justificativas para alteração de Campos
     private List<String> justificativasAlteracaoCampos;
@@ -1004,6 +1001,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public boolean validarCampo() {
+
         if (atributoAssociado.isObrigatorio()) {
             if (isUmCampoArquivoEntidade()) {
                 if (!getComoArquivoDeEntidade().isExisteArquivo()) {

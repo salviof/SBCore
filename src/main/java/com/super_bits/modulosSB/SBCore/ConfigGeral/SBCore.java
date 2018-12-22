@@ -74,13 +74,14 @@ import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
  *
  *
  *
- *
+ * W
  * @author Sálvio Furbino <salviof@gmail.com>
  * @since 24/05/2014
  *
  */
 public class SBCore {
 
+    public static final String DOMINIO_FICTICIO_INTRANET_DOCKER = "dockerIntranetColetivoJava.org.br";
     public static String CAMINHO_BASE_DESENVOLVIMENTO = "/home/superBits";
     public static String CAMINHO_BASE_PROJETOS = "/home/superBits/projetos";
 

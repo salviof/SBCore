@@ -652,6 +652,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
 
         Class classeAtual = pClasse;
         boolean encontrou = false;
+        classes.add(classeAtual);
         while (!encontrou) {
             if (classeAtual == ItemGenerico.class
                     || classeAtual == Object.class) {
@@ -663,8 +664,9 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                 }
 
             }
-
-            classes.add(classeAtual);
+            if (classeAtual != pClasse) {
+                classes.add(classeAtual);
+            }
             if (!classeAtual.isInterface()) {
                 classeAtual = classeAtual.getSuperclass();
             } else {

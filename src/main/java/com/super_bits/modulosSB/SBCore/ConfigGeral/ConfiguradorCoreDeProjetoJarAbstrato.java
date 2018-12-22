@@ -4,6 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.CentralComunicacaoApenasLogs;
+
 /**
  *
  * @author salvioF
@@ -15,6 +17,7 @@ public abstract class ConfiguradorCoreDeProjetoJarAbstrato extends ConfiguradorC
         UtilConfiguracaoCore.setclassesPadraoJar(pConfiguracao);
         setIgnorarConfiguracaoAcoesDoSistema(true);
         setIgnorarConfiguracaoPermissoes(true);
+        pConfiguracao.setCentralComunicacao(CentralComunicacaoApenasLogs.class);
 
     }
 

@@ -50,14 +50,14 @@ public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, I
     @Override
     public String getImgGrande() {
 
-        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.IMG_GRANDE);
+        return SBCore.getCentralDeArquivos().getEndrRemotoImagem(this, FabTipoAtributoObjeto.IMG_GRANDE);
         //	return OrganizadorDeArquivos.getURLImagem(this, TC.IMG_GRANDE);
     }
 
     @Override
     public String getImgMedia() {
 
-        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.IMG_MEDIA);
+        return SBCore.getCentralDeArquivos().getEndrRemotoImagem(this, FabTipoAtributoObjeto.IMG_MEDIA);
         //return OrganizadorDeArquivos.getURLImagem(this, TC.IMG_MEDIA);
     }
 
