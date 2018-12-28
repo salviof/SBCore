@@ -4,7 +4,7 @@
  */
 package com.super_bits.view.fabricasCompVisual;
 
-import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualSB;
+import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualBase;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class FabTipoVisualCampoTest {
     @Test
     public void teste() {
         for (FabCompVisualInputs fabComponente : FabCompVisualInputs.class.getEnumConstants()) {
-            ComponenteVisualSB cp = (ComponenteVisualSB) fabComponente.getRegistro();
+            ComponenteVisualBase cp = (ComponenteVisualBase) fabComponente.getRegistro();
             System.out.println(cp.getId());
             System.out.println(cp.getNome());
             System.out.println(cp.getNomeComponente());

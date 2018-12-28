@@ -88,11 +88,16 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                             getCampoInstanciadoByNomeOuAnotacao(
                                     FabTipoAtributoObjeto.LCCEP.name());
                 }
-
-                if (campoCEp == null || campoCEp.equals(new CampoNaoImplementado())) {
-                    temCep = false;
-                } else {
+                if (pCampoGerador.getObjetoDoAtributo().isTemCampoAnotado(FabTipoAtributoObjeto.LCCEP)) {
+                    campoCEp = pCampoGerador.getObjetoDoAtributo().getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LCCEP);
                     temCep = true;
+                } else {
+
+                    if (campoCEp == null || campoCEp.equals(new CampoNaoImplementado())) {
+                        temCep = false;
+                    } else {
+                        temCep = true;
+                    }
                 }
                 break;
             case LOCALIZACAO_SIMPLES_COM_CEP_EM_ENTIDADE:
@@ -174,8 +179,13 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                     }
                 }
             }
+            ItfCampoInstanciado cpBairro = getCampoInstBairro();
+            if (cpBairro == null) {
+                return null;
+            } else {
+                return (ItfBairro) cpBairro.getValor();
+            }
 
-            return (ItfBairro) getCampoInstBairro().getValor();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo bairro do endereço", t);
             return null;

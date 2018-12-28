@@ -257,7 +257,7 @@ public class SBCore {
                     if (ignorarConfigurcoesDePermissao) {
                         System.out.println("A Classe de permissões não foi definida");
                     } else {
-                        throw new UnsupportedOperationException("Erro configurando classes de serviço");
+                        throw new UnsupportedOperationException("Erro configurando classe responsavel por permissao");
                     }
 
                 }

@@ -1145,4 +1145,15 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         return atributoAssociado.getXhtmlVisaoMobile();
     }
 
+    @Override
+    public boolean isUmValorEmLista() {
+        switch (atributoAssociado.getFabricaTipoAtributo()) {
+            case LISTA_OBJETOS_PUBLICOS:
+            case LISTA_OBJETOS_PARTICULARES:
+                return true;
+            default:
+                return false;
+        }
+    }
+
 }

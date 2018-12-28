@@ -61,6 +61,10 @@ public class LinhaTela implements ItfLinhaTela {
         }
 
         if (gridLayout.getLinhas().size() > 1) {
+            if (gridLayout.getLinhas().get(0) == this) {
+                return "OrganizadorContainer";
+            }
+
             if (colunasRestante > 3) {
                 return "OrganizadorContainerEsquerda";
             } else {

@@ -701,7 +701,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      */
     @Override
     @Deprecated
-    public ItfCampoInstanciado getCampoByNomeOuAnotacao(String pNomeOuANotacao) {
+    public ItfCampoInstanciado getCampoByNomeOuAnotacao(final String pNomeOuANotacao) {
 
         if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(pNomeOuANotacao)) {
             return UtilSBCoreReflexaoCaminhoCampo.getCampoSeparador(pNomeOuANotacao);
@@ -761,13 +761,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                     return UtilSBCoreReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
                 }
                 String nomeRestante = UtilSBCoreReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
-
+                String campoAnterior = pNomeOuANotacao.replace("." + nomeRestante, "");
                 ItfCampoInstanciado proximoCampo = itemSuperior.getCampoByNomeOuAnotacao(nomeRestante);
+
                 if (proximoCampo == null) {
                     throw new UnsupportedOperationException(nomeRestante + "o Caminhio nao foi encontrado em " + itemSuperior);
                 }
-                proximoCampo.setCampoInstanciadoRaiz(itemAtual);
 
+                proximoCampo.setCampoInstanciadoRaiz(getCampoInstanciadoByNomeOuAnotacao(campoAnterior));
                 return proximoCampo;
 
             }
