@@ -256,6 +256,9 @@ public class UtilSBController extends UtilSBControllerSimples {
 
     public static Method getMetodoByAcaoController(ItfAcaoController pAcaoController) {
         try {
+            if (pAcaoController == null) {
+                throw new UnsupportedOperationException("Erro tentando obter o metodo de execução da ação enviando ação nula como parametro");
+            }
             if (!SBCore.isControleDeAcessoDefinido()) {
                 throw new UnsupportedOperationException("O recurso getMetodo by ação Controoler só pode ser chamado se a classe de Controle de ações for definida.");
             }

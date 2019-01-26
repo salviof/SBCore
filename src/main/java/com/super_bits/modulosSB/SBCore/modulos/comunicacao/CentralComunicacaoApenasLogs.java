@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioOSistema;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
@@ -77,7 +77,7 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     @Override
     public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao tipocomunicacao, String mensagem, ItffabricaTrasporteComunicacao... tiposTransporte) {
         ItfComunicacao comunicacao
-                = new ComunicacaoTransient(new UsuarioOSistema(), SBCore.getUsuarioLogado(),
+                = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), SBCore.getUsuarioLogado(),
                         tipocomunicacao.getRegistro(), gerarListaTransportes(tiposTransporte));
         comunicacao.setMensagem(mensagem);
         comunicacao.setNome(mensagem);

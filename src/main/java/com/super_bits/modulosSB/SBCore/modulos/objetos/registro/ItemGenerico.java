@@ -538,6 +538,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 mapaCamposInstanciados.put(anotacao.tipo().toString().toUpperCase(), campoformatado);
             }
         } catch (Throwable t) {
+
             String nomeCampo = "Enviado campo null";
             if (pCampoReflection != null) {
                 nomeCampo = pCampoReflection.getName();

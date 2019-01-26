@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -24,7 +25,7 @@ import java.util.List;
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Usuários", tags = {"O Sistema"})
-public class UsuarioOSistema extends ItemNormal implements ItfUsuario, ItfBeanComIcone, Serializable {
+public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario, ItfBeanComIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
@@ -33,7 +34,7 @@ public class UsuarioOSistema extends ItemNormal implements ItfUsuario, ItfBeanCo
 
     @Override
     public String getEmail() {
-        return "oSistema@OSistema.com.br";
+        return "sistema@coletivojava.com.br";
     }
 
     @Override
@@ -43,7 +44,7 @@ public class UsuarioOSistema extends ItemNormal implements ItfUsuario, ItfBeanCo
 
     @Override
     public String getTipoUsuario() {
-        return "OSISTEMA";
+        return "APLICACAO";
     }
 
     @Override
@@ -68,7 +69,7 @@ public class UsuarioOSistema extends ItemNormal implements ItfUsuario, ItfBeanCo
 
     @Override
     public String getApelido() {
-        return "Deus";
+        return SBCore.getGrupoProjeto() + "-" + SBCore.getNomeProjeto();
     }
 
     @Override

@@ -57,7 +57,7 @@ public class UtilSBCoreDataHora {
     }
 
     public static int segundosEntre(Date pDatainicial, Date pDatafinal) {
-        return 1;
+        return (int) ((pDatafinal.getTime() - pDatainicial.getTime()) / 1000);
     }
 
     public static int mileSegundosEntre(Date pDatainicial, Date pDatafinal) {
@@ -99,7 +99,7 @@ public class UtilSBCoreDataHora {
                     return new SimpleDateFormat(pPersonalizado);
                 } catch (Throwable e) {
 
-                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO,"erro criando um SimpleDateFormat no UtilCoreDAtaHora", e);
+                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "erro criando um SimpleDateFormat no UtilCoreDAtaHora", e);
                 }
             case MES:
 

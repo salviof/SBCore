@@ -53,7 +53,7 @@ public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuar
 
     @Override
     public String getNome() {
-        return "Grupos do Sistema";
+        return "Grupo interno da Aplicação";
     }
 
     @Override

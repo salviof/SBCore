@@ -157,7 +157,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     @Override
     public int getValorMaximo() {
         if (valorMaximo == 0) {
-            valorMaximo = 99999;
+            valorMaximo = InfoCampo.MAX_PADRAO;
         }
         return valorMaximo;
     }
@@ -248,7 +248,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
 
     @Override
     public boolean isTemValidacaoMaximo() {
-        return valorMaximo > 0;
+        return (valorMaximo != InfoCampo.MAX_PADRAO && valorMaximo > 0);
     }
 
     @Override

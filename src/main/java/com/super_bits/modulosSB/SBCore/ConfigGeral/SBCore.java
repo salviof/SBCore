@@ -229,10 +229,12 @@ public class SBCore {
 
                     if (infoAplicacao.getConfigPermissoes() == null) {
                         Class configPermissao = UtilSBCoreReflexao.getClasseQueEstendeIsto(ConfigPermissaoSBCoreAbstrato.class, "com.super_bits.configSBFW.acessos");
+
                         if (configPermissao == null) {
                             throw new UnsupportedOperationException("A classe que configura permissão não foi encontrada, crie uma classe que implemente config permssaoSBcore, ou altere a configuração do core dispensando as configurações de permissão");
                         }
                         configuradorDePermissao = (ItfCentralPermissoes) configPermissao.newInstance();
+
                     } else {
                         try {
                             configuradorDePermissao = (ItfCentralPermissoes) infoAplicacao.getConfigPermissoes().newInstance();
@@ -289,7 +291,7 @@ public class SBCore {
     }
 
     public static boolean isControleDeAcessoDefinido() {
-        return infoAplicacao.getConfigPermissoes() != null;
+        return configuradorDePermissao != null;
 
     }
 

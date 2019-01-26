@@ -21,6 +21,7 @@ public abstract class MapaControllerEmExecucao {
     private static final Map<Integer, ItfRespostaAcaoDoSistema> RESPOSTAS_EM_EXECUCAO = new HashMap<>();
 
     private static int buildIDExecucao(ItfAcaoController acao) {
+
         String identificador = SBCore.getCentralDeSessao().getSessaoAtual().getIdSessao() + acao.getNomeUnico();
         return identificador.hashCode();
     }

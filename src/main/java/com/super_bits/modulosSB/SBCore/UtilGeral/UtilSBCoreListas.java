@@ -12,6 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ public class UtilSBCoreListas {
 
     public static String getValoresSeparadosPorVirgula(List<String> valores) {
         return getValoresSeparadoPorCaracter(valores, ",");
+    }
+
+    public static <T> Iterable<T> iteratorToIterable(Iterator<T> iterator) {
+        return () -> iterator;
     }
 
     public static String getValoresSeparadosPorVirgulaInt(List<Integer> valores) {

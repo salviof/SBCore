@@ -237,9 +237,9 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                         }
                     }
                 }
+                return componente;
             }
 
-            return componente;
         }
 
         if (getFabricaTipoAtributo().getTipo_input_prime().getFamilia().equals(FabFamiliaCompVisual.INPUT)) {
@@ -252,7 +252,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                     } else {
                         return FabCompVisualInputs.TEXTO_SEM_FORMATACAO.getRegistro();
                     }
-
+                default:
+                    return componente;
             }
         }
 
@@ -1001,26 +1002,30 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public boolean validarCampo() {
-
-        if (atributoAssociado.isObrigatorio()) {
-            if (isUmCampoArquivoEntidade()) {
-                if (!getComoArquivoDeEntidade().isExisteArquivo()) {
-                    return false;
-                } else {
-                    return true;
+        try {
+            if (atributoAssociado.isObrigatorio()) {
+                if (isUmCampoArquivoEntidade()) {
+                    if (!getComoArquivoDeEntidade().isExisteArquivo()) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
-            }
-            return UtilSBCoreValidacao.validaSintaxeENulo(getPropriedadesRefexao().getAtributoGerado(), getValor());
-        } else {
-            if (isUmCampoArquivoEntidade()) {
-                return true;
+                return UtilSBCoreValidacao.validacoesBasicas(getPropriedadesRefexao().getAtributoGerado(), getValor());
             } else {
-                if (getValor() != null) {
-                    return UtilSBCoreValidacao.validaSintaxeENulo(getPropriedadesRefexao().getAtributoGerado(), getValor());
+                if (isUmCampoArquivoEntidade()) {
+                    return true;
+                } else {
+                    if (getValor() != null) {
+                        return UtilSBCoreValidacao.validacoesBasicas(getPropriedadesRefexao().getAtributoGerado(), getValor());
+                    }
                 }
             }
+            return true;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Indetermnando tentando validar: " + getNomeCompostoIdentificador(), t);
+            return true;
         }
-        return true;
 
     }
 
@@ -1132,7 +1137,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public boolean validarCampo(Object pValor) {
-        return UtilSBCoreValidacao.validaSintaxeENulo(getPropriedadesRefexao().getAtributoGerado(), pValor);
+
+        return UtilSBCoreValidacao.validacoesBasicas(this, pValor);
     }
 
     @Override

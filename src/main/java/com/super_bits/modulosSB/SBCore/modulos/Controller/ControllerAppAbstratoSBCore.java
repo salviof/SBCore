@@ -191,12 +191,14 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      * @param pResp O objeto de resposta onde a mensagem de erro será adicionada
      */
     @SuppressWarnings("null")
-    protected static void addMensagemDeAutorizacao(@NotNull ItfResposta pResp) {
+    protected static void addMensagemDeAutorizacao(@NotNull ItfRespostaAcaoDoSistema pResp) {
         try {
             if (pResp == null) {
                 throw new UnsupportedOperationException("Tentativa de adicionar uma mensgem de autorização em uma resposta nula");
             }
-
+            if (!pResp.getAcaoVinculada().isPrecisaPermissao()) {
+                return;
+            }
             ItfUsuario usuario = SBCore.getControleDeSessao().getSessaoAtual().getUsuario();
 
             if (usuario.getEmail().equals(new UsuarioSistemaRoot().getEmail())) {

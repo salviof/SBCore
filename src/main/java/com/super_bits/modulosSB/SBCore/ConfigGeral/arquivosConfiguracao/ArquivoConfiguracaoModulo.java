@@ -66,6 +66,7 @@ public abstract class ArquivoConfiguracaoModulo {
     }
 
     protected boolean salvarPropriedades(Properties pProp) {
+        String caminhoCOmpleto = UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
         try {
             Properties prop;
             if (pProp == null) {
@@ -78,7 +79,7 @@ public abstract class ArquivoConfiguracaoModulo {
 
             }
             UtilSBcoreModulos.getCaminhoRelativoConfigModulo(fabricaConfig);
-            String caminhoCOmpleto = UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
+
             String diretorio = UtilSBCoreDiretoriosSimples.getDiretorioArquivo(caminhoCOmpleto);
             File dirFile = new File(diretorio);
             if (!dirFile.exists()) {
@@ -91,7 +92,7 @@ public abstract class ArquivoConfiguracaoModulo {
 
             return true;
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando arquivo de configuração padrão do modulo", t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando arquivo de configuração padrão do modulo em [" + caminhoCOmpleto + "]", t);
             return false;
         }
     }

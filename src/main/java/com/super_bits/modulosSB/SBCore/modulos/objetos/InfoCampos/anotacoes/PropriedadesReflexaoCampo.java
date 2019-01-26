@@ -178,7 +178,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                                                 || anotacoes.getInfoCampo().valorMaximo() != InfoCampo.MAX_PADRAO) {
                                             pCampo.setValorMaximo(anotacoes.getInfoCampo().valorMaximo());
                                         }
-                                        if (pCampo.getValorMinimo() == 0 || anotacoes.getInfoCampo().valorMinimo() > 0) {
+                                        if (pCampo.getValorMinimo() == 0 && anotacoes.getInfoCampo().valorMinimo() > 0) {
                                             pCampo.setValorMinimo(anotacoes.getInfoCampo().valorMinimo());
                                         }
                                         pCampo.setSomenteLeitura(anotacoes.getInfoCampo().somenteLeitura());

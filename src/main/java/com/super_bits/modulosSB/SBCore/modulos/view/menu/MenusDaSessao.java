@@ -12,16 +12,16 @@ import org.coletivojava.fw.api.objetoNativo.view.menu.MenuSBFW;
  */
 public class MenusDaSessao implements ItfMenusDeSessao {
 
-    private MenuSBFW menuPrincipal;
+    private ItfMenuSB menuPrincipal;
 
-    private MenuSBFW menuAvancado;
+    private ItfMenuSB menuAvancado;
 
     /**
      *
      * @param menuPrincipal Menu com atalhos principais
      * @param menuSecundario Menu avançado
      */
-    public MenusDaSessao(MenuSBFW menuPrincipal, MenuSBFW menuSecundario) {
+    public MenusDaSessao(ItfMenuSB menuPrincipal, ItfMenuSB menuSecundario) {
 
         this.menuPrincipal = menuPrincipal;
         this.menuAvancado = menuSecundario;
@@ -49,7 +49,7 @@ public class MenusDaSessao implements ItfMenusDeSessao {
 
     @Override
     public MenuSBFW getMenuPrincipal() {
-        return menuPrincipal;
+        return (MenuSBFW) menuPrincipal;
     }
 
     public void setMenuPrincipal(MenuSBFW menuPrincipal) {
@@ -59,7 +59,7 @@ public class MenusDaSessao implements ItfMenusDeSessao {
     @Override
     public MenuSBFW getMenuAvancado() {
 
-        return menuAvancado;
+        return (MenuSBFW) menuAvancado;
     }
 
     public void setMenuAvancado(MenuSBFW menuAvancado) {

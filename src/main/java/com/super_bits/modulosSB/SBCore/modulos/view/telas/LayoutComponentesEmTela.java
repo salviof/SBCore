@@ -87,6 +87,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
                 ColunaTela novaColuna = new ColunaTela();
                 novaColuna.setComponenteVinculado(cp);
                 novaColuna.setPesoLarguraIdeal(cp.getPesoLargura());
+
                 novaColuna.setPorcentagemIdeal(cp.getPesoLargura() * UtilSBCoreLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM);
                 mapaColunas.put(cp.getNomeIdentificador(), novaColuna);
                 mapaColunas.put(nomeIdentificadoLayout + "." + cp.getNomeIdentificador(), novaColuna);
