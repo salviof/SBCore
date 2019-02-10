@@ -6,9 +6,9 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador.isNuloOuEmbranco;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.text.Normalizer;
 import org.apache.commons.lang3.text.WordUtils;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreStringFiltrosSimples;
 
 /**

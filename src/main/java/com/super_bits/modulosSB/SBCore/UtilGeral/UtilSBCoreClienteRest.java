@@ -5,12 +5,10 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRest;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRestBasico;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.FabTipoConexaoRest;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.InfoConsumoRestService;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.RespostaWebServiceSimples;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,11 +16,12 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -140,6 +139,7 @@ public class UtilSBCoreClienteRest {
             Map<String, String> pCabecalho, String pCorpoRequisicao) {
 
         try {
+
             System.out.println("conectando com" + pURL);
             HttpURLConnection conn = (HttpURLConnection) new URL(pURL).openConnection();
             conn.setConnectTimeout(5000);
@@ -154,7 +154,7 @@ public class UtilSBCoreClienteRest {
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
 
-                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), Charset.forName("UTF-8").newEncoder());
                     wr.write(pCorpoRequisicao);
                     wr.flush();
                 }
@@ -163,6 +163,8 @@ public class UtilSBCoreClienteRest {
             String respostaStr = "";
             try {
                 br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+            } catch (IOException io) {
+                respostaStr += io.getMessage();
             } catch (Throwable t) {
                 // SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, t.getLocalizedMessage() + t.getMessage(), t);
                 //      return null;

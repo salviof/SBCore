@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.RespostaWebServiceRestIntegracao;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -12,7 +12,8 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.RespostaWebServiceR
  */
 public interface ItfConexaoWebServiceSimples {
 
-    public RespostaWebServiceRestIntegracao getRespostaComoObjetoJson();
+    public JSONObject getRespostaComoObjetoJson();
 
     public String getRespostaTexto();
+
 }

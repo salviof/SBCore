@@ -39,7 +39,7 @@ public abstract class UtilSBCoreShellBasico {
                 }
                 String diretorio = UtilSBCoreDiretoriosSimples.getDiretorioArquivo(pComando[0]) + "/";
                 String comando = UtilSBCoreDiretoriosSimples.getNomeArquivo(pComando[0]);
-                processo = Runtime.getRuntime().exec("./" + comando, null, new File(diretorio));
+                processo = Runtime.getRuntime().exec("/bin/bash ./" + comando, null, new File(diretorio));
 
             } else {
                 processo = Runtime.getRuntime().exec(pComando);

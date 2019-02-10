@@ -5,16 +5,14 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient;
 
 import com.google.common.collect.Lists;
-import com.google.common.net.HttpHeaders;
-import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreClienteRest;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListas;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRest;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.RespostaWebServiceRestIntegracao;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.core.HttpHeaders;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -151,13 +149,8 @@ public class ConexaoClienteWebService extends ConexaoClienteWebServiceBasico imp
     }
 
     @Override
-    public RespostaWebServiceRestIntegracao getRespostaComoObjetoJson() {
-        try {
-            return consumoWS.getResposta();
-        } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.LANCAR_EXCECÃO, "Erro acessando servico Rest" + t.getMessage(), t);
-            return null;
-        }
+    public JSONObject getRespostaComoObjetoJson() {
+        return consumoWS.getResposta().getJsonObj();
     }
 
 }
