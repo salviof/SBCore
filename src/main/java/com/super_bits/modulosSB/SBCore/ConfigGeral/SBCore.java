@@ -745,6 +745,9 @@ public class SBCore {
      * @return Controle de comunicação, entre Sistema, Usuário e Desenvolvedor
      */
     public static ItfCentralComunicacao getCentralDeComunicacao() {
+        if (centralComunicacao == null) {
+            throw new UnsupportedOperationException("A central de comunicação não foi definida");
+        }
         return centralComunicacao;
     }
 
@@ -805,6 +808,9 @@ public class SBCore {
      * @return Iniciar um novo dialogo, ou interagir com um dialogo existente
      */
     public static ItfCentralComunicacao getCentralComunicacao() {
+        if (centralComunicacao == null) {
+            throw new UnsupportedOperationException("A central de comunicacao não foi registrada");
+        }
         return centralComunicacao;
     }
 

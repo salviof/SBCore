@@ -9,6 +9,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreClienteRest;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListas;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRest;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.RespostaWebServiceRestIntegracao;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.core.HttpHeaders;
@@ -140,6 +141,10 @@ public class ConexaoClienteWebService extends ConexaoClienteWebServiceBasico imp
         if (!consumoWS.finalizou) {
             consumoWS.start();
         }
+    }
+
+    public RespostaWebServiceRestIntegracao getResposta() {
+        return consumoWS.getResposta();
     }
 
     @Override

@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.WS;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.RespostaWebServiceSimples;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.json.simple.JSONObject;
@@ -15,7 +16,7 @@ import org.json.simple.parser.JSONParser;
  *
  * @author SalvioF
  */
-public class RespostaWebServiceRestIntegracao extends RespostaSimples {
+public class RespostaWebServiceRestIntegracao extends RespostaWebServiceSimples {
 
     public RespostaWebServiceRestIntegracao(String pResposta, int codigoResposta) {
         this(pResposta, codigoResposta, null);
@@ -23,7 +24,7 @@ public class RespostaWebServiceRestIntegracao extends RespostaSimples {
     }
 
     public RespostaWebServiceRestIntegracao(String pResposta, int codigoResposta, String erroUsuario) {
-        super(String.class);
+        super(codigoResposta, pResposta, erroUsuario);
 
         if (UtilSBCoreStringValidador.isNuloOuEmbranco(pResposta) || UtilSBCoreStringValidador.isNAO_NuloNemBranco(erroUsuario) || codigoResposta < 200 || codigoResposta > 250) {
             if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(erroUsuario)) {
