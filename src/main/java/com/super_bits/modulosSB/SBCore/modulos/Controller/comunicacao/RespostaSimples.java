@@ -9,11 +9,10 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
-import org.coletivojava.fw.api.objetoNativo.mensagem.Mensagem;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -38,7 +37,9 @@ public class RespostaSimples implements ItfResposta, Serializable {
     protected boolean mensagensDisparada = false;
 
     public RespostaSimples(Class pTipoRetorno) {
-        tipoRetorno = pTipoRetorno;
+        if (pTipoRetorno != Void.class) {
+            tipoRetorno = pTipoRetorno;
+        }
     }
 
     protected void calculaResultados() {

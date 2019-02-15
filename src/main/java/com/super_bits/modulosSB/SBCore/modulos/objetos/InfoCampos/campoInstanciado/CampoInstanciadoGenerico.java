@@ -8,9 +8,9 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -21,6 +21,7 @@ import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.F
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_BAIRRO;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_CAMPO_ABERTO;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_CIDADE;
+import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_COMPLEMENTO_E_NUMERO;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_LOCALIDADE;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_LOGRADOURO;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA;
@@ -29,7 +30,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCam
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfTipoAtributoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
-
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
@@ -44,10 +47,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_COMPLEMENTO_E_NUMERO;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -1113,20 +1113,43 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             Object valorGerado = tipoAtributo.getValorAleatorioEmConformidade(this);
             boolean valorNaoPrenchido = false;
             try {
-                valorNaoPrenchido = (getValor() == null || getValor().toString().isEmpty());
+                if (isUmItemDeUmaLista()) {
+                    try {
+                        ItfBeanSimplesSomenteLeitura itemSelecionado = (ItfBeanSimplesSomenteLeitura) getValor();
+                        if (itemSelecionado.getId() == 0 && UtilSBCoreStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
+                            valorNaoPrenchido = true;
+                        }
+                    } catch (Throwable t) {
+
+                    }
+                } else if (isUmaListaDinamica()) {
+
+                } else if (isUmaListagemParticular()) {
+
+                } else {
+                    valorNaoPrenchido = (getValor() == null || getValor().toString().isEmpty());
+                }
             } catch (Throwable t) {
 
             }
 
-            if ((valorGerado != null) && (valorNaoPrenchido)) {
+            if ((valorNaoPrenchido)) {
                 if (isUmCampoCampoLocalizacao()) {
-
-                    if (getTipoCampoSTR().equals(FabTipoAtributoObjeto.LCCEP.toString())) {
-                        getComoCampoLocalizacao().setCep((String) valorGerado);
+                    if (valorGerado != null) {
+                        if (getTipoCampoSTR().equals(FabTipoAtributoObjeto.LCCEP.toString())) {
+                            getComoCampoLocalizacao().setCep((String) valorGerado);
+                        }
+                    }
+                    if (getTipoCampoSTR().equals(FabTipoAtributoObjeto.LC_LOCALIZACAO.toString())) {
+                        TipoAtributoMetodosBase tipoAtributoCep = new TipoAtributoMetodosBase(FabTipoAtributoObjeto.LCCEP);
+                        String valorGeradoCep = (String) tipoAtributoCep.getValorAleatorioEmConformidade();
+                        getObjetoDoAtributo().getCampoInstanciadoByNomeOuAnotacao(getNomeCamponaClasse() + ".cep").getComoCampoLocalizacao().setCep(valorGeradoCep);
                     }
 
                 } else {
-                    setValor(valorGerado);
+                    if (valorGerado != null) {
+                        setValor(valorGerado);
+                    }
                 }
             }
 

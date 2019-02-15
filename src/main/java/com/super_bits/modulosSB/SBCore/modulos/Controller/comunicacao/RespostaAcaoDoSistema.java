@@ -11,6 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 
 /**
  *
@@ -27,6 +28,14 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
     public RespostaAcaoDoSistema() {
         super(null);
         this.acaoDosistema = null;
+    }
+
+    public RespostaAcaoDoSistema(ItfAcaoDoSistema pAcaoDoSistema) {
+        this(Void.class, pAcaoDoSistema);
+    }
+
+    public RespostaAcaoDoSistema(ItfBeanSimples pItemPrincipal, ItfAcaoDoSistema pAcaoDosistema) {
+        this((pItemPrincipal == null) ? null : pItemPrincipal.getClass(), pAcaoDosistema);
     }
 
     @SuppressWarnings("LeakingThisInConstructor")
