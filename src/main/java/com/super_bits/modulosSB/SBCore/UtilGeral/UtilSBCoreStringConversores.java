@@ -5,7 +5,6 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *

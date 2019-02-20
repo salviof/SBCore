@@ -12,12 +12,12 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaAcaoDoSistema;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.lang.reflect.Method;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -76,9 +76,9 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      *
      * @return RespostaAcaoDoSistema com o erro não implementado
      */
-    protected ItfRespostaAcaoDoSistema getNovaRespostaNaoImplementado() {
-        RespostaAcaoDoSistema naoImplementado = new RespostaAcaoDoSistema(null, null);
-        return (ItfRespostaAcaoDoSistema) naoImplementado.addMensagemErroDisparaERetorna("Os algorítimos para [" + getMetodoChamado() + "] do modulo [" + this.getClass().getSimpleName() + "] não foi implementado.");
+    protected static ItfRespostaAcaoDoSistema getNovaRespostaNaoImplementado() {
+        RespostaAcaoDoSistema naoImplementado = new RespostaAcaoDoSistema(UtilSBController.getAcaoByMetodo(getMetodoChamado(), true));
+        return (ItfRespostaAcaoDoSistema) naoImplementado.addMensagemErroDisparaERetorna("Os algorítimos para [" + getAcaoDoMetodo().getNome() + "] do modulo [" + getAcaoDoMetodo().getModulo().getNome() + "] não foi implementado. em" + getMetodoChamado().getDeclaringClass().getSimpleName() + "." + getMetodoChamado().getName());
     }
 
     protected List<ItfPermissao> carregaAcessos() {

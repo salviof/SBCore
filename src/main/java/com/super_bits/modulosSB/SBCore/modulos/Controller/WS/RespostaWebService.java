@@ -7,15 +7,14 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.WS;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaSimples;
 
 /**
  *
  * @author desenvolvedor
  */
-public class RespostaWebService extends RespostaAcaoDoSistema {
+public class RespostaWebService extends RespostaSimples {
 
     @Expose()
     private String retornoJson;
@@ -23,15 +22,11 @@ public class RespostaWebService extends RespostaAcaoDoSistema {
     private Resultado resultadoWS = Resultado.SUCESSO;
 
     public RespostaWebService() {
-        super(null, null);
-    }
-
-    public RespostaWebService(Class pTipoRetorno, ItfAcaoDoSistema pAcaoDoSistema) {
-        super(pTipoRetorno, pAcaoDoSistema);
+        super(null);
     }
 
     @Override
-    public ItfRespostaAcaoDoSistema setRetorno(Object pObjetoResultante) {
+    public ItfResposta setRetorno(Object pObjetoResultante) {
         super.setRetorno(pObjetoResultante); //To change body of generated methods, choose Tools | Templates.
         retornoJson = new Gson().toJson(pObjetoResultante);
         return this;
@@ -47,6 +42,7 @@ public class RespostaWebService extends RespostaAcaoDoSistema {
 
     @Override
     public void setResultadoWS(Resultado resultadoWS) {
+        super.setResultadoWS(resultadoWS);
         this.resultadoWS = resultadoWS;
 
     }
