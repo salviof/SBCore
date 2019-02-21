@@ -6,7 +6,6 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados) Funções
@@ -75,7 +75,7 @@ public class UtilSBCoreDataHora {
             case DATA_HORA_SISTEMA:
                 return new SimpleDateFormat("dd-MM-yy HH-mm-ss");
             case DATA_HORA_USUARIO:
-                return new SimpleDateFormat("dd-MM-yy HH-mm-ss");
+                return new SimpleDateFormat("dd-MM-yy HH:mm:ss");
             case DATA_SISTEMA:
                 return new SimpleDateFormat("dd-MM-yy");
             case DATA_USUARIO:

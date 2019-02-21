@@ -26,17 +26,21 @@ public class ValidarUnitarioMinimo extends ValidadorUnitarioCampoInstGenerico im
     @Override
     public String gerarMensagemErroValidacao(Object pValor) {
         try {
+
             if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
                 return null;
             }
+
             if (!campoInstanciado.isTemValidacaoMinimo()) {
                 return null;
             }
+
             if (campoInstanciado.isNumeral()) {
-                if (pValor == null || Double.parseDouble(pValor.toString()) < campoInstanciado.getValorMinimo()) {
+                if (pValor == null || Double.parseDouble(pValor.toString()) < new Double(campoInstanciado.getValorMinimo())) {
                     throw new ErroValidacao("O valor mínimo permitido para " + campoInstanciado.getLabel() + " é " + campoInstanciado.getValorMinimo());
                 }
             }
+
             switch (campoInstanciado.getFabricaTipoAtributo()) {
                 case AAA_NOME:
                 case NOME_COMPLETO:
