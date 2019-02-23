@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,11 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
     }
 
     @Override
-    public ItfComunicacao iniciarComunicacaoSistema_Usuairo(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String mensagem, ItffabricaTrasporteComunicacao... pTiposTransporte) {
+    public ItfComunicacao iniciarComunicacaoSistema_Usuairo(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String pAssunto, String mensagem, ItffabricaTrasporteComunicacao... pTiposTransporte) {
         ItfComunicacao comunicacao = new ComunicacaoTransient(pUsuario, pUsuario, tipocomunicacao.getRegistro(), gerarListaTransportes(pTiposTransporte));
         comunicacao.setMensagem(mensagem);
-        comunicacao.setNome(mensagem);
+        comunicacao.setAssunto(pAssunto);
+        comunicacao.setAssunto(pAssunto);
 
         if (getAramazenamento().registrarInicioComunicacao(comunicacao)) {
             for (ItffabricaTrasporteComunicacao<ItfDisparoComunicacao> transp : pTiposTransporte) {
@@ -49,6 +51,16 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
         } else {
             return null;
         }
+    }
+
+    @Override
+    public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao tipocomunicacao, String pAssunto, String mensagem, ItffabricaTrasporteComunicacao... tiposTransporte) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ItfComunicacao iniciarComunicacaoSistema_Usuairo(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String mensagem, ItffabricaTrasporteComunicacao... pTiposTransporte) {
+        return iniciarComunicacaoSistema_Usuairo(tipocomunicacao, pUsuario, UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140), mensagem, pTiposTransporte);
     }
 
     @Override

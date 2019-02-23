@@ -21,6 +21,7 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
     private final Date dataHoraCriou;
     private boolean foiSelado;
     private String codigoSelo;
+    private FabStatusComunicacao status;
 
     public ComunicacaoAbstrata() {
         dataHoraCriou = new Date();
@@ -34,7 +35,23 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
             Long idDataHora = dataHoraCriou.getTime();
             id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
             codigoSelo = String.valueOf(id);
+            if (status == null) {
+                status = FabStatusComunicacao.SELADO;
+            }
         }
+    }
+
+    @Override
+    public FabStatusComunicacao getStatusComunicacao() {
+        if (status == null && isFoiSelado()) {
+            status = FabStatusComunicacao.SELADO;
+        }
+        return status;
+    }
+
+    @Override
+    public void setStatusComunicacao(FabStatusComunicacao pStatus) {
+        status = pStatus;
     }
 
     @Override

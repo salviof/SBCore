@@ -158,21 +158,18 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
      * Coleta as primeiras letras de uma String utilizando substring
      *
      * @param pString
-     * @param NumeroCasas
+     * @param pNumeroDeCasas
      * @return
      */
-    public static String getPrimeirasXLetrasDaString(String pString, int NumeroCasas) {
+    public static String getPrimeirasXLetrasDaString(String pString, int pNumeroDeCasas) {
         try {
-            if (pString == null) {
-                return null;
-            }
-            if (pString.isEmpty()) {
+            if (pString == null || pString.isEmpty()) {
                 return pString;
             }
-            if (pString.length() < NumeroCasas) {
-                NumeroCasas = pString.length() - 1;
+            if (pString.length() < pNumeroDeCasas) {
+                pNumeroDeCasas = pString.length() - 1;
             }
-            return pString.substring(0, NumeroCasas);
+            return pString.substring(0, pNumeroDeCasas + 1);
 
         } catch (Throwable e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo primeiras letras da string" + pString, e);

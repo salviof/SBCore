@@ -53,6 +53,21 @@ public interface ItfCentralComunicacao {
             ItffabricaTrasporteComunicacao... tiposTransporte
     );
 
+    public ItfComunicacao iniciarComunicacaoSistema_Usuairo(
+            FabTipoComunicacao tipocomunicacao,
+            ItfUsuario pUsuario,
+            String pAssunto,
+            String mensagem,
+            ItffabricaTrasporteComunicacao... tiposTransporte
+    );
+
+    public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(
+            FabTipoComunicacao tipocomunicacao,
+            String pAssunto,
+            String mensagem,
+            ItffabricaTrasporteComunicacao... tiposTransporte
+    );
+
     public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(
             FabTipoComunicacao tipocomunicacao,
             String mensagem,

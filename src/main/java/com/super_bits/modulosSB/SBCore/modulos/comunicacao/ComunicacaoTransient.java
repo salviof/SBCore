@@ -4,12 +4,12 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.List;
+import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 
 /**
  *
@@ -138,6 +138,11 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
 
     @Override
     public void setNome(String pAssunto) {
+        assunto = pAssunto;
+    }
+
+    @Override
+    public void setAssunto(String pAssunto) {
         assunto = pAssunto;
     }
 

@@ -4,14 +4,11 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import org.coletivojava.fw.api.objetoNativo.comunicacao.RespostaComunicacao;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
-import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEmTexto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEmTexto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
@@ -20,9 +17,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.coletivojava.fw.api.objetoNativo.comunicacao.RespostaComunicacao;
+import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
+import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 
 /**
  *
@@ -40,6 +39,8 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
     private final ItfUsuario usuarioRemetente;
     private final List<ItfTipoTransporteComunicacao> transportes;
     private long tempoAceitavelResposta;
+
+    private FabStatusComunicacao status;
 
     private ItfRespostaComunicacao respostaEscolhida;
     private String mensagem;
@@ -188,6 +189,25 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
     @Override
     public void setMensagem(String pMensagem) {
         mensagem = pMensagem;
+    }
+
+    @Override
+    public FabStatusComunicacao getStatusComunicacao() {
+        if (status == null && isFoiSelado()) {
+            status = FabStatusComunicacao.SELADO;
+        }
+
+        return status;
+    }
+
+    @Override
+    public void setStatusComunicacao(FabStatusComunicacao pStatus) {
+        status = pStatus;
+    }
+
+    @Override
+    public void setAssunto(String pAssunto) {
+        assunto = pAssunto;
     }
 
 }
