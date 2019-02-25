@@ -1,18 +1,15 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
-import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoMetodoEmContextoDeExecucao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
@@ -31,16 +28,15 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAssistenteDeLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroDeMapaDeCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroObtendoValorDoCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroSetandoValorDeCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanReflexoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -51,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.HibernateProxyHelper;
 
@@ -549,10 +547,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     }
 
-    protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) {
-        return UtilSBCoreReflexaoObjeto.getParametroPrepararObjeto(pTipoParametro,
-                UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class),
-                parametros);
+    protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
+        try {
+            return UtilSBCoreReflexaoObjeto.getParametroPrepararObjeto(pTipoParametro,
+                    UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class),
+                    parametros);
+        } catch (Throwable t) {
+            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) this, "Erro procurando parametro por tipo anotação " + InfoPreparacaoObjeto.class.getSimpleName() + " Não foi encontrada");
+        }
     }
 
     /**

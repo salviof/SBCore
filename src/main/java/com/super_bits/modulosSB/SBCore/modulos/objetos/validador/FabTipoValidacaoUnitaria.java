@@ -10,6 +10,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadr
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioAtributoUnico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioCNPJ;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioCPF;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioCodigoDeBarass;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMaximo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMinimo;
 
@@ -24,9 +25,30 @@ public enum FabTipoValidacaoUnitaria {
     MAXIMO,
     CPF,
     CNPJ,
+    CODIGO_DE_BARRAS,
     CAMPO_UNICO;
 
     public ItfValidacaoUnitaria getValidador(ItfAtributoObjetoSB pCampo) {
+        switch (pCampo.getFabricaTipoAtributo()) {
+            case CODIGO_DE_BARRAS:
+                switch (this) {
+                    case CODIGO_DE_BARRAS:
+                        return new ValidarUnitarioCodigoDeBarass(pCampo);
+                }
+            case CPF:
+                switch (this) {
+                    case CPF:
+                        return new ValidarUnitarioCPF(pCampo);
+                }
+            case CNPJ:
+                switch (this) {
+                    case CNPJ:
+                        return new ValidarUnitarioCNPJ(pCampo);
+                }
+
+            default:
+        }
+
         switch (this) {
             case NULO:
                 return new ValidadorUnitarioNulo(pCampo);
@@ -34,10 +56,7 @@ public enum FabTipoValidacaoUnitaria {
                 return new ValidarUnitarioMinimo(pCampo);
             case MAXIMO:
                 return new ValidarUnitarioMaximo(pCampo);
-            case CPF:
-                return new ValidarUnitarioCPF(pCampo);
-            case CNPJ:
-                return new ValidarUnitarioCNPJ(pCampo);
+
             case CAMPO_UNICO:
                 return new ValidarUnitarioAtributoUnico(pCampo);
 
