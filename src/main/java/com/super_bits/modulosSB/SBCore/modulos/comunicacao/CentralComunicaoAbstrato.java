@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
     }
 
     @Override
-    public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao tipocomunicacao, String pAssunto, String mensagem, ItffabricaTrasporteComunicacao... tiposTransporte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao tipocomunicacao, String pAssunto, String mensagem, ItffabricaTrasporteComunicacao... pTiposTransporte) {
+        return iniciarComunicacaoSistema_Usuairo(tipocomunicacao, SBCore.getUsuarioLogado(), UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140), mensagem, pTiposTransporte);
     }
 
     @Override

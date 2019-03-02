@@ -105,8 +105,14 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
                         if (pValor != null) {
                             tipoClasse = pValor.getClass().getSimpleName();
                         }
+                        String nomeparametroMetodo = "indefinido";
+                        try {
+                            nomeparametroMetodo = metodo.getParameterTypes()[0].getClass().getSimpleName();
+                        } catch (Throwable tt) {
 
-                        SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Tentativa de chamar metodo Set com parametro incompativel: " + metodo.getName() + " o tipo do parametro enviado foi " + tipoClasse, t);
+                        }
+
+                        SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Tentativa de chamar metodo Set com parametro incompativel: " + metodo.getName() + " o tipo do parametro enviado foi " + tipoClasse + " já no método, o parametro é do tipo: " + nomeparametroMetodo, t);
 
                     } catch (IllegalAccessException | InvocationTargetException t) {
                         SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro invocando método via reflexão", t);
