@@ -18,13 +18,15 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
-    private final Date dataHoraCriou;
+
     private boolean foiSelado;
     private String codigoSelo;
     private FabStatusComunicacao status;
+    private final Date dataHoraDisparo;
+    private Date dataHoraResposta;
 
     public ComunicacaoAbstrata() {
-        dataHoraCriou = new Date();
+        dataHoraDisparo = new Date();
     }
 
     @Override
@@ -32,7 +34,7 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
         if (!foiSelado) {
             String usuario = getUsuarioRemetente().getEmail();
             String destinatario = getDestinatario().getEmailsConcatenados();
-            Long idDataHora = dataHoraCriou.getTime();
+            Long idDataHora = dataHoraDisparo.getTime();
             id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
             codigoSelo = String.valueOf(id);
             if (status == null) {
@@ -72,4 +74,19 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
     public String getCodigoSelo() {
         return codigoSelo;
     }
+
+    @Override
+    public Date getDataHoraDisparo() {
+        return dataHoraDisparo;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Date getDataHoraResposta() {
+        return dataHoraResposta;
+    }
+
 }

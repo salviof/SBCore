@@ -154,6 +154,13 @@ public class SessaoOffline implements ItfSessao {
         return comunicacoesEncontradas;
     }
 
+    public List<ItfComunicacao> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
+        List<ItfComunicacao> lista = new ArrayList();
+        SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
+                .stream().limit(6).forEach(lista::add);
+        return lista;
+    }
+
     @Override
     public int getIdSessao() {
         if (idSessao == 0) {

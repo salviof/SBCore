@@ -49,6 +49,7 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
     @Override
     public ItfRespostaAcaoDoSistema dispararMensagens() {
         calculaResultados();
+
         if (!mensagensDisparada) {
             if (getMensagens().isEmpty()) {
                 if (acaoDosistema != null) {
@@ -58,10 +59,9 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
                 }
             }
 
-            for (ItfMensagem msg : getMensagens()) {
+            getMensagens().forEach((msg) -> {
                 SBCore.getCentralDeMensagens().enviaMensagem(msg);
-
-            }
+            });
             mensagensDisparada = true;
         }
         return this;

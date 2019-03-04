@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,38 +48,57 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
 
     @Override
     public boolean limparComunicacaoExpirada() {
+
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ItfComunicacao> {
+
+        @Override
+        public int compare(ItfComunicacao o1, ItfComunicacao o2) {
+
+            return (o1.getDataHoraDisparo().getTime() < o2.getDataHoraDisparo().getTime() ? 1 : -1);
+
+        }
+
+    }
+
+    private boolean isComunicacaoEdousuario(ItfUsuario pUsuario, ItfComunicacao pComunicacao) {
+        switch (pComunicacao.getDestinatario().getTipoDestinatario()) {
+            case USUARIO:
+                if (pUsuario.equals(pComunicacao.getDestinatario().getUsuario())) {
+                    return true;
+                }
+                break;
+            case USUARIOS:
+                if (pComunicacao.getDestinatario().getUsuarios().contains(pUsuario)) {
+                    return true;
+                }
+                break;
+            case GRUPO:
+                if (pComunicacao.getDestinatario().getGrupoUsuario().equals(pUsuario.getGrupo())) {
+                    return true;
+                }
+                break;
+            case GRUPOS:
+                if (pComunicacao.getDestinatario().getGruposUsuario().contains(pUsuario.getGrupo())) {
+                    return true;
+                }
+            default:
+                throw new AssertionError(pComunicacao.getDestinatario().getTipoDestinatario().name());
+
+        }
+        return false;
     }
 
     @Override
     public List<ItfComunicacao> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario) {
         List<ItfComunicacao> comunicacoes = new ArrayList<>();
-        for (ItfComunicacao comunicacao : comunicacoesAtivas.values()) {
-            switch (comunicacao.getDestinatario().getTipoDestinatario()) {
-                case USUARIO:
-                    if (pDestinatario.equals(comunicacao.getDestinatario().getUsuario())) {
-                        comunicacoes.add(comunicacao);
-                    }
-                    break;
-                case USUARIOS:
-                    if (comunicacao.getDestinatario().getUsuarios().contains(pDestinatario)) {
-                        comunicacoes.add(comunicacao);
-                    }
-                    break;
-                case GRUPO:
-                    if (comunicacao.getDestinatario().getGrupoUsuario().equals(pDestinatario.getGrupo())) {
-                        comunicacoes.add(comunicacao);
-                    }
-                    break;
-                case GRUPOS:
-                    if (comunicacao.getDestinatario().getGruposUsuario().contains(pDestinatario.getGrupo())) {
-                        comunicacoes.add(comunicacao);
-                    }
-                default:
-                    throw new AssertionError(comunicacao.getDestinatario().getTipoDestinatario().name());
 
-            }
-        }
+        comunicacoesAtivas.values().stream().
+                filter(cm -> isComunicacaoEdousuario(pDestinatario, cm)).
+                sorted(new OrdemComunicacaoMaisNovoPrimeiro()).forEach(comunicacoes::add);
+
         return comunicacoes;
     }
 

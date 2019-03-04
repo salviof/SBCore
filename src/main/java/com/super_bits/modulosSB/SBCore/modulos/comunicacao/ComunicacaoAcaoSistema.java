@@ -90,7 +90,9 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
         this.repostas = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
 
         if (this.repostas.isEmpty()) {
-            UtilSBCoreComunicacao.getTipoRespostas(FabTipoComunicacao.CONFIRMAR_CANCELAR).forEach(resp -> repostas.add(new RespostaComunicacao(this, resp)));
+
+            repostas.addAll(UtilSBCoreComunicacao.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
+
         }
         String mensagemModeloPredefinida = pAcaoVinculada.getTipoComunicacao().getMensagemModeloPredefinida();
 

@@ -24,7 +24,7 @@ import org.junit.Before;
 public class TestesCore {
 
     @Before
-    protected void configAmbienteDesevolvimento() {
+    public void configAmbienteDesevolvimento() {
         System.out.println("Teste relato de Erro");
         SBCore.configurar(new ConfiguradorProjetoSBCore(), SBCore.ESTADO_APP.DESENVOLVIMENTO);
         //   SBCore.LancarErro(InfoErroSB.FabErro.USUARIO, "Executa Alerta Usuario");
