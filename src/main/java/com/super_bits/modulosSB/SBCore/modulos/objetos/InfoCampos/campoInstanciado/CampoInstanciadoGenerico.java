@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.MapaPesquisaFonetica;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
@@ -1086,6 +1087,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
+    @Deprecated
     public boolean contem(Object pParametro, int pIndice) {
         Object valor = getValor();
         if (pParametro == null) {
@@ -1094,9 +1096,10 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         if (valor == null) {
             return false;
         }
+
         try {
 
-            return UtilSBCoreStringComparador.isParecido(valor.toString(), pParametro.toString(), pIndice);
+            return MapaPesquisaFonetica.isValorFoneticoCompativel(this, pParametro.toString());
 
         } catch (Throwable t) {
             return false;

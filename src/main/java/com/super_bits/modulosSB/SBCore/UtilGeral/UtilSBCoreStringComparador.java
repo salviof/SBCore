@@ -10,7 +10,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import mtfn.MetaphonePtBr;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;
+import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -20,9 +22,14 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 public class UtilSBCoreStringComparador {
 
     private static final LongestCommonSubsequence CALCULO_SIMILAR = new LongestCommonSubsequence();
+    private static final LongestCommonSubsequenceDistance CALCULO_DIFERENCA = new LongestCommonSubsequenceDistance();
 
     public static boolean isParecido(String pReferencia, String pParametro) {
-        return isParecido(pReferencia, pParametro, 80);
+        int score = 80;
+        if ((pReferencia.length() - pParametro.length()) > 10) {
+            score = 95;
+        }
+        return isParecido(pReferencia, pParametro, score);
     }
 
     public static boolean isBastanteParecido(String pReferencia, String pParametro) {
@@ -32,32 +39,56 @@ public class UtilSBCoreStringComparador {
     public static boolean isParecido(String pReferencia, String pParametro, int indiceIgualdade) {
         int maximo = pParametro.length();
         int score = CALCULO_SIMILAR.apply(pReferencia.toLowerCase(), pParametro.toLowerCase());
-        double valor = (score * 100) / maximo;
-        return valor >= indiceIgualdade;
+        double valor = (score * 100) / maximo + 1;
+
+        return score > 52;
+    }
+
+    public static boolean isBastanteParecidoFoneticamente(String pReferencia, String pParamentro) {
+        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pReferencia) || UtilSBCoreStringValidador.isNuloOuEmbranco(pParamentro)) {
+            return false;
+        } else {
+            return new MetaphonePtBr(pReferencia).toString().contains(new MetaphonePtBr(pParamentro).toString());
+        }
+    }
+
+    public static boolean isParecidoFoneticamente(String pReferencia, String pParamentro) {
+        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pReferencia) || UtilSBCoreStringValidador.isNuloOuEmbranco(pParamentro)) {
+            return false;
+        } else {
+            return new MetaphonePtBr(pReferencia).toString().contains(new MetaphonePtBr(pParamentro).toString());
+        }
     }
 
     public static boolean isParecido(ItfBeanSimples pReferencia, List<? extends ItfCaminhoCampo> pCampos, String pParametro, boolean pParametroNumerico) {
         if (pReferencia == null) {
             return false;
         }
-        ConcurrentLinkedQueue<ItfCaminhoCampo> campos = new ConcurrentLinkedQueue<>();
+        ConcurrentLinkedQueue<ItfCaminhoCampo> camposComMatch = new ConcurrentLinkedQueue<>();
         pCampos.parallelStream().forEach(
                 coluna -> {
                     try {
                         ItfCampoInstanciado campoinstanciado = pReferencia.getCampoInstanciadoByNomeOuAnotacao(coluna.getCaminhoSemNomeClasse());
-                        if (pParametroNumerico) {
+                        if (!pParametroNumerico) {
                             switch (campoinstanciado.getTipoPrimitivoDoValor()) {
                                 case LETRAS:
                                     if (campoinstanciado.isTemMascara()) {
                                         if (campoinstanciado.getMascara().contains("#")) {
-                                            if (campoinstanciado.contem(pParametro, 100)) {
-                                                campos.add(coluna);
-                                                return;
+                                            try {
+                                                if (campoinstanciado.getValor().toString().contains(pParametro)) {
+                                                    camposComMatch.add(coluna);
+                                                    break;
+                                                }
+                                            } catch (NullPointerException n) {
+                                                break;
                                             }
                                         }
                                     } else {
-
+                                        if (campoinstanciado.contem(pParametro, 100)) {
+                                            camposComMatch.add(coluna);
+                                        }
                                     }
+                                    break;
                                 case INTEIRO:
                                 case NUMERO_LONGO:
 
@@ -71,17 +102,18 @@ public class UtilSBCoreStringComparador {
                                 case ENTIDADE:
                                     break;
                                 case OUTROS_OBJETOS:
+
                                     break;
                                 default:
-                                    throw new AssertionError(campoinstanciado.getTipoPrimitivoDoValor().name());
+                                    if (campoinstanciado.contem(pParametro, 100)) {
+                                        camposComMatch.add(coluna);
+                                    }
 
                             }
-                            if (campoinstanciado.contem(pParametro, 100)) {
-                                campos.add(coluna);
-                            }
+
                         } else {
                             if (campoinstanciado.contem(pParametro, 100)) {
-                                campos.add(coluna);
+                                camposComMatch.add(coluna);
                             }
 
                         }
@@ -90,7 +122,7 @@ public class UtilSBCoreStringComparador {
                     }
                 }
         );
-        return !campos.isEmpty();
+        return !camposComMatch.isEmpty();
 
     }
 

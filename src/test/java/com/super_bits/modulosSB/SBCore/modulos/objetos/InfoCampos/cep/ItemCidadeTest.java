@@ -6,8 +6,9 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.testes.TestesCore;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -22,7 +23,14 @@ public class ItemCidadeTest extends TestesCore {
     public void testeGetEstado() {
 
         ItemCidade cidade = new ItemCidade();
-        cidade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA);
+        List<Integer> teste = new ArrayList();
+        for (int i = 0; i < 10000; i++) {
+            teste.add(i);
+        }
+        //   cidade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA);
+        teste.parallelStream().forEach(i -> {
+            cidade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA);
+        });
 
         ItemBairro bairro = new ItemBairro();
         bairro.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LC_CIDADE);

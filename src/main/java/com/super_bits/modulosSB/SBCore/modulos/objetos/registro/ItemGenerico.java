@@ -41,6 +41,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -523,7 +524,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      *
      * @param pCampoReflection
      */
-    private void carregaCampoInstanciado(Field pCampoReflection) {
+    private synchronized void carregaCampoInstanciado(Field pCampoReflection) {
         try {
             CampoIntemGenericoInstanciado campoformatado = (CampoIntemGenericoInstanciado) instanciarnovoCampo(pCampoReflection);
             if (mapaCamposInstanciados.get(pCampoReflection.getName()) != null) {
@@ -568,15 +569,16 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @param pCampoReflexao
      * @return
      */
-    protected ItfCampoInstanciado instanciarnovoCampo(Field pCampoReflexao) {
+    protected synchronized ItfCampoInstanciado instanciarnovoCampo(Field pCampoReflexao) {
         return new CampoIntemGenericoInstanciado(pCampoReflexao);
     }
 
-    private void buildCamposPorAnotacao() {
+    private synchronized void buildCamposPorAnotacao() {
         if (mapaCampoPorAnotacao.isEmpty()) {
 
-            mapaCamposInstanciados = new HashMap<>();
-            mapaCampoPorAnotacao = new HashMap<>();
+            mapaCamposInstanciados = Collections.synchronizedMap(new HashMap());
+            mapaCampoPorAnotacao = Collections.synchronizedMap(new HashMap());
+
             Class classeAnalizada = this.getClass();
             while (!UtilSBCoreReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
 
@@ -592,11 +594,11 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         }
     }
 
-    public Map<String, ItfCampoInstanciado> getmapaCamposInstanciados(String pCampo) {
+    public synchronized Map<String, ItfCampoInstanciado> getmapaCamposInstanciados(String pCampo) {
 
         if (mapaCampoPorAnotacao == null) {
-            mapaCamposInstanciados = new HashMap<>();
-            mapaCampoPorAnotacao = new HashMap<>();
+            mapaCamposInstanciados = Collections.synchronizedMap(new HashMap());
+            mapaCampoPorAnotacao = Collections.synchronizedMap(new HashMap());
         }
 
         buildCamposPorAnotacao();

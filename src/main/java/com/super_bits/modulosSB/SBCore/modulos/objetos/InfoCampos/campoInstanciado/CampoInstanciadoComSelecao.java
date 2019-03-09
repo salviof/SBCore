@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.MapaPesquisaFonetica;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.ItfSeletorGenerico;
@@ -15,6 +15,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.ArrayList;
 import java.util.List;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -55,14 +56,24 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
             listaCompleta.forEach(seletor.getOrigem()::add);
         } else {
             try {
-                listaCompleta.parallelStream().filter(item
-                        -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
-                        .forEach(getOrigemEmFila()::add);
+
+                if (!apenasNumero) {
+                    String chave = MapaPesquisaFonetica.getChaveFonetica(filtro);
+
+                    listaCompleta.parallelStream().filter(item
+                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), chave, apenasNumero))
+                            .forEach(getOrigemEmFila()::add);
+                } else {
+                    listaCompleta.parallelStream().filter(item
+                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
+                            .forEach(getOrigemEmFila()::add);
+                }
+
             } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro executando Pesquisa completa ", t);
                 listaCompleta.stream().
                         filter(item -> UtilSBCoreStringComparador.
-                        isParecido(((ItfBeanSimplesSomenteLeitura) item).getNome(), filtro))
+                        isBastanteParecido(((ItfBeanSimplesSomenteLeitura) item).getNome(), filtro))
                         .forEach(getOrigemEmFila()::add);
             }
         }
