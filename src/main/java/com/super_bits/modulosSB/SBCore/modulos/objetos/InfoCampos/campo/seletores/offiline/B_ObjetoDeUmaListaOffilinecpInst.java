@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.offiline;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.ItfSelecaoObjetoDeUmaLista;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.*;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
@@ -54,9 +53,7 @@ public class B_ObjetoDeUmaListaOffilinecpInst<T extends ItfBeanSimplesSomenteLei
     @Override
     public void atualizaPickListViewContexto() {
         System.out.println("Atulizando exibição da lista para:");
-        getOrigem().stream().forEach((o) -> {
-            System.out.println("->" + o.toString());
-        });
+
     }
 
 }

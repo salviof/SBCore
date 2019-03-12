@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.offiline;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.ItfselecaoListaComOrigem;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.*;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
@@ -37,9 +36,7 @@ public class B_listaComOrigemOffiline<T extends ItfBeanSimplesSomenteLeitura>
     @Override
     public void atualizaPickListViewContexto() {
         System.out.println("Atulizando exibição da lista para:");
-        getOrigem().stream().forEach((o) -> {
-            System.out.println("->" + o.toString());
-        });
+
     }
 
     @Override
