@@ -487,8 +487,12 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
 
     public String getCaminhoRelativoItemSublista() {
         try {
-            if (caminhoComleto.contains("[]")) {
-                return caminhoComleto.substring(caminhoComleto.lastIndexOf("]") + 2);
+            String caminhoRelativo = caminhoComleto;
+            if (caminhoRelativo.endsWith("[]")) {
+                caminhoRelativo = caminhoRelativo.substring(0, caminhoRelativo.length() - 2);
+            }
+            if (caminhoRelativo.contains("[]")) {
+                return caminhoRelativo.substring(caminhoRelativo.lastIndexOf("]") + 2);
             } else {
                 return getCaminhoSemNomeClasse();
             }
