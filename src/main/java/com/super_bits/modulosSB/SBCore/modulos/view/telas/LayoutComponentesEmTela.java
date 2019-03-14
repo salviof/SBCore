@@ -41,6 +41,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
         permitirEspremer = pEspremerSeNaoCouber;
         colunasMaximo = pTipoTela.getColunas().getQuantidade();
         nomeIdentificadoLayout = pNomeIdentificador;
+
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -72,6 +73,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     protected final ItfAtributoObjetoEditavel atributoAssociado;
     private final PropriedadesReflexaoCampo propriedadesReflexao;
     private ItfValidacao validacaoLogica;
+    private FabEstadoFormulario statusFormulario = FabEstadoFormulario.INDEFINIDO;
 
     // TODO, Justificativas para alteração de Campos
     private List<String> justificativasAlteracaoCampos;
@@ -340,6 +342,9 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
      */
     @Override
     public boolean isSomenteLeitura() {
+        if (statusFormulario.equals(FabEstadoFormulario.VISUALIZAR)) {
+            return true;
+        }
         return atributoAssociado.isSomenteLeitura();
     }
 
@@ -1186,6 +1191,11 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             default:
                 return false;
         }
+    }
+
+    @Override
+    public void setStatusFormularioExibicao(FabEstadoFormulario pStatusForm) {
+        statusFormulario = pStatusForm;
     }
 
 }
