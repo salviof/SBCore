@@ -5,13 +5,17 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.AtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_DECLARACAO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 
 import java.util.List;
 
@@ -20,7 +24,7 @@ import java.util.List;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = "Calculo de Entidade", plural = "Calculos")
-public class CalculoDeEntidade implements ItfEstruturaCampoEntidade {
+public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoDinamicoEntidade {
 
     private final EstruturaCampo estruturaCampo;
 
@@ -74,7 +78,7 @@ public class CalculoDeEntidade implements ItfEstruturaCampoEntidade {
     }
 
     @Override
-    public EstruturaDeEntidade getEstruturaPai() {
+    public ItfEstruturaDeEntidade getEstruturaPai() {
         return estruturaCampo.getEstruturaPai();
     }
 
@@ -249,11 +253,6 @@ public class CalculoDeEntidade implements ItfEstruturaCampoEntidade {
     }
 
     @Override
-    public void setEstruturaPai(EstruturaDeEntidade estruturaPai) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void setFabricaTipoAtributo(FabTipoAtributoObjeto pTipoCampo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -396,6 +395,26 @@ public class CalculoDeEntidade implements ItfEstruturaCampoEntidade {
     @Override
     public String getXhtmlVisao(int numeroColunas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEstruturaPai(ItfEstruturaDeEntidade estruturaPai) {
+        estruturaCampo.setEstruturaPai(estruturaPai);
+    }
+
+    @Override
+    public boolean isTemValorLogico() {
+        return estruturaCampo.isTemValorLogico();
+    }
+
+    @Override
+    public boolean isTemListaDinamica() {
+        return estruturaCampo.isTemListaDinamica();
+    }
+
+    @Override
+    public boolean isTemValidadorLogico() {
+        return estruturaCampo.isTemValidadorLogico();
     }
 
 }

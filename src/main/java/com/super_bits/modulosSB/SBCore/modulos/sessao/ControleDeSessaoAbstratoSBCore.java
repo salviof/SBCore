@@ -10,7 +10,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreEmail;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.sessao.Interfaces.ItfControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import java.io.Serializable;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 

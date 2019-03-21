@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsMaiuculoMinusculo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 
 /**
  *
@@ -29,7 +30,7 @@ public class UtilSBGeradorDeCodigoBase {
         return CAMINHO_PADRAO_PACOTE_IMPLEMENTACAO_MODEL + "." + pSubPacote.toLowerCase();
     }
 
-    public static String getNomeClasseValidacao(EstruturaCampo pCampo) {
+    public static String getNomeClasseValidacao(ItfEstruturaCampoEntidade pCampo) {
         return "Validacao" + pCampo.getEstruturaPai().getNome() + UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
     }
 }

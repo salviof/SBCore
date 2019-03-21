@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.fonteDados;
 
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 
@@ -23,7 +24,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletore
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.ItfselecaoListaComOrigem;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.ItfSelecaoObjetoDeUmaLista;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoSatusObjetoDoSistemaAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfInfoStatusObjetoAplicacaoContexto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +116,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
     }
 
     @Override
-    public void atualizarInformacoesDeObjeto(InfoSatusObjetoDoSistemaAtual pObjeto
+    public void atualizarInformacoesDeObjeto(ItfInfoStatusObjetoAplicacaoContexto pObjeto
     ) {
 
         try {

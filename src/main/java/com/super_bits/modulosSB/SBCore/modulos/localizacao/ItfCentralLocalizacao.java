@@ -12,8 +12,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import java.util.List;
 
 /**
+ * ############################################################# <br/>
+ * Esta Interface assina um dos serviços do núcleo SBCore
+ * <br/>
+ * Veja todos os serviços disponíveis digitando SBCore.getServico...
+ * ############################################################# <br/>
  *
- * @author desenvolvedor
+ * Serviço de gestão de CEP
+ *
+ *
+ * @author salviof@gmail.com
  */
 public interface ItfCentralLocalizacao {
 

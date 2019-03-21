@@ -67,49 +67,50 @@ public final class WebServiceCepRepublicaVirtual {
      * @author Tomaz Lavieri
      */
     private enum Xml {
+
         CIDADE {
 
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setCidade(text);
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setCidade(text);
+                    }
+                },
         BAIRRO {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setBairro(text);
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setBairro(text);
+                    }
+                },
         TIPO_LOGRADOURO {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setLogradouroType(text);
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setLogradouroType(text);
+                    }
+                },
         LOGRADOURO {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setLogradouro(text);
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setLogradouro(text);
+                    }
+                },
         RESULTADO {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setResulCode(Integer.parseInt(text));
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setResulCode(Integer.parseInt(text));
+                    }
+                },
         RESULTADO_TXT {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setResultText(text);
-            }
-        },
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setResultText(text);
+                    }
+                },
         UF {
-            @Override
-            public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
-                webServiceCep.setUf(text);
-            }
-        };
+                    @Override
+                    public void setCep(String text, WebServiceCepRepublicaVirtual webServiceCep) {
+                        webServiceCep.setUf(text);
+                    }
+                };
 
         /**
          * Seta o texto enviado no parametro <tt>text</tt> no objeto
@@ -213,7 +214,7 @@ public final class WebServiceCepRepublicaVirtual {
 
         SAXReader reader = new SAXReader();
 
-        Document document = reader.read(UTilSBCoreInputs.getStreamBuffredByURL(url, 1000, 4000));
+        Document document = reader.read(UTilSBCoreInputs.getStreamBuffredByURL(url, 1000, 2000));
         return document;
     }
 

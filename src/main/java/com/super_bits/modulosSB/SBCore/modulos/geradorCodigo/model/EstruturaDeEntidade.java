@@ -4,13 +4,20 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.basico.FabTipoBeanSBGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoBeanSBGenerico;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaMuitos;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaUm;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoUmParaMuitos;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -31,13 +38,13 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
     @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
     private String nomeEntidade;
 
-    private List<EstruturaCampo> campos;
+    private List<ItfEstruturaCampoEntidade> campos;
 
-    private List<LigacaoMuitosParaUm> muitosParaUm;
+    private List<ItfLigacaoMuitosParaUm> muitosParaUm;
 
-    private List<LigacaoUmParaMuitos> umParaMuitos;
+    private List<ItfLigacaoUmParaMuitos> umParaMuitos;
 
-    private List<LigacaoMuitosParaMuitos> muitosParaMuitos;
+    private List<ItfLigacaoMuitosParaMuitos> muitosParaMuitos;
 
     private List<String> tags;
 
@@ -45,9 +52,9 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
 
     private FabTipoBeanSBGenerico tipoEntidade;
 
-    private List<CalculoDeEntidade> calculos;
+    private List<ItfEstruturaCampoDinamicoEntidade> calculos;
 
-    private List<ListaDeEntidade> listas;
+    private List<ItfListaDeEntidade> listas;
 
     private final Map<String, EstruturaCampo> mapaCampo;
 
@@ -56,32 +63,32 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
     private boolean configurouLigacoes = false;
 
     @Override
-    public List<CalculoDeEntidade> getCalculos() {
+    public List<ItfEstruturaCampoDinamicoEntidade> getCalculos() {
         return calculos;
     }
 
     @Override
-    public void setCalculos(List<CalculoDeEntidade> calculos) {
+    public void setCalculos(List<ItfEstruturaCampoDinamicoEntidade> calculos) {
         this.calculos = calculos;
     }
 
     @Override
-    public List<ListaDeEntidade> getListas() {
+    public List<ItfListaDeEntidade> getListas() {
         return listas;
     }
 
     @Override
-    public void setListas(List<ListaDeEntidade> listas) {
+    public void setListas(List<ItfListaDeEntidade> listas) {
         this.listas = listas;
     }
 
     @Override
-    public List<LigacaoMuitosParaMuitos> getMuitosParaMuitos() {
+    public List<ItfLigacaoMuitosParaMuitos> getMuitosParaMuitos() {
         return muitosParaMuitos;
     }
 
     @Override
-    public void setMuitosParaMuitos(List<LigacaoMuitosParaMuitos> muitosParaMuitos) {
+    public void setMuitosParaMuitos(List<ItfLigacaoMuitosParaMuitos> muitosParaMuitos) {
         this.muitosParaMuitos = muitosParaMuitos;
     }
 
@@ -114,7 +121,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
                 if (campos.isEmpty()) {
                     throw new UnsupportedOperationException("nenhum campo foi configurado na estrutura de entidade " + nomeEntidade);
                 }
-                for (EstruturaCampo cp : campos) {
+                for (ItfEstruturaCampoEntidade cp : campos) {
                     switch (cp.getFabricaTipoAtributo()) {
                         case OBJETO_DE_UMA_LISTA:
                         case REG_USUARIO_ALTERACAO:
@@ -143,7 +150,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
     }
 
     @Override
-    public List<LigacaoMuitosParaUm> getMuitosParaUm() {
+    public List<ItfLigacaoMuitosParaUm> getMuitosParaUm() {
 
         buildLigacoes();
         return muitosParaUm;
@@ -221,7 +228,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
         for (int i = 0; i < array.length; i++) {
             if (listaEnum == null) {
                 listaEnum = new ArrayList();
-                for (ListaDeEntidade entidade : listas) {
+                for (ItfListaDeEntidade entidade : listas) {
                     listaEnum.add(entidade.getNomeEnum());
                 }
             } else {
@@ -259,29 +266,29 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
      * @return
      */
     @Override
-    public List<EstruturaCampo> getCampos() {
+    public List<ItfEstruturaCampoEntidade> getCampos() {
         return campos;
     }
 
     @Override
-    public void setCampos(List<EstruturaCampo> campos
+    public void setCampos(List<ItfEstruturaCampoEntidade> campos
     ) {
         this.campos = campos;
     }
 
     @Override
-    public void setMuitosParaUm(List<LigacaoMuitosParaUm> muitosParaUm
+    public void setMuitosParaUm(List<ItfLigacaoMuitosParaUm> muitosParaUm
     ) {
         this.muitosParaUm = muitosParaUm;
     }
 
     @Override
-    public List<LigacaoUmParaMuitos> getUmParaMuitos() {
+    public List<ItfLigacaoUmParaMuitos> getUmParaMuitos() {
         return umParaMuitos;
     }
 
     @Override
-    public void setUmParaMuitos(List<LigacaoUmParaMuitos> umParaMuitos
+    public void setUmParaMuitos(List<ItfLigacaoUmParaMuitos> umParaMuitos
     ) {
         this.umParaMuitos = umParaMuitos;
     }
@@ -313,27 +320,31 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
         this.descricao = descricao;
     }
 
-    public List<EstruturaCampo> getCamposComValidadorLogico() {
-        List<EstruturaCampo> camposComValidadorLogico = new ArrayList<>();
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComValidadorLogico() {
+        List<ItfEstruturaCampoEntidade> camposComValidadorLogico = new ArrayList<>();
         getCampos().stream().filter(cp -> cp.isTemValidadorLogico()).forEach(camposComValidadorLogico::add);
         return camposComValidadorLogico;
 
     }
 
-    public List<EstruturaCampo> getCamposComListaDinamica() {
-        List<EstruturaCampo> camposComValidadorLogico = new ArrayList<>();
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComListaDinamica() {
+        List<ItfEstruturaCampoEntidade> camposComValidadorLogico = new ArrayList<>();
         getCampos().stream().filter(cp -> cp.isTemListaDinamica()).forEach(camposComValidadorLogico::add);
         return camposComValidadorLogico;
 
     }
 
-    public List<EstruturaCampo> getCamposComValorLogico() {
-        List<EstruturaCampo> campoValorLogico = new ArrayList<>();
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComValorLogico() {
+        List<ItfEstruturaCampoEntidade> campoValorLogico = new ArrayList<>();
         getCampos().stream().filter(cp -> cp.isTemValorLogico()).forEach(campoValorLogico::add);
         return campoValorLogico;
 
     }
 
+    @Override
     public boolean isTemCampoValidadoresLogicos() {
         try {
             return getCampos().stream().filter(cp -> cp.isTemValidadorLogico()).findFirst().isPresent();
@@ -343,6 +354,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
         }
     }
 
+    @Override
     public boolean isTemCampoValorLogico() {
         try {
             return getCampos().stream().filter(cp -> cp.isTemValorLogico()).findFirst().isPresent();
@@ -352,6 +364,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
         }
     }
 
+    @Override
     public boolean isTemCampoListaDinamica() {
         try {
             return getCampos().stream().filter(cp -> cp.isTemListaDinamica()).findFirst().isPresent();

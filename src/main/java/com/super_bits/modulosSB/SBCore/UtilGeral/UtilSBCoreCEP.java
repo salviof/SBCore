@@ -27,36 +27,37 @@ public abstract class UtilSBCoreCEP {
      * @return True se encontrar o CEP, false se não encontrar
      */
     public static boolean configuraEndereco(String cep, ItfLocal pLocal) {
+        try {
+            WebServiceCepRepublicaVirtual republicaVirtual = WebServiceCepRepublicaVirtual.searchCep(cep);
 
-        WebServiceCepRepublicaVirtual republicaVirtual = WebServiceCepRepublicaVirtual.searchCep(cep);
+            if (!republicaVirtual.isCepNotFound()) {
+                //ItfBairro bairroEncontrao = new ItemBairro(republicaVirtual);
+                try {
+                    pLocal.prepararNovoObjeto();
+                } catch (Throwable t) {
+                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro preparando Objeto para configuração de cep", t);
+                }
+                pLocal.setNome(republicaVirtual.getLogradouroFull());
+                try {
+                    pLocal.getComoLocalPostavel().setLogradouro(republicaVirtual.getLogradouroFull());
+                } catch (Throwable t) {
 
-        if (!republicaVirtual.isCepNotFound()) {
-            //ItfBairro bairroEncontrao = new ItemBairro(republicaVirtual);
-            try {
-                pLocal.prepararNovoObjeto();
-            } catch (Throwable t) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro preparando Objeto para configuração de cep", t);
+                }
+                pLocal.getBairro().setNome(republicaVirtual.getBairro());
+
+                pLocal.getBairro().getCidade().setNome(republicaVirtual.getCidade());
+                pLocal.getBairro().getCidade().getUnidadeFederativa().setNome(republicaVirtual.getUf());
+                pLocal.getBairro().getCidade().getUnidadeFederativa().setSigla(republicaVirtual.getUf());
+
+                return true;
+            } else {
+                System.out.println("local:" + pLocal);
+                System.out.println("Cep não encontrado em republic virtual" + cep);
             }
-            pLocal.setNome(republicaVirtual.getLogradouroFull());
-            try {
-                pLocal.getComoLocalPostavel().setLogradouro(republicaVirtual.getLogradouroFull());
-            } catch (Throwable t) {
-
-            }
-            pLocal.getBairro().setNome(republicaVirtual.getBairro());
-
-            pLocal.getBairro().getCidade().setNome(republicaVirtual.getCidade());
-            pLocal.getBairro().getCidade().getUnidadeFederativa().setNome(republicaVirtual.getUf());
-            pLocal.getBairro().getCidade().getUnidadeFederativa().setSigla(republicaVirtual.getUf());
-
-            return true;
-        } else {
-            System.out.println("local:" + pLocal);
-            System.out.println("Cep não encontrado em republic virtual" + cep);
+        } catch (Throwable t) {
+            return false;
         }
-
         return false;
-
     }
 
     public static boolean cepExiste(String cep) {

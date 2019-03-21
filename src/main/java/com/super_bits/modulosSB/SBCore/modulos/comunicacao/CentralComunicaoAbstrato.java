@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;

@@ -11,12 +11,12 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfCentralDados;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfCentralComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfCentralAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.sessao.Interfaces.ItfControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 
 /**

@@ -11,7 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAc
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
-import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfCentralAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
@@ -32,6 +32,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroDe
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroObtendoValorDoCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroSetandoValorDeCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanReflexoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
@@ -73,6 +74,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     private Map<ItfCalculos, Boolean> controleCalculo;
 
     public static enum DEFINICAO_VIEW {
+
         NAO_DEFINIDO, PADRAO, PERSONALIZADO
     }
 
@@ -445,7 +447,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 } else if (pCampoReflexao.getType().getName()
                         .equals("java.lang.Double")
                         || pCampoReflexao.getType().getName()
-                                .equals("double")) {
+                        .equals("double")) {
                     valor = (Double) pCampoReflexao.get(this);
                 } else if (pCampoReflexao.getType().getSimpleName()
                         .equals("Date")) {
@@ -1014,7 +1016,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public List<ItfCampoInstanciado> getCamposInstanciados() {
         List<ItfCampoInstanciado> camposInstanciados = new ArrayList<>();
-        for (EstruturaCampo estrutura : getEstruturaDaEntidade().getCampos()) {
+        for (ItfEstruturaCampoEntidade estrutura : getEstruturaDaEntidade().getCampos()) {
             camposInstanciados.add(getCampoInstanciadoByNomeOuAnotacao(estrutura.getNomeDeclarado()));
         }
         return camposInstanciados;

@@ -5,13 +5,15 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ListaDeEntidade extends ItemSimples {
+public class ListaDeEntidade extends ItemSimples implements ItfListaDeEntidade {
 
     public ListaDeEntidade(String nomeEnum, String nomeDeclaracao, String nomeEntidade, String nomeObjetoListado, String javaDoc, EstruturaDeEntidade pEstrutura) {
         this.nomeEnum = nomeEnum;
@@ -28,53 +30,65 @@ public class ListaDeEntidade extends ItemSimples {
     private String nomeEnum;
     private String nomeDeclaracao;
     private String nomeObjetoListado;
-    private EstruturaDeEntidade estrutura;
+    private ItfEstruturaDeEntidade estrutura;
 
+    @Override
     public String getNomeObjetoListado() {
         return nomeObjetoListado;
     }
 
+    @Override
     public void setNomeObjetoListado(String nomeObjetoListado) {
         this.nomeObjetoListado = nomeObjetoListado;
     }
 
+    @Override
     public String getNomeEntidade() {
         return nomeEntidade;
     }
 
+    @Override
     public void setNomeEntidade(String nomeEntidade) {
         this.nomeEntidade = nomeEntidade;
     }
 
+    @Override
     public String getNomeEnum() {
         return nomeEnum;
     }
 
+    @Override
     public void setNomeEnum(String nomeEnum) {
         this.nomeEnum = nomeEnum;
     }
 
+    @Override
     public String getNomeDeclaracao() {
         return nomeDeclaracao;
     }
 
+    @Override
     public void setNomeDeclaracao(String nomeDeclaracao) {
         this.nomeDeclaracao = nomeDeclaracao;
     }
 
+    @Override
     public String getJavaDoc() {
         return javaDoc;
     }
 
+    @Override
     public void setJavaDoc(String javaDoc) {
         this.javaDoc = javaDoc;
     }
 
-    public EstruturaDeEntidade getEstrutura() {
+    @Override
+    public ItfEstruturaDeEntidade getEstrutura() {
         return estrutura;
     }
 
-    public void setEstrutura(EstruturaDeEntidade estrutura) {
+    @Override
+    public void setEstrutura(ItfEstruturaDeEntidade estrutura) {
         this.estrutura = estrutura;
     }
 

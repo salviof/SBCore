@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
 import java.util.Comparator;

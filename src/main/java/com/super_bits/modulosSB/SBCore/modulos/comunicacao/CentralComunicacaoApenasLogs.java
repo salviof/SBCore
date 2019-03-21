@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
 import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;

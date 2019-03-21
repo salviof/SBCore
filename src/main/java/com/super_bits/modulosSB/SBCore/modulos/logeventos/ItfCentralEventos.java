@@ -8,7 +8,11 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import java.util.Map;
 
 /**
- *
+ * ############################################################# <br/>
+ * Esta Interface assina um dos serviços do núcleo SBCore
+ * <br/>
+ * Veja todos os serviços disponíveis digitando SBCore.getServico...
+ * ############################################################# <br/>
  *
  * @author <a href="mailto:salviof@gmail.com">Salvio Furbino</a>
  * @since 17/03/2015

@@ -226,7 +226,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     public boolean atualizarEnderecoPorCep() {
         switch (tipoOrganizacao) {
             case LOCALIZACAO_POSTAVEL:
-
+                //SBCore.getServicoLocalizacao().configurarCep(null);
                 boolean localizouCEP = UtilSBCoreCEP.configuraEndereco(getCep(), getLocal());
                 if (localizouCEP) {
                     pesquisaSucessoBairro = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getBairro());

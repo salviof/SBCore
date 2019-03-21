@@ -5,8 +5,19 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.basico.FabTipoBeanSBGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaUm;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoBeanSBGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaMuitos;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoUmParaMuitos;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -14,14 +25,19 @@ import java.util.List;
  *
  * @author desenvolvedor
  */
-public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
+@InfoObjetoSB(tags = {"Ligação Muitos para um"}, plural = "Ligações muitos para um")
+public class LigacaoMuitosParaUm extends ItemSimples implements ItfLigacaoMuitosParaUm {
 
-    private String label, descricao, nomeDeclarado;
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
+    private int id;
+    private String label, descricao;
+    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    private String nomeDeclarado;
     private final ItfEstruturaDeEntidade estruturaObjeto;
     private final Class classeObjetoVinculado;
-    private EstruturaDeEntidade estruturaPai;
+    private ItfEstruturaDeEntidade estruturaPai;
 
-    public LigacaoMuitosParaUm(EstruturaCampo campo) {
+    public LigacaoMuitosParaUm(ItfEstruturaCampoEntidade campo) {
 
         classeObjetoVinculado = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(campo.getClasseCampoDeclaradoOuTipoLista());
         nomeDeclarado = campo.getNomeDeclarado();
@@ -77,17 +93,17 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
     }
 
     @Override
-    public List<CalculoDeEntidade> getCalculos() {
+    public List<ItfEstruturaCampoDinamicoEntidade> getCalculos() {
         return estruturaObjeto.getCalculos();
     }
 
     @Override
-    public EstruturaCampo getCampoByNomeDeclarado(String pNome) {
+    public ItfEstruturaCampoEntidade getCampoByNomeDeclarado(String pNome) {
         return estruturaObjeto.getCampoByNomeDeclarado(pNome);
     }
 
     @Override
-    public List<EstruturaCampo> getCampos() {
+    public List<ItfEstruturaCampoEntidade> getCampos() {
         return estruturaObjeto.getCampos();
     }
 
@@ -107,17 +123,17 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
     }
 
     @Override
-    public List<ListaDeEntidade> getListas() {
+    public List<ItfListaDeEntidade> getListas() {
         return estruturaObjeto.getListas();
     }
 
     @Override
-    public List<LigacaoMuitosParaMuitos> getMuitosParaMuitos() {
+    public List<ItfLigacaoMuitosParaMuitos> getMuitosParaMuitos() {
         return estruturaObjeto.getMuitosParaMuitos();
     }
 
     @Override
-    public List<LigacaoMuitosParaUm> getMuitosParaUm() {
+    public List<ItfLigacaoMuitosParaUm> getMuitosParaUm() {
         return estruturaObjeto.getMuitosParaUm();
     }
 
@@ -142,18 +158,8 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
     }
 
     @Override
-    public List<LigacaoUmParaMuitos> getUmParaMuitos() {
+    public List<ItfLigacaoUmParaMuitos> getUmParaMuitos() {
         return estruturaObjeto.getUmParaMuitos();
-    }
-
-    @Override
-    public void setCalculos(List<CalculoDeEntidade> calculos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setCampos(List<EstruturaCampo> campos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -167,17 +173,12 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
     }
 
     @Override
-    public void setListas(List<ListaDeEntidade> listas) {
+    public void setMuitosParaMuitos(List<ItfLigacaoMuitosParaMuitos> muitosParaMuitos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setMuitosParaMuitos(List<LigacaoMuitosParaMuitos> muitosParaMuitos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setMuitosParaUm(List<LigacaoMuitosParaUm> muitosParaUm) {
+    public void setMuitosParaUm(List<ItfLigacaoMuitosParaUm> muitosParaUm) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -202,7 +203,7 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
     }
 
     @Override
-    public void setUmParaMuitos(List<LigacaoUmParaMuitos> umParaMuitos) {
+    public void setUmParaMuitos(List<ItfLigacaoUmParaMuitos> umParaMuitos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -212,6 +213,56 @@ public class LigacaoMuitosParaUm implements ItfEstruturaDeEntidade {
 
     public ItfEstruturaDeEntidade getEstruturaObjeto() {
         return estruturaObjeto;
+    }
+
+    @Override
+    public void setCalculos(List<ItfEstruturaCampoDinamicoEntidade> calculos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setCampos(List<ItfEstruturaCampoEntidade> campos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setListas(List<ItfListaDeEntidade> listas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComListaDinamica() {
+        return estruturaObjeto.getCamposComListaDinamica();
+    }
+
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComValidadorLogico() {
+        return estruturaObjeto.getCamposComValidadorLogico();
+    }
+
+    @Override
+    public boolean isTemCampoListaDinamica() {
+        return estruturaObjeto.isTemCampoListaDinamica();
+    }
+
+    @Override
+    public boolean isTemCampoValorLogico() {
+        return estruturaObjeto.isTemCampoValorLogico();
+    }
+
+    @Override
+    public boolean isTemCampoValidadoresLogicos() {
+        return estruturaObjeto.isTemCampoValidadoresLogicos();
+    }
+
+    @Override
+    public List<ItfEstruturaCampoEntidade> getCamposComValorLogico() {
+        return estruturaObjeto.getCamposComValidadorLogico();
+    }
+
+    @Override
+    public String getSlugIdentificador() {
+        return estruturaObjeto.getSlugIdentificador(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

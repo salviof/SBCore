@@ -26,15 +26,15 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfCentralComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
-import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfCentralAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 
-import com.super_bits.modulosSB.SBCore.modulos.sessao.Interfaces.ItfControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import java.io.File;
 import java.util.HashMap;
@@ -52,17 +52,17 @@ import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 /**
  *
  *
- * A classe SBCore permite acesso aos principais métodos de um sistema do
- * super-bits Framewor
+ * A classe SBCore permite acesso aos principais serviços de sistemas
+ * desenvolvidos com o super-bits Framework
  *
  *
  *
- * Além fornecer acesso a variaveis como diretórios do projeto, nome, cliente,
- * Estado da aplicação (Desenvolvimento, Testes ou Produção) de maneira rápida,
- * é atravez dele que é possível configurar e acessar as classes de controle do
- * sistema, como estas:
+ * Além fornecer acesso a configurações do projeto como: nome, cliente, Estado
+ * da aplicação (Desenvolvimento, Testes ou Produção) de maneira rápida, é
+ * atravez dela que é possível configurar e acessar as classes de acesso a
+ * serviços do sistema, como estas:
  *
- * @see #getCentralComunicacao();
+ * @see #getServicoSessao()
  * @see #getCentralDeMensagens();
  * @see #getCentralDeEventos();
  *
@@ -74,7 +74,7 @@ import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
  *
  *
  *
- * W
+ *
  * @author Sálvio Furbino <salviof@gmail.com>
  * @since 24/05/2014
  *
@@ -535,7 +535,7 @@ public class SBCore {
         return getControleDeSessao().getSessaoAtual().getUsuario();
     }
 
-    private static void makeEnumByNomeUnico() {
+    private static void gerarEnumByNomeUnico() {
 
         ENUMACAO_BY_NOMEUNICO.clear();
 
@@ -560,7 +560,7 @@ public class SBCore {
             }
 
             if (ENUMACAO_BY_NOMEUNICO.isEmpty()) {
-                makeEnumByNomeUnico();
+                gerarEnumByNomeUnico();
             }
 
             ItfFabricaAcoes acao = ENUMACAO_BY_NOMEUNICO.get(pNomeUnico);
@@ -670,10 +670,11 @@ public class SBCore {
 
     /**
      *
-     * @see ItfCentralDeArquivos
+     * @see SBCore#getServicoArquivosDeEntidade()
      *
      * @return Manipulação de Arquivos de Entidade e do Sistema
      */
+    @Deprecated
     public static ItfCentralDeArquivos getCentralDeArquivos() {
 
         return centralDeArquivos;
@@ -681,9 +682,29 @@ public class SBCore {
 
     /**
      *
+     * @see ItfCentralDeArquivos
+     *
+     * @return Manipulação de Arquivos de Entidade e do Sistema
+     */
+    public static ItfCentralDeArquivos getServicoArquivosDeEntidade() {
+
+        return centralDeArquivos;
+    }
+
+    /**
+     *
+     * @return @see SBCore#getServicoLocalizacao()
+     */
+    @Deprecated
+    public static ItfCentralLocalizacao getCentralDeLocalizacao() {
+        return getServicoLocalizacao();
+    }
+
+    /**
+     * @see ItfCentralLocalizacao
      * @return Helper framework CEP
      */
-    public static ItfCentralLocalizacao getCentralDeLocalizacao() {
+    public static ItfCentralLocalizacao getServicoLocalizacao() {
         return centralLocalizacao;
     }
 
@@ -694,7 +715,19 @@ public class SBCore {
      *
      * @return Metodos de Controle da Central de Mensagens
      */
+    @Deprecated
     public static ItfCentralMensagens getCentralDeMensagens() {
+        return getServicoMensagens();
+    }
+
+    /**
+     *
+     *
+     * @see ItfCentralMensagens
+     *
+     * @return Metodos de Controle da Central de Mensagens
+     */
+    public static ItfCentralMensagens getServicoMensagens() {
         try {
             return infoAplicacao.getCentralDeMensagens().newInstance();
         } catch (Throwable ex) {
@@ -711,24 +744,46 @@ public class SBCore {
      *
      * @return Controle de Log referente ao Sistema
      */
+    @Deprecated
     public static ItfCentralEventos getCentralDeEventos() {
 
+        return getServicoLogEventos();
+
+    }
+
+    /**
+     *
+     *
+     *
+     * @return
+     */
+    public static ItfCentralEventos getServicoLogEventos() {
         try {
             return infoAplicacao.getCentralDeEventos().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             RelatarErro(FabErro.PARA_TUDO, "ERRO CRIANDO CENTRAL DE EVENTOS", ex);
         }
         return null;
+    }
 
+    /**
+     *
+     * @see SBCore#getServicoSessao()
+     * @return @deprecated Utilize getServico
+     *
+     */
+    @Deprecated
+    public static ItfControleDeSessao getCentralDeSessao() {
+        return getServicoSessao();
     }
 
     /**
      *
      * @see ItfControleDeSessao
-     *
      * @return Controle de Sessão do contexto Atual de execução
+     *
      */
-    public static ItfControleDeSessao getCentralDeSessao() {
+    public static ItfControleDeSessao getServicoSessao() {
         try {
             return infoAplicacao.getControleDeSessao().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -738,13 +793,40 @@ public class SBCore {
         return null;
     }
 
+    @Deprecated
+    public static ItfControleDeSessao getControleDeSessao() {
+        return getCentralDeSessao();
+    }
+
+    /**
+     *
+     *
+     * @deprecated Utilize getServicoComunicacao
+     * @return
+     */
+    @Deprecated
+    public static ItfCentralComunicacao getCentralDeComunicacao() {
+        return getServicoComunicacao();
+    }
+
+    /**
+     *
+     * @see SBCore#getServicoComunicacao()
+     * @deprecated Utilize getServiço
+     * @return
+     */
+    @Deprecated
+    public static ItfCentralComunicacao getCentralComunicacao() {
+        return getServicoComunicacao();
+    }
+
     /**
      *
      * @see ItfCentralComunicacao
      *
      * @return Controle de comunicação, entre Sistema, Usuário e Desenvolvedor
      */
-    public static ItfCentralComunicacao getCentralDeComunicacao() {
+    public static ItfCentralComunicacao getServicoComunicacao() {
         if (centralComunicacao == null) {
             throw new UnsupportedOperationException("A central de comunicação não foi definida");
         }
@@ -755,10 +837,22 @@ public class SBCore {
         if (estadoAplicativo != ESTADO_APP.PRODUCAO || !forcarExibicao) {
             System.out.println("SBCoreInfo:" + pInfo);
         }
+
     }
 
     public static void soutInfoDebug(String pInfo) {
         soutInfoDebug(pInfo, false);
+    }
+
+    /**
+     *
+     * @return @deprecated Utilize getSErvicoFonteDeDados
+     * @see SBCore#getServicoFonteDeDadosParaAtributos()
+     */
+    @Deprecated
+    public static ItfCentralAtributosDeObjetos getCentralFonteDeDados() {
+        return getServicoFonteDeDadosParaAtributos();
+
     }
 
     /**
@@ -768,19 +862,24 @@ public class SBCore {
      * @return Helper para exibição de opções possiveis para determinado
      * atributo de objeto
      */
-    public static ItfCentralAtributosDeObjetos getCentralFonteDeDados() {
+    public static ItfCentralAtributosDeObjetos getServicoFonteDeDadosParaAtributos() {
         try {
             return centralDeAtributosPadrao.newInstance();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Inciando Central de atributos via" + centralDeAtributosPadrao.getSimpleName(), t);
             return null;
         }
-
     }
 
+    /**
+     *
+     *
+     * @see SBCore#getServicoPermissao()
+     * @return Asistente para Controle de Acesso as ações do sistema
+     */
     @Deprecated
-    public static ItfControleDeSessao getControleDeSessao() {
-        return getCentralDeSessao();
+    public static ItfCentralPermissoes getCentralPermissao() {
+        return getServicoPermissao();
     }
 
     /**
@@ -789,7 +888,7 @@ public class SBCore {
      *
      * @return Asistente para Controle de Acesso as ações do sistema
      */
-    public static ItfCentralPermissoes getCentralPermissao() {
+    public static ItfCentralPermissoes getServicoPermissao() {
         if (isIgnorarPermissoes()) {
             return null;
         }
@@ -798,20 +897,6 @@ public class SBCore {
 
         }
         return configuradorDePermissao;
-    }
-
-    /**
-     *
-     *
-     * @see ItfCentralComunicacao
-     *
-     * @return Iniciar um novo dialogo, ou interagir com um dialogo existente
-     */
-    public static ItfCentralComunicacao getCentralComunicacao() {
-        if (centralComunicacao == null) {
-            throw new UnsupportedOperationException("A central de comunicacao não foi registrada");
-        }
-        return centralComunicacao;
     }
 
     /**

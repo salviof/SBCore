@@ -5,6 +5,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.UtilSBGeradorDeCodigoBase;
@@ -23,6 +24,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoListaDinamica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValidadorLogico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 
 import java.lang.reflect.Field;
@@ -41,7 +43,7 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     private final int id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
     private String nomeDeclarado;
-    private EstruturaDeEntidade estruturaPai;
+    private ItfEstruturaDeEntidade estruturaPai;
     private TIPO_DECLARACAO tipoDeclaracao;
     private final boolean temValidadorLogico;
     private final boolean temValorLogico;
@@ -100,12 +102,12 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     }
 
     @Override
-    public EstruturaDeEntidade getEstruturaPai() {
+    public ItfEstruturaDeEntidade getEstruturaPai() {
         return estruturaPai;
     }
 
     @Override
-    public void setEstruturaPai(EstruturaDeEntidade estruturaPai) {
+    public void setEstruturaPai(ItfEstruturaDeEntidade estruturaPai) {
         this.estruturaPai = estruturaPai;
     }
 
@@ -360,10 +362,12 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
         return temValidadorLogico;
     }
 
+    @Override
     public boolean isTemValorLogico() {
         return temValorLogico;
     }
 
+    @Override
     public boolean isTemListaDinamica() {
         return temListaDinamica;
     }

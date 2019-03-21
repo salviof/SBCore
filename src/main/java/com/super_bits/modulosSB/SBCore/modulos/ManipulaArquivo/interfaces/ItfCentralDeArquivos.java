@@ -20,9 +20,16 @@ import java.util.List;
 
 /**
  *
+ * ############################################################# <br/>
+ * Esta Interface assina um dos serviços do núcleo SBCore
+ * <br/>
+ * Veja todos os serviços disponíveis digitando SBCore.getServico...
+ * ############################################################# <br/>
  *
  *
- *
+ * O serviço de arquivos de entidade, manipula um arquivo vinculado a um
+ * registro de entidade do sistema, e associação de imagens tamanho pequeno
+ * médio e grande vinculado a um objeto
  *
  *
  *
