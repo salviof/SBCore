@@ -5,6 +5,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
@@ -39,9 +40,13 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     }
 
     private String tipoRetorno;
+    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
     private String nomeEnum;
     private String descricao;
     private String javaDoc;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
+    private int id;
 
     public String getTipoRetorno() {
         return tipoRetorno;
