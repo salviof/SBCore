@@ -8,6 +8,7 @@ import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfInfoErroSB;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringListas;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import org.coletivojava.fw.api.objetoNativo.mensagem.MensagemProgramador;
@@ -64,13 +65,13 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
     @Override
     public String getCaminhoStackTraceCompletoStr() {
         checarConfiguracao();
-        return UtilSBCoreStringValidador.getStringDaListaComBarraN(getCaminhoStackTraceCompleto());
+        return UtilSBCoreStringListas.getStringDaListaComBarraN(getCaminhoStackTraceCompleto());
     }
 
     @Override
     public String getCaminhoStackTraceResumidoStr() {
         checarConfiguracao();
-        return UtilSBCoreStringValidador.getStringDaListaComBarraN(getCaminhoStackTraceResumido());
+        return UtilSBCoreStringListas.getStringDaListaComBarraN(getCaminhoStackTraceResumido());
     }
 
     @Override

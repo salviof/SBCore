@@ -191,7 +191,7 @@ public class UtilSBCoreClienteRest {
                         respostaErro.add(linha);
                         linha = br.readLine();
                     }
-                    mensagemErro += UtilSBCoreStringValidador.getStringDaListaComBarraN(respostaErro);
+                    mensagemErro += UtilSBCoreStringListas.getStringDaListaComBarraN(respostaErro);
 
                 } catch (IOException t) {
                     SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro processando informações de erro", t);
