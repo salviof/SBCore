@@ -1,12 +1,10 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import de.svenjacobs.loremipsum.LoremIpsum;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
