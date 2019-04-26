@@ -38,4 +38,8 @@ public class UtilSBCoreErros {
         return texto;
     }
 
+    public static Throwable getCausaRaiz(Throwable pErro) {
+        return ExceptionUtils.getRootCause(pErro);
+    }
+
 }

@@ -9,7 +9,10 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,8 +93,18 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
 
     @Override
     public List<ItfBeanSimplesSomenteLeitura> getListaOpcoesObjeto() {
+
         if (listaOpcoesObjeto == null) {
-            listaOpcoesObjeto = UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
+
+            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                listaOpcoesObjeto = new ArrayList();
+                for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
+
+                    listaOpcoesObjeto.add(new TipoAtributoObjetoSB(tipoAtr));
+                }
+            } else {
+                listaOpcoesObjeto = UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
+            }
         }
         return listaOpcoesObjeto;
     }
@@ -104,7 +117,15 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
     @Override
     public List<String> getListaOpcoesString() {
         if (listaOpcoesString == null) {
-            listaOpcoesString = UtilSBCoreReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
+            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                listaOpcoesString = new ArrayList();
+                for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
+
+                    listaOpcoesString.add(tipoAtr.toString());
+                }
+            } else {
+                listaOpcoesString = UtilSBCoreReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
+            }
         }
         return listaOpcoesString;
     }
@@ -112,7 +133,13 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
     @Override
     public ItfBeanSimplesSomenteLeitura getBeanSelecionado() {
         if (enumSelecionado != null) {
-            beanSelecionado = (ItfBeanSimplesSomenteLeitura) enumSelecionado.getRegistro();
+
+            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                TipoAtributoObjetoSB tipoObj = new TipoAtributoObjetoSB((FabTipoAtributoObjeto) enumSelecionado);
+                beanSelecionado = tipoObj;
+            } else {
+                beanSelecionado = (ItfBeanSimplesSomenteLeitura) enumSelecionado.getRegistro();
+            }
         }
         return beanSelecionado;
     }

@@ -17,7 +17,7 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
 public class UtilSBCoreReflexaoObjeto extends UtilSBCoreReflexaoObjetoSimples {
 
     public static Class getClassExtraindoProxy(String pNomeClasse) {
-        if (!pNomeClasse.contains("$")) {
+        if (pNomeClasse.indexOf("$") <= 0) {
             return MapaObjetosProjetoAtual.getClasseDoObjetoByNome(pNomeClasse);
         }
         String nomeClasse = UtilSBCoreStringBuscaTrecho.getStringAteEncontrarIsto(pNomeClasse, "$");

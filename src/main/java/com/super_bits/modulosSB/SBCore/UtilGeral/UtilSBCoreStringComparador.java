@@ -7,12 +7,15 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo.ObjetoNativoComoItemSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import mtfn.MetaphonePtBr;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
+import org.coletivojava.fw.api.objetoNativo.ObjetoNativoCoreDoSistema;
+import org.coletivojava.fw.api.objetoNativo.view.icone.IconeSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -41,7 +44,7 @@ public class UtilSBCoreStringComparador {
         int score = CALCULO_SIMILAR.apply(pReferencia.toLowerCase(), pParametro.toLowerCase());
         double valor = (score * 100) / maximo + 1;
 
-        return score > 52;
+        return valor > 80;
     }
 
     public static boolean isBastanteParecidoFoneticamente(String pReferencia, String pParamentro) {
@@ -69,6 +72,15 @@ public class UtilSBCoreStringComparador {
                 coluna -> {
                     try {
                         ItfCampoInstanciado campoinstanciado = pReferencia.getCampoInstanciadoByNomeOuAnotacao(coluna.getCaminhoSemNomeClasse());
+
+                        if (campoinstanciado == null) {
+                            if (pReferencia instanceof ObjetoNativoCoreDoSistema) {
+                                ObjetoNativoComoItemSimples nativoComoItemSimples = new ObjetoNativoComoItemSimples(pReferencia);
+                                campoinstanciado = nativoComoItemSimples.getCampoInstanciadoByNomeOuAnotacao(coluna.getCaminhoSemNomeClasse());
+                            } else {
+                                throw new UnsupportedOperationException("não foi possível encontrar o campo: [" + coluna.getCaminhoSemNomeClasse() + "] para pesquisa emm campos do objeto: [" + pReferencia + "]");
+                            }
+                        }
                         if (!pParametroNumerico) {
                             switch (campoinstanciado.getTipoPrimitivoDoValor()) {
                                 case LETRAS:
@@ -112,8 +124,10 @@ public class UtilSBCoreStringComparador {
                             }
 
                         } else {
-                            if (campoinstanciado.contem(pParametro, 100)) {
-                                camposComMatch.add(coluna);
+                            if (campoinstanciado.getValor() != null) {
+                                if (String.valueOf(campoinstanciado.getValor()).contains(pParametro)) {
+                                    camposComMatch.add(coluna);
+                                }
                             }
 
                         }

@@ -40,8 +40,16 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
         try {
 
             ItfPropriedadesReflexaoCampos propAtributoReflexao = pCampoInstanciado.getPropriedadesRefexao();
+            FabTipoLisgagemOpcoesCampo tipoLista = propAtributoReflexao.getTipoListagem();
+            switch (tipoLista) {
 
-            return getListaOpcoesCampo(propAtributoReflexao);
+                case LISTAR_POR_SUBLISTA:
+                    return (List) pCampoInstanciado.getObjetoDoAtributo().getCPinst(propAtributoReflexao.getCaminhoListagemOpcoes()).getValor();
+
+                default:
+                    return getListaOpcoesCampo(propAtributoReflexao);
+
+            }
 
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo lista de atributos para o campo " + pCampoInstanciado, t);
@@ -52,9 +60,12 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
 
     @Override
     public List getListaOpcoesCampo(ItfPropriedadesReflexaoCampos pPropriedades) {
+        if (pPropriedades == null) {
+            throw new UnsupportedOperationException("Tentativa de chamada de lista de opções do campo de atributo, enviando propriedae de campoAtributo nulo");
+        }
+        FabTipoLisgagemOpcoesCampo tipoLista = pPropriedades.getTipoListagem();
         try {
 
-            FabTipoLisgagemOpcoesCampo tipoLista = pPropriedades.getTipoListagem();
             if (tipoLista == null) {
                 return new ArrayList();
             }
@@ -64,7 +75,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
                     return UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(pPropriedades.getFabricaCriacaoOpcoes());
 
                 case LISTAR_POR_SUBLISTA:
-                    return (List) ((ItfBeanSimples) pPropriedades.getObjetoDoAtributo()).getCampoByNomeOuAnotacao(pPropriedades.getCaminhoListagemOpcoes());
+                    throw new UnsupportedOperationException("Para listar a partir de sublista, é nescessário utilizar um campo instanciado");
 
                 case LISTA_POR_ENTIDADE:
 
@@ -77,7 +88,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
                     throw new AssertionError(tipoLista.name());
             }
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo lista de atributos para o campo " + pPropriedades.getAtributoGerado(), t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo lista de atributos para o campo " + pPropriedades.getAtributoGerado() + " utilizando a estrategia" + tipoLista, t);
             return new ArrayList<>();
         }
     }

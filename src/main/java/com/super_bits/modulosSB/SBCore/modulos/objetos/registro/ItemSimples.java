@@ -31,6 +31,12 @@ public abstract class ItemSimples extends ItemGenerico implements
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
     }
 
+    public ItemSimples(Object pInstancia) {
+        super(pInstancia);
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME), true);
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
+    }
+
     @Override
     public String getImgPequena() {
         return SBCore.getCentralDeArquivos().getEndrRemotoImagem(this, FabTipoAtributoObjeto.IMG_PEQUENA);

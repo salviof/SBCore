@@ -41,6 +41,16 @@ import javax.persistence.ManyToOne;
  */
 public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos, Serializable {
 
+    /**
+     *
+     * @return @deprecated usar getClasseOrigemAtributo
+     */
+    @Override
+    @Deprecated
+    public Class getClasseDoObjetoDesteAtributo() {
+        return getClasseOrigemAtributo();
+    }
+
     private enum TIPO_ORIGEM_PROPRIEDADE {
         CAMPO_REFLEXAO, ATRIBUTO_REFERENCIA
     };
@@ -559,7 +569,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
     }
 
     @Override
-    public Object getObjetoDoAtributo() {
+    public Class getClasseOrigemAtributo() {
         try {
 
             return classeOrigemAtributo;
@@ -586,11 +596,6 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
     @Override
     public Class getClasseDeclaracaoAtributo() {
         return classeDeclaracaoAtributo;
-    }
-
-    @Override
-    public Class getClasseOrigemAtributo() {
-        return classeOrigemAtributo;
     }
 
     @Deprecated

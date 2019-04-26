@@ -27,12 +27,13 @@ public class ValidarUnitarioMaximo extends ValidadorUnitarioCampoInstGenerico im
     public String gerarMensagemErroValidacao(Object pValor) {
         try {
             boolean superouMaximo = false;
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
-                return null;
-            }
             if (!campoInstanciado.isTemValidacaoMaximo()) {
                 return null;
             }
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                return null;
+            }
+
             if (campoInstanciado.isNumeral()) {
                 campoInstanciado.isNumeral();
                 if (pValor == null || Double.parseDouble(pValor.toString()) > campoInstanciado.getValorMaximo()) {

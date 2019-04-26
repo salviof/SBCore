@@ -26,7 +26,11 @@ public class UtilSBCoreOutputs {
         try {
             File diretorio = new File(pCaminhoLocal.substring(0, pCaminhoLocal.lastIndexOf(File.separator)));
             diretorio.mkdirs();
-            pInput.reset();
+            try {
+                pInput.reset();
+            } catch (Throwable t) {
+
+            }
             Files.copy(pInput, destination, StandardCopyOption.REPLACE_EXISTING);
         } catch (Throwable e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro salvando arquivo a partir de imput em:" + pCaminhoLocal, e);

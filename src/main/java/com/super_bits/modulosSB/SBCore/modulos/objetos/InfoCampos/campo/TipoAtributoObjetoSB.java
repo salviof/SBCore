@@ -326,7 +326,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
 
     @Override
     public String getNome() {
-        return nome;
+        return tipoCampo.toString();
     }
 
     @Override
@@ -438,6 +438,11 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     @Override
     public boolean isUmCampoDinamico() {
         return this instanceof ItfAtributoObjetoSB;
+    }
+
+    @Override
+    public String toString() {
+        return getTipoCampoSTR();
     }
 
 }

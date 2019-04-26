@@ -50,7 +50,7 @@ public abstract class ArquivoConfiguracaoModulo {
         try {
             if (!new File(arquivo).exists()) {
                 if (!salvarPropriedadesPadrao()) {
-                    throw new UnsupportedOperationException("O modulo " + fabricaConfig.getSimpleName() + " não pôde ser configurado, Houve um erro tentando salvar");
+                    throw new UnsupportedOperationException("O modulo " + fabricaConfig.getSimpleName() + " não pôde ser configurado, Houve um erro tentando salvar" + arquivo);
                 } else {
                     SBCore.soutInfoDebug("Arquivo de cofiguração de módulo criado em:" + arquivo);
                 }

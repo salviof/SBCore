@@ -27,11 +27,10 @@ public class ValidarUnitarioMinimo extends ValidadorUnitarioCampoInstGenerico im
     public String gerarMensagemErroValidacao(Object pValor) {
         try {
 
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+            if (!campoInstanciado.isTemValidacaoMinimo()) {
                 return null;
             }
-
-            if (!campoInstanciado.isTemValidacaoMinimo()) {
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
                 return null;
             }
 

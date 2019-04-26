@@ -37,9 +37,9 @@ public abstract class AtributoObjetoSBAbstrato extends ItemSimples implements It
             throw new UnsupportedOperationException("Erro criando atributo de Objeto, o tipo do atributo não pôde ser determinado " + pPropriedadesReflexao.getLabel());
         }
 
-        idAtributo = (pPropriedadesReflexao.getObjetoDoAtributo() + getLabel()).hashCode();
+        idAtributo = (pPropriedadesReflexao.getClasseOrigemAtributo() + getLabel()).hashCode();
         classeDeclaracaoObjeto = pPropriedadesReflexao.getClasseDeclaracaoAtributo();
-        nomeClasseOrigemAtributo = pPropriedadesReflexao.getObjetoDoAtributo().toString();
+        nomeClasseOrigemAtributo = pPropriedadesReflexao.getClasseOrigemAtributo().toString();
         if (nomeClasseOrigemAtributo.contains(".")) {
             String[] partes = nomeClasseOrigemAtributo.split("\\.");
             nomeClasseOrigemAtributo = partes[partes.length - 1];

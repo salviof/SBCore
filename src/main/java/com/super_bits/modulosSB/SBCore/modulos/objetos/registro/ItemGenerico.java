@@ -72,6 +72,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     private boolean mapeouTodosOsCampos = false;
 
     private Map<ItfCalculos, Boolean> controleCalculo;
+    private final Object instancia;
 
     public static enum DEFINICAO_VIEW {
 
@@ -94,8 +95,6 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         return controleCalculo;
     }
 
-    private final Class<?> classeModelo;
-
     public String getTesteParametro(String pteste) {
         if (pteste == null) {
             pteste = "";
@@ -105,7 +104,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     protected Object getInstancia() {
-        return this;
+        return instancia;
     }
 
     /**
@@ -207,7 +206,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             return;
         }
         Map<String, Field> fromFields = analyze(dados);
-        Map<String, Field> toFields = analyze(this);
+        Map<String, Field> toFields = analyze(getInstancia());
         fromFields.keySet().retainAll(toFields.keySet());
 
         for (Entry<String, Field> fromFieldEntry : fromFields.entrySet()) {
@@ -221,7 +220,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 }
                 targetField.setAccessible(true);
                 try {
-                    targetField.set(this, sourceField.get(dados));
+                    targetField.set(getInstancia(), sourceField.get(dados));
                 } catch (IllegalAccessException e) {
                     throw new IllegalStateException("Can't access field!");
                 }
@@ -231,10 +230,18 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     protected ItemGenerico() {
         super();
+        instancia = this;
         this.camposEsperados = new CampoMapValores();
-        classeModelo = this.getClass();
+
         UtilSBCoreReflexao.instanciarListas(this);
 
+    }
+
+    protected ItemGenerico(Object pInstancia) {
+        super();
+        instancia = pInstancia;
+        this.camposEsperados = new CampoMapValores();
+        UtilSBCoreReflexao.instanciarListas(this);
     }
 
     /**
@@ -258,7 +265,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             }
 
         } catch (Throwable t) {
-            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) this, t);
+            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) getInstancia(), t);
 
         }
 
@@ -279,14 +286,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     protected Field getCampoByAnotacao(FabTipoAtributoObjeto pNomedaAnotacao) {
         Class classeEntidade = null;
         try {
-            if (this instanceof HibernateProxy) {
+            if (getInstancia() instanceof HibernateProxy) {
                 classeEntidade = HibernateProxyHelper.getClassWithoutInitializingProxy(this.getClass());
             } else {
 
-                classeEntidade = this.getClass();
+                classeEntidade = getInstancia().getClass();
             }
         } catch (Throwable t) {
-            classeEntidade = this.getClass();
+            classeEntidade = getInstancia().getClass();
         }
         Field campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classeEntidade, pNomedaAnotacao);
         return campo;
@@ -329,9 +336,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         try {
             Field campo = null;
             try {
-                if (this instanceof HibernateProxy) {
-                    Class classe = UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
-                    campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
+
+                if (getInstancia() instanceof HibernateProxy || this.getClass().getSimpleName().indexOf("$") > 0) {
+                    try {
+                        Class classe = UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
+                        campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
+                    } catch (Throwable t) {
+
+                    }
                 } else {
 
                 }
@@ -349,7 +361,9 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             } else {
                 pCampo.setFoiAnotado(false);
                 if (pObrigatorio) {
-                    throw new UnsupportedOperationException("Campo " + pCampo.getTipoCampo() + " obrigatório não foi implementado na classe " + this.getClass().getSimpleName());
+                    if (!SBCore.isEmModoProducao()) {
+                        throw new UnsupportedOperationException("Campo " + pCampo.getTipoCampo() + " obrigatório não foi implementado na classe " + this.getClass().getSimpleName());
+                    }
                 }
             }
 
@@ -359,7 +373,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 //Campo não encontrado utilizndo o seguinte método:
                 Field campo = getCampoByAnotacao(pCampo.getTipoCampo());
             }
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Campo obrigatório para o tipo de objeto não foi anotado com infoCampo, O tipo não encontrado foi: " + pCampo.getTipoCampo().name() + " Objeto: " + this.getClass().getSimpleName() + " (Atenção, nas proximas versões este erro irá gerar um PARATUDO", e);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro registrando Atributo Obrigatório de objeto conhecido " + "em" + this.getClass().getSimpleName() + pCampo, e);
 
         }
 
@@ -403,14 +417,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
         try {
             if (pCampoReflexao == null) {
-                throw new UnsupportedOperationException("Chamada de SetValorByFieldReflexao, com Fileld nulo em " + this);
+                throw new UnsupportedOperationException("Chamada de SetValorByFieldReflexao, com Fileld nulo em " + getInstancia());
             }
             pCampoReflexao.setAccessible(true);
 
             pCampoReflexao.set(getInstancia(), valor);
             return;
         } catch (IllegalArgumentException | IllegalAccessException ex) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando setar novo valor para o campo " + pCampoReflexao.getName() + " na classe " + this.getClass().getSimpleName() + " via reflection", ex);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando setar novo valor para o campo " + pCampoReflexao.getName() + " na classe " + getInstancia().getClass().getSimpleName() + " via reflection", ex);
         }
 
         throw new ErroSetandoValorDeCampoPorReflexao();
@@ -420,7 +434,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     private void setValorByFieldReflexao(Field pCampoReflexao, int valor) throws ErroSetandoValorDeCampoPorReflexao {
         pCampoReflexao.setAccessible(true);
         try {
-            pCampoReflexao.set(this, valor);
+            pCampoReflexao.set(getInstancia(), valor);
             return;
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando setar novo valor via reflection", ex);
@@ -439,21 +453,21 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             try {
                 String tipoDeValor = pCampoReflexao.getType().getName();
                 if (tipoDeValor.equals(String.class.toString())) {
-                    valor = (String) pCampoReflexao.get(this);
+                    valor = (String) pCampoReflexao.get(getInstancia());
                 } else // System.out.println("TTTTIIIPOOOO diferente de String:"+campoReflecao.getType().getName());
                 if (pCampoReflexao.getType().getName().equals("int")) {
                     // System.out.println("TTTTIIIPOOOO int");
-                    valor = (Integer) pCampoReflexao.get(this);
+                    valor = (Integer) pCampoReflexao.get(getInstancia());
                 } else if (pCampoReflexao.getType().getName()
                         .equals("java.lang.Double")
                         || pCampoReflexao.getType().getName()
-                        .equals("double")) {
-                    valor = (Double) pCampoReflexao.get(this);
+                                .equals("double")) {
+                    valor = (Double) pCampoReflexao.get(getInstancia());
                 } else if (pCampoReflexao.getType().getSimpleName()
                         .equals("Date")) {
-                    valor = ((Date) pCampoReflexao.get(this)).toString();
-                } else if (pCampoReflexao.get(this) != null) {
-                    valor = pCampoReflexao.get(this);
+                    valor = ((Date) pCampoReflexao.get(getInstancia())).toString();
+                } else if (pCampoReflexao.get(getInstancia()) != null) {
+                    valor = pCampoReflexao.get(getInstancia());
                     return valor;
                 } else {
                     return null;
@@ -498,7 +512,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 }
 
             } catch (ErroObtendoValorDoCampoPorReflexao ex) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "O infoCampo  " + tipoCampo + " pesquisado não foi encontrado na classe" + this.getClass().getName(), ex);
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "O infoCampo  " + tipoCampo + " pesquisado não foi encontrado na classe" + getInstancia().getClass().getName(), ex);
             }
 
             if (campoEsperadoEncontrado.getAnotacaoObrigatoria()) {
@@ -509,7 +523,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                             campoEsperadoEncontrado.getTipoCampo()));
                 } catch (ErroDeMapaDeCampos e) {
 
-                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Um campo  do tipo " + campoEsperadoEncontrado.getTipoCampo().getRegistro() + "era esperado, e não foi localizado na classe" + this.getClass(), e);
+                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Um campo  do tipo " + campoEsperadoEncontrado.getTipoCampo().getRegistro() + "era esperado, e não foi localizado na classe" + getInstancia().getClass(), e);
                 }
             }
 
@@ -545,7 +559,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 nomeCampo = pCampoReflection.getName();
             }
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro instanciando novo campo [" + nomeCampo + "] em "
-                    + this.getClass().getSimpleName(), t);
+                    + getInstancia().getClass().getSimpleName(), t);
         }
 
     }
@@ -556,7 +570,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                     UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class),
                     parametros);
         } catch (Throwable t) {
-            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) this, "Erro procurando parametro por tipo anotação " + InfoPreparacaoObjeto.class.getSimpleName() + " Não foi encontrada");
+            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) getInstancia(), "Erro procurando parametro por tipo anotação " + InfoPreparacaoObjeto.class.getSimpleName() + " Não foi encontrada");
         }
     }
 
@@ -581,7 +595,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             mapaCamposInstanciados = Collections.synchronizedMap(new HashMap());
             mapaCampoPorAnotacao = Collections.synchronizedMap(new HashMap());
 
-            Class classeAnalizada = this.getClass();
+            Class classeAnalizada = getInstancia().getClass();
             while (!UtilSBCoreReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
 
                 for (Field campoEncontrado : classeAnalizada.getDeclaredFields()) {
@@ -610,7 +624,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             return mapaCamposInstanciados;
         } else {
 
-            Class classeAnalizada = this.getClass();
+            Class classeAnalizada = getInstancia().getClass();
 
             while (!UtilSBCoreReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
 
@@ -655,13 +669,13 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         try {
             ItfCampoInstanciado campoInstanciado = getCampoByNomeOuAnotacao(pNome);
             if (campoInstanciado == null) {
-                throw new UnsupportedOperationException("Erro tendando acessar atributo " + pNome + " em " + this.getClass().getSimpleName());
+                throw new UnsupportedOperationException("Erro tendando acessar atributo " + pNome + " em " + getInstancia().getClass().getSimpleName());
             } else {
                 return campoInstanciado;
             }
         } catch (Throwable t) {
             if (!SBCore.isEmModoProducao()) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha acessando atributo de Objeto em " + this.getClass().getSimpleName(), t);
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha acessando atributo de Objeto em " + getInstancia().getClass().getSimpleName(), t);
             }
             return new CampoNaoImplementado();
         }
@@ -678,7 +692,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             Object resposta = campoInstanciado.getValor();
             return resposta;
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo valor de campo:" + pCaminhoCampo + " na classe " + this.getClass().getSimpleName(), t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo valor de campo:" + pCaminhoCampo + " na classe " + getInstancia().getClass().getSimpleName(), t);
             throw new UnsupportedOperationException("impossivel obter valor pelo caminho do campo");
         }
 
@@ -789,24 +803,24 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     @Override
     public Field getCampoReflexaoByAnotacao(FabTipoAtributoObjeto pInfoCampo) {
-        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(this.getClass(), pInfoCampo);
+        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfoCampo);
     }
 
     @Override
     public boolean isTemCampoAnotado(FabTipoAtributoObjeto pCampo) {
-        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(this.getClass(), pCampo) != null;
+        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pCampo) != null;
     }
 
     @Override
     public String getNomeCampo(FabTipoAtributoObjeto pInfocampo) {
         try {
-            Field campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(this.getClass(), pInfocampo);
+            Field campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfocampo);
             if (campo == null) {
-                throw new UnsupportedOperationException("a anotação " + pInfocampo + " não foi encontrada em " + this.getClass().getSimpleName());
+                throw new UnsupportedOperationException("a anotação " + pInfocampo + " não foi encontrada em " + getInstancia().getClass().getSimpleName());
             }
             return campo.getName();
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo nome do campo em" + this.getClass().getSimpleName() + "<b>Utilize isTem campo anotado para verificar se o item possui ou não este campo declarado </b>", t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo nome do campo em" + getInstancia().getClass().getSimpleName() + "<b>Utilize isTem campo anotado para verificar se o item possui ou não este campo declarado </b>", t);
             return null;
         }
     }
@@ -851,7 +865,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             return id;
         } catch (Throwable t) {
 
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando definir o ID para o item" + this.getClass().getName(), t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando definir o ID para o item" + getInstancia().getClass().getName(), t);
             return 0;
         }
     }
@@ -869,7 +883,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             return Lists.newLinkedList(mapaCamposInstanciados.values());
         }
 
-        for (Class classse : UtilSBCoreReflexao.getClasseESubclassesAteClasseBaseDeEntidade(classeModelo)) {
+        for (Class classse : UtilSBCoreReflexao.getClasseESubclassesAteClasseBaseDeEntidade(getInstancia().getClass())) {
             for (Field campo : classse.getDeclaredFields()) {
                 getCampoByNomeOuAnotacao(campo.getName());
             }
@@ -881,7 +895,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public List<ItfCaminhoCampo> getEntidadesVinculadas() {
 
-        return Lists.newArrayList(UtilSBCoreReflexaoCaminhoCampo.getCamposComSubCamposDaClasse(this.getClass()).values());
+        return Lists.newArrayList(UtilSBCoreReflexaoCaminhoCampo.getCamposComSubCamposDaClasse(getInstancia().getClass()).values());
 
     }
 
@@ -928,7 +942,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
                 Field cp = getClass().getDeclaredField(pNomeCampo);
                 cp.setAccessible(true);
-                ret = (ItfBeanSimples) cp.get(this);
+                ret = (ItfBeanSimples) cp.get(getInstancia());
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Campo: [" + pNomeCampo + "] não encontrado na classe : [" + getClass().getSimpleName() + "]", ex);
             }
@@ -942,12 +956,12 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     @Override
     public String getNomeDoObjeto() {
-        return UtilSBCoreReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(this.getClass());
+        return UtilSBCoreReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(getInstancia().getClass());
     }
 
     @Override
     public String getNomeDoObjetoPlural() {
-        return UtilSBCoreReflexaoObjeto.getNomeObjetoPlural(this.getClass());
+        return UtilSBCoreReflexaoObjeto.getNomeObjetoPlural((Class<? extends ItfBeanGenerico>) getInstancia().getClass());
     }
 
     /**
@@ -967,9 +981,9 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     ) {
         nomeDaLista = nomeDaLista.replace("[]", "");
         try {
-            Field campo = this.getClass().getDeclaredField(nomeDaLista);
+            Field campo = getInstancia().getClass().getDeclaredField(nomeDaLista);
             campo.setAccessible(true);
-            List lista = (List) campo.get(this);
+            List lista = (List) campo.get(getInstancia());
             Class classeTipo = UtilSBCoreReflexaoAtributoDeObjeto.getClasseGenerica(campo);
 
             lista.add(classeTipo.newInstance());
@@ -979,11 +993,11 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     public EstruturaDeEntidade getEstruturaDaEntidade() {
-        return MapaObjetosProjetoAtual.getEstruturaObjeto(this.getClass());
+        return MapaObjetosProjetoAtual.getEstruturaObjeto(getInstancia().getClass());
     }
 
     public String getXhtmlVisualizacao() {
-        return MapaObjetosProjetoAtual.getVisualizacaoDoObjeto(this.getClass());
+        return MapaObjetosProjetoAtual.getVisualizacaoDoObjeto(getInstancia().getClass());
     }
 
     public ItfResposta executarAcao(ItfAcaoController pAcao) {
@@ -1009,7 +1023,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     protected String gerarSlug() {
-        ItfBeanSimples bean = (ItfBeanSimples) this;
+        ItfBeanSimples bean = (ItfBeanSimples) getInstancia();
         return bean.getNome() + "-" + bean.getId();
     }
 
@@ -1029,11 +1043,11 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public void adicionarSubItem(String pNomeCampo) {
         try {
-            Class classe = this.getClass();
+            Class classe = getInstancia().getClass();
             Field campo = classe.getDeclaredField(pNomeCampo);
             campo.setAccessible(true);
             Class tipoItem = UtilSBCoreReflexao.getClasseGenericaDaClasseDoCampo(campo);
-            ((List) campo.get(this)).add(tipoItem.newInstance());
+            ((List) campo.get(getInstancia())).add(tipoItem.newInstance());
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro adicionando item em campo" + pNomeCampo, t);
         }
@@ -1064,8 +1078,8 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
-            ItfBeanGenerico novoObjeto = this.getClass().newInstance();
-            novoObjeto.copiaDados(this);
+            ItfBeanGenerico novoObjeto = (ItfBeanGenerico) getInstancia().getClass().newInstance();
+            novoObjeto.copiaDados(getInstancia());
             return novoObjeto; //To change body of generated methods, choose Tools | Templates.
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro TEntando criar clone do Objeto", t);
@@ -1077,7 +1091,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     public int compareTo(ItfBeanSimples o) {
 
         try {
-            return ((ItfBeanSimples) this).getNome().compareTo(o.getNome());
+            return ((ItfBeanSimples) getInstancia()).getNome().compareTo(o.getNome());
         } catch (Throwable t) {
             return -1;
         }
@@ -1087,11 +1101,11 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public String toString() {
         try {
-            ItfBeanSimplesSomenteLeitura itemSimples = (ItfBeanSimplesSomenteLeitura) this;
-            if (this.getClass().getSimpleName().contains("$")) {
-                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
+            ItfBeanSimplesSomenteLeitura itemSimples = (ItfBeanSimplesSomenteLeitura) getInstancia();
+            if (getInstancia().getClass().getSimpleName().contains("$")) {
+                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
             } else {
-                return this.getClass().getSimpleName() + "_" + itemSimples.getId();
+                return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId();
             }
 
         } catch (Throwable t) {
@@ -1114,7 +1128,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public boolean equals(Object obj) {
         try {
-            return obj.hashCode() == this.hashCode();
+            return obj.hashCode() == getInstancia().hashCode();
         } catch (Throwable t) {
             return super.equals(obj);
         }
