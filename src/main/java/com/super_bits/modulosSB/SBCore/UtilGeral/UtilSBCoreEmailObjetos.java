@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -67,15 +69,25 @@ public class UtilSBCoreEmailObjetos {
         private String nome;
         private String tipo;
         private InputStream arquivo;
+        private String cid;
 
-        public ArquivoAnexoEmail(ByteArrayDataSource pAnexo, int id) throws IOException {
+        public ArquivoAnexoEmail(ByteArrayDataSource pAnexo, String pCid) throws IOException {
             nome = pAnexo.getName();
             tipo = pAnexo.getContentType();
             arquivo = IOUtils.toBufferedInputStream(pAnexo.getInputStream());
+            cid = pCid;
         }
 
         public int getId() {
             return id;
+        }
+
+        public String getCid() {
+            return cid;
+        }
+
+        public void setCid(String cid) {
+            this.cid = cid;
         }
 
         public String getNome() {
@@ -90,23 +102,42 @@ public class UtilSBCoreEmailObjetos {
             return arquivo;
         }
 
+        public boolean isContemCid() {
+            return !UtilSBCoreStringValidador.isNuloOuEmbranco(cid);
+        }
+
     }
 
     public static String substituirCidPorUrl(String texto, Map<String, String> mapaUrls) {
-        Pattern r = Pattern.compile("((cid:)(\\w*.\\w*)@\\w*.\\w*)");
+        Pattern r = Pattern.compile("((cid:\\w*))");
 
         // Now create matcher object.
         Matcher m = r.matcher(texto);
 
         while (m.find()) {
             String cidCompleta = m.group(0);
-            String imagem = m.group(3);
-            if (mapaUrls.get(imagem) != null) {
-                texto = texto.replace(cidCompleta, mapaUrls.get(imagem));
+            String cid = cidCompleta.replace("cid:", "");
+            if (mapaUrls.get(cid) != null) {
+                texto = texto.replace(cidCompleta, mapaUrls.get(cid));
             }
 
         }
         return texto;
+    }
+
+    public static List<String> getcids(String texto) {
+        Pattern r = Pattern.compile("((cid:\\w*))");
+
+        // Now create matcher object.
+        Matcher m = r.matcher(texto);
+        List<String> cids = new ArrayList<>();
+        while (m.find()) {
+            String cidCompleta = m.group(0);
+            //     String imagem = m.group(0);
+            cids.add(cidCompleta.replace("cid:", ""));
+        }
+
+        return cids;
     }
 
     public static List<ArquivoAnexoEmail> lerAnexos(Message m)
@@ -115,25 +146,33 @@ public class UtilSBCoreEmailObjetos {
         List<ArquivoAnexoEmail> listaanexos = new ArrayList<>();
         try {
 
-            if (m instanceof MimeMessage) {
-                MimeMessage mimeMensagem = (MimeMessage) m;
-
-            }
             conteudo = new MimeMessageParser((MimeMessage) m);
             conteudo.parse();
-            final DataSourceResolver dataSourceResolver = new DataSourceUrlResolver(new URL("http://www.apache.org"), false);
+            List<String> cids = getcids(conteudo.getHtmlContent());
+            List<DataSource> streamsDeArquivosAnexados = new ArrayList<>();
+            for (String cid : cids) {
+                DataSource arquivo = conteudo.findAttachmentByCid(cid);
+
+                if (arquivo instanceof ByteArrayDataSource) {
+                    streamsDeArquivosAnexados.add(arquivo);
+                    ByteArrayDataSource anexo = (ByteArrayDataSource) arquivo;
+
+                    listaanexos.add(new ArquivoAnexoEmail(anexo, cid));
+
+                    //UtilSBCoreOutputs.salvarArquivoBfInput(new BufferedInputStream(IOUtils.toBufferedInputStream(anexo.getInputStream())), "/home/superBits/temp/" + anexo.getName());
+                }
+            }
 
             for (Iterator iterator = conteudo.getAttachmentList().iterator(); iterator.hasNext();) {
-                Object next = iterator.next();
+                DataSource next = (DataSource) iterator.next();
 
-                int id = 0;
                 if (next instanceof ByteArrayDataSource) {
+                    if (!streamsDeArquivosAnexados.contains(next)) {
+                        ByteArrayDataSource anexo = (ByteArrayDataSource) next;
+                        System.out.println(anexo.getName());
+                        listaanexos.add(new ArquivoAnexoEmail(anexo, null));
 
-                    ByteArrayDataSource anexo = (ByteArrayDataSource) next;
-
-                    System.out.println(anexo.getName());
-                    listaanexos.add(new ArquivoAnexoEmail(anexo, id));
-                    id++;
+                    }
                     //UtilSBCoreOutputs.salvarArquivoBfInput(new BufferedInputStream(IOUtils.toBufferedInputStream(anexo.getInputStream())), "/home/superBits/temp/" + anexo.getName());
                 }
                 System.out.println(next);

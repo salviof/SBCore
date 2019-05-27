@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico;
 
+import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
@@ -158,6 +159,19 @@ public class SessaoOffline implements ItfSessao {
         List<ItfComunicacao> lista = new ArrayList();
         SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
                 .stream().limit(6).forEach(lista::add);
+        return lista;
+    }
+
+    public List<ItfComunicacao> getUltimasNotificacoesMenuAguardandoRespostaUsuarioSessao() {
+        List<ItfComunicacao> lista = new ArrayList();
+        SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario()).stream()
+                .filter(cm -> cm
+                .getTransportes().stream().filter(tp -> tp.equals(ERPTransporteComunicacao.INTRANET_MENU.getRegistro()))
+                .findFirst().isPresent())
+                .limit(6).forEach(lista::add);
+        for (ItfComunicacao teste : lista) {
+            System.out.println(teste.getTransportes().contains(ERPTransporteComunicacao.INTRANET_MENU.getRegistro()));
+        }
         return lista;
     }
 

@@ -6,8 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPad
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -18,7 +17,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  */
 public class ValidarUnitarioMaximo extends ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    public ValidarUnitarioMaximo(ItfAtributoObjetoSB pCampoInst) {
+    public ValidarUnitarioMaximo(ItfCampoInstanciado pCampoInst) {
         super(pCampoInst, FabTipoValidacaoUnitaria.MAXIMO);
 
     }
@@ -47,7 +46,7 @@ public class ValidarUnitarioMaximo extends ValidadorUnitarioCampoInstGenerico im
                 case TEXTO_SIMPLES:
                     if (pValor.toString().length() > campoInstanciado.getValorMaximo()) {
                         return campoInstanciado.getLabel()
-                                + " possui " + campoInstanciado.toString().length()
+                                + " possui " + pValor.toString().length()
                                 + " caractéres, o máximo permitido é " + campoInstanciado.getValorMaximo();
                     }
                     break;

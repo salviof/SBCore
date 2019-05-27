@@ -24,7 +24,7 @@ import java.util.Optional;
  */
 public abstract class UtilSBCoreValidacao {
 
-    public static boolean validacoesBasicas(ItfAtributoObjetoSB pCampo, Object pValor) {
+    public static boolean validacoesBasicas(ItfCampoInstanciado pCampo, Object pValor) {
 
         return !Arrays.stream(FabTipoValidacaoUnitaria.values()).filter(validacao
                 -> !validacao.getValidador(pCampo).isValorValido(pValor)).findFirst().isPresent();
@@ -68,18 +68,26 @@ public abstract class UtilSBCoreValidacao {
         }
     }
 
-    public static boolean isValorUnico(ItfAtributoObjetoSB pCampo, Object pValor) {
+    public static boolean isValorUnico(ItfCampoInstanciado pCampo, Object pValor) {
         try {
-            return SBCore.getCentralDados().selecaoRegistros(null, null,
-                    "from " + pCampo.getNomeClasseOrigemAtributo() + " where " + pCampo.getNome() + "= ?0", 1,
-                    MapaObjetosProjetoAtual.getClasseDoObjetoByNome(pCampo.getNomeClasseOrigemAtributo()), FabTipoSelecaoRegistro.NOMECURTO, pValor).isEmpty();
+            ItfCampoInstanciado cpId = pCampo.getObjetoDoAtributo().getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID);
+            if (cpId == null) {
+                cpId = pCampo.getObjetoDoAtributo().getCampoInstanciadoByNomeOuAnotacao("id");
+            }
+            List lista = SBCore.getCentralDados().selecaoRegistros(null, null,
+                    "from " + pCampo.getNomeClasseOrigemAtributo() + " where " + pCampo.getNome() + "= ?0 and " + cpId.getNomeCamponaClasse() + " != ?1", 1,
+                    MapaObjetosProjetoAtual.getClasseDoObjetoByNome(pCampo.getNomeClasseOrigemAtributo()), FabTipoSelecaoRegistro.NOMECURTO, pValor, cpId.getValor());
+            if (lista == null) {
+                return true;
+            }
+            return lista.isEmpty();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro validando valor unico em " + pCampo.getNomeClasseOrigemAtributo() + "." + pCampo.getNome(), t);
             return true;
         }
     }
 
-    public static List<String> gerarMensagensValidacao(ItfAtributoObjetoSB pCampo, Object pValor, boolean pUmaNovaEntidade, boolean imporMensagemPadrao) {
+    public static List<String> gerarMensagensValidacao(ItfCampoInstanciado pCampo, Object pValor, boolean pUmaNovaEntidade, boolean imporMensagemPadrao) {
         List<String> resp = new ArrayList<>();
         try {
 

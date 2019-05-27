@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -27,6 +29,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
             comunicacoesAtivas.put(pComunicacao.getCodigoSelo(), pComunicacao);
             return true;
         } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Armazenando comunicação " + t.getMessage(), t);
             return false;
         }
     }

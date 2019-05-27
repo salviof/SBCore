@@ -662,7 +662,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                 return classes;
             }
             for (String objtoFinal : nomesObjetosFinal) {
-                if (pClasse.getSimpleName().startsWith(objtoFinal)) {
+                if (classeAtual.getSimpleName().startsWith(objtoFinal)) {
                     return classes;
                 }
 

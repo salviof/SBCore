@@ -250,7 +250,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             switch (campoFamiliaInput) {
                 case TEXTO_COM_FORMATACAO:
                 case TEXTO_SEM_FORMATACAO:
-                    if (isTemMascara()) {
+                    if (isTemMascara() || isTemValidacaoRegex()) {
                         return FabCompVisualInputs.TEXTO_COM_FORMATACAO.getRegistro();
                     } else {
                         return FabCompVisualInputs.TEXTO_SEM_FORMATACAO.getRegistro();
@@ -1017,13 +1017,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                         return true;
                     }
                 }
-                return UtilSBCoreValidacao.validacoesBasicas(getPropriedadesRefexao().getAtributoGerado(), getValor());
+                return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
             } else {
                 if (isUmCampoArquivoEntidade()) {
                     return true;
                 } else {
                     if (getValor() != null) {
-                        return UtilSBCoreValidacao.validacoesBasicas(getPropriedadesRefexao().getAtributoGerado(), getValor());
+                        return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
                     }
                 }
             }

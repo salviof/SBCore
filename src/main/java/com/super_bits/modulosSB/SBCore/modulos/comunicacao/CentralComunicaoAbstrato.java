@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
 
     @Override
     public ItfComunicacao iniciarComunicacaoSistema_Usuairo(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String pAssunto, String mensagem, ItffabricaTrasporteComunicacao... pTiposTransporte) {
-        ItfComunicacao comunicacao = new ComunicacaoTransient(pUsuario, pUsuario, tipocomunicacao.getRegistro(), gerarListaTransportes(pTiposTransporte));
+        ItfComunicacao comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro(), gerarListaTransportes(pTiposTransporte));
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
         comunicacao.setAssunto(pAssunto);

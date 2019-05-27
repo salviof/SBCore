@@ -5,6 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.fabrica;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
@@ -58,6 +60,15 @@ public abstract class UtilSBCoreReflexaoFabrica {
     public static ItfFabrica getEnumDoObjetoFabrica(Class<? extends ItfFabrica> fabrica, ItfBeanSimplesSomenteLeitura pObjetoReferencia) {
         try {
             List todos = new ArrayList<>();
+
+            if (fabrica.getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                TipoAtributoObjetoSB tipoAtributo = (TipoAtributoObjetoSB) pObjetoReferencia;
+                for (FabTipoAtributoObjeto tipo : FabTipoAtributoObjeto.values()) {
+                    if (tipo.equals(tipoAtributo.getTipoCampo())) {
+                        return tipo;
+                    }
+                }
+            }
             for (ItfFabrica fb : fabrica.getEnumConstants()) {
                 if (((ItfBeanSimplesSomenteLeitura) fb.getRegistro()).getId() == pObjetoReferencia.getId()) {
                     return fb;

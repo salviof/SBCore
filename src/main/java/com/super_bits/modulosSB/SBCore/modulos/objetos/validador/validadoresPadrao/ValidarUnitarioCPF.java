@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPad
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
 
@@ -15,7 +16,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUni
  */
 public class ValidarUnitarioCPF extends ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    public ValidarUnitarioCPF(ItfAtributoObjetoSB pCampoInst) {
+    public ValidarUnitarioCPF(ItfCampoInstanciado pCampoInst) {
         super(pCampoInst, FabTipoValidacaoUnitaria.MAXIMO);
 
     }

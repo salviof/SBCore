@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
 
@@ -14,10 +15,10 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUni
  */
 public abstract class ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    protected final ItfAtributoObjetoSB campoInstanciado;
+    protected final ItfCampoInstanciado campoInstanciado;
     protected final FabTipoValidacaoUnitaria tipoValidacao;
 
-    public ValidadorUnitarioCampoInstGenerico(ItfAtributoObjetoSB pCampoInstanciado, FabTipoValidacaoUnitaria pTipoValidacao) {
+    public ValidadorUnitarioCampoInstGenerico(ItfCampoInstanciado pCampoInstanciado, FabTipoValidacaoUnitaria pTipoValidacao) {
         this.campoInstanciado = pCampoInstanciado;
         this.tipoValidacao = pTipoValidacao;
     }

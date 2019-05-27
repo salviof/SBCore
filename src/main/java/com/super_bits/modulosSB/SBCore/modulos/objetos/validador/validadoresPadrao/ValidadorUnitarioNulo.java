@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 
 /**
@@ -14,8 +14,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidaca
  */
 public class ValidadorUnitarioNulo extends ValidadorUnitarioCampoInstGenerico {
 
-    public ValidadorUnitarioNulo(ItfAtributoObjetoSB pCampoInst) {
-        super(pCampoInst, FabTipoValidacaoUnitaria.MAXIMO);
+    public ValidadorUnitarioNulo(ItfCampoInstanciado pCampoInst) {
+        super(pCampoInst, FabTipoValidacaoUnitaria.NULO);
     }
 
     @Override

@@ -69,6 +69,8 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
         tipoCampo = pTipo;
         tipoVisualizacao = pTipo.toString().toUpperCase();
         tipoOrigemValor = pTipo.getTipoOrigemPadrao();
+        pTipo.configuraPropriedadesBasicas(this);
+
     }
 
     public TipoAtributoObjetoSB(FabTipoAtributoObjeto pTipo) {

@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
@@ -16,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUni
  */
 public class ValidarUnitarioAtributoUnico extends ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    public ValidarUnitarioAtributoUnico(ItfAtributoObjetoSB pCampoInst) {
+    public ValidarUnitarioAtributoUnico(ItfCampoInstanciado pCampoInst) {
         super(pCampoInst, FabTipoValidacaoUnitaria.MAXIMO);
 
     }
@@ -31,17 +32,19 @@ public class ValidarUnitarioAtributoUnico extends ValidadorUnitarioCampoInstGene
             return null;
         }
         ItfCampoInstanciado campoInst = (ItfCampoInstanciado) campoInstanciado;
-        if (campoInst.getObjetoDoAtributo().getId() != 0) {
-            return null;
-        }
+
         if ((pValor instanceof Integer)
                 || (pValor instanceof Long)) {
             long valorrr = (long) pValor;
             if (valorrr == 0) {
                 return null;
             }
+        } else {
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(campoInst.getValor())) {
+                return null;
+            }
         }
-        if (!UtilSBCoreValidacao.isValorUnico(campoInstanciado, pValor)) {
+        if (!UtilSBCoreValidacao.isValorUnico(campoInst, pValor)) {
             return "Já existe um " + campoInstanciado.getLabel() + " com o valor " + pValor;
         }
         return null;

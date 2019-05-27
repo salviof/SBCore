@@ -9,6 +9,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -36,5 +37,10 @@ public abstract class CampoInstanciadoDinamico extends CampoInstanciadoGenerico 
     }
 
     public abstract ItfAtributoObjetoSB getAtributosCampoDinamico();
+
+    @Override
+    public ItfComponenteVisualSB getComponenteVisualPadrao() {
+        return super.getComponenteVisualPadrao(); //chamada super do metodo (implementação classe pai)
+    }
 
 }

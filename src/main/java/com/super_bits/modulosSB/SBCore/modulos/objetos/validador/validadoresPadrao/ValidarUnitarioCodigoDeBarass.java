@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
 
@@ -14,7 +15,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUni
  */
 public class ValidarUnitarioCodigoDeBarass extends ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    public ValidarUnitarioCodigoDeBarass(ItfAtributoObjetoSB pCampoInstanciado) {
+    public ValidarUnitarioCodigoDeBarass(ItfCampoInstanciado pCampoInstanciado) {
 
         super(pCampoInstanciado, FabTipoValidacaoUnitaria.CODIGO_DE_BARRAS);
 

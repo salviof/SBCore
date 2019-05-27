@@ -22,7 +22,7 @@ public class UtilSBCoreStringsExtrator extends UtilSBCoreStringFiltros {
         if (UtilSBCoreStringValidador.isNuloOuEmbranco(pString)) {
             return null;
         } else {
-            Pattern pattern = Pattern.compile("([a-z0-9_.-]+)@([a-z0-9_.-]+[a-z])");
+            Pattern pattern = Pattern.compile("([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+[a-z])");
             Matcher matcher = pattern.matcher(pString);
 
             while (matcher.find()) {

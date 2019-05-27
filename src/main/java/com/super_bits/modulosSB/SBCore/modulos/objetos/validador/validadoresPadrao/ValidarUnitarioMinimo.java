@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPad
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
@@ -18,7 +19,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  */
 public class ValidarUnitarioMinimo extends ValidadorUnitarioCampoInstGenerico implements ItfValidacaoUnitaria {
 
-    public ValidarUnitarioMinimo(ItfAtributoObjetoSB pCampoInst) {
+    public ValidarUnitarioMinimo(ItfCampoInstanciado pCampoInst) {
         super(pCampoInst, FabTipoValidacaoUnitaria.MAXIMO);
 
     }

@@ -29,6 +29,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico.CampoInstanciadoDinamico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.Date;
 import javax.persistence.Entity;
 
@@ -42,6 +43,7 @@ public final class TipoAtributoMetodosBase {
 
     public TipoAtributoMetodosBase(FabTipoAtributoObjeto pTipo) {
         tipo = pTipo;
+
     }
 
     public TipoAtributoObjetoSB getRegistro() {
@@ -297,6 +299,27 @@ public final class TipoAtributoMetodosBase {
                     break;
 
                 case LETRAS:
+                    if (pCampo.isTemMascara()) {
+                        if (pValor == null) {
+                            return pValor;
+                        }
+                        if (pCampo.getMascara().equals(pValor) || pCampo.getMascaraJqueryMode().equals(pValor)) {
+                            return null;
+                        }
+                        // Evitar má pŕatica incompativel com unique de banco de dados
+                        if (pValor.equals("")) {
+                            return null;
+                        }
+                        return pValor;
+                    }
+                    if (pCampo.isValorCampoUnico()) {
+                        if (pValor == null) {
+                            return null;
+                        }
+                        if (pValor.toString().isEmpty()) {
+                            return null;
+                        }
+                    }
                     break;
 
                 case DATAS:
@@ -330,7 +353,7 @@ public final class TipoAtributoMetodosBase {
                 case DATAHORA:
                     return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pValor);
                 case MOEDA_REAL:
-                    return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(UtilSBCoreStringFiltros.filtrarApenasLetra(pValor));
+                    return pValor;
                 case VERDADEIRO_FALSO:
                     if (pValor.equals("true") || pValor.toUpperCase().equals("SIM")) {
                         return true;
@@ -573,7 +596,19 @@ public final class TipoAtributoMetodosBase {
             case TELEFONE_CELULAR:
             case TELEFONE_FIXO_NACIONAL:
             case TEXTO_SIMPLES:
+            case OBJETO_DE_UMA_LISTA:
+                ItfBeanSimplesSomenteLeitura valor = null;
+                try {
+                    if (pAtributo instanceof ItfCampoInstanciado) {
+                        ItfCampoInstanciado cpi = (ItfCampoInstanciado) pAtributo;
+                        if (cpi.getComoCampoSeltorItem().getSeletor().getOrigem().isEmpty()) {
+                            valor = (ItfBeanSimplesSomenteLeitura) cpi.getComoCampoSeltorItem().getSeletor().getOrigem().get(0);
+                        }
+                    }
+                } catch (Throwable t) {
 
+                }
+                return valor;
             case INSCRIACAO_MUNICIPAL:
             case INSCRICAO_ESTADUAL:
                 ItfTipoAtributoSBSomenteLeitura tipoAtributo;
@@ -584,7 +619,16 @@ public final class TipoAtributoMetodosBase {
                 }
                 if (tipoAtributo != null) {
                     if (tipoAtributo.isTemMascara()) {
-                        return (UtilSBCoreRandomico.getValorStringRandomicoViaMaskara(pAtributo.getMascara()));
+                        String valorMaskara = (UtilSBCoreRandomico.getValorStringRandomicoViaMaskara(pAtributo.getMascara()));
+                        switch (tipo) {
+                            case TELEFONE_FIXO_INTERNACIONAL:
+
+                            case TELEFONE_FIXO_NACIONAL:
+                                return "(31) 32" + valorMaskara.substring(7, valorMaskara.length() - 1);
+                            case TELEFONE_CELULAR:
+                                return "(31) 99" + valorMaskara.substring(7, valorMaskara.length() - 1);
+                        }
+                        return valorMaskara;
                     }
                 }
                 String valorAleatorio = UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.LETRAS, 10);

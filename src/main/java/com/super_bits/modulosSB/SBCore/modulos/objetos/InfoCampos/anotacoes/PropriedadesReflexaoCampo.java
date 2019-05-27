@@ -97,6 +97,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
             classeOrigemAtributo = classeOrigem;
             tipoConversao = campoVInculado.getTipoConversao();
             tipoEnum = campoVInculado.isCampoEnum();
+
             this.atributoReferencia = new AtributoObjetoSB(this);
 
             //    validar();
@@ -117,10 +118,18 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
             tipoOrigem = TIPO_ORIGEM_PROPRIEDADE.ATRIBUTO_REFERENCIA;
             fabTipoAtributo = pAtributoReferencia.getFabricaTipoAtributo();
             String nomeClasseDeclarada = pAtributoReferencia.getNomeClasseAtributoDeclarado();
-            classeDeclaracaoAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasseDeclarada);
+            if (!UtilSBCoreStringValidador.isNuloOuEmbranco(nomeClasseDeclarada)) {
+                classeDeclaracaoAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasseDeclarada);
+            } else {
+                classeDeclaracaoAtributo = null;
+            }
             String classeOrigem = pAtributoReferencia.getNomeClasseOrigemAtributo();
-            nomeClasseDeclarada = pAtributoReferencia.getNome();
-            classeOrigemAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(classeOrigem);
+            //nomeClasseDeclarada = pAtributoReferencia.getNome();
+            if (!UtilSBCoreStringValidador.isNuloOuEmbranco(classeOrigem)) {
+                classeOrigemAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(classeOrigem);
+            } else {
+                classeOrigemAtributo = null;
+            }
 
             //  validar();
         } catch (Throwable t) {

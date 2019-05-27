@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLiberal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioNulo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioAtributoUnico;
@@ -13,6 +14,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadr
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioCodigoDeBarass;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMaximo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMinimo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioREGEX;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 /**
  *
@@ -26,9 +29,10 @@ public enum FabTipoValidacaoUnitaria {
     CPF,
     CNPJ,
     CODIGO_DE_BARRAS,
-    CAMPO_UNICO;
+    CAMPO_UNICO,
+    REGEX,;
 
-    public ItfValidacaoUnitaria getValidador(ItfAtributoObjetoSB pCampo) {
+    public ItfValidacaoUnitaria getValidador(ItfCampoInstanciado pCampo) {
         switch (pCampo.getFabricaTipoAtributo()) {
             case CODIGO_DE_BARRAS:
                 switch (this) {
@@ -59,6 +63,9 @@ public enum FabTipoValidacaoUnitaria {
 
             case CAMPO_UNICO:
                 return new ValidarUnitarioAtributoUnico(pCampo);
+            case REGEX:
+
+                return new ValidarUnitarioREGEX(pCampo);
 
             default:
                 return new ValidadorUnitarioLiberal();
