@@ -146,4 +146,12 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
         assunto = pAssunto;
     }
 
+    @Override
+    public boolean isAssuntoIgualMensagem() {
+        if (getMensagem() == null) {
+            return false;
+        }
+        return getMensagem().equals(getAssunto());
+    }
+
 }

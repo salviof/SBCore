@@ -166,10 +166,14 @@ public class SessaoOffline implements ItfSessao {
         List<ItfComunicacao> lista = new ArrayList();
         SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario()).stream()
                 .filter(cm -> cm
-                .getTransportes().stream().filter(tp -> tp.equals(ERPTransporteComunicacao.INTRANET_MENU.getRegistro()))
+                .getTransportes().stream().filter(tp -> tp.toString().equals(ERPTransporteComunicacao.INTRANET_MENU.getRegistro().toString()))
                 .findFirst().isPresent())
                 .limit(6).forEach(lista::add);
         for (ItfComunicacao teste : lista) {
+            teste.getTransportes().stream().forEach(tf -> {
+                System.out.println(tf.toString());
+            });
+            System.out.println(ERPTransporteComunicacao.INTRANET_MENU.getRegistro().toString());
             System.out.println(teste.getTransportes().contains(ERPTransporteComunicacao.INTRANET_MENU.getRegistro()));
         }
         return lista;
