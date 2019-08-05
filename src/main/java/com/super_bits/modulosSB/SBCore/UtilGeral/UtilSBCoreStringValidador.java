@@ -89,9 +89,6 @@ public abstract class UtilSBCoreStringValidador {
         return resposta;
     }
 
-   
-
- 
     /**
      *
      * @see UtilSBCoreStringsMaiuculoMinusculo#splitMaiuscula(java.lang.String)
@@ -304,7 +301,10 @@ public abstract class UtilSBCoreStringValidador {
      *
      * @param pString
      * @return true Se não for igual a nulo e nem string vazia
+     * @deprecated "Desnecessário criar funções negativas para cada função
+     * alternativa, utilize -> [!]"
      */
+    @Deprecated()
     public static boolean isNAO_NuloNemBranco(String pString) {
         if (pString == null) {
             return false;

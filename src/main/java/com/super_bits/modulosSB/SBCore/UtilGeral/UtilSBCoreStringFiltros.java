@@ -190,6 +190,18 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         return pString.replaceAll("\\D*", ""); //To numeric digits only
     }
 
+    /**
+     *
+     *
+     * Retira as letras e retorna apenas os numeros na string
+     *
+     * @param pString String completa (com numeros e letras)
+     * @return string Contendo apenas as numeros
+     */
+    public static String filtrarApenasNumeros(String pString) {
+        return getNumericosDaString(pString);
+    }
+
     public static String filtrarApenasLetra(String pString) {
         return pString.replaceAll("[A-Za-z]", "");
     }

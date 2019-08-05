@@ -55,6 +55,10 @@ public class SessaoMenuSB implements ItfSessaoDeMenuSB, Serializable {
         return (List) acoes;
     }
 
+    public void addAcao(ItfFabricaAcoes pAcao) {
+        this.addAcao(pAcao.getRegistro());
+    }
+
     public void addAcao(ItfAcaoDoSistema pAcao) {
         if (pAcao == null) {
             throw new UnsupportedOperationException("A ação adicionada na sessao não pode ser nula");

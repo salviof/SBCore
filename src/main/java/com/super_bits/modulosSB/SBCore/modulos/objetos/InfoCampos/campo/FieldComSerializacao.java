@@ -14,6 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Anot
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoDinamico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoModeloDocumento;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.FabTipoConversaoEnum;
@@ -193,6 +194,10 @@ public class FieldComSerializacao implements Serializable {
 
     public boolean isPossuiAnotacaoMuitosParaMuitos() {
         return (campo.getAnnotation(ManyToMany.class) != null);
+    }
+
+    public boolean isPossuiValorDinamicoCalculado() {
+        return (campo.getAnnotation(InfoCampoValorLogico.class) != null);
     }
 
     public AnotacoesCampo gerarAnotacoes() {

@@ -74,7 +74,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     private final PropriedadesReflexaoCampo propriedadesReflexao;
     private ItfValidacao validacaoLogica;
     private FabEstadoFormulario statusFormulario = FabEstadoFormulario.INDEFINIDO;
-
+    private int indiceValorLista = -1;
     // TODO, Justificativas para alteração de Campos
     private List<String> justificativasAlteracaoCampos;
 

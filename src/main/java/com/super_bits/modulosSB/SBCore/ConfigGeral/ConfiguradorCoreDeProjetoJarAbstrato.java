@@ -17,6 +17,7 @@ public abstract class ConfiguradorCoreDeProjetoJarAbstrato extends ConfiguradorC
         UtilConfiguracaoCore.setclassesPadraoJar(pConfiguracao);
         setIgnorarConfiguracaoAcoesDoSistema(true);
         setIgnorarConfiguracaoPermissoes(true);
+
         pConfiguracao.setCentralComunicacao(CentralComunicacaoApenasLogs.class);
 
     }

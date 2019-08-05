@@ -33,4 +33,8 @@ public class UtilSBGeradorDeCodigoBase {
     public static String getNomeClasseValidacao(ItfEstruturaCampoEntidade pCampo) {
         return "Validacao" + pCampo.getEstruturaPai().getNome() + UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
     }
+
+    public static String getNomeClasseValorLogico(ItfEstruturaCampoEntidade pCampo) {
+        return "ValorLogico" + pCampo.getEstruturaPai().getNome() + UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
+    }
 }

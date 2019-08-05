@@ -7,6 +7,8 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
@@ -110,10 +112,22 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     @Override
     public boolean isExisteArquivo() {
-        if (getCampoInstanciado().getObjetoDoAtributo().getId() == 0) {
-            return intputTemporario != null;
+        switch (getCampoInstanciado().getPropriedadesRefexao().getFabTipoAtributo()) {
+            case ARQUIVO_DE_ENTIDADE:
+                if (getCampoInstanciado().getObjetoDoAtributo().getId() == 0) {
+                    return intputTemporario != null;
+                } else {
+                    return new File(getCaminhoArquivo(campoInstanciado)).exists();
+                }
+            case IMG_MEDIA:
+
+                return new File(SBCore.getCentralDeArquivos().getEndrLocalImagem(getCampoInstanciado().getObjetoDoAtributo(), FabTipoAtributoObjeto.IMG_MEDIA)
+                ).exists();
+
+            default:
+                return new File(getCaminhoArquivo(campoInstanciado)).exists();
         }
-        return new File(getCaminhoArquivo(campoInstanciado)).exists();
+
     }
 
     @Override

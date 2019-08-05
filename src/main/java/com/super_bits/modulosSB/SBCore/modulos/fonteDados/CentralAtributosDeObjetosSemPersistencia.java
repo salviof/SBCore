@@ -24,6 +24,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletore
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.ItfselecaoListaComOrigem;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.ItfSelecaoObjetoDeUmaLista;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfInfoStatusObjetoAplicacaoContexto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.ArrayList;
@@ -154,6 +155,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
 
     @Override
     public int getNumeroMaximoRegistros(ItfCampoInstanciado pCampoInstanciado) {
+
         return getListaOpcoesCampoInstanciado(pCampoInstanciado).size();
     }
 

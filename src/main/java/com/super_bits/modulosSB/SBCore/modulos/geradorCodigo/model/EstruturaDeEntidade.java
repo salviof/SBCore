@@ -6,9 +6,12 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoBeanSBGenerico;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -113,6 +116,16 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
 
         }
 
+    }
+
+    public Class<? extends ItfCalculoValorLogicoAtributoObjeto> getClasseImplementacaoValorLogico(String pCaminhoAtributo) {
+        try {
+            return (Class<? extends ItfCalculoValorLogicoAtributoObjeto>) mapaCampo.get(pCaminhoAtributo).getClasseValorLogico();
+
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Implementação para campo dinamico não encontrado para ", t);
+            return null;
+        }
     }
 
     private void buildLigacoes() {

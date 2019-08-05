@@ -34,4 +34,11 @@ public @interface InfoConsumoRestService {
 
     public String urlServidorAlternativo() default "";
 
+    /**
+     * Adiciona o Reader Authorization, valor Bearer {0}
+     *
+     * @return falso não adiciona o Header
+     */
+    public boolean adicionarAutenticacaoBearer() default false;
+
 }

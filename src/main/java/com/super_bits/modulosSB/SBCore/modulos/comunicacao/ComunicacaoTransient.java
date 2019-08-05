@@ -151,7 +151,7 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
         if (getMensagem() == null) {
             return false;
         }
-        return getMensagem().equals(getAssunto());
+        return getMensagem().equals(getNome());
     }
 
 }

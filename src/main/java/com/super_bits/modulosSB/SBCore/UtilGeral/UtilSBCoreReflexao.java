@@ -144,21 +144,24 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
      * @return
      */
     public static List<Field> instanciarListas(Object instancia) {
-        Class classe = instancia.getClass();
-        Field[] fields = classe.getDeclaredFields();
 
+        List<Class> classes = UtilSBCoreReflexao.getClassesComHierarquiaAteNomeObjetoFinalConterNoInicio(instancia.getClass(), "Entidade", "ItemGenerico");
         List<Field> resposta = new ArrayList<>();
-        for (Field campo : fields) {
-            if (campo.getType().getName().equals(List.class.getName())) {
-                campo.setAccessible(true);
-                try {
-                    campo.set(instancia, new ArrayList<>());
-
-                    //System.out.println("Lista Auto Instanciada" + campo.getName());
-                } catch (Throwable ex) {
-                    Logger.getLogger(UtilSBCoreReflexao.class.getName()).log(Level.SEVERE, null, ex);
+        for (Class classe : classes) {
+            Field[] fields = classe.getDeclaredFields();
+            for (Field campo : fields) {
+                if (campo.getType().getName().equals(List.class.getName())) {
+                    campo.setAccessible(true);
+                    try {
+                        campo.set(instancia, new ArrayList<>());
+                        resposta.add(campo);
+                        //System.out.println("Lista Auto Instanciada" + campo.getName());
+                    } catch (Throwable ex) {
+                        Logger.getLogger(UtilSBCoreReflexao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
+
         }
         return resposta;
     }

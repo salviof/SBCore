@@ -9,7 +9,9 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreClienteRest;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListas;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRest;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRestOAuth;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.RespostaWebServiceRestIntegracao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.oauth.MapaInfoOauthEmAndamento;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.core.HttpHeaders;
@@ -26,12 +28,12 @@ public class ConexaoClienteWebService extends ConexaoClienteWebServiceBasico imp
     private int tempoEsperaMaximo = 5000;
     private boolean permitirModificacoesPreEnviar;
     private boolean postarInformacoes;
+    private boolean adicionarAutenticacaoBared;
     private InfoConsumoRestService infoConsumo;
     private final Map<String, String> CABECALHO = new HashMap<>();
     private String corpoRequisicao;
     private String[] parametros;
-
-    ;
+    private String token;
 
     public ConexaoClienteWebService(ItfFabricaIntegracaoRest pConexao, String... parametros) {
         this(pConexao, false, parametros);
@@ -77,6 +79,10 @@ public class ConexaoClienteWebService extends ConexaoClienteWebServiceBasico imp
         if (infoConsumo.tipoInformacaoEnviada().getMediaType() != null) {
             CABECALHO.put(HttpHeaders.CONTENT_TYPE, infoConsumo.tipoInformacaoEnviada().getMediaType().toString());
         }
+        if (adicionarAutenticacaoBared) {
+
+            CABECALHO.put("Authorization", "Bearer " + token);
+        }
         corpoRequisicao = getFabIntegracao().getCorpoRequisicao(parametros);
 
         if (!UtilSBCoreStringValidador.isNuloOuEmbranco(corpoRequisicao)) {
@@ -99,10 +105,18 @@ public class ConexaoClienteWebService extends ConexaoClienteWebServiceBasico imp
 
         infoConsumo = pConexao.getInformacoesConsumo();
         parametros = pParametros;
-
+        adicionarAutenticacaoBared = infoConsumo.adicionarAutenticacaoBearer();
         System.out.println("Informações de consumo obtidas, preparando para conectar");
         if (infoConsumo == null) {
             throw new UnsupportedOperationException("a anotação " + InfoConsumoRestService.class.getSimpleName() + " não foi encontrada em " + fabricaIntegracao.toString());
+        }
+
+        pConexao.getCaminhoServico(parametros);
+        if (adicionarAutenticacaoBared) {
+            if (pConexao instanceof ItfFabricaIntegracaoRestOAuth) {
+                ItfFabricaIntegracaoRestOAuth cn = (ItfFabricaIntegracaoRestOAuth) pConexao;
+                token = MapaInfoOauthEmAndamento.getAutenticadorSistemaAtual(cn).getTokenDeAcesso().getTokenValido();
+            }
         }
         configurarPropriedadesPadrao();
 

@@ -126,8 +126,6 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
                         if (!campo.isCampoNaoInstanciado()) {
                             switch (campo.getFabricaTipoAtributo()) {
 
-                                case LC_LOGRADOURO:
-                                case LCCEP:
                                 case LC_BAIRRO:
                                 case LC_CIDADE:
                                 case LC_LOCALIDADE:
