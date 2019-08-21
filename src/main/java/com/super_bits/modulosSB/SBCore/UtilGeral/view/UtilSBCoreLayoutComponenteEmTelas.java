@@ -80,12 +80,13 @@ public class UtilSBCoreLayoutComponenteEmTelas {
                 if (!pCampoInstanciado.equals(CAMPO_NAO_INSTANCIADO)) {
                     if (!campo.isUmCampoListavel()) {
                         componenteEmLayout = new ComponenteVisualInputEmLayout(pCampoInstanciado, campo);
-                        int pesoComponente = pCampoInstanciado.getFabricaTipoAtributo().getPesoLarguraEspecifico();
-                        componenteEmLayout.setPesoLargura(pesoComponente);
-                        pesoTotal = pesoTotal + pesoComponente;
+
                     } else {
                         componenteEmLayout = new ComponenteVisualSubListaEmLayout(pCampoInstanciado, campo.getComoCampoListagem());
                     }
+                    int pesoComponente = pCampoInstanciado.getFabricaTipoAtributo().getPesoLarguraEspecifico();
+                    componenteEmLayout.setPesoLargura(pesoComponente);
+                    pesoTotal = pesoTotal + pesoComponente;
                     layout.adicionarComponente(componenteEmLayout, campo.getCaminhoSemNomeClasse());
 
                 }

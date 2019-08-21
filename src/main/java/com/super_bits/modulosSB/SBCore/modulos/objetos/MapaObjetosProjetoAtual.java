@@ -125,7 +125,7 @@ public class MapaObjetosProjetoAtual {
         novaEstrutura.setDescricao(infoClasse.descricao());
         novaEstrutura.setTags(Lists.newArrayList(infoClasse.tags()));
 
-        UtilSBCoreReflexao.getCamposRecursivodaClasseAteConterNomeObjetoFinal(pClasse, "Entidade", "Item").forEach((campo) -> {
+        UtilSBCoreReflexao.getCamposRecursivodaClasseAteConterNomeObjetoFinal(pClasse, "Entidade", "ItemGenerico").forEach((campo) -> {
             try {
                 novaEstrutura.adicionarCampo(campo);
             } catch (Throwable t) {

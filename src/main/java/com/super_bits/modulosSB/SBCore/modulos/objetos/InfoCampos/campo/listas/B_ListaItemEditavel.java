@@ -51,9 +51,19 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
             if (preparadorObjeto != null) {
                 classeSConstructor = preparadorObjeto.classesPrConstructorPrincipal();
             }
+            boolean objetoPaiCompativelcomClasseConstructorPrincipal = false;
+            try {
+                Object objetoTeste = preparadorObjeto.classesPrConstructorPrincipal()[0].newInstance();
+                if (objetoTeste.getClass().isInstance(campoInstanciado.getObjetoDoAtributo())) {
+                    objetoPaiCompativelcomClasseConstructorPrincipal = true;
+                }
+
+            } catch (Throwable t) {
+                objetoPaiCompativelcomClasseConstructorPrincipal = false;
+            }
 
             if (classeSConstructor != null && classeSConstructor.length == 1) {
-                if (preparadorObjeto.classesPrConstructorPrincipal()[0].equals(classeObjetoPrincipal)) {
+                if (preparadorObjeto.classesPrConstructorPrincipal()[0].equals(classeObjetoPrincipal) || objetoPaiCompativelcomClasseConstructorPrincipal) {
                     novoObjeto.prepararNovoObjeto(campoInstanciado.getObjetoDoAtributo());
                 } else {
                     for (ItfCaminhoCampo caminho : novoObjeto.getEntidadesVinculadas()) {
