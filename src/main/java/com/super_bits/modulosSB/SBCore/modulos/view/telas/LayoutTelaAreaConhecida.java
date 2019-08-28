@@ -19,5 +19,6 @@ public abstract class LayoutTelaAreaConhecida {
     public static final String AREA_CONTEUDO = "idAreaSBConteudo";
     public static final String AREA_CHAT = "idAreaSBChat";
     public static final String AREA_CARRINHO_COMPRA = "idAreaSBCarrinhoCompra";
+    public static final String AREA_INPUT_GENERICO = "inputFormPadrao";
 
 }

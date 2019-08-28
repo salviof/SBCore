@@ -29,8 +29,8 @@ public abstract class UtilSBCoreRandomico {
                 for (int i = 0; i < tamanho; i++) {
                     valorMaximo += "9";
                 }
-
-                int valorRamdon = RandomUtils.nextInt(0, Integer.valueOf(valorMaximo));
+                long max = Long.valueOf(valorMaximo);
+                long valorRamdon = RandomUtils.nextLong(0, max);
                 return String.valueOf(valorRamdon);
 
             case LETRAS:

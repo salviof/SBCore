@@ -61,7 +61,7 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
                     String chave = MapaPesquisaFonetica.getChaveFonetica(filtro);
 
                     listaCompleta.parallelStream().filter(item
-                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), chave, apenasNumero))
+                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
                             .forEach(getOrigemEmFila()::add);
                 } else {
                     listaCompleta.parallelStream().filter(item

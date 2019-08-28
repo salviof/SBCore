@@ -1103,8 +1103,11 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         }
 
         try {
-
-            return MapaPesquisaFonetica.isValorFoneticoCompativel(this, pParametro.toString());
+            if (pParametro.toString().toLowerCase().contains(valor.toString().toLowerCase())) {
+                return true;
+            } else {
+                return MapaPesquisaFonetica.isValorFoneticoCompativel(this, pParametro.toString());
+            }
 
         } catch (Throwable t) {
             return false;
