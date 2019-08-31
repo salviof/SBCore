@@ -96,7 +96,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
 
         if (listaOpcoesObjeto == null) {
 
-            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+            if (classeEnumFab.getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
                 listaOpcoesObjeto = new ArrayList();
                 for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
 

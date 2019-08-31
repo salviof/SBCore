@@ -39,7 +39,7 @@ public abstract class B_ObjetoDeUmaListaAbs<T extends ItfBeanSimplesSomenteLeitu
     public B_ObjetoDeUmaListaAbs(ItfCampoInstanciado pCampoInstanciado) {
 
         super(pCampoInstanciado);
-        ajuste(true);
+        ajuste(false);
     }
 
     public B_ObjetoDeUmaListaAbs(List pLista, List<T> pOrigem) {
@@ -54,7 +54,7 @@ public abstract class B_ObjetoDeUmaListaAbs<T extends ItfBeanSimplesSomenteLeitu
 
     protected final void ajuste(boolean pRenovar) {
 
-        if (!origem.isEmpty()) {
+        if (pRenovar && !origem.isEmpty()) {
             origem.remove(getObjetoSelecionado());
         }
         atualizaPickListViewContexto();
