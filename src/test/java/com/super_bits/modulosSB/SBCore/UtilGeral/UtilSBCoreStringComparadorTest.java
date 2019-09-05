@@ -32,7 +32,26 @@ public class UtilSBCoreStringComparadorTest {
      */
     @Test
     public void testIsParecido_String_String() {
-
+        
+        String testeMaluco= "ROSCA CHOCOLATE";
+        String testeMalucoPrametro="coca cola";
+         for (String ss : testeMalucoPrametro.toLowerCase().split("\\s")){
+       for (String s : testeMaluco.toLowerCase().split("\\s")){
+           UtilSBCoreStringComparador.JaroWinkler(s,ss);
+       }
+         }
+        
+    double score=    UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "SHAMPOO");
+     UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "SHAMPOO");
+     UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "SHAMPOO");
+     UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "CHOCOLATE");
+     UtilSBCoreStringComparador.JaroWinkler("CHOCOLATE", "CHOCO");
+     UtilSBCoreStringComparador.JaroWinkler("CHOCO","CHOCOLATE" );
+     UtilSBCoreStringComparador.JaroWinkler("CHOCOLATE","CHOCOLATE" );
+     UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "SHAMPOO");
+     UtilSBCoreStringComparador.JaroWinkler("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "SHAMPOO");
+        System.out.println(score);
+           
         UtilSBCoreStringComparador.isParecido("SHAMPOO DOVE CACHOS CONTROLADOS DAMAGE THERAPY 200ML", "CHOCOLATE");
 
         System.out.println("isParecido");

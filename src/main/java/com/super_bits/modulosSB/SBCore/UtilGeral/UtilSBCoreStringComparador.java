@@ -12,6 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import mtfn.MetaphonePtBr;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
 import org.coletivojava.fw.api.objetoNativo.ObjetoNativoCoreDoSistema;
@@ -35,6 +36,13 @@ public class UtilSBCoreStringComparador {
         return isParecido(pReferencia, pParametro, score);
     }
 
+    
+    public  static double JaroWinkler(String pUm,String pDois){
+       double score= StringUtils.getJaroWinklerDistance(pUm, pDois);
+      //  System.out.println(pUm+"-"+pDois+"="+score);
+        return score;
+    }
+    
     public static boolean isBastanteParecido(String pReferencia, String pParametro) {
         return isParecido(pReferencia, pParametro, 90);
     }
