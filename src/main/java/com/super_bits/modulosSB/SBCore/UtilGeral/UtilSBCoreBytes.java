@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 /*
  *  Desenvolvido pela equipe Super-Bits.com CNPJ 20.019.971/0001-90
@@ -52,6 +53,17 @@ public class UtilSBCoreBytes {
             return null;
         }
 
+    }
+
+    public static byte[] gerarBytePorInputstream(InputStream pInput) {
+        try {
+            byte[] bytes = IOUtils.toByteArray(pInput);
+
+            return bytes;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public static byte[] gerarBytePorBufferedImagem(BufferedImage pImagem) {
