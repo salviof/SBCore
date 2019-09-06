@@ -36,13 +36,12 @@ public class UtilSBCoreStringComparador {
         return isParecido(pReferencia, pParametro, score);
     }
 
-    
-    public  static double JaroWinkler(String pUm,String pDois){
-       double score= StringUtils.getJaroWinklerDistance(pUm, pDois);
-      //  System.out.println(pUm+"-"+pDois+"="+score);
+    public static double JaroWinkler(String pUm, String pDois) {
+        double score = StringUtils.getJaroWinklerDistance(pUm, pDois);
+        //  System.out.println(pUm+"-"+pDois+"="+score);
         return score;
     }
-    
+
     public static boolean isBastanteParecido(String pReferencia, String pParametro) {
         return isParecido(pReferencia, pParametro, 90);
     }
@@ -133,6 +132,7 @@ public class UtilSBCoreStringComparador {
 
                         } else {
                             if (campoinstanciado.getValor() != null) {
+
                                 if (String.valueOf(campoinstanciado.getValor()).contains(pParametro)) {
                                     camposComMatch.add(coluna);
                                 }

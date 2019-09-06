@@ -5,16 +5,20 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.MapaPesquisaFonetica;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.ItfSeletorGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -28,7 +32,7 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
     private final List<String> camposFiltro;
     private int minimoParaPesquisa = 4;
     private final ItfSeletorGenerico seletor;
-    private final List listaCompleta;
+    private final List<ItfBeanSimples> listaCompleta;
     private final ItfCampoInstanciado campoInstanciado;
 
     public CampoInstanciadoComSelecao(ItfSeletorGenerico pSeletor, ItfCampoInstanciado pCampoInstanciado) {
@@ -38,13 +42,29 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
         }
         this.seletor = pSeletor;
         listaCompleta = new ArrayList();
-        listaCompleta.addAll(pCampoInstanciado.getListaDeOpcoes());
+        listaCompleta.addAll((List) pCampoInstanciado.getListaDeOpcoes());
         campoInstanciado = pCampoInstanciado;
 
     }
 
-    private synchronized List getOrigemEmFila() {
+    private synchronized List getOrigemSincronizado() {
         return seletor.getOrigem();
+    }
+
+    private List filtroSimilaridadeEmListaCompleta(final String pParamentro) {
+        List resp = new ArrayList();
+        Map<Integer, ItemSimilar> itens = listaCompleta.stream().parallel()
+                .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
+                        n -> new ItemSimilar((ItfBeanSimples) n, pParamentro)));
+        System.out.println("teste");
+//(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
+        List<ItemSimilar> produtosOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
+        Collections.sort(produtosOrdenados);
+        Collections.reverse(produtosOrdenados);
+        long fim = new Date().getTime();
+
+        produtosOrdenados.stream().limit(20).forEach(item -> resp.add(item.getpObjetoAnalizado()));
+        return resp;
     }
 
     private void filtrar() {
@@ -58,15 +78,13 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
             try {
 
                 if (!apenasNumero) {
-                    String chave = MapaPesquisaFonetica.getChaveFonetica(filtro);
+                    // String chave = MapaPesquisaFonetica.getChaveFonetica(filtro);
+                    filtroSimilaridadeEmListaCompleta(filtro).forEach(getOrigemSincronizado()::add);
 
-                    listaCompleta.parallelStream().filter(item
-                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
-                            .forEach(getOrigemEmFila()::add);
                 } else {
                     listaCompleta.parallelStream().filter(item
                             -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
-                            .forEach(getOrigemEmFila()::add);
+                            .forEach(getOrigemSincronizado()::add);
                 }
 
             } catch (Throwable t) {
@@ -74,7 +92,7 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
                 listaCompleta.stream().
                         filter(item -> UtilSBCoreStringComparador.
                         isBastanteParecido(((ItfBeanSimplesSomenteLeitura) item).getNome(), filtro))
-                        .forEach(getOrigemEmFila()::add);
+                        .forEach(getOrigemSincronizado()::add);
             }
         }
 
@@ -88,11 +106,9 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
 
                 listaCompleta.clear();
                 if (false) {
-                    List resultado = SBCore.getCentralFonteDeDados().getListaOpcoesCampoInstanciado(campoInstanciado, filtro, camposFiltro.toArray(new String[camposFiltro.size()]));
+                    List<ItfBeanSimples> resultado = (List) SBCore.getCentralFonteDeDados().getListaOpcoesCampoInstanciado(campoInstanciado, filtro, camposFiltro.toArray(new String[camposFiltro.size()]));
+                    resultado.stream().forEach(listaCompleta::add);
 
-                    resultado.stream().forEach((item) -> {
-                        listaCompleta.add(item);
-                    });
                 }
             }
 
