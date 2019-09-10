@@ -902,10 +902,15 @@ public class SBCore {
     /**
      *
      * @see ItfCentralDados
-     *
+     * @deprecated Usar getServicoRepositorio
      * @return Recupera Entidades persistidas
      */
+    @Deprecated
     public static ItfCentralDados getCentralDados() {
+        return getServicoRepositorio();
+    }
+
+    public static ItfCentralDados getServicoRepositorio() {
         if (centralDados == null) {
             throw new UnsupportedOperationException("A central de dados não foi registrada");
         }
