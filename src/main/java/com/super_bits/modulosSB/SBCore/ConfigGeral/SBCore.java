@@ -269,7 +269,7 @@ public class SBCore {
             if (estadoAplicativo == ESTADO_APP.DESENVOLVIMENTO) {
                 String arquivoPomDoProjeto = SBCore.getCaminhoDesenvolvimento() + "/pom.xml";
                 if (!UtilSBCoreArquivos.isArquivoExiste(arquivoPomDoProjeto)) {
-                    throw new UnsupportedOperationException("O arquivo pom não foi encontrado em " + SBCore.getCaminhoDesenvolvimento());
+                    throw new UnsupportedOperationException("O arquivo pom não foi encontrado em " + arquivoPomDoProjeto);
                 }
             }
             System.out.println("COnfigurando Mapa de Ações do sistema");

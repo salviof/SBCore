@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import javax.crypto.Cipher;
+import org.apache.commons.codec.digest.Crypt;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import static sun.security.x509.CertificateAlgorithmId.ALGORITHM;
 
@@ -25,7 +26,7 @@ import static sun.security.x509.CertificateAlgorithmId.ALGORITHM;
  */
 public class UtilSBCoreCriptrografia {
 
-    public KeyPair gerarChaveRSA1024() {
+    public KeyPair gerarParChaveRSA1024() {
         final KeyPairGenerator keyGen;
         try {
             keyGen = KeyPairGenerator.getInstance(ALGORITHM);
@@ -39,7 +40,7 @@ public class UtilSBCoreCriptrografia {
         }
     }
 
-    public KeyPair gerarChaveRSA2048() {
+    public KeyPair gerarParChaveRSA2048() {
         final KeyPairGenerator keyGen;
         try {
             keyGen = KeyPairGenerator.getInstance(ALGORITHM);
@@ -56,7 +57,7 @@ public class UtilSBCoreCriptrografia {
     /**
      * Criptografa o texto puro usando chave pública.
      */
-    public static byte[] criptografaTexto(String texto, PublicKey chave) {
+    public static byte[] criptografaTextoAssimetrico(String texto, PublicKey chave) {
         byte[] cipherText = null;
 
         try {
@@ -74,7 +75,7 @@ public class UtilSBCoreCriptrografia {
     /**
      * Decriptografa o texto puro usando chave privada.
      */
-    public static String decriptografa(byte[] texto, PrivateKey chave) {
+    public static String decriptografaAssimetrica(byte[] texto, PrivateKey chave) {
         byte[] dectyptedText = null;
 
         try {
@@ -88,6 +89,16 @@ public class UtilSBCoreCriptrografia {
         }
 
         return new String(dectyptedText);
+    }
+
+    public static String criptografarTextoSimetricoSaltAleatorio(String pSenha) {
+        return Crypt.crypt(pSenha);
+    }
+
+    public static boolean checarCriptografiaTextoSimetricoSaltAleatorio(String pSenha, String chave) {
+        String hash = UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio(pSenha);
+        final String check = Crypt.crypt(pSenha, hash);
+        return check.equals(hash);
     }
 
 }

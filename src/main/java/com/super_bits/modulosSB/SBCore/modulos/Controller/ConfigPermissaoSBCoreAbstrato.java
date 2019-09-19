@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCriptrografia;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
@@ -45,12 +46,24 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
 
     }
 
+    private boolean confereSenha(String senhaEnviada, String senhaArmazenada) {
+        if (senhaArmazenada == null || senhaEnviada == null) {
+            return false;
+        }
+        if (senhaArmazenada.length() > 40) {
+            return UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio(senhaEnviada, senhaArmazenada);
+        } else {
+            return senhaArmazenada.equals(senhaEnviada);
+        }
+    }
+
     @Override
     public void logarEmailESenha(String pEmail, String pSenha) {
         ItfUsuario usuarioEncontrado = SBCore.getCentralPermissao().getUsuarioByEmail(pEmail);
         EntityManager em = null;
         if (usuarioEncontrado != null) {
-            if (usuarioEncontrado.getSenha().equals(pSenha)) {
+
+            if (confereSenha(pSenha, usuarioEncontrado.getSenha())) {
                 try {
                     if (usuarioEncontrado.getGrupo() == null || !usuarioEncontrado.getGrupo().isAtivo()) {
                         SBCore.enviarMensagemUsuario("O Grupo de usuário está desativado", FabMensagens.ALERTA);
@@ -61,8 +74,10 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
                         SBCore.enviarMensagemUsuario("Atenção, O Usuário " + usuarioEncontrado.getNome() + "está Desativado", FabMensagens.ALERTA);
                         return;
                     }
+
                     SBCore.getControleDeSessao().getSessaoAtual().setUsuario(usuarioEncontrado);
                     SBCore.enviarAvisoAoUsuario("Bem vindo " + usuarioEncontrado.getNome());
+
                     return;
                 } catch (Throwable t) {
 
@@ -227,7 +242,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
                 return mt;
             }
         }
-        SBCore.RelatarErro(FabErro.PARA_TUDO,"Erro procurando " + pNomeMetodo + " na classe " + pClasse, null);
+        SBCore.RelatarErro(FabErro.PARA_TUDO, "Erro procurando " + pNomeMetodo + " na classe " + pClasse, null);
 
         return null;
     }
