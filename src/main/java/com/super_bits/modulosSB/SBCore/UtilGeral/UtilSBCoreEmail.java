@@ -40,6 +40,7 @@ public abstract class UtilSBCoreEmail {
     public static boolean enviarPorServidorPadrao(String pDestinatario, String pMensagem, String pAssunto) {
         verificarConfiguracao();
         return enviaporSSL(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
+                configuracao.getFromEmail(),
                 configuracao.getServidorPrincipalTransacional().getUsuarioSMTP(),
                 configuracao.getServidorPrincipalTransacional().getSenhaServidorSMTP(), pMensagem,
                 pDestinatario, pAssunto);
@@ -50,9 +51,9 @@ public abstract class UtilSBCoreEmail {
 
     }
 
-    public static boolean enviaporSSL(final String servidor, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
+    public static boolean enviaporSSL(final String servidor, final String pFromEmail, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
-        return enviarEmail(getPropriedadesEmailSMTP(servidor), pUsuario, pSenha, mensagem, para, pAssunto);
+        return enviarEmail(getPropriedadesEmailSMTP(servidor), pFromEmail, pUsuario, pSenha, mensagem, para, pAssunto);
     }
 
     private static Properties getPropriedadesEmailSMTP(String enderecoServidorSMTP) {
@@ -66,7 +67,8 @@ public abstract class UtilSBCoreEmail {
         return props;
     }
 
-    private static boolean enviarEmail(Properties props, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
+    private static boolean enviarEmail(Properties props, final String pFromEmail, final String pUsuario,
+            final String pSenha, String mensagem, String para, String pAssunto) {
         boolean envioucomsucesso = true;
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -79,7 +81,7 @@ public abstract class UtilSBCoreEmail {
 
             Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(pUsuario));
+            message.setFrom(new InternetAddress(pFromEmail));
 
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(para));
@@ -109,7 +111,7 @@ public abstract class UtilSBCoreEmail {
     public static boolean enviaGmailporSSL(final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
         Properties props = getPropriedadesEmailSMTP("smtp.gmail.com");
-        return enviarEmail(props, pUsuario, pSenha, mensagem, para, pAssunto);
+        return enviarEmail(props, pUsuario, pUsuario, pSenha, mensagem, para, pAssunto);
 
     }
 

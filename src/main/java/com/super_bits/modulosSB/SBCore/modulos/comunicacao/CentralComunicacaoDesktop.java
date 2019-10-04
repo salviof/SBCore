@@ -6,22 +6,10 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ArmazenamentoComunicacaoTransient;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.CentralComunicaoAbstrato;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComunicacaoTransient;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoRespostaComunicacao;
-
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDestinatario;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDisparoComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfModeloMensagem;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfTipoTransporteComunicacao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import javax.swing.JOptionPane;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItffabricaTrasporteComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
 
 /**

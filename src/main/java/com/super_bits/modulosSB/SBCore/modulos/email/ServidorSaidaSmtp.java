@@ -24,6 +24,7 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     private String enderecoServidor;
     private int porta;
     private String usuario;
+    private String fromEmail;
     private String senha;
     private boolean usarSSL;
     private boolean usarTSL;
@@ -105,6 +106,15 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     @Override
     public String getEmail() {
         return getUsuarioSMTP();
+    }
+
+    @Override
+    public String getFromEmail() {
+        return fromEmail;
+    }
+
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
     }
 
 }

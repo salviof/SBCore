@@ -22,11 +22,16 @@ public class ConfigEmailServersProjeto {
     Map<String, ItfServidorEmailReceptor> servidoresEntrada = new HashMap<>();
     Map<String, ServidorSaidaSmtp> servidoresSaidaSMTP = new HashMap<>();
 
-    public ConfigEmailServersProjeto(String servidor, String Usuario, String senha) {
+    public ConfigEmailServersProjeto(String pServidor, String pUsuario, String pSenha) {
+        this(pServidor, pUsuario, pUsuario, pSenha);
+    }
+
+    public ConfigEmailServersProjeto(String servidor, String pFromEmail, String Usuario, String senha) {
 
         servidorPrincipalTransacional = new ServidorSaidaSmtp();
         servidorPrincipalTransacional.setPorta(587);
         servidorPrincipalTransacional.setEnderecoServidor(servidor);
+        servidorPrincipalTransacional.setFromEmail(pFromEmail);
         servidorPrincipalTransacional.setUsuario(Usuario);
         servidorPrincipalTransacional.setSenha(senha);
         servidorPrincipalTransacional.setUsarSSL(true);
@@ -34,6 +39,10 @@ public class ConfigEmailServersProjeto {
         servidorPrincipalTransacional.setNome(NOME_SERVIDOR_SMTP_PRINCIPAL);
         servidoresSaidaSMTP.put(NOME_SERVIDOR_SMTP_PRINCIPAL, servidorPrincipalTransacional);
 
+    }
+
+    public String getFromEmail() {
+        return servidorPrincipalTransacional.getFromEmail();
     }
 
     public ServidorSaidaSmtp getServidorPrincipalTransacional() {

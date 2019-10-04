@@ -316,4 +316,18 @@ public abstract class UtilSBCoreStringValidador {
         return UtilSBCoreStringFiltros.gerarUrlAmigavel(pTexto);
     }
 
+    public static boolean isUmaUrlYoutubeEmbed(String pUrl) {
+        String pattern = "(https:\\/\\/www.youtube.com\\/embed\\/\\w+)";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        //url is youtube url for which you want to extract the id.
+        Matcher matcher = compiledPattern.matcher(pUrl);
+        if (matcher.find()) {
+            if (pUrl.contains("/embed/")) {
+                return true;
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

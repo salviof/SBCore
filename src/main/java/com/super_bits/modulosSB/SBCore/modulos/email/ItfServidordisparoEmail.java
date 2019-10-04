@@ -15,6 +15,10 @@ public interface ItfServidordisparoEmail extends ItfServidorEmail {
 
     }
 
+    public default String getFromEmail() {
+        return getUsuarioSMTP();
+    }
+
     public default String getSenhaServidorSMTP() {
         return getSenha();
     }
