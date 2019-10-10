@@ -193,13 +193,15 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
     /**
      *
      *
-     * Retira as letras e retorna apenas os numeros na string
+     * Retira as letras e caracteres epeciais e retorna apenas os numeros na
+     * string
      *
      * @param pString String completa (com numeros e letras)
      * @return string Contendo apenas as numeros
      */
     public static String filtrarApenasNumeros(String pString) {
-        return getNumericosDaString(pString);
+
+        return getNumericosDaString(removeCaracteresEspeciaisEspacosETracos(pString));
     }
 
     public static String filtrarApenasLetra(String pString) {
