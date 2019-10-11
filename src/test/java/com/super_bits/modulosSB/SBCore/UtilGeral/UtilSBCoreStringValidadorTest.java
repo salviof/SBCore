@@ -4,8 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import java.util.Date;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

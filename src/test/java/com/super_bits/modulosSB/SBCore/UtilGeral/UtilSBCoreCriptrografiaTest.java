@@ -29,6 +29,7 @@ public class UtilSBCoreCriptrografiaTest {
 
         String hashteste = UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("senhaTeste@teste");
         Assert.assertTrue("Senha não confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("senhaTeste@teste", hashteste));
+        Assert.assertFalse("Senha  confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("senhaTeste@testrrre", hashteste));
 
         System.out.println(UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("SenhaTEste").length());
         System.out.println(UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("SenhaTEste"));
