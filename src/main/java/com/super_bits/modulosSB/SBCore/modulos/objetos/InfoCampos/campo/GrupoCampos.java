@@ -163,6 +163,12 @@ public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
 
             for (String campo : pLabelDinamico.campos()) {
                 ItfCampoExibicaoFormulario caminho = campos.get(campo);
+                if (caminho instanceof CaminhoCampoListagemExibicaoFormulario) {
+                    CaminhoCampoListagemExibicaoFormulario campoLista = (CaminhoCampoListagemExibicaoFormulario) caminho;
+                    campoLista.getCamposDoSubFormulario().forEach(cp -> {
+
+                    });
+                }
                 if (caminho != null) {
                     campos.get(campo).setLabelAlternativo(pLabelDinamico.labels()[i]);
 
