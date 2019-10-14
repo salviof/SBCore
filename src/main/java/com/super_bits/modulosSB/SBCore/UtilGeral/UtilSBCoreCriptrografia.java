@@ -96,9 +96,9 @@ public class UtilSBCoreCriptrografia {
     }
 
     public static boolean checarCriptografiaTextoSimetricoSaltAleatorio(String pSenha, String chave) {
-        String hash = UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio(pSenha);
-        final String check = Crypt.crypt(pSenha, hash);
-        return check.equals(hash);
+
+        final String check = Crypt.crypt(pSenha, chave);
+        return check.equals(chave);
     }
 
 }

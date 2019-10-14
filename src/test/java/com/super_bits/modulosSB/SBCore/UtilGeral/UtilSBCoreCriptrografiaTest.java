@@ -24,12 +24,8 @@ public class UtilSBCoreCriptrografiaTest {
     public void testesCriptografiaSimples() {
         String hash = UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("SenhaTEste");
 
-        final String check = Crypt.crypt("SenhaTEste", hash);
-        final String check2 = Crypt.crypt("SenhaTEstess", hash);
-
-        String hashteste = UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("senhaTeste@teste");
-        Assert.assertTrue("Senha não confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("senhaTeste@teste", hashteste));
-        Assert.assertFalse("Senha  confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("senhaTeste@testrrre", hashteste));
+        Assert.assertTrue("Senha não confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("SenhaTEste", hash));
+        Assert.assertFalse("Senha  confere", UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio("senhaTeste@testrrre", hash));
 
         System.out.println(UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("SenhaTEste").length());
         System.out.println(UtilSBCoreCriptrografia.criptografarTextoSimetricoSaltAleatorio("SenhaTEste"));

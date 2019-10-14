@@ -237,7 +237,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             pCampo.setValorMaximo(anotacoes.getTamanho().max());
                             break;
                         case DIGITOS:
-                            pCampo.setNumeroDeCasasDecimais(anotacoes.getDigitos().integer());
+                            pCampo.setNumeroDeCasasDecimais(anotacoes.getDigitos().fraction());
                             break;
                         case REGEX:
 
