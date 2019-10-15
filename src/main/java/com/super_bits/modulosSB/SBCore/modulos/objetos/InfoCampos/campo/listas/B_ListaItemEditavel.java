@@ -170,13 +170,13 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
             Field campo = UtilSBCoreReflexaoCaminhoCampo.getFieldByCaminho(new CaminhoCampoReflexao(campoInstanciado.getObjetoDoAtributo().getClass().getSimpleName() + "." + campoInstanciado.getNomeCompostoIdentificador()));
             InfoObjetoSB infoObj = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(UtilSBCoreReflexao.getClasseGenericaDaClasseDoCampo(campo));
             if (!infoObj.generoFeminino()) {
-                acao.setNomeAcao("Novo " + infoObj.tags()[0]);
+                acao.setNomeAcao("Incluir " + infoObj.tags()[0]);
             } else {
-                acao.setNomeAcao("Nova " + infoObj.tags()[0]);
+                acao.setNomeAcao("Incluir " + infoObj.tags()[0]);
             }
 
         } catch (Throwable t) {
-            acao.setNomeAcao("Novo" + campoInstanciado.getNomeDoObjeto());
+            acao.setNomeAcao("Incluir" + campoInstanciado.getNomeDoObjeto());
             acao.setIconeAcao(FabIconeFontAwesome.REG_NOVO.getIcone().getTagHtml());
         }
 

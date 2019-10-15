@@ -319,4 +319,7 @@ public class AnotacoesCampo implements ItfAnotacoesCampo {
         return column;
     }
 
+    public boolean isUmCampoValorLogico() {
+        return infoCampoValorLogico != null;
+    }
 }

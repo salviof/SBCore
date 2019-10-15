@@ -1047,7 +1047,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public boolean isUmValorLogico() {
-        return atributoAssociado.isUmValorLogico();
+        return isPossuiValorCalculoDinamico();
     }
 
     @Override

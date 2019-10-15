@@ -253,4 +253,14 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
         return (ItfBeanSimples) getParent();
     }
 
+    /**
+     * Será subistituido por isUmValorLogico
+     *
+     * @return @deprecated * Será subistituido por isUmValorLogico
+     */
+    @Deprecated
+    public boolean isPossuiValorCalculoDinamico() {
+        return possuiValorCalculoDinamico;
+    }
+
 }

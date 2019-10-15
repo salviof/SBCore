@@ -448,7 +448,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     @Override
     public void setUmValorLogico(boolean pValor) {
-
+        umValorLogico = pValor;
     }
 
     @Override
