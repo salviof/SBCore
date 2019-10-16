@@ -24,7 +24,7 @@ public class WebServiceCepRepublicaVirtualTest {
 
     @Test
     public void testSearchCep() {
-
+        //SBCore.getServicoLocalizacao().instanciarNovoBairo(pBairro, pCidade);
         WebServiceCepRepublicaVirtual webServiceCep = WebServiceCepRepublicaVirtual.searchCep("13345-325");
         //A ferramenta de busca ignora qualquer caracter que não seja número.
 

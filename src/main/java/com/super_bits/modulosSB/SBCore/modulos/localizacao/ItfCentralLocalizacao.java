@@ -23,6 +23,7 @@ import java.util.List;
  *
  * @author salviof@gmail.com
  */
+@Deprecated
 public interface ItfCentralLocalizacao {
 
     public List<ItfUnidadeFederativa> getUnidadesFederativas();
