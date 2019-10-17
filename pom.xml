@@ -39,6 +39,12 @@
             <artifactId>apiComunicacao</artifactId>
             <version>1.0.0-RC-SNAPSHOT</version>
         </dependency>
+        
+        <dependency>
+            <groupId>br.org.coletivoJava.fw.api.erp.cepBR</groupId>
+            <artifactId>SbErpCodigoPostalBR</artifactId>
+            <version>1.0.0-RC-SNAPSHOT</version>
+        </dependency>
 
 
         <dependency>

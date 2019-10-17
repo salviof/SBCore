@@ -56,6 +56,9 @@ public class UtilSBCoreResources {
     public static long getHashCodeClasseDoPacote(Class pClass) {
         //  System.out.println(Logger.GLOBAL_LOGGER_NAME);
         try {
+            if (pClass == null || pClass.getCanonicalName() == null) {
+                return -1;
+            }
             String caminhoArquivp = pClass.getCanonicalName().replaceAll("\\.", "/") + ".class";
             InputStream teste = pClass.getClassLoader().getResourceAsStream(caminhoArquivp);
 

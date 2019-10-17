@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCEP;
+
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreObjetoSB;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
@@ -224,10 +224,13 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     @Override
     public boolean atualizarEnderecoPorCep() {
+
         switch (tipoOrganizacao) {
             case LOCALIZACAO_POSTAVEL:
                 //SBCore.getServicoLocalizacao().configurarCep(null);
-                boolean localizouCEP = UtilSBCoreCEP.configuraEndereco(getCep(), getLocal());
+                boolean localizouCEP = SBCore.getServicoLocalizacao().getImplementacaoPadraoApiCep().
+                        getImplementacaoDoContexto().configuraEndereco(getCep(), getLocal());
+
                 if (localizouCEP) {
                     pesquisaSucessoBairro = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getBairro());
                     pesquisaSucessoCidade = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getCidade());

@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.localizacao;
 
+import br.org.coletivoJava.fw.api.erp.codigoPostal.br.ERPCodigoPostalBR;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanLocalizavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
@@ -45,4 +46,8 @@ public interface ItfCentralLocalizacao {
     public void configurarEndereco(String cep, ItfLocal pLocal);
 
     public ItfBairro instanciarNovoBairo(String pBairro, ItfCidade pCidade);
+
+    public default ERPCodigoPostalBR getImplementacaoPadraoApiCep() {
+        return ERPCodigoPostalBR.REPUBLICA_VIRUTAL;
+    }
 }

@@ -2,6 +2,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreGeradorDeID;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoMetodoEmContextoDeExecucao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
@@ -854,13 +855,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public int configIDPeloNome() {
         try {
+
             String nomeparaHash = (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_NOME);
+
             if (nomeparaHash == null) {
                 throw new UnsupportedOperationException("Erro configurando id pelo nome, o campo que identifica" + FabTipoAtributoObjeto.AAA_NOME + " retornou nulo");
             }
-            nomeparaHash = UtilSBCoreStringFiltros.removeCaracteresEspeciaisEspacosETracos(nomeparaHash);
-            nomeparaHash = nomeparaHash.toUpperCase();
-            int id = nomeparaHash.hashCode();
+
+            int id = UtilSBCoreGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);
             setValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID, id);
             return id;
         } catch (Throwable t) {

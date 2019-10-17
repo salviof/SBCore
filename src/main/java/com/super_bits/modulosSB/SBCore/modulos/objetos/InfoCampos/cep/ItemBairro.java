@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
-import com.super_bits.modulosSB.SBCore.apiClients.UtilWebService.cep.WebServiceCepRepublicaVirtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
@@ -29,10 +28,6 @@ public class ItemBairro extends ItemSimples implements ItfBairro {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_CIDADE)
     private ItemCidade cidade;
-
-    public ItemBairro(WebServiceCepRepublicaVirtual cepEncontrado) {
-
-    }
 
     public ItemBairro() {
         cidade = new ItemCidade();

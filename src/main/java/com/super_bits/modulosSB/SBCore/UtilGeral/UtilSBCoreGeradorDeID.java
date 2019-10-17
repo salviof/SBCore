@@ -12,4 +12,14 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreGeradorDeIDSimples;
  */
 public abstract class UtilSBCoreGeradorDeID extends UtilSBCoreGeradorDeIDSimples {
 
+    public static int gerarIdUnicoLetrasDaString(String pValor) {
+
+        String nomeparaHash = UtilSBCoreStringFiltros.removeCaracteresEspeciaisEspacosETracos(pValor);
+        if (UtilSBCoreStringValidador.isNuloOuEmbranco(nomeparaHash)) {
+            return -1;
+        }
+        nomeparaHash = nomeparaHash.toUpperCase();
+        return nomeparaHash.hashCode();
+    }
+
 }
