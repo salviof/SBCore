@@ -183,6 +183,12 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
                             = MapaObjetosProjetoAtual.getEstruturaObjeto(prCampoinstanciado.getObjetoDoAtributo().getClass()).
                                     getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
 
+                    if (implementacaoCalculo == null) {
+                        System.out.println("");
+                        MapaObjetosProjetoAtual.getEstruturaObjeto(prCampoinstanciado.getObjetoDoAtributo().getClass()).
+                                getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
+                    }
+
                     ItfCalculoValorLogicoAtributoObjeto calculo = implementacaoCalculo
                             .getConstructor(ItfCampoInstanciado.class).newInstance(prCampoinstanciado);
                     return calculo.getValor();

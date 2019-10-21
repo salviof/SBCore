@@ -48,6 +48,6 @@ public interface ItfCentralLocalizacao {
     public ItfBairro instanciarNovoBairo(String pBairro, ItfCidade pCidade);
 
     public default ERPCodigoPostalBR getImplementacaoPadraoApiCep() {
-        return ERPCodigoPostalBR.REPUBLICA_VIRUTAL;
+        return ERPCodigoPostalBR.API_FREE_REDUNTANTE;
     }
 }

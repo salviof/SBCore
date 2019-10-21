@@ -410,13 +410,13 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
 
             try {
                 classeValorDinamico = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeClasse);
-                return classeValidacao;
+                return classeValorDinamico;
             } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro procurando implementação para valor lógico dinamico para " + getSlugIdentificador(), t);
             }
 
         }
-        return classeValidacao;
+        return classeValorDinamico;
     }
 
 }
