@@ -183,7 +183,8 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
                             = MapaObjetosProjetoAtual.getEstruturaObjeto(prCampoinstanciado.getObjetoDoAtributo().getClass()).
                                     getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
 
-                    ItfCalculoValorLogicoAtributoObjeto calculo = implementacaoCalculo.getConstructor(ItfCampoInstanciado.class).newInstance(prCampoinstanciado);
+                    ItfCalculoValorLogicoAtributoObjeto calculo = implementacaoCalculo
+                            .getConstructor(ItfCampoInstanciado.class).newInstance(prCampoinstanciado);
                     return calculo.getValor();
                 }
             } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException t) {
