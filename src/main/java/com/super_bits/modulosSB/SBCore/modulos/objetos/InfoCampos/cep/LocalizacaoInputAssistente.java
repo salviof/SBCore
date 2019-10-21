@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreObjetoSB;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
@@ -138,8 +139,8 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
             return cidadesEncontradas;
         }
 
-        SBCore.getCentralDeLocalizacao().gerarListaDeCidades(pCidadeTXT, getUnidadeFederativa()).stream().
-                filter(cidade -> UtilSBCoreStringComparador.isParecido(cidade.getNome(), pCidadeTXT)).forEach(cidadesEncontradas::add);
+        SBCore.getCentralDeLocalizacao().gerarListaDeCidades(pCidadeTXT, getUnidadeFederativa()).stream().forEach(
+                (cidadesEncontradas::add));
 
         return cidadesEncontradas;
     }
@@ -149,15 +150,8 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         if (unidadesFederativasDisponiveis == null) {
             unidadesFederativasDisponiveis = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
         }
-        List<ItfUnidadeFederativa> resultadoPesquisa = new ArrayList<>();
-        if (pNomeEstado != null) {
+        List<ItfUnidadeFederativa> resultadoPesquisa = UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(SBCore.getCentralDeLocalizacao().getUnidadesFederativas(), pNomeEstado, 1);
 
-            unidadesFederativasDisponiveis.stream().filter((pEstado)
-                    -> (pEstado.getNome() != null && pEstado.getSigla() != null)
-                    && ((UtilSBCoreStringComparador.isParecido(pEstado.getSigla(), pNomeEstado))
-                    || (UtilSBCoreStringComparador.isParecido(pEstado.getNome(), pNomeEstado)))).
-                    forEach(resultadoPesquisa::add);
-        }
         return resultadoPesquisa;
     }
 
@@ -264,6 +258,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
             if (isInstanciaCidadeCriada()) {
                 if (getCampoInstCidade().getValor() != null) {
                     ItfCidade cidade = (ItfCidade) getCampoInstCidade().getValor();
+
                     if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(cidade.getNome())) {
                         cidadeTemporaria = cidade;
                     }

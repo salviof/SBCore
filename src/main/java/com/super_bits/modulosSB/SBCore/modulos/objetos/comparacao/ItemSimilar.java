@@ -36,6 +36,7 @@ public class ItemSimilar implements ItfBeanSimples, Comparable<ItemSimilar> {
     private double nota;
     private final List<Double> notasValidas = new ArrayList<>();
     private final List<Double> notasIdentico = new ArrayList<>();
+    private final List<Double> notasIdenticoInicio = new ArrayList<>();
 
     public ItemSimilar(ItfBeanSimples pObjetoAnalizado, String parametro) {
         this.pObjetoAnalizado = pObjetoAnalizado;
@@ -48,16 +49,22 @@ public class ItemSimilar implements ItfBeanSimples, Comparable<ItemSimilar> {
             }
 
             Arrays.stream(parametro.split("\\s"))
-                    .forEach(sp -> {
+                    .forEach(parteParametro -> {
                         Arrays.stream(pObjetoAnalizado.getNome().toLowerCase().replace("-", " ").split("\\s"))
-                                .forEach(s -> {
-                                    if (UtilSBCoreStringValidador.isNuloOuEmbranco(s)) {
+                                .forEach(parteTextoAnalizadao -> {
+                                    if (UtilSBCoreStringValidador.isNuloOuEmbranco(parteTextoAnalizadao)) {
                                         return;
                                     }
-                                    double nt = UtilSBCoreStringComparador.JaroWinkler(s, sp);
+                                    if (parteTextoAnalizadao.length() > parteParametro.length()) {
+                                        parteTextoAnalizadao = parteTextoAnalizadao.substring(0, parteParametro.length());
+                                    }
+                                    double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
                                     if (nt > 0.8) {
                                         if (nt >= 0.9) {
                                             notasIdentico.add(nt);
+                                            if (pObjetoAnalizado.getNome().toLowerCase().startsWith(parteParametro)) {
+                                                notasIdenticoInicio.add(nt);
+                                            }
                                         } else {
                                             notasValidas.add(nt);
                                         }
@@ -75,6 +82,9 @@ public class ItemSimilar implements ItfBeanSimples, Comparable<ItemSimilar> {
             }
             if (!notasIdentico.isEmpty()) {
                 nota += (notasIdentico.size() * 1);
+            }
+            if (!notasIdenticoInicio.isEmpty()) {
+                nota += (notasIdenticoInicio.size() * 2);
             }
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando indice de semelhanca", t);
