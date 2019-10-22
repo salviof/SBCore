@@ -296,7 +296,8 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             pCampo.setValorCampoUnico(col.unique());
                             break;
                         case INFO_CAMPO_VALOR_LOGICO:
-                            pCampo.setSomenteLeitura(true);
+
+                            pCampo.setSomenteLeitura(anotacoes.getInfoCampoValorLogico().somenteLeitura());
                             pCampo.setUmValorLogico(true);
                             break;
                         case INFO_CAMPO_LISTA_DINAMICA:
