@@ -309,10 +309,12 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             pCampo.setTemValidacaoLogica(true);
                             break;
                         case INFO_CAMPO_LOCALIZACAO:
+
+                            pCampo.setPermitirCadastroManualEndereco(anotacoes.getInfoCampoLocalizacao().permitirCadastroCepNaoEncontrado());
                             //TODO:
-                            anotacoes.getInfoCampoLocalizacao().permitirCadastroNovaCidade();
                             anotacoes.getInfoCampoLocalizacao().permitirCadastroCepNaoEncontrado();
                             anotacoes.getInfoCampoLocalizacao().permitirCadstroNovoBairro();
+                            anotacoes.getInfoCampoLocalizacao().permitirCadastroNovaCidade();
                             break;
 
                         default:

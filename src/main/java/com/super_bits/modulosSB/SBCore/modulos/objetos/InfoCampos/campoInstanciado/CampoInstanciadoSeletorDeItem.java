@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.ItfSelecaoObjetoDeUmaLista;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,11 @@ public class CampoInstanciadoSeletorDeItem extends CampoInstanciadoComSelecao im
     @Override
     public ItfSelecaoObjetoDeUmaLista getObjetoDeUmaLista() {
         return objetoAPartirDeLista;
+    }
+
+    @Override
+    public List filtrarPorAutoComplet(String pParametro) {
+        return super.filtrarPorAutoComplet(pParametro); //chamada super do metodo (implementação classe pai)
     }
 
 }

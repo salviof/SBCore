@@ -570,4 +570,9 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
 
     }
 
+    @Override
+    public boolean isPermitirCadastroManualEndereco() {
+        return false;
+    }
+
 }

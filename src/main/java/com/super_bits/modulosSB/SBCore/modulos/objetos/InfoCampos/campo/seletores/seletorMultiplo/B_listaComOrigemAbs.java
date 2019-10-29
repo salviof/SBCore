@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.B_SeletorDeGetorGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.B_SeletorGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.ArrayList;
@@ -22,35 +22,21 @@ import java.util.List;
  * @param <T>
  */
 public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura>
-        extends B_SeletorDeGetorGenerico
+        extends B_SeletorGenerico
         implements ItfselecaoListaComOrigem {
 
-    private List<T> origemCompleta;
     protected final List<T> lista;
 
     public B_listaComOrigemAbs(ItfCampoInstanciado pCampoInstanciado) {
         super(pCampoInstanciado);
-        carregaOrigemCompleta((List<T>) pCampoInstanciado.getListaDeOpcoes());
-
         lista = (List) pCampoInstanciado.getValor();
 
-        ajuste(true);
     }
 
     public B_listaComOrigemAbs(List<T> pLista, List<T> pOrigem) {
         super(pOrigem);
-        carregaOrigemCompleta((List<T>) pOrigem);
-
         lista = (List) pLista;
         ajuste(true);
-    }
-
-    protected final void carregaOrigemCompleta(List<T> pList) {
-        origemCompleta = (List) new ArrayList();
-        origemCompleta.clear();
-        for (T item : pList) {
-            origemCompleta.add((T) item);
-        }
     }
 
     protected void carregaOrigemFromDataBase() {
@@ -61,7 +47,7 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
     protected final void ajuste(boolean pRenovar) {
         if (pRenovar) {
             origem.clear();
-            origem.addAll(origemCompleta);
+            origem.addAll(origem);
         }
         if (!origem.isEmpty()) {
             origem.removeAll(getListaObjetosSelecionados());
@@ -86,13 +72,8 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
     }
 
     @Override
-    public List<T> getOrigem() {
-        return origem;
-    }
-
-    @Override
     public void reloadOrigem() {
-        carregaOrigemFromDataBase();
+        super.reloadOrigem();
         ajuste(true);
         atualizaPickListViewContexto();
     }

@@ -50,10 +50,4 @@ public class B_ObjetoDeUmaListaOffilinecpInst<T extends ItfBeanSimplesSomenteLei
         setObjetoSelecionado(null);
     }
 
-    @Override
-    public void atualizaPickListViewContexto() {
-        System.out.println("Atulizando exibição da lista para:");
-
-    }
-
 }

@@ -6,6 +6,8 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.calculos;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 
 /**
@@ -29,6 +31,11 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
     @Override
     public ItfCampoInstanciado getCampoInst() {
         return campoInst;
+    }
+
+    protected ItfAtributoObjetoEditavel getAtributosDoCampo() {
+        CampoInstanciadoGenerico cp = (CampoInstanciadoGenerico) campoInst;
+        return (ItfAtributoObjetoEditavel) cp.getAtributosDoObjeto();
     }
 
 }

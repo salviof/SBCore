@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.B_SeletorDeGetorGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.B_SeletorGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  * @param <T>
  */
 public abstract class B_ObjetoDeUmaListaAbs<T extends ItfBeanSimplesSomenteLeitura> extends
-        B_SeletorDeGetorGenerico
+        B_SeletorGenerico
         implements ItfSelecaoObjetoDeUmaLista<T> {
 
     /**
@@ -39,32 +39,12 @@ public abstract class B_ObjetoDeUmaListaAbs<T extends ItfBeanSimplesSomenteLeitu
     public B_ObjetoDeUmaListaAbs(ItfCampoInstanciado pCampoInstanciado) {
 
         super(pCampoInstanciado);
-        ajuste(false);
+
     }
 
     public B_ObjetoDeUmaListaAbs(List pLista, List<T> pOrigem) {
         super(pOrigem);
 
-    }
-
-    protected void carregaOrigemFromDataBase() {
-        //   carregaOrigemCompleta((List) UtilSBPersistencia.getListaTodos(classeOrigem));
-        ajuste(true);
-    }
-
-    protected final void ajuste(boolean pRenovar) {
-
-        if (pRenovar && !origem.isEmpty()) {
-            origem.remove(getObjetoSelecionado());
-        }
-        atualizaPickListViewContexto();
-    }
-
-    @Override
-    public void reloadOrigem() {
-        carregaOrigemFromDataBase();
-        ajuste(true);
-        atualizaPickListViewContexto();
     }
 
     @Override

@@ -1201,4 +1201,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         statusFormulario = pStatusForm;
     }
 
+    public ItfAtributoObjetoSB getAtributosDoObjeto() {
+        return atributoAssociado;
+    }
+
+    @Override
+    public boolean isPermitirCadastroManualEndereco() {
+        return atributoAssociado.isPermitirCadastroManualEndereco();
+    }
+
 }

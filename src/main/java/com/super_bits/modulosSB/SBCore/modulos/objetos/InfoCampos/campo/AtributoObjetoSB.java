@@ -40,6 +40,8 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     private String textoPositivo;
     private String textoNegativo;
 
+    private boolean permitirCadastroManualEndereco;
+
     private boolean valorCampoUnico;
 
     public AtributoObjetoSB(PropriedadesReflexaoCampo pPropriedadesReflexao) {
@@ -474,6 +476,16 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     @Override
     public boolean isTemValidadacaoLogica() {
         return temValidacaoLogica;
+    }
+
+    @Override
+    public boolean isPermitirCadastroManualEndereco() {
+        return permitirCadastroManualEndereco;
+    }
+
+    @Override
+    public void setPermitirCadastroManualEndereco(boolean permitirCadastroManualEndereco) {
+        this.permitirCadastroManualEndereco = permitirCadastroManualEndereco;
     }
 
 }

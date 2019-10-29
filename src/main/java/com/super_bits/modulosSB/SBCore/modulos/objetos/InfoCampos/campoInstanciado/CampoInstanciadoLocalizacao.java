@@ -326,7 +326,8 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
 
     @Override
     public boolean isCepEncontradoObrigatorio() {
-        return true;
+        return assistente.isCepEncontradoObrigatorio();
+
     }
 
     @Override

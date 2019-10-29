@@ -110,9 +110,8 @@ public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtrib
 
         List resultado = new ArrayList();
 
-        pCampoInstanciado.getComoCampoComListaDeOpcoes().getSeletor().getOrigem().clear();
-        pCampoInstanciado.getComoCampoComListaDeOpcoes().getSeletor().getOrigem().addAll(getListaOpcoesCampoInstanciado(pCampoInstanciado));
-
+        //pCampoInstanciado.getComoCampoComListaDeOpcoes().getSeletor().getOrigem()
+        // pCampoInstanciado.getComoCampoComListaDeOpcoes().getSeletor().getOrigem().addAll(getListaOpcoesCampoInstanciado(pCampoInstanciado));
         if (!pCampoInstanciado.getListaDeOpcoes().isEmpty()) {
             pCampoInstanciado.getListaDeOpcoes().stream().filter((item) -> (item != null)).forEachOrdered((item) -> {
                 String nome = item.getNome();

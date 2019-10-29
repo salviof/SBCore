@@ -56,7 +56,6 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     private boolean pesquisaSucessoUnidadeFederativa;
 
     public LocalizacaoInputAssistente(ItfCampoInstanciado pCampoGerador, TipoOrganizacaoDadosEndereco pTipoOrganizacao) {
-
         tipoOrganizacao = pTipoOrganizacao;
         identificacaoMapa = tipoOrganizacao.getIdentificacaoMapaAssisteBean(pCampoGerador);
         if (identificacaoMapa == null) {
@@ -150,7 +149,14 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         if (unidadesFederativasDisponiveis == null) {
             unidadesFederativasDisponiveis = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
         }
-        List<ItfUnidadeFederativa> resultadoPesquisa = UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(SBCore.getCentralDeLocalizacao().getUnidadesFederativas(), pNomeEstado, 1);
+        List<ItfUnidadeFederativa> resultadoPesquisa = new ArrayList();
+
+        List<ItfUnidadeFederativa> todos = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
+        if (pNomeEstado.length() == 2) {
+            todos.stream().filter(uf -> (uf.getSigla().toLowerCase().equals(pNomeEstado.toLowerCase()))).forEach(resultadoPesquisa::add);
+        } else {
+            resultadoPesquisa = UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(SBCore.getCentralDeLocalizacao().getUnidadesFederativas(), pNomeEstado, 1);
+        }
 
         return resultadoPesquisa;
     }
@@ -737,9 +743,11 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     @Override
     public boolean isCepEncontradoObrigatorio() {
-
-        // TODO: Habilitar possibilidade de mudança de paramentro com InfoCampoLocalização
-        return true;
+        if (getCampoInstLocal() == null) {
+            return false;
+        } else {
+            return !getCampoInstLocal().isPermitirCadastroManualEndereco();
+        }
     }
 
     public void adicionarListaOpcoesBairro(List<ItfBairro> bairros) {
