@@ -113,14 +113,14 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
         filtrar();
     }
 
-    public void adicionarItemListaCompleta(Object it) {
+    protected void adicionarItemListaCompleta(Object it) {
         listaCompleta.add((T) it);
     }
 
     public List<T> getListaCompletaLasyMode() {
         if (listaCompleta.isEmpty()) {
             SBCore.getServicoFonteDeDadosParaAtributos().getListaOpcoesCampoInstanciado(campoInstanciado).parallelStream()
-                    .forEach(it -> adicionarItemListaCompleta(it));
+                    .forEach(this::adicionarItemListaCompleta);
         }
         return listaCompleta;
     }

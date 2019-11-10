@@ -47,12 +47,11 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
     protected final void ajuste(boolean pRenovar) {
         if (pRenovar) {
             origem.clear();
-            origem.addAll(origem);
+            origem.addAll(listaCompleta);
         }
-        if (!origem.isEmpty()) {
-            origem.removeAll(getListaObjetosSelecionados());
-        }
-        atualizaPickListViewContexto();
+
+        origem.removeAll(getListaObjetosSelecionados());
+
     }
 
     @Override
@@ -67,7 +66,7 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
     @Override
     public void setListaObjetosSelecionados(List pLista) {
 
-        ajuste(false);
+        ajuste(true);
         atualizaPickListViewContexto();
     }
 
