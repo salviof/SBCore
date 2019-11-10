@@ -49,7 +49,6 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
             origem.clear();
             origem.addAll(listaCompleta);
         }
-
         origem.removeAll(getListaObjetosSelecionados());
 
     }
