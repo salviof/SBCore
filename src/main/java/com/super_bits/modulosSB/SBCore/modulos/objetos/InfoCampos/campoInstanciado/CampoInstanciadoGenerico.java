@@ -273,10 +273,9 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         }
 
         // caso o componente diferenciado seja igual ao componente padrão da familia de componentes, retorna o compoenente do campo
-        if (pComponente.getXhtmlJSF().equals(getFabricaTipoAtributo().getTipo_input_prime().getFamilia().getComponentePadrao().getXhtmlJSF())) {
-            return getComponenteVisualPadrao();
-        }
-
+        //if (pComponente.getXhtmlJSF().equals(getFabricaTipoAtributo().getTipo_input_prime().getFamilia().getComponentePadrao().getXhtmlJSF())) {
+        //    return getComponenteVisualPadrao();
+        //}
         ///caso o componente enviado não seja da familia retornar o xhtml campo incompativel
         if (getComponenteVisualPadrao().getFamilia().equals(pComponente.getFamilia())) {
             return pComponente;
