@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Random;
 
@@ -61,6 +62,19 @@ public class UtilSBCoreNumeros {
 
         return randomNum;
 
+    }
+
+    /**
+     *
+     * @param pValor ex: 120,50
+     * @return 12050
+     */
+    public static String converterNumeroToStrMoedaPadraoBanco(Object pValor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String valor = formatter.format(pValor);
+        valor = valor.replace(",", "");
+        valor = valor.replace(".", "");
+        return valor;
     }
 
     public static String converterMoeda(Object pValor) {
