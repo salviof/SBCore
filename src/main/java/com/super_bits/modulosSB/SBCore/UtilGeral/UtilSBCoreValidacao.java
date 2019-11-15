@@ -54,7 +54,9 @@ public abstract class UtilSBCoreValidacao {
 
     public static boolean isTodosCamposValidadados(ItfBeanSimples pObjeto) {
         try {
-            boolean todosValidados = !(pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo())).findFirst().isPresent());
+
+            Optional<ItfCampoInstanciado> campoInvalido = pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo())).findFirst();
+            boolean todosValidados = !(campoInvalido.isPresent());
             if (!todosValidados && !SBCore.isEmModoProducao()) {
                 //algoritimo declarativo para fins de debug, pois não só de logs vive um Jedi.
                 //Todo retirar quando log estiver alcançar o estado da arte
