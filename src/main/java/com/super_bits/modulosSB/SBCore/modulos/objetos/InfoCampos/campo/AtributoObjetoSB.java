@@ -39,6 +39,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     private boolean umaListaDinamica;
     private String textoPositivo;
     private String textoNegativo;
+    private boolean atualizarValorLogicoAoPersistir;
 
     private boolean permitirCadastroManualEndereco;
 
@@ -486,6 +487,16 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     @Override
     public void setPermitirCadastroManualEndereco(boolean permitirCadastroManualEndereco) {
         this.permitirCadastroManualEndereco = permitirCadastroManualEndereco;
+    }
+
+    @Override
+    public void setAtualizarValorLogicoAoPersistir(boolean pAtualizarValorLogico) {
+        atualizarValorLogicoAoPersistir = pAtualizarValorLogico;
+    }
+
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        return atualizarValorLogicoAoPersistir;
     }
 
 }

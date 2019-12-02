@@ -96,12 +96,14 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
         return nomeClasse + "." + nomeMetodo;
     }
 
+    @Deprecated
     protected static Method getMetodoChamado() {
 
         int inicioPesquisaMetodo = 3;
 
         final Thread t = Thread.currentThread();
         final StackTraceElement[] stackTraceTodosMetodos = t.getStackTrace();
+
         int idfinalStacktrace = stackTraceTodosMetodos.length - 1;
         if (inicioPesquisaMetodo >= stackTraceTodosMetodos.length) {
             inicioPesquisaMetodo = stackTraceTodosMetodos.length - 1;

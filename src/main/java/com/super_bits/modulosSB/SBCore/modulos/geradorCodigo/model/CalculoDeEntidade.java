@@ -422,4 +422,9 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
         return estruturaCampo.isTemValidadorLogico();
     }
 
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        return estruturaCampo.isAtualizarValorLogicoAoPersistir();
+    }
+
 }

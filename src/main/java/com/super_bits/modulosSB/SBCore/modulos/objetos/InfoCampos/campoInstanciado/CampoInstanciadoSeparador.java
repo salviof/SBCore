@@ -575,4 +575,9 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
         return false;
     }
 
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        return false;
+    }
+
 }

@@ -60,8 +60,12 @@ public class UtilSBCoreDataHora {
         return (int) ((pDatafinal.getTime() - pDatainicial.getTime()) / 1000);
     }
 
+    public static double horasEntre(Date pDatainicial, Date pDatafinal) {
+        return (double) ((pDatafinal.getTime() - pDatainicial.getTime()) / 1000 / 60 / 60d);
+    }
+
     public static int mileSegundosEntre(Date pDatainicial, Date pDatafinal) {
-        return 1;
+        return (int) ((pDatafinal.getTime() - pDatainicial.getTime()));
     }
 
     private static SimpleDateFormat getDatePaternByFormatoTempo(FORMATO_TEMPO pFormato) {

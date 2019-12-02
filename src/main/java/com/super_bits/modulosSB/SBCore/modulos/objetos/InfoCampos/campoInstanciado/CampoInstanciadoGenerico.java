@@ -1008,6 +1008,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public boolean validarCampo() {
         try {
+            if (atributoAssociado.isUmValorLogico()) {
+
+                if (!atributoAssociado.isTemValidadacaoLogica()) {
+                    return true;
+                }
+
+            }
             if (atributoAssociado.isObrigatorio()) {
                 if (isUmCampoArquivoEntidade()) {
                     if (!getComoArquivoDeEntidade().isExisteArquivo()) {
@@ -1207,6 +1214,11 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public boolean isPermitirCadastroManualEndereco() {
         return atributoAssociado.isPermitirCadastroManualEndereco();
+    }
+
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        return atributoAssociado.isAtualizarValorLogicoAoPersistir();
     }
 
 }

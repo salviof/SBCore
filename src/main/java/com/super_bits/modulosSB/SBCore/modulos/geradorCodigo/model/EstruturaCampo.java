@@ -51,6 +51,7 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     Class<? extends ItfValidacao> classeValidacao;
     private Class classeListaDinamica;
     private Class classeValorDinamico;
+    private boolean atualizarValorLogicoAoSalvar;
 
     public EstruturaCampo(Field pCampo, EstruturaDeEntidade est) {
 
@@ -64,7 +65,12 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
         id = (estruturaPai.getNome() + nomeDeclarado).hashCode();
 
         temValidadorLogico = (pCampo.getAnnotation(InfoCampoValidadorLogico.class) != null);
+        InfoCampoValorLogico vl = pCampo.getAnnotation(InfoCampoValorLogico.class);
         temValorLogico = (pCampo.getAnnotation(InfoCampoValorLogico.class) != null);
+        if (temValorLogico) {
+            atualizarValorLogicoAoSalvar = vl.atualizarSempreQueSalvar();
+        }
+
         temListaDinamica = (pCampo.getAnnotation(InfoCampoListaDinamica.class) != null);
         if (temValorLogico) {
             tipoDeclaracao = TIPO_DECLARACAO.CAMPO_TRANSIENTE;
@@ -417,6 +423,11 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
 
         }
         return classeValorDinamico;
+    }
+
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        throw new UnsupportedOperationException("O METODO AINDA N\u00c3O FOI IMPLEMENTADO.");
     }
 
 }

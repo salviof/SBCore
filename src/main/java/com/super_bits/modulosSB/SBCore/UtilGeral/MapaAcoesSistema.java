@@ -17,6 +17,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
 
 /**
  *
@@ -37,6 +38,7 @@ public abstract class MapaAcoesSistema {
             throw new UnsupportedOperationException("O mapa de ações não pode ser definido, pos as Fabricas de ações do core não foram definidas");
         }
         try {
+
             mapaAcoes = new MapaDeAcoes(SBCore.getFabricasDeAcaoDoSistema());
             mapaCriado = true;
         } catch (Throwable t) {

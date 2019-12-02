@@ -447,4 +447,9 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
         return getTipoCampoSTR();
     }
 
+    @Override
+    public boolean isAtualizarValorLogicoAoPersistir() {
+        return false;
+    }
+
 }
