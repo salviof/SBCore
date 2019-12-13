@@ -35,6 +35,9 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
     public String getPropriedadePorAnotacao(ItfFabrica pPropriedades) {
 
         ItfFabConfigModulo atributo = UtilSBCoreReflexaoEnuns.getEnumConfigComEstaFabricaNaAnotacao(fabricaConfig, pPropriedades);
+        if (atributo == null) {
+            throw new UnsupportedOperationException("Atributo " + pPropriedades + "não parece ser um parametro esperado ");
+        }
         return getPropriedade(atributo);
 
     }
