@@ -5,10 +5,7 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.ItfFabricaIntegracaoRestBasico;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.FabTipoConexaoRest;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.InfoConsumoRestService;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.WS.conexaoWebServiceClient.RespostaWebServiceSimples;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,17 +28,6 @@ import org.json.simple.parser.JSONParser;
  * @author SalvioF
  */
 public class UtilSBCoreClienteRest {
-
-    public static InfoConsumoRestService getInformacoesConsumoRest(ItfFabricaIntegracaoRestBasico pConexao) {
-
-        try {
-            Field camo = pConexao.getClass().getField(pConexao.toString());
-            return camo.getAnnotation(InfoConsumoRestService.class);
-        } catch (Throwable t) {
-            return null;
-        }
-
-    }
 
     public static JSONObject getObjetoJsonPorUrl(String pUrl) {
         try {
@@ -134,77 +120,4 @@ public class UtilSBCoreClienteRest {
 
     }
 
-    public static RespostaWebServiceSimples getRespostaRest(String pURL, FabTipoConexaoRest pTipoConexao,
-            boolean pPostarInformcoesCorpoRequisicao,
-            Map<String, String> pCabecalho, String pCorpoRequisicao) {
-
-        try {
-
-            System.out.println("conectando com" + pURL);
-            HttpURLConnection conn = (HttpURLConnection) new URL(pURL).openConnection();
-            conn.setConnectTimeout(5000);
-            conn.setRequestMethod(pTipoConexao.getMetodoRequest());
-            pCabecalho.keySet().forEach((cabecalho) -> {
-                conn.setRequestProperty(cabecalho, pCabecalho.get(cabecalho));
-            });
-
-            if (pPostarInformcoesCorpoRequisicao) {
-
-                if (pCorpoRequisicao != null) {
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), Charset.forName("UTF-8").newEncoder());
-                    wr.write(pCorpoRequisicao);
-                    wr.flush();
-                }
-            }
-            BufferedReader br = null;
-            String respostaStr = "";
-            try {
-                br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-            } catch (IOException io) {
-                respostaStr += io.getMessage();
-            } catch (Throwable t) {
-                // SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, t.getLocalizedMessage() + t.getMessage(), t);
-                //      return null;
-                respostaStr += t.getMessage();
-            }
-
-            String inputResposta;
-
-            if (br != null) {
-                while ((inputResposta = br.readLine()) != null) {
-                    respostaStr += inputResposta;
-                }
-            }
-
-            int codigoResposta = conn.getResponseCode();
-            String mensagemErro = "";
-            if (codigoResposta < 200 || codigoResposta > 220) {
-                mensagemErro = conn.getResponseCode() + conn.getResponseMessage();
-                try {
-                    br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-                    ArrayList<String> respostaErro = new ArrayList<>();
-                    String linha = br.readLine();
-                    while (linha != null) {
-                        respostaErro.add(linha);
-                        linha = br.readLine();
-                    }
-                    mensagemErro += UtilSBCoreStringListas.getStringDaListaComBarraN(respostaErro);
-
-                } catch (IOException t) {
-                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro processando informações de erro", t);
-                }
-
-                //throw new RuntimeException("Falha Comunicação com serviço rest : HTTP error codidigo : " + conn.getResponseCode() + " Mensagem:" + mensagemErro);
-            }
-
-            conn.disconnect();
-
-            return new RespostaWebServiceSimples(codigoResposta, respostaStr, mensagemErro);
-        } catch (IOException | RuntimeException t) {
-            return null;
-        }
-    }
 }
