@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -133,6 +134,32 @@ public class UtilSBCoreStringBuscaTrecho {
         }
 
         return listar;
+    }
+
+    public static List<String> getPartesEntreColchete(String pTexto) {
+
+        List<String> resposta = new ArrayList<String>();
+        Pattern p = Pattern.compile("\\[([^\\}]+?)\\]"); // coloquei o trecho que quero entre parênteses
+        Matcher matcher = p.matcher(pTexto);
+        while (matcher.find()) {
+            String result = matcher.group(1); // pego o primeiro grupo de captura
+            resposta.add(result);
+        }
+
+        return resposta;
+    }
+
+    public static List<String> getPartesEntreChaves(@NotNull String pTexto) {
+
+        List<String> resposta = new ArrayList<>();
+        Pattern p = Pattern.compile("\\{([^\\}]+?)\\}"); // coloquei o trecho que quero entre parênteses
+        Matcher matcher = p.matcher(pTexto);
+        while (matcher.find()) {
+            String result = matcher.group(1); // pego o primeiro grupo de captura
+            resposta.add(result);
+        }
+
+        return resposta;
     }
 
     /**
