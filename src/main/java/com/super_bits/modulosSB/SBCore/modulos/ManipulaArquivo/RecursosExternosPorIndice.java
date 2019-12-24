@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
 import org.json.simple.JSONArray;
@@ -55,7 +56,7 @@ public class RecursosExternosPorIndice {
     public JSONObject getJsonObjeto(String pIndice) {
         try {
             String texto = getTexto(pIndice);
-            if (texto == null) {
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(texto)) {
                 return null;
             }
             JSONParser parser = new JSONParser();
