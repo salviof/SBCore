@@ -3,6 +3,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
@@ -12,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.io.Serializable;
 import java.util.List;
 
-@InfoObjetoSB(tags = {"Atributo de Objeto"}, plural = "Atributos de Objeto")
+@InfoObjetoSB(tags = {"Atributo de Objeto"}, plural = "Atributos de Objeto", fabricaVinculada = FabTipoAtributoObjeto.class)
 public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, ItfTipoAtributoSB, ItfBeanSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
@@ -450,6 +451,16 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
         return false;
+    }
+
+    @Override
+    public void setEnumVinculado(ItfFabrica pFabrica) {
+        tipoCampo = (FabTipoAtributoObjeto) pFabrica;
+    }
+
+    @Override
+    public ItfFabrica getEnumVinculado() {
+        return tipoCampo;
     }
 
 }

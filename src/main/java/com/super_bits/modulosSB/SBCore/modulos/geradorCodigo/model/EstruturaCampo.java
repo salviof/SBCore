@@ -8,6 +8,7 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.UtilSBGeradorDeCodigoBase;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
@@ -428,6 +429,16 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
         throw new UnsupportedOperationException("O METODO AINDA N\u00c3O FOI IMPLEMENTADO.");
+    }
+
+    @Override
+    public void setEnumVinculado(ItfFabrica pFabrica) {
+        setFabricaTipoAtributo((FabTipoAtributoObjeto) pFabrica);
+    }
+
+    @Override
+    public ItfFabrica getEnumVinculado() {
+        return getFabricaTipoAtributo();
     }
 
 }

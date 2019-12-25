@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -497,6 +498,16 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
         return atualizarValorLogicoAoPersistir;
+    }
+
+    @Override
+    public void setEnumVinculado(ItfFabrica pFabrica) {
+        setFabricaTipoAtributo((FabTipoAtributoObjeto) pFabrica);
+    }
+
+    @Override
+    public ItfFabrica getEnumVinculado() {
+        return getFabricaTipoAtributo();
     }
 
 }
