@@ -112,7 +112,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     @Override
     public boolean isExisteArquivo() {
-        switch (getCampoInstanciado().getPropriedadesRefexao().getFabTipoAtributo()) {
+        switch (getCampoInstanciado().getFabricaTipoAtributo()) {
             case ARQUIVO_DE_ENTIDADE:
                 if (getCampoInstanciado().getObjetoDoAtributo().getId() == 0) {
                     return intputTemporario != null;

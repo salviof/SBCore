@@ -9,6 +9,8 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.It
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,9 +19,36 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributoObjeto {
 
     private final ItfCampoInstanciado campoInst;
+    private boolean cacheAtivado;
+
+    public boolean isCacheAtivado() {
+        return cacheAtivado;
+
+    }
+
+    public void setValorPorReflexao(Object pValor) {
+
+        getCampoInst().setValor(pValor);
+
+    }
 
     public ValorLogicoCalculoGenerico(ItfCampoInstanciado pCampo) {
         campoInst = pCampo;
+    }
+
+    public void ativarCache(int pSegundos) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(pSegundos * 1000);
+                    cacheAtivado = false;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ValorLogicoCalculoGenerico.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }.start();
     }
 
     @Override

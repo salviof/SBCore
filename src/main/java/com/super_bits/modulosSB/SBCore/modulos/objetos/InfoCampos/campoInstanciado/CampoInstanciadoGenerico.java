@@ -872,6 +872,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public ItfPropriedadesReflexaoCampos getPropriedadesRefexao() {
+
         return propriedadesReflexao;
     }
 
