@@ -877,7 +877,7 @@ public class UtilSBCoreReflexaoCaminhoCampo {
     public static ItfValidacao getValidadorDoCampoInstanciado(ItfCampoInstanciado pCampo) {
         try {
 
-            EstruturaCampo est = MapaObjetosProjetoAtual.getEstruturaCampoPorCaminhoCompleto(pCampo.getNomeClasseOrigemAtributo() + "." + pCampo.getNomeCamponaClasse());
+            EstruturaCampo est = MapaObjetosProjetoAtual.getEstruturaCampoPorCaminhoCompleto(pCampo.getObjetoDoAtributo().getClass().getSimpleName() + "." + pCampo.getNomeCamponaClasse());
             Class classeValidacao = est.getClasseValidacao();
             if (est.getClasseValidacao() == null) {
 
