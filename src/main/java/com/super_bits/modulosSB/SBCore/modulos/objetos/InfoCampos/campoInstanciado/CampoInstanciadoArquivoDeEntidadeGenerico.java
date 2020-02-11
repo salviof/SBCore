@@ -56,7 +56,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
                 throw new UnsupportedOperationException("Este campo não extende " + ItfBeanSimples.class.getSimpleName());
             }
 
-            campoInstanciado.setValor(pNomeArquivo);
+            //campoInstanciado.setValor(pNomeArquivo);
             ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
             if (entidadeVinculada.getId() == 0) {
                 intputTemporario = pInputStream;

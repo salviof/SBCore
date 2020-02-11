@@ -834,7 +834,7 @@ public class SBCore {
     }
 
     public static void soutInfoDebug(String pInfo, boolean forcarExibicao) {
-        if (estadoAplicativo != ESTADO_APP.PRODUCAO || !forcarExibicao) {
+        if (estadoAplicativo != ESTADO_APP.PRODUCAO || forcarExibicao) {
             System.out.println("SBCoreInfo:" + pInfo);
         }
 

@@ -83,9 +83,6 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                 } catch (Throwable ex) {
                     Logger.getLogger(UtilSBCoreReflexao.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-
-                System.out.println("nao encontrou em:" + campo.getType().getName() + "--" + campo.getName() + " o tipo: " + tipoProcurado.getName());
             }
         }
         return resposta;

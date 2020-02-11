@@ -103,7 +103,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
 
     @Override
     public boolean salvarArquivo(ItfCampoInstanciado pCampo, byte[] arquivo, String pNomeArquivo) {
-
+        pCampo.setValor(pNomeArquivo);
         return salvarArquivo((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
     }
 
