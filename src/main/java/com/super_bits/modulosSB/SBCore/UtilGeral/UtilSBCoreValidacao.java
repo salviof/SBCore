@@ -34,7 +34,8 @@ public abstract class UtilSBCoreValidacao {
     public static String getPrimeiraInconsistenciaDeValidacao(ItfBeanSimples pObjeto) {
         Optional<ItfCampoInstanciado> cpEncontrado = pObjeto.getCamposInstanciados().stream().
                 filter(cp
-                        -> (!cp.validarCampo())).findFirst();
+                        -> (!cp.validarCampo())
+                ).findFirst();
 
         if (cpEncontrado.isPresent()) {
             return gerarMensagensValidacao(cpEncontrado.get(), cpEncontrado.get().getValor(), pObjeto.getId() == 0, true).get(0);

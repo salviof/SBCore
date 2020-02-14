@@ -16,10 +16,6 @@ public class UtilSBCoreNumerosOperacoes {
     public static boolean compararDouble(double f1, double f2) {
         final double THRESHOLD = .0001;
 
-        for (int i = 1; i <= 11; i++) {
-            f1 += .1;
-        }
-
         return Math.abs(f1 - f2) < THRESHOLD;
     }
 
