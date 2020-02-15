@@ -11,7 +11,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAc
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
@@ -37,6 +36,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -565,8 +565,12 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
         try {
+            InfoPreparacaoObjeto anotacaoConstructor = UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class);
+            if (anotacaoConstructor == null) {
+                throw new UnsupportedOperationException("A anotação" + InfoPreparacaoObjeto.class.getSimpleName() + " é nescessária no método PrepararNovoObjeto do " + this.getClass().getSimpleName());
+            }
             return UtilSBCoreReflexaoObjeto.getParametroPrepararObjeto(pTipoParametro,
-                    UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class),
+                    anotacaoConstructor,
                     parametros);
         } catch (Throwable t) {
             throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) getInstancia(), "Erro procurando parametro por tipo anotação " + InfoPreparacaoObjeto.class.getSimpleName() + " Não foi encontrada");
