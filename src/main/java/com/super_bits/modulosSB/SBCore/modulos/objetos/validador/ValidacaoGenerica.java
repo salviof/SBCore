@@ -7,8 +7,6 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import java.io.Serializable;
-import org.apache.logging.log4j.LogManager;
-import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 
 /**
  *
@@ -20,15 +18,9 @@ public class ValidacaoGenerica<T> implements ItfValidacao<T>, Serializable {
 
     @Override
     public Object validar(Object pValor) throws ErroValidacao {
-        try {
-            throw new UnsupportedOperationException("Ainda não implementado");
-        } catch (Throwable t) {
-            LogManager.getLogger(LogPadraoSB.class).error("O validador do  campo" + getCampoInstanciado().getNomeClasseAtributoDeclarado() + " não foi impplementado", t);
-            if (LogManager.getLogger(LogPadraoSB.class).isDebugEnabled()) {
-                LogManager.getLogger(LogPadraoSB.class).error("Falta implmentar o validador para o campo", t);
-            }
-            return null;
-        }
+
+        throw new ErroValidacao("O validador do  campo" + getCampoInstanciado().getObjetoDoAtributo().getClass().getSimpleName() + "." + getCampoInstanciado().getLabel() + " não foi impplementado em " + this.getClass().getSimpleName());
+
     }
 
     public ValidacaoGenerica(ItfCampoInstanciado pCampo) {

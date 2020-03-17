@@ -5,11 +5,12 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.Random;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -99,4 +100,13 @@ public class UtilSBCoreNumeros {
         return nf.format(pNumero);
     }
 
+    public static final double doubleArredondamento(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }

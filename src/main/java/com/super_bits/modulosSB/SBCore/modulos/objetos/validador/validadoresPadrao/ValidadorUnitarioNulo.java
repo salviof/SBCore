@@ -26,18 +26,22 @@ public class ValidadorUnitarioNulo extends ValidadorUnitarioCampoInstGenerico {
         switch (campoInstanciado.getFabricaTipoAtributo()) {
             case ARQUIVO_DE_ENTIDADE:
                 if (pValor != null) {
+                    if (!campoInstanciado.getComoArquivoDeEntidade().isExisteArquivo()) {
+                        return "O arquivo para " + campoInstanciado.getLabel() + " não foi encontrado";
+                    }
                     return null;
                 }
             default:
-                if (campoInstanciado.isUmValorLivre()) {
-                    if (campoInstanciado.isObrigatorio()) {
-                        if (pValor instanceof String) {
-                            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor.toString())) {
-                                return campoInstanciado.getLabel() + " não pode ser nulo";
-                            }
+                if (campoInstanciado.isObrigatorio()) {
+                    if (!campoInstanciado.isNumeral()) {
+
+                        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                            return campoInstanciado.getLabel() + " não pode ser nulo";
                         }
+
                     }
                 }
+
         }
 
         return null;

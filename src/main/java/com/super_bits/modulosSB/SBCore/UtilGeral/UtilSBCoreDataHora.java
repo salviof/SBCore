@@ -8,12 +8,16 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import org.apache.commons.lang3.time.DateUtils;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -642,6 +646,22 @@ public class UtilSBCoreDataHora {
         return dataRetorno;
     }
 
+    /**
+     *
+     * @param pData Data de referência
+     * @param pNumeroMeses numero de dias para incrementar
+     * @return
+     */
+    public static Date incrementaMes(Date pData, int pNumeroMeses) {
+        if (pNumeroMeses == 0) {
+            return pData;
+        }
+
+        Date novadata = DateUtils.addMonths(pData, pNumeroMeses);
+
+        return novadata;
+    }
+
     public static long interTempContRegSegundos(Date pDataInicial, Date pDataFinal) {
 
         long diferencaSegundos = intervaloTempoSegundos(pDataInicial, pDataFinal);
@@ -1060,6 +1080,100 @@ public class UtilSBCoreDataHora {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Não foi possivel obter hora atual!", t);
             return null;
         }
+
+    }
+
+    public static boolean isDiaIgual(Date pData1, Date pData2) {
+        if (pData1 == null || pData2 == null) {
+            //False por questão filosófica de não existir dia nulo
+            return false;
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(pData1);
+        cal2.setTime(pData2);
+
+        return cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+                && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+
+    }
+
+    public static boolean isMesFazParteDoIntevalor(Date pMesReferencia, Date pMesinicial, Date pMesFinal) {
+        if (pMesinicial == null || pMesFinal == null) {
+            //False por questão filosófica de não existir mês nulo
+            return false;
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        Calendar calReferencia = Calendar.getInstance();
+        cal1.setTime(pMesinicial);
+        cal2.setTime(pMesFinal);
+        calReferencia.setTime(pMesReferencia);
+
+        int anoReferencia = cal2.get(Calendar.YEAR);
+        int mesREferencia = cal1.get(Calendar.MONTH);
+
+        int anoinicial = cal1.get(Calendar.YEAR);
+        int anoFinal = cal2.get(Calendar.YEAR);
+
+        int mesInicial = calReferencia.get(Calendar.MONTH);
+        int mesFinal = calReferencia.get(Calendar.MONTH);
+
+        if (anoReferencia < anoinicial || anoReferencia > anoFinal || mesREferencia > mesFinal) {
+            return false;
+        }
+
+        return mesREferencia >= mesInicial;
+
+    }
+
+    public static boolean isMesIgual(Date pData1, Date pData2) {
+        if (pData1 == null || pData2 == null) {
+            //False por questão filosófica de não existir mês nulo
+            return false;
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(pData1);
+        cal2.setTime(pData2);
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+    }
+
+    public static int getMes(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.MONTH);
+    }
+
+    public static int getDia(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static boolean isDiaIgualOuSuperior(Date pDiaReferencia, Date pDiaSuperior) {
+        if (pDiaReferencia == null || pDiaSuperior == null) {
+            //False por questão filosófica de não existir dia nulo
+            return false;
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(pDiaReferencia);
+        cal2.setTime(pDiaSuperior);
+
+        if (cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+                && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)) {
+            return true;
+        }
+        return pDiaSuperior.getTime() > pDiaReferencia.getTime();
 
     }
 
