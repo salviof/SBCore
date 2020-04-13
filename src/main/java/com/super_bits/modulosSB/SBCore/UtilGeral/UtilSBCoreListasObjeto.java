@@ -29,6 +29,20 @@ public class UtilSBCoreListasObjeto {
 
     }
 
+    public static void ordernarPorCampo(List pLista, String pAtributo) {
+
+        ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, false);
+        pLista.sort(cpGenerico);
+
+    }
+
+    public static void ordernarPorCampoReverso(List pLista, String pAtributo) {
+
+        ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, true);
+        pLista.sort(cpGenerico);
+
+    }
+
     public static void ordernarPorTipoCampoReverso(List pLista, FabTipoAtributoObjeto pAtributo) {
         ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, true);
         pLista.sort(cpGenerico);

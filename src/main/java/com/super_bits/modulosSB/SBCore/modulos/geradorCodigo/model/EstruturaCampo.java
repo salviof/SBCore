@@ -428,7 +428,7 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
 
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
-        throw new UnsupportedOperationException("O METODO AINDA N\u00c3O FOI IMPLEMENTADO.");
+        return atualizarValorLogicoAoSalvar;
     }
 
     @Override

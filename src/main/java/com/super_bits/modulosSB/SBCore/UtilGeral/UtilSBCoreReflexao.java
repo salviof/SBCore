@@ -368,23 +368,6 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
 
     }
 
-    public static boolean isClasseIgualOuExetende(Class pClasseReferencia, Class pClassePesquisada) {
-
-        if (pClasseReferencia.getSimpleName().equals(pClassePesquisada.getSimpleName())) {
-            return true;
-        }
-        Class classeAtual = pClasseReferencia.getSuperclass();
-        while (!classeAtual.getSimpleName().equals(Object.class.getSimpleName())) {
-
-            if (classeAtual.getSimpleName().equals(pClassePesquisada.getSimpleName())) {
-                return true;
-            }
-            classeAtual = classeAtual.getSuperclass();
-        }
-        return false;
-
-    }
-
     /**
      *
      * Verifica se classe ou algum superType da classe implementa uma interface

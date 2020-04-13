@@ -7,6 +7,8 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -62,7 +64,7 @@ public class UtilSBCoreDataHoraTest {
     public void testIntervaloTempoMileSegundos() { // não fazer nenhuma multiplicação por mil 60 60 e 24 simplesmente o .getTime()
     }
 
-    //@Test
+    @Test
     public void testIntervaloTempoSegundos() {
 
         try {
@@ -85,7 +87,7 @@ public class UtilSBCoreDataHoraTest {
 
     }
 
-    //@Test
+    @Test
     public void testIntervaloTempoMinutos() {
 
         try {
@@ -108,7 +110,7 @@ public class UtilSBCoreDataHoraTest {
 
     }
 
-    //@Test
+    @Test
     public void testIntervaloTempoHoras() {
 
         try {
@@ -131,7 +133,7 @@ public class UtilSBCoreDataHoraTest {
 
     }
 
-    //@Test
+    @Test
     public void testIntervaloTempoDias() {
 
         try {
@@ -154,7 +156,7 @@ public class UtilSBCoreDataHoraTest {
 
     }
 
-    //@Test
+    @Test
     public void testIntervaloTempoMeses() {
 
         try {
@@ -262,22 +264,42 @@ public class UtilSBCoreDataHoraTest {
     public void testIntervaloTempoDias_Long() {
     }
 
-    //@Test
     public void testIntervaloTempoSemanas_Date_Date() throws ParseException {
 
+        SimpleDateFormat ds = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date dataInicial = ds.parse("07/09/2016 12:00:00");
+        Date dataFinal = UtilSBCoreDataHora.incrementaDias(dataInicial, 365);
+
+        Long diferencaEsperada = 52L;
+        Long diferencaSemanas = ((dataFinal.getTime() - dataInicial.getTime()) / (QTDMILISEGUNDOSSEGUNDO * SEGUNDOSMINUTO * MINUTOSHORA * HORASDIA * 24));
+        assertEquals(diferencaEsperada, diferencaSemanas);
+
+        diferencaSemanas = UtilSBCoreDataHora.intervaloTempoSemanas(dataInicial, dataFinal);
+        assertEquals(diferencaEsperada, diferencaSemanas);
+
+    }
+
+    @Test
+    public void testIsDiaIgualOuSuperior() {
         try {
             SimpleDateFormat ds = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date dataInicial = ds.parse("07/09/2016 12:00:00");
-            Date dataFinal = UtilSBCoreDataHora.incrementaDias(dataInicial, 365);
+            Date dataInicial = ds.parse("22/01/2020 12:00:00");
 
-            Long diferencaEsperada = 52L;
-            Long diferencaSemanas = ((dataFinal.getTime() - dataInicial.getTime()) / (QTDMILISEGUNDOSSEGUNDO * SEGUNDOSMINUTO * MINUTOSHORA * HORASDIA * 24));
-            assertEquals(diferencaEsperada, diferencaSemanas);
-
-            diferencaSemanas = UtilSBCoreDataHora.intervaloTempoSemanas(dataInicial, dataFinal);
-            assertEquals(diferencaEsperada, diferencaSemanas);
-        } catch (Throwable t) {
-            t.printStackTrace();
+            Date dataIgual = ds.parse("22/01/2020 12:00:00");
+            Date dataIgual2 = ds.parse("22/01/2020 10:00:00");
+            Date dataSuperior = ds.parse("23/01/2020 12:00:00");
+            Date dataSuperior3 = ds.parse("22/02/2020 12:00:00");
+            Date dataSuperior2 = new Date();
+            Date dataInferior = ds.parse("21/01/2020 12:00:00");
+            assertTrue("Falha verificando dia igual1", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataIgual));
+            assertTrue("Falha verificando dia igual2", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataIgual2));
+            assertTrue("Falha verificando dia superior 1", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataSuperior));
+            assertTrue("Falha verificando dia superior 2", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataSuperior2));
+            assertTrue("Falha verificando dia superior 3", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataSuperior3));
+            assertFalse("Falha verificando dia inferior 2", UtilSBCoreDataHora.isDiaIgualOuSuperior(dataInicial, dataInferior));
+        } catch (ParseException ex) {
+            Logger.getLogger(UtilSBCoreDataHoraTest.class.getName()).log(Level.SEVERE, null, ex);
+            fail("Falhou testando data igual ou superior");
         }
     }
 
