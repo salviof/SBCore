@@ -1113,20 +1113,25 @@ public class UtilSBCoreDataHora {
         cal2.setTime(pMesFinal);
         calReferencia.setTime(pMesReferencia);
 
-        int anoReferencia = cal2.get(Calendar.YEAR);
-        int mesREferencia = cal1.get(Calendar.MONTH);
+        int anoReferencia = calReferencia.get(Calendar.YEAR);
+        int mesREferencia = calReferencia.get(Calendar.MONTH);
 
         int anoinicial = cal1.get(Calendar.YEAR);
         int anoFinal = cal2.get(Calendar.YEAR);
 
-        int mesInicial = calReferencia.get(Calendar.MONTH);
-        int mesFinal = calReferencia.get(Calendar.MONTH);
+        int mesInicial = cal1.get(Calendar.MONTH);
+        int mesFinal = cal2.get(Calendar.MONTH);
 
-        if (anoReferencia < anoinicial || anoReferencia > anoFinal || mesREferencia > mesFinal) {
-            return false;
+        if (anoReferencia >= anoinicial && anoReferencia <= anoFinal) {
+            if (anoReferencia == anoFinal) {
+                if (mesREferencia <= mesFinal) {
+                    return true;
+                }
+            }
+            return anoReferencia < anoFinal;
+
         }
-
-        return mesREferencia >= mesInicial;
+        return false;
 
     }
 

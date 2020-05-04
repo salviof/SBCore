@@ -15,6 +15,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -87,6 +90,7 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
                     } else {
                         if (metodo.getParameterCount() == 1) {
                             Class tipoParametro = metodo.getParameterTypes()[0];
+
                             if (tipoParametro.isInstance(pValor)) {
                                 metodo.invoke(getObjetoDoAtributo(), pValor);
                             } else {
@@ -111,6 +115,15 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
 
                                     }
                                     return;
+                                }
+                                if (pValor instanceof Object[]) {
+                                    if (tipoParametro.getSimpleName().equals("List")) {
+                                        List lista = new ArrayList();
+                                        Object[] itens = (Object[]) pValor;
+                                        lista.addAll(Arrays.asList(itens));
+                                        metodo.invoke(getObjetoDoAtributo(), lista);
+                                        return;
+                                    }
                                 }
                                 metodo.invoke(getObjetoDoAtributo(), pValor);
                             }

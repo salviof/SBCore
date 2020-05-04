@@ -493,7 +493,13 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @return Valor da propriedade pojo anotada com o campo procurado
      */
     protected Object getValorByTipoCampoEsperado(FabTipoAtributoObjeto tipoCampo) {
-        CampoEsperado campoEsperadoEncontrado = camposEsperados.getCampo(tipoCampo);
+        CampoEsperado campoEsperadoEncontrado;
+        try {
+            campoEsperadoEncontrado = camposEsperados.getCampo(tipoCampo);
+        } catch (Throwable t) {
+            adcionaCampoEsperado(new CampoEsperado(tipoCampo, null), false);
+            campoEsperadoEncontrado = camposEsperados.getCampo(tipoCampo);
+        }
 
         if (campoEsperadoEncontrado.getFoiAnotado()) {
 

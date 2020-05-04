@@ -16,12 +16,9 @@ public class UtilSBCoreNumerosOperacoes {
     public static boolean compararDouble(double f1, double f2) {
         final double LIMITE = .0001;
 
-<<<<<<< HEAD
         boolean resultado = Math.abs(f1 - f2) < LIMITE;
         return resultado;
-=======
-        return Math.abs(f1 - f2) < THRESHOLD;
->>>>>>> 8bed58aec68dcf776cae3a1efd2599efc88f4322
+
     }
 
 }
