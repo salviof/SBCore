@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.hibernate.proxy.HibernateProxy;
@@ -493,6 +495,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @return Valor da propriedade pojo anotada com o campo procurado
      */
     protected Object getValorByTipoCampoEsperado(FabTipoAtributoObjeto tipoCampo) {
+<<<<<<< HEAD
         CampoEsperado campoEsperadoEncontrado;
         try {
             campoEsperadoEncontrado = camposEsperados.getCampo(tipoCampo);
@@ -518,24 +521,25 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
             } catch (ErroObtendoValorDoCampoPorReflexao ex) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "O infoCampo  " + tipoCampo + " pesquisado não foi encontrado na classe" + getInstancia().getClass().getName(), ex);
+=======
+        try {
+            return getCampoByAnotacao(tipoCampo).get(this);
+        } catch (IllegalAccessException il) {
+            Field campo = getCampoByAnotacao(tipoCampo);
+            if (!campo.isAccessible()) {
+                campo.setAccessible(true);
+>>>>>>> 1c3a3bb6d3eecc8206b9c3b89cc369239ddd9279
             }
-
-            if (campoEsperadoEncontrado.getAnotacaoObrigatoria()) {
-
-                try {
-                    throw new ErroDeMapaDeCampos(String.format(
-                            ErrorMessages.CAMPO_ANOTACAO_OBRIGATORIO,
-                            campoEsperadoEncontrado.getTipoCampo()));
-                } catch (ErroDeMapaDeCampos e) {
-
-                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Um campo  do tipo " + campoEsperadoEncontrado.getTipoCampo().getRegistro() + "era esperado, e não foi localizado na classe" + getInstancia().getClass(), e);
-                }
+            try {
+                return campo.get(this);
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
+                SBCore.RelatarErroAoUsuario(FabErro.SOLICITAR_REPARO, "erro obtendo valor pelo tipo de campo " + tipoCampo + " em " + this.getClass().getSimpleName(), ex);
+                return null;
             }
-
-            return campoEsperadoEncontrado.getValorPadrao();
-
+        } catch (IllegalArgumentException ex) {
+            SBCore.RelatarErroAoUsuario(FabErro.SOLICITAR_REPARO, "erro obtendo valor pelo tipo de campo " + tipoCampo + " em " + this.getClass().getSimpleName(), ex);
+            return null;
         }
-        return null;
     }
 
     /**
