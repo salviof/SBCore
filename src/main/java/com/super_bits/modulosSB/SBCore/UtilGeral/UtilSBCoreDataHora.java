@@ -1135,6 +1135,21 @@ public class UtilSBCoreDataHora {
 
     }
 
+    public static boolean isAnoIgual(Date pData1, Date pData2) {
+        if (pData1 == null || pData2 == null) {
+            //False por questão filosófica de não existir mês nulo
+            return false;
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(pData1);
+        cal2.setTime(pData2);
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+
+    }
+
     public static boolean isMesIgual(Date pData1, Date pData2) {
         if (pData1 == null || pData2 == null) {
             //False por questão filosófica de não existir mês nulo

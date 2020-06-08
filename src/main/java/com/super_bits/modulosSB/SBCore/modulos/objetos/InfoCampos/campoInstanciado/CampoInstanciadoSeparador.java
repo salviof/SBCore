@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCampos;
@@ -506,7 +507,7 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public ItfValidacao getValidacaoLogica() {
+    public ItfValidacao getValidacaoLogicaEstrategia() {
         return null;
     }
 
@@ -578,6 +579,11 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
         return false;
+    }
+
+    @Override
+    public ItfCalculoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
+        return null;
     }
 
 }

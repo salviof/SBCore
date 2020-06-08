@@ -13,6 +13,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -33,6 +34,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfTipoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
@@ -43,12 +45,15 @@ import static com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.co
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualSeletorItem;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualSistema;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -73,6 +78,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     protected final ItfAtributoObjetoEditavel atributoAssociado;
     private final PropriedadesReflexaoCampo propriedadesReflexao;
     private ItfValidacao validacaoLogica;
+    private ItfCalculoValorLogicoAtributoObjeto valorLogicoEstrategia;
+
     private FabEstadoFormulario statusFormulario = FabEstadoFormulario.INDEFINIDO;
     private int indiceValorLista = -1;
     // TODO, Justificativas para alteração de Campos
@@ -1063,24 +1070,6 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public ItfValidacao getValidacaoLogica() {
-        if (isCampoNaoInstanciado()) {
-            return null;
-        }
-
-        if (validacaoLogica != null) {
-            return validacaoLogica;
-        } else {
-
-            if (validacaoLogica == null) {
-                validacaoLogica = UtilSBCoreReflexaoCaminhoCampo.getValidadorDoCampoInstanciado((ItfCampoInstanciado) this);
-            }
-        }
-        return validacaoLogica;
-
-    }
-
-    @Override
     public boolean contem(Object pParametro) {
         Object valor = getValor();
         if (pParametro == null) {
@@ -1220,6 +1209,62 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public boolean isAtualizarValorLogicoAoPersistir() {
         return atributoAssociado.isAtualizarValorLogicoAoPersistir();
+    }
+
+    @Override
+    public ItfCalculoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
+        if (isCampoNaoInstanciado()) {
+            return null;
+        }
+
+        if (valorLogicoEstrategia != null) {
+            return valorLogicoEstrategia;
+        } else {
+
+            try {
+                Class<? extends ItfCalculoValorLogicoAtributoObjeto> implementacaoCalculo
+                        = MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
+                                getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
+
+                if (implementacaoCalculo == null) {
+                    System.out.println("");
+                    MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
+                            getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
+                }
+
+                try {
+                    valorLogicoEstrategia = implementacaoCalculo.getConstructor(ItfCampoInstanciado.class).newInstance(this);
+
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                    Logger.getLogger(CampoInstanciadoGenerico.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } catch (NoSuchMethodException | SecurityException ex) {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo instancia do valor lógico", ex);
+                return null;
+            }
+
+        }
+        return valorLogicoEstrategia;
+
+    }
+
+    @Override
+    public ItfValidacao getValidacaoLogicaEstrategia() {
+        if (isCampoNaoInstanciado()) {
+            return null;
+        }
+
+        if (validacaoLogica != null) {
+            return validacaoLogica;
+        } else {
+
+            if (validacaoLogica == null) {
+                validacaoLogica = UtilSBCoreReflexaoCaminhoCampo.getValidadorDoCampoInstanciado((ItfCampoInstanciado) this);
+            }
+        }
+        return validacaoLogica;
+
     }
 
 }

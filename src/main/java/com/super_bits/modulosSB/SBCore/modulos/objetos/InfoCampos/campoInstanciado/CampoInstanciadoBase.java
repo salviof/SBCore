@@ -27,8 +27,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
 
     protected final FieldComSerializacao campoReflection;
-//    protected int indiceValorLista = -1;
-    private ItfValidacao validacao;
+
     private boolean bloquearProximaTentativaDeAlteracao = false;
     private boolean possuiValorCalculoDinamico = false;
 
@@ -192,21 +191,11 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
             try {
                 if (campoReflection.isPossuiValorDinamicoCalculado()) {
                     ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
-                    Class<? extends ItfCalculoValorLogicoAtributoObjeto> implementacaoCalculo
-                            = MapaObjetosProjetoAtual.getEstruturaObjeto(prCampoinstanciado.getObjetoDoAtributo().getClass()).
-                                    getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
+                    ItfCalculoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();
 
-                    if (implementacaoCalculo == null) {
-                        System.out.println("");
-                        MapaObjetosProjetoAtual.getEstruturaObjeto(prCampoinstanciado.getObjetoDoAtributo().getClass()).
-                                getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
-                    }
-
-                    ItfCalculoValorLogicoAtributoObjeto calculo = implementacaoCalculo
-                            .getConstructor(ItfCampoInstanciado.class).newInstance(prCampoinstanciado);
                     return calculo.getValor();
                 }
-            } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException t) {
+            } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo implementação de valor dinamico calculado" + campoReflection.getNomeDeclaracao(), t);
             }
             try {

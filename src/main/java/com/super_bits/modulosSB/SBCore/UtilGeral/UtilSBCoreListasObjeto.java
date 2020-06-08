@@ -58,7 +58,7 @@ public class UtilSBCoreListasObjeto {
         List<ItemSimilar> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
         Collections.sort(itensOrdenados);
         Collections.reverse(itensOrdenados);
-        itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getpObjetoAnalizado()));
+        itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;
     }
 
