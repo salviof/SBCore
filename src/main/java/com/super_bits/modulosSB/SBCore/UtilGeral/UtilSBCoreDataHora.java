@@ -1177,6 +1177,31 @@ public class UtilSBCoreDataHora {
         return cal1.get(Calendar.DAY_OF_MONTH);
     }
 
+    public static String getDiaDaSemana(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        int diaDaSemana = cal1.get(Calendar.DAY_OF_WEEK);
+
+        switch (diaDaSemana) {
+            case Calendar.SUNDAY:
+                return "Domingo";
+            case Calendar.MONDAY:
+                return "Segunda";
+            case Calendar.TUESDAY:
+                return "terça";
+            case Calendar.WEDNESDAY:
+                return "Quarta";
+            case Calendar.THURSDAY:
+                return "Quinta";
+            case Calendar.FRIDAY:
+                return "Sexta";
+            case Calendar.SATURDAY:
+                return "Sábado";
+        }
+
+        return null;
+    }
+
     public static boolean isDiaIgualOuSuperior(Date pDiaReferencia, Date pDiaSuperior) {
         if (pDiaReferencia == null || pDiaSuperior == null) {
             //False por questão filosófica de não existir dia nulo
