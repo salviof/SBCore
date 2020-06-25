@@ -97,8 +97,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
                 ordem++;
             }
 
-            System.out.println("pesoTotal=" + somaPeso);
-
+//            System.out.println("pesoTotal=" + somaPeso);
             int restoColuna = 12 - somaPeso;
 
             double VALOR_UNIDADE_COLUNA_PORCENTAGEM_DO_LAYOUT = 100 / somaPeso;
