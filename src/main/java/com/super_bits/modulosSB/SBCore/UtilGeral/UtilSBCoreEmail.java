@@ -42,7 +42,7 @@ public abstract class UtilSBCoreEmail {
         return enviaporSSL(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
                 configuracao.getFromEmail(),
                 configuracao.getServidorPrincipalTransacional().getUsuarioSMTP(),
-                configuracao.getServidorPrincipalTransacional().getSenhaServidorSMTP(), pMensagem,
+                configuracao.getServidorPrincipalTransacional().getSenhaSMTP(), pMensagem,
                 pDestinatario, pAssunto);
     }
 

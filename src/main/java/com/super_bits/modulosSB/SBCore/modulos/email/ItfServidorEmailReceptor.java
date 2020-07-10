@@ -24,7 +24,7 @@ public interface ItfServidorEmailReceptor extends ItfServidorEmail {
         return 995;
     }
 
-    public default boolean isSSLRecepcao() {
+    public default boolean isUsarSSLRecepcao() {
 
         return (portaRecepcao() != 110);
     }

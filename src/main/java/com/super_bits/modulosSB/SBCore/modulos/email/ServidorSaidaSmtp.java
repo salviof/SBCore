@@ -71,12 +71,12 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     }
 
     @Override
-    public boolean isUsarSSL() {
+    public boolean isUsarSSLSMTP() {
         return usarSSL;
     }
 
     @Override
-    public boolean isUsarTSL() {
+    public boolean isUsarTSLSMTP() {
         return usarTSL;
     }
 
@@ -86,7 +86,7 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     }
 
     @Override
-    public String getSenhaServidorSMTP() {
+    public String getSenhaSMTP() {
         return senha;
     }
 
@@ -100,7 +100,7 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
 
     @Override
     public String getSenha() {
-        return getSenhaServidorSMTP();
+        return getSenhaSMTP();
     }
 
     @Override
