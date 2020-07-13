@@ -82,6 +82,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
     }
 
     public PropriedadesReflexaoCampo(FieldComSerializacao campoVInculado) {
+
         try {
             this.anotacoes = campoVInculado.gerarAnotacoes();
 
@@ -247,11 +248,11 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             break;
                         case GRUPO_CAMPOS:
                             try {
-                                pCampo.setGrupoSubCamposExibicao(UtilSBCoreReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
-                            } catch (Throwable t) {
-                                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando Grupo de campos para exibição em " + getClasseDeclaracaoAtributo().getSimpleName() + "->" + getLabel(), t);
-                            }
-                            break;
+                            pCampo.setGrupoSubCamposExibicao(UtilSBCoreReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
+                        } catch (Throwable t) {
+                            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando Grupo de campos para exibição em " + getClasseDeclaracaoAtributo().getSimpleName() + "->" + getLabel(), t);
+                        }
+                        break;
                         case MUITOS_PARA_UM:
                             switch (pCampo.getFabricaTipoAtributo()) {
 
@@ -285,7 +286,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                         case INFOCAMPO_MODELO:
                             break;
                         case VERDADEIRO_FALSO:
-                            pCampo.setTextoNegativo(anotacoes.getInfoVerdadeiroFalso().iconeNegativo());
+                            pCampo.setTextoNegativo(anotacoes.getInfoVerdadeiroFalso().textoNegativo());
                             pCampo.setTextoPositivo(anotacoes.getInfoVerdadeiroFalso().textoPositivo());
                             pCampo.setIconeNegativo(anotacoes.getInfoVerdadeiroFalso().iconeNegativo());
                             pCampo.setIconePositivo(anotacoes.getInfoVerdadeiroFalso().iconePostivio());

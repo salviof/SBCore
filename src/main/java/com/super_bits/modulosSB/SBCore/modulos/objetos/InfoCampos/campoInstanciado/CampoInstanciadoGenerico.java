@@ -72,6 +72,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     private ItfCampoInstSeletorItem campoSeletorItem;
     private CampoInstanciadoSubItens campoSubItens;
     private CampoInstanciadoEnumFabricaObjeto campoInstanciadoEnum;
+
+    private ItfCampoInstanciadoVerdadeiroOuFalso campoInstanciadoVerdadeiroOuFalso;
     private ItfCampoInstTemplate campoInstanciadoTemplate;
     private ItfCampoInstanciado campoInstanciadoPai;
     private boolean valorModificado;
@@ -690,6 +692,23 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro otendo campo com lista de oções entidade em" + getObjetoDoAtributo() + " campo" + getNomeCamponaClasse(), t);
             return null;
 
+        }
+
+    }
+
+    @Override
+    public ItfCampoInstanciadoVerdadeiroOuFalso getComoCampoVerdadeiroOuFalso() {
+
+        try {
+
+            if (campoInstanciadoVerdadeiroOuFalso == null) {
+                campoInstanciadoVerdadeiroOuFalso = new CampoInstanciadoVerdadeiroOuFalso(this);
+            }
+            return campoInstanciadoVerdadeiroOuFalso;
+            //alteracao de atualizacao
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro otendo campo como Verdadeiro ou falso em" + getObjetoDoAtributo() + " campo" + getNomeCamponaClasse(), t);
+            return null;
         }
 
     }

@@ -452,6 +452,11 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
+    public ItfCampoInstanciadoVerdadeiroOuFalso getComoCampoVerdadeiroOuFalso() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public ItfPropriedadesReflexaoCampos getPropriedadesRefexao() {
         return null;
     }
