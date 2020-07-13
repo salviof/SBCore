@@ -16,7 +16,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreRefl
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoPreparacaoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.util.ErrorMessages;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsperado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
@@ -26,7 +25,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAssistenteDeLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroDeMapaDeCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroObtendoValorDoCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroSetandoValorDeCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -48,8 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.hibernate.proxy.HibernateProxy;
@@ -495,12 +491,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @return Valor da propriedade pojo anotada com o campo procurado
      */
     protected Object getValorByTipoCampoEsperado(FabTipoAtributoObjeto tipoCampo) {
+
         try {
             return getCampoByAnotacao(tipoCampo).get(this);
         } catch (IllegalAccessException il) {
             Field campo = getCampoByAnotacao(tipoCampo);
             if (!campo.isAccessible()) {
                 campo.setAccessible(true);
+
             }
             try {
                 return campo.get(this);

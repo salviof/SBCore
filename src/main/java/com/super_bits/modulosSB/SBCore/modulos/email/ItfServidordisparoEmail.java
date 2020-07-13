@@ -19,7 +19,7 @@ public interface ItfServidordisparoEmail extends ItfServidorEmail {
         return getUsuarioSMTP();
     }
 
-    public default String getSenhaServidorSMTP() {
+    public default String getSenhaSMTP() {
         return getSenha();
     }
 
@@ -27,11 +27,11 @@ public interface ItfServidordisparoEmail extends ItfServidorEmail {
         return getEmail();
     }
 
-    public default boolean isUsarSSL() {
+    public default boolean isUsarSSLSMTP() {
         return true;
     }
 
-    public default boolean isUsarTSL() {
+    public default boolean isUsarTSLSMTP() {
         return true;
     }
 

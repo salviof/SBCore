@@ -45,6 +45,18 @@ public class UtilSBCoreBytes {
 
     }
 
+    public static InputStream geraInputStreamByByteArray(byte[] pByte) {
+        try {
+            InputStream in = new ByteArrayInputStream(pByte);
+
+            return in;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando BufferedImage por byte Array", t);
+            return null;
+        }
+
+    }
+
     public static BufferedImage getBufferedImagebyStringBase64(String pString) {
         try {
             return gerarBufferedImagemByByteArray(gerarByteByStringBase64(pString));
@@ -53,6 +65,17 @@ public class UtilSBCoreBytes {
             return null;
         }
 
+    }
+
+    public static byte[] gerarBytePorUrltream(String pUrl) {
+        try {
+            byte[] bytes = IOUtils.toByteArray(UTilSBCoreInputs.getStreamBuffredByURL(pUrl));
+
+            return bytes;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public static byte[] gerarBytePorInputstream(InputStream pInput) {
@@ -88,6 +111,7 @@ public class UtilSBCoreBytes {
         while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
             baos.write(buffer, 0, bytesRead);
         }
+        fis.close();
         return baos.toByteArray();
     }
 

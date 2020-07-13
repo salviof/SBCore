@@ -9,17 +9,25 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDi
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+import static java.lang.Math.log;
+import java.lang.management.ManagementFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -270,5 +278,53 @@ public abstract class UtilSBCoreArquivos {
             return false;
         }
 
+    }
+
+    /**
+     *
+     * Retorna um hash de identificação do arquivo
+     *
+     * @param pBytes Bytes do arquivo binário
+     * @return
+     */
+    public static String getHashDoByteArray(byte[] pBytes) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(pBytes);
+
+            String hex = Hex.encodeHexString(hash);
+            return hex;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UtilSBCoreArquivos.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public static void listOpenFiles() throws IOException {
+        int pid = pid();
+        String caminhodiretorioPadrao = "/home/sfurbino/tmp/logTeste/";
+        File pastalog = new File(caminhodiretorioPadrao);
+        int numeroArquivo = pastalog.listFiles().length;
+
+        String nomeArquivo = "log" + String.valueOf(numeroArquivo);
+
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("lsof -p " + pid);
+        InputStream is = process.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        String line;
+        List<String> arquivosAbertos = new ArrayList();
+        while ((line = br.readLine()) != null) {
+            arquivosAbertos.add(line);
+        }
+        UtilSBCoreArquivoTexto.escreveLinhasEmNovoArquivo(caminhodiretorioPadrao + nomeArquivo, arquivosAbertos);
+        br.close();
+    }
+
+    public static int pid() {
+        String id = ManagementFactory.getRuntimeMXBean().getName();
+        String[] ids = id.split("@");
+        return Integer.parseInt(ids[0]);
     }
 }

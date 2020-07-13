@@ -71,7 +71,7 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
         Collections.sort(produtosOrdenados);
         Collections.reverse(produtosOrdenados);
 
-        produtosOrdenados.stream().limit(quantidadeExibicaoPesquisa).forEach(item -> resp.add(item.getpObjetoAnalizado()));
+        produtosOrdenados.stream().limit(quantidadeExibicaoPesquisa).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;
     }
 

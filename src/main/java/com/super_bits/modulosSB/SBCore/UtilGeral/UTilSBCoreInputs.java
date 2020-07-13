@@ -260,6 +260,7 @@ public abstract class UTilSBCoreInputs {
         if (c != null) {
             try {
                 BufferedInputStream arq = new BufferedInputStream(c.getInputStream());
+
                 return arq;
             } catch (IOException ex) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Frame:" + pUrl, ex);

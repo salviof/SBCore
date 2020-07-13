@@ -136,6 +136,19 @@ public class UtilSBCoreStringBuscaTrecho {
         return listar;
     }
 
+    public static List<String> getPartesEntreMaiorMenor(String pTexto) {
+
+        List<String> resposta = new ArrayList<String>();
+        Pattern p = Pattern.compile("\\[(<^\\}]+?)\\>"); // coloquei o trecho que quero entre parênteses
+        Matcher matcher = p.matcher(pTexto);
+        while (matcher.find()) {
+            String result = matcher.group(1); // pego o primeiro grupo de captura
+            resposta.add(result);
+        }
+
+        return resposta;
+    }
+
     public static List<String> getPartesEntreColchete(String pTexto) {
 
         List<String> resposta = new ArrayList<String>();

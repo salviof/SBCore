@@ -50,6 +50,31 @@ public class UtilSBCoreEmailObjetos {
         return str.toString();
     }
 
+    /**
+     * Extrai o e-mail de um texto de e-mail padrão, caso tenha vários e-mails
+     * retorna o primeiro
+     *
+     * @param pTextoProtocoloMailPadrao
+     * @return
+     */
+    public static String extrairTextoEamailDeStringProtocoloPadrao(String pTextoProtocoloMailPadrao) {
+        if (pTextoProtocoloMailPadrao == null) {
+            return null;
+        }
+        if (!pTextoProtocoloMailPadrao.contains("@")) {
+            return null;
+        }
+        if (pTextoProtocoloMailPadrao.contains("<")) {
+            String email = UtilSBCoreStringBuscaTrecho.getPartesEntreMaiorMenor(pTextoProtocoloMailPadrao).get(0);
+            if (email.contains("@")) {
+                return email;
+            } else {
+                return null;
+            }
+        }
+        return UtilSBCoreStringsExtrator.extrairEmail(pTextoProtocoloMailPadrao);
+    }
+
     public static String getAddresEmFormatoSeparadoVirgula(Address[] pDEstinatarios) {
         if (pDEstinatarios == null) {
             return "";
@@ -126,18 +151,23 @@ public class UtilSBCoreEmailObjetos {
     }
 
     public static List<String> getcids(String texto) {
-        Pattern r = Pattern.compile("((cid:\\w*))");
+        try {
+            Pattern r = Pattern.compile("((cid:\\w*))");
 
-        // Now create matcher object.
-        Matcher m = r.matcher(texto);
-        List<String> cids = new ArrayList<>();
-        while (m.find()) {
-            String cidCompleta = m.group(0);
-            //     String imagem = m.group(0);
-            cids.add(cidCompleta.replace("cid:", ""));
+            // Now create matcher object.
+            Matcher m = r.matcher(texto);
+            List<String> cids = new ArrayList<>();
+            while (m.find()) {
+                String cidCompleta = m.group(0);
+                //     String imagem = m.group(0);
+                cids.add(cidCompleta.replace("cid:", ""));
+            }
+            return cids;
+        } catch (Throwable t) {
+
+            return new ArrayList<>();
         }
 
-        return cids;
     }
 
     public static List<ArquivoAnexoEmail> lerAnexos(Message m)
@@ -195,11 +225,12 @@ public class UtilSBCoreEmailObjetos {
         MimeMessageParser conteudo;
         try {
             conteudo = new MimeMessageParser((MimeMessage) m);
-
             conteudo.parse();
-            System.out.println(conteudo.getHtmlContent());
-            System.out.println(conteudo.getPlainContent());
-            return conteudo.getHtmlContent();
+            if (conteudo.getHtmlContent() != null) {
+                return conteudo.getHtmlContent();
+            } else {
+                return conteudo.getPlainContent();
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(UtilSBCoreEmailObjetos.class

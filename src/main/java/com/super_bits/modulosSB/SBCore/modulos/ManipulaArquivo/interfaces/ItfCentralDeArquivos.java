@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.FabTipoEmpacotamento;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao.MapaSubstituicao;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TIPO_ESTRUTURA_LOCAL_XHTML_PADRAO;
@@ -14,6 +15,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
+import java.io.File;
 
 import java.io.InputStream;
 import java.util.List;
@@ -117,11 +119,15 @@ public interface ItfCentralDeArquivos {
      *
      * ex: http://www.meuprojeto.com.br/resoureces/objetos/Cliente
      *
+     * @Deprecated talvez este método deva ser privado, mais análises
+     * nesscessárias (29-2020) Salvio Furbino
+     *
      * @param entidade
      * @param tipoAcesso
      * @param pTipoArquivo
      * @return
      */
+    @Deprecated
     public String getEndrRemotoRecursosDoObjeto(Class entidade, FabTipoAcessoArquivo tipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
 
     /**
@@ -161,7 +167,7 @@ public interface ItfCentralDeArquivos {
 
     /**
      *
-     *
+     * @Deprecated -poderia ser um metodo privado? 29/05/2020 Sálvio Furbino
      *
      * @param item
      * @param galeria
@@ -169,6 +175,7 @@ public interface ItfCentralDeArquivos {
      * @param pTipoArquivo
      * @return
      */
+    @Deprecated
     public String getEndrRemotoRecursosItem(ItfBeanSimples item, String galeria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
 
     /**
@@ -324,6 +331,10 @@ public interface ItfCentralDeArquivos {
 
     /**
      *
+     *
+     * @Deprecated não está clara a função deste método 19/05/2020 Salvio
+     * Furbino
+     *
      * @param entidade
      * @param arqivo
      * @param pNomeCampoOuCategoria Categoria (nome da subpasta, em geral é o
@@ -332,6 +343,7 @@ public interface ItfCentralDeArquivos {
      * @param mapaSubistituicao
      * @return
      */
+    @Deprecated
     public boolean baixarArquivo(ItfBeanSimplesSomenteLeitura entidade, InputStream arqivo, String pNomeCampoOuCategoria, String pNomeArquivo, MapaSubstituicao mapaSubistituicao);
 
     public String getEndrLocalImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo, ItfSessao pSessao);
@@ -359,5 +371,13 @@ public interface ItfCentralDeArquivos {
     public FabTipoEmpacotamento getTipoEmpacotamento();
 
     public TIPO_ESTRUTURA_LOCAL_XHTML_PADRAO getTipoEstruturaCaminhoFormPadrao();
+
+    public default boolean isTemImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo) {
+        try {
+            return new File(getEndrLocalImagem(item, tipo)).exists();
+        } catch (Throwable t) {
+            return false;
+        }
+    }
 
 }

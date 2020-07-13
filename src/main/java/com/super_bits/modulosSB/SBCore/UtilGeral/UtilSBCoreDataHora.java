@@ -1113,20 +1113,40 @@ public class UtilSBCoreDataHora {
         cal2.setTime(pMesFinal);
         calReferencia.setTime(pMesReferencia);
 
-        int anoReferencia = cal2.get(Calendar.YEAR);
-        int mesREferencia = cal1.get(Calendar.MONTH);
+        int anoReferencia = calReferencia.get(Calendar.YEAR);
+        int mesREferencia = calReferencia.get(Calendar.MONTH);
 
         int anoinicial = cal1.get(Calendar.YEAR);
         int anoFinal = cal2.get(Calendar.YEAR);
 
-        int mesInicial = calReferencia.get(Calendar.MONTH);
-        int mesFinal = calReferencia.get(Calendar.MONTH);
+        int mesInicial = cal1.get(Calendar.MONTH);
+        int mesFinal = cal2.get(Calendar.MONTH);
 
-        if (anoReferencia < anoinicial || anoReferencia > anoFinal || mesREferencia > mesFinal) {
+        if (anoReferencia >= anoinicial && anoReferencia <= anoFinal) {
+            if (anoReferencia == anoFinal) {
+                if (mesREferencia <= mesFinal) {
+                    return true;
+                }
+            }
+            return anoReferencia < anoFinal;
+
+        }
+        return false;
+
+    }
+
+    public static boolean isAnoIgual(Date pData1, Date pData2) {
+        if (pData1 == null || pData2 == null) {
+            //False por questão filosófica de não existir mês nulo
             return false;
         }
 
-        return mesREferencia >= mesInicial;
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(pData1);
+        cal2.setTime(pData2);
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
 
     }
 
@@ -1155,6 +1175,31 @@ public class UtilSBCoreDataHora {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(pData);
         return cal1.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static String getDiaDaSemana(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        int diaDaSemana = cal1.get(Calendar.DAY_OF_WEEK);
+
+        switch (diaDaSemana) {
+            case Calendar.SUNDAY:
+                return "Domingo";
+            case Calendar.MONDAY:
+                return "Segunda";
+            case Calendar.TUESDAY:
+                return "terça";
+            case Calendar.WEDNESDAY:
+                return "Quarta";
+            case Calendar.THURSDAY:
+                return "Quinta";
+            case Calendar.FRIDAY:
+                return "Sexta";
+            case Calendar.SATURDAY:
+                return "Sábado";
+        }
+
+        return null;
     }
 
     public static boolean isDiaIgualOuSuperior(Date pDiaReferencia, Date pDiaSuperior) {

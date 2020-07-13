@@ -6,9 +6,10 @@ package com.super_bits.modulosSB.SBCore.modulos.view.formulario;
 
 /**
  *
- * @author salvioF
+ * @author salvioF ????
  */
-public interface ItfFormulario {
+@Deprecated
+public interface ItfFormularioOld {
 
     public void publicarEmWordPress();
 

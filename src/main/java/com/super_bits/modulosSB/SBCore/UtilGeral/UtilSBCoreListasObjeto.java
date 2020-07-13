@@ -6,12 +6,15 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilarGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +61,7 @@ public class UtilSBCoreListasObjeto {
         List<ItemSimilar> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
         Collections.sort(itensOrdenados);
         Collections.reverse(itensOrdenados);
-        itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getpObjetoAnalizado()));
+        itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;
     }
 
