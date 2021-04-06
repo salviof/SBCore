@@ -81,6 +81,7 @@ import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
  */
 public class SBCore {
 
+    @Deprecated
     public static final String DOMINIO_FICTICIO_INTRANET_DOCKER = "dockerIntranetColetivoJava.org.br";
     public static String CAMINHO_BASE_DESENVOLVIMENTO = "/home/superBits";
     public static String CAMINHO_BASE_PROJETOS = "/home/superBits/projetos";
@@ -220,7 +221,7 @@ public class SBCore {
             }
             if (!ignorarConfigurcoesDePermissao) {
                 if (infoAplicacao.getFabricaDeAcoes() == null) {
-                    throw new UnsupportedOperationException("As Açoes do Sistema não foram configuradas");
+                    throw new UnsupportedOperationException("As configurações de permissão não foram definidas, você pode declarar desuso na classe de configuração, ou criar uma implementação");
                 }
                 //MapaAcoesSistema.makeMapaAcoesSistema();
 

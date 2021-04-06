@@ -30,8 +30,9 @@ public class CampoInstanciadoComSelecao implements ItfCampoInstSeletor {
 
     @Override
     public void atualizarListaCompleta() {
-
-        seletor.atualizaOrigemPelaSelecao();
+        limparFiltro();
+        seletor.atualizarListaCompleta();
+        seletor.reloadOrigem();
 
     }
 

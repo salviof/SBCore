@@ -4,10 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoEnuns;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -16,6 +19,8 @@ import java.util.Iterator;
  * @author SalvioF
  */
 public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfigModulo {
+
+    private static Map<String, String> propriedadesEnv = new HashMap<>();
 
     @Deprecated
     public ConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig, ClassLoader resourceLoader) throws IOException {
@@ -29,6 +34,20 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
 
     @Override
     public String getPropriedade(ItfFabConfigModulo pPropriedades) {
+        if (SBCore.isEmModoProducao()) {
+            if (!propriedadesEnv.containsKey(pPropriedades.toString())) {
+                String propriedadeEnv = System.getenv(pPropriedades.toString());
+                propriedadesEnv.put(pPropriedades.toString(), propriedadeEnv);
+            }
+            String valorEnv = propriedadesEnv.get(pPropriedades.toString());
+            if (valorEnv != null) {
+                return propriedadesEnv.get(pPropriedades.toString());
+            }
+        }
+        if (proppriedadesBasicas.get(pPropriedades.toString()) != null) {
+            return proppriedadesBasicas.getProperty(pPropriedades.toString());
+        }
+        // ATENÇÃO, SUPORTE LEGADO NÃO REMOVER ATÉ O ANO DE  2025 OU ATÉ A VERSÃO 2.0
         return proppriedadesBasicas.getProperty(pPropriedades.getNomePropriedade());
     }
 

@@ -412,7 +412,7 @@ public final class TipoAtributoMetodosBase {
                         Date valorData = (Date) pValor;
 
                         pValor = UtilSBCoreDataHora.converteDateEmSTringDD_MM_YY(valorData);
-
+                        break;
                     case OBJETO_DE_UMA_LISTA:
                         if (pValor == null) {
                             return null;

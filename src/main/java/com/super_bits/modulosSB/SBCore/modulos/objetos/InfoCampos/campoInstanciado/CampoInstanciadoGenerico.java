@@ -161,15 +161,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public boolean isVazio() {
-
-        if (getValor() == null) {
-            return true;
-        } else if (getFabricaTipoAtributo().isCampoUmArquivoDeEntidade()) {
-            boolean vazio = !getComoArquivoDeEntidade().isExisteArquivo();
-            return vazio;
-        } else {
-            return getValor() == null || getValor().toString().isEmpty();
+        switch (getFabricaTipoAtributo()) {
+            case ARQUIVO_DE_ENTIDADE:
+                return !getComoArquivoDeEntidade().isExisteArquivo();
+            default:
+                return (UtilSBCoreStringValidador.isNuloOuEmbranco(getValor()));
         }
+
     }
 
     @Override

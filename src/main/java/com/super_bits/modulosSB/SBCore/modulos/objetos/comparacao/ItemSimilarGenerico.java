@@ -29,7 +29,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  *
  * @author sfurbino
  */
-public abstract class ItemSimilarGenerico implements ItfBeanSimples, Comparable<ItemSimilarGenerico> {
+public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemSimilarGenerico<T> {
 
     protected final ItfBeanSimples objetoAnalizado;
     protected double nota;
@@ -38,8 +38,6 @@ public abstract class ItemSimilarGenerico implements ItfBeanSimples, Comparable<
     protected final List<Double> notasIdenticoInicio = new ArrayList<>();
     protected final String textoReferenciaPesquisa;
     protected final String termoPesquisa;
-
-    public abstract String getTextoReferencia();
 
     public ItemSimilarGenerico(ItfBeanSimples pObjetoAnalizado, String pTermpoPesquisa) {
         this.objetoAnalizado = pObjetoAnalizado;
@@ -103,6 +101,7 @@ public abstract class ItemSimilarGenerico implements ItfBeanSimples, Comparable<
         }
     }
 
+    @Override
     public double getNota() {
         return nota;
     }
@@ -338,12 +337,15 @@ public abstract class ItemSimilarGenerico implements ItfBeanSimples, Comparable<
     }
 
     @Override
-    public int compareTo(ItemSimilarGenerico o) {
-
-        return Double.compare(nota, o.getNota());
-
+    public int compareTo(T o) {
+        try {
+            return Double.compare(((ItfItemSimilarGenerico) o).getNota(), nota);
+        } catch (Throwable t) {
+            return 0;
+        }
     }
 
+    @Override
     public ItfBeanSimples getObjetoAnalizado() {
         return objetoAnalizado;
     }

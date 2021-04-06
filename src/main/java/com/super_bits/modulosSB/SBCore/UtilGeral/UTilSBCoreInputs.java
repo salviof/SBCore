@@ -74,6 +74,7 @@ public abstract class UTilSBCoreInputs {
             while ((content = fis.read()) != -1) {
                 conteudo += ((char) content);
             }
+            fis.close();
         } catch (IOException e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro lendo arquivo" + pCaminhoArquivoLocal, e);
         }
@@ -229,13 +230,23 @@ public abstract class UTilSBCoreInputs {
     }
 
     public static InputStream getStreamByURL(String pUrl) {
-        throw new UnsupportedOperationException("NÃO FOI IMPLEMENTADO");
+        URLConnection conexao = getConexao(pUrl);
+
+        try {
+
+            return conexao.getInputStream();
+
+        } catch (IOException ex) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando criar input por conexao de URL", ex);
+        }
+        return null;
     }
 
     public static InputStream getStreamByLocalFile(String pCaminhoLocal) {
 
         try {
             File arquivo = new File(pCaminhoLocal);
+
             FileInputStream input = new FileInputStream(arquivo);
             return input;
         } catch (Throwable t) {
@@ -263,6 +274,7 @@ public abstract class UTilSBCoreInputs {
 
                 return arq;
             } catch (IOException ex) {
+
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Frame:" + pUrl, ex);
             }
         }
@@ -275,6 +287,7 @@ public abstract class UTilSBCoreInputs {
 
     public static Image getImageByURL(String pUrl) {
         return (Image) getImagemBufferedbyURL(pUrl);
+
     }
 
 }

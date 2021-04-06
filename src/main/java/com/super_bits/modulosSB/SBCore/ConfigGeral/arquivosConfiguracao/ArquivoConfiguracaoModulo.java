@@ -11,8 +11,10 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.RecursosExternosPorIndice;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 import org.apache.commons.io.filefilter.FileFileFilter;
@@ -59,7 +61,10 @@ public abstract class ArquivoConfiguracaoModulo {
                     SBCore.soutInfoDebug("Arquivo de cofiguração de módulo encontrado em:" + arquivo);
                 }
             }
-            proppriedadesBasicas.load(UTilSBCoreInputs.getStreamByLocalFile(arquivo));
+            FileInputStream inputstream = (FileInputStream) UTilSBCoreInputs.getStreamByLocalFile(arquivo);
+            proppriedadesBasicas.load(inputstream);
+            inputstream.close();
+
         } catch (IOException | UnsupportedOperationException t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo configurações de módulos", t);
         }
@@ -72,7 +77,7 @@ public abstract class ArquivoConfiguracaoModulo {
             if (pProp == null) {
                 prop = new Properties();
                 for (ItfFabConfigModulo fabrica : fabricaConfig.getEnumConstants()) {
-                    prop.setProperty(fabrica.getNomePropriedade(), fabrica.getValorPadrao());
+                    prop.setProperty(fabrica.toString(), fabrica.getValorPadrao());
                 }
             } else {
                 prop = pProp;
@@ -89,6 +94,7 @@ public abstract class ArquivoConfiguracaoModulo {
             FileFileFilter teste;
             OutputStream out = new FileOutputStream(arquivoConfigRuntime);
             prop.store(out, "Prorpiedades do módulo " + fabricaConfig.getClass().getSimpleName() + " armazanada em");
+            out.close();
 
             return true;
         } catch (Throwable t) {

@@ -46,6 +46,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
         }
         try {
             FileUtils.writeByteArrayToFile(new File(caminhoArquivo), arqivo);
+
             return true;
 
         } catch (Throwable t) {
@@ -53,6 +54,12 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             return false;
         }
 
+    }
+
+    @Override
+    public boolean salvarArquivo(ItfCampoInstanciado pCampo, byte[] arquivo, String pNomeArquivo) {
+        pCampo.setValor(pNomeArquivo);
+        return salvarArquivo((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
     }
 
     @Override
@@ -90,21 +97,20 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             String nomeArquivo = pCampo.getValor().toString();
             return urlEntidade + nomeArquivo;
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo Endereço remoto de campo instanciado", t);
+            if (pCampo != null) {
+                System.out.println("nome do arquovo não encontrado em " + pCampo.getNomeCompostoIdentificador());
+            }
+
+            //      SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo Endereço remoto de campo instanciado", t);
             return null;
         }
     }
 
     @Override
     public String getEndrLocalArquivoCampoInstanciado(ItfCampoInstanciado pCampo) {
+        
         String caminhoArquivo = getEndrLocalArquivoItem((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
         return caminhoArquivo;
-    }
-
-    @Override
-    public boolean salvarArquivo(ItfCampoInstanciado pCampo, byte[] arquivo, String pNomeArquivo) {
-        pCampo.setValor(pNomeArquivo);
-        return salvarArquivo((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
     }
 
     @Override

@@ -6,15 +6,13 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilarGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorPorId;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -25,10 +23,25 @@ import java.util.stream.Collectors;
  */
 public class UtilSBCoreListasObjeto {
 
-    public static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo) {
-
+    private static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo,boolean pReverso) {
+        ComparadorGenerico comparador=null;
+        switch (pAtributo){
+            case ID:
+                comparador=new ComparadorPorId(pReverso);
+                break;
+                default:
         ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, false);
-        pLista.sort(cpGenerico);
+        
+        }
+        
+        pLista.sort(comparador);
+
+    }
+    public static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo) {
+        ordernarPorTipoCampo(pLista, pAtributo, false);
+    }
+    public static void ordernarPorTipoCampoReverso(List pLista, FabTipoAtributoObjeto pAtributo) {
+        ordernarPorTipoCampo(pLista, pAtributo, true);
 
     }
 
@@ -46,10 +59,7 @@ public class UtilSBCoreListasObjeto {
 
     }
 
-    public static void ordernarPorTipoCampoReverso(List pLista, FabTipoAtributoObjeto pAtributo) {
-        ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, true);
-        pLista.sort(cpGenerico);
-    }
+    
 
     public static <T> List<T> filtrarOrdenandoMaisParecidos(List<T> pLista, String pParametro, int pLimite) {
         List resp = new ArrayList();
@@ -60,7 +70,7 @@ public class UtilSBCoreListasObjeto {
 //(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
         List<ItemSimilar> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
         Collections.sort(itensOrdenados);
-        Collections.reverse(itensOrdenados);
+        //Collections.reverse(itensOrdenados);
         itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;
     }

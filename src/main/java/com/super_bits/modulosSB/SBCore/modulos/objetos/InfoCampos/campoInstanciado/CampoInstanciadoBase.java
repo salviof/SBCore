@@ -272,4 +272,9 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
         return possuiValorCalculoDinamico;
     }
 
+    @Override
+    public ItfBeanSimples getValorComoItemSimples() {
+        return ItfCampoInstanciadoBase.super.getValorComoItemSimples(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -72,6 +72,7 @@ public abstract class UtilSBCoreEmail {
         boolean envioucomsucesso = true;
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(pUsuario, pSenha);
             }

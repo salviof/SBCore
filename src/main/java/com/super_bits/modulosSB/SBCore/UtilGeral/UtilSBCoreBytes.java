@@ -48,7 +48,7 @@ public class UtilSBCoreBytes {
     public static InputStream geraInputStreamByByteArray(byte[] pByte) {
         try {
             InputStream in = new ByteArrayInputStream(pByte);
-
+            in.reset();
             return in;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando BufferedImage por byte Array", t);

@@ -5,14 +5,16 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.io.File;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -47,6 +49,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     @Override
     public boolean uploadArquivo(String pNomeArquivo, byte[] pInputStream) {
         try {
+            String nomeArquivoCompativel = UtilSBCoreStringSlugs.gerarSlugSimples(pNomeArquivo);
             Object entidade = campoInstanciado.getObjetoDoAtributo();
             if (pNomeArquivo == null) {
                 throw new UnsupportedOperationException("O nome do Arquivo não foi enviado, impossível realizar o upload ");
@@ -60,12 +63,18 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
             ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
             if (entidadeVinculada.getId() == 0) {
                 intputTemporario = pInputStream;
-                entidadeVinculada.uploadArquivoDeEntidade(campoInstanciado, pInputStream, pNomeArquivo);
-                return true;
+                campoInstanciado.setValor(nomeArquivoCompativel);
+
+                return entidadeVinculada.uploadArquivoDeEntidade(campoInstanciado, pInputStream, pNomeArquivo);
             } else {
 
-                entidadeVinculada.uploadArquivoDeEntidade(campoInstanciado, pInputStream, pNomeArquivo);
-                return true;
+                if (entidadeVinculada.uploadArquivoDeEntidade(campoInstanciado, pInputStream, pNomeArquivo)) {
+
+                    campoInstanciado.setValor(nomeArquivoCompativel);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro executando upload de arquivo em " + campoInstanciado.getNome(), t);
@@ -117,18 +126,16 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
                 if (getCampoInstanciado().getObjetoDoAtributo().getId() == 0) {
                     return intputTemporario != null;
                 } else {
-                    return new File(getCaminhoArquivo(campoInstanciado)).exists();
+                    return SBCore.getServicoArquivosDeEntidade().isExisteArquivo(campoInstanciado);
                 }
-            case IMG_MEDIA:
-
-                return new File(SBCore.getCentralDeArquivos().getEndrLocalImagem(getCampoInstanciado().getObjetoDoAtributo(), FabTipoAtributoObjeto.IMG_MEDIA)
-                ).exists();
 
             default:
-                return new File(getCaminhoArquivo(campoInstanciado)).exists();
+                return SBCore.getServicoArquivosDeEntidade().isExisteArquivo(campoInstanciado);
         }
 
     }
+    
+    
 
     @Override
     public String getCaminhoArquivoLocal() {
@@ -174,13 +181,26 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     public void excluirArquivo() {
         try {
             String arquivo = SBCore.getCentralDeArquivos().getEndrLocalArquivoCampoInstanciado(campoInstanciado);
-            File novoFile = new File(arquivo);
-            novoFile.delete();
-            getCampoInstanciado().setValor(null);
+            if (arquivo.startsWith("http")) {
+                SBCore.getServicoArquivosDeEntidade().excluirArquivo(campoInstanciado);
+            } else {
+                File novoFile = new File(arquivo);
+                novoFile.delete();
+                getCampoInstanciado().setValor(null);
+            }
         } catch (Throwable t) {
             SBCore.enviarMensagemUsuario("Erro removendo arquivo", FabMensagens.ERRO);
         }
 
+    }
+
+    private String hashArquivoEntidade;
+
+    public String getHashDeArquivoDeEntidadeRegistrado() {
+        if (hashArquivoEntidade == null) {
+            hashArquivoEntidade = SBCore.getServicoArquivosDeEntidade().getHashArquivoDeEntidadeRegistrado(campoInstanciado);
+        }
+        return hashArquivoEntidade;
     }
 
 }

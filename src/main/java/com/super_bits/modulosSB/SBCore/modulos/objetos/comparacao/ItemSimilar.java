@@ -12,7 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * @since 05/09/2019
  * @version 1.0
  */
-public class ItemSimilar extends ItemSimilarGenerico {
+public class ItemSimilar<T> extends ItemSimilarGenerico<T> {
 
     public ItemSimilar(ItfBeanSimples pObjetoAnalizado, String parametro) {
         super(pObjetoAnalizado, parametro);

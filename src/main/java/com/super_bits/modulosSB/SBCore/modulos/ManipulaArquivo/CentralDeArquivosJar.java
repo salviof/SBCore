@@ -9,14 +9,17 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao.MapaSubstituicao;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo.FabTipoAcessoArquivo;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralPermissaoArquivo;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -241,6 +244,26 @@ public class CentralDeArquivosJar extends CentralDeArquivosAbstrata {
                 return diretorioBase + "imagemLogoPequeno.jpg";
 
         }
+    }
+
+    @Override
+    public boolean excluirArquivo(ItfCampoInstanciado pCampo) {
+        try {
+            String arquivo = SBCore.getCentralDeArquivos().getEndrLocalArquivoCampoInstanciado(pCampo);
+
+            File novoFile = new File(arquivo);
+            novoFile.delete();
+            pCampo.setValor(null);
+            return true;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha excluindo" + pCampo, t);
+            return false;
+        }
+    }
+
+    @Override
+    public String getHashArquivoDeEntidadeRegistrado(ItfCampoInstanciado pCampo) {
+        return null;
     }
 
 }

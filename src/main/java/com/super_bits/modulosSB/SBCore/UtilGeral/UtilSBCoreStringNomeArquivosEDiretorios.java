@@ -91,6 +91,15 @@ public class UtilSBCoreStringNomeArquivosEDiretorios {
      * @return exetenção do arquivo
      */
     public static String getExtencaoNomeArquivoSemPonto(String pNomeArquivo) {
+        if (pNomeArquivo == null || pNomeArquivo.length() < 3) {
+            return null;
+        }
+        if (!pNomeArquivo.contains(".")) {
+            if (pNomeArquivo.endsWith("docx")) {
+                return "docx";
+            }
+            return pNomeArquivo.substring(pNomeArquivo.length() - 3);
+        }
         return pNomeArquivo.lastIndexOf('.') > pNomeArquivo.lastIndexOf(File.separatorChar)
                 ? pNomeArquivo.substring(pNomeArquivo.lastIndexOf('.') + 1, pNomeArquivo.length())
                 : "";

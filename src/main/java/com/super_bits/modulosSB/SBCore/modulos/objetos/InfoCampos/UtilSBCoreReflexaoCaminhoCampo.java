@@ -212,10 +212,14 @@ public class UtilSBCoreReflexaoCaminhoCampo {
                         }
 
                     }
-                    if (pTipoCampo.equals(FabTipoAtributoObjeto.ID)) {
-                        if (field.getAnnotation(Id.class) != null) {
-                            return field;
+                    try {
+                        if (pTipoCampo.equals(FabTipoAtributoObjeto.ID)) {
+                            if (field.getAnnotation(Id.class) != null) {
+                                return field;
+                            }
                         }
+                    } catch (Throwable t) {
+                        //TODO ignora erro caso o pacote JPA não faça parte do projeoo
                     }
 
                 }

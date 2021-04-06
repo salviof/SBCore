@@ -374,10 +374,31 @@ public interface ItfCentralDeArquivos {
 
     public default boolean isTemImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo) {
         try {
-            return new File(getEndrLocalImagem(item, tipo)).exists();
+            String caminhoLocal = getEndrLocalImagem(item, tipo);
+            if (caminhoLocal.startsWith("http")) {
+                return true;
+            }
+            return new File(caminhoLocal).exists();
         } catch (Throwable t) {
             return false;
         }
     }
+
+    public default boolean isExisteArquivo(ItfCampoInstanciado pCampo) {
+        try {
+            String caminhoLocal = getEndrLocalArquivoCampoInstanciado(pCampo);
+
+            if (caminhoLocal.startsWith("http")) {
+                return true;
+            }
+            return new File(caminhoLocal).exists();
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    public boolean excluirArquivo(ItfCampoInstanciado pCampo);
+
+    public String getHashArquivoDeEntidadeRegistrado(ItfCampoInstanciado pCampo);
 
 }

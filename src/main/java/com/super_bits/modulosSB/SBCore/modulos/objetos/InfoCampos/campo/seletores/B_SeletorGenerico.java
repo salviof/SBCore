@@ -69,7 +69,7 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
 //(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
         List<ItemSimilar> produtosOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
         Collections.sort(produtosOrdenados);
-        Collections.reverse(produtosOrdenados);
+        //Collections.reverse(produtosOrdenados);
 
         produtosOrdenados.stream().limit(quantidadeExibicaoPesquisa).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;
