@@ -4,6 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import java.util.stream.Stream;
+
 /**
  *
  * @author desenvolvedor
@@ -12,6 +14,19 @@ public abstract class UtilSBCoreStringSlugs {
 
     public static String gerarSlugCaixaAlta(String pValor) {
         return gerarSlugSimples(pValor).toUpperCase();
+    }
+
+    public static String gerarSlugCaixaAltaByCammelCase(String pValorCammelCase) {
+        String stringNormalizada = gerarSlugSimples(pValorCammelCase);
+        StringBuilder slugBulder = new StringBuilder();
+        stringNormalizada.chars().forEachOrdered(caracter -> {
+            if (Character.isUpperCase(caracter) && !slugBulder.toString().isEmpty()) {
+                slugBulder.append("_");
+            }
+            slugBulder.append(Character.toChars(caracter));
+
+        });
+        return slugBulder.toString().toUpperCase();
     }
 
     public static String gerarSlugSimples(String pValor) {

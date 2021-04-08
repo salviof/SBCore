@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoEnuns;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,12 +33,31 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
         super(pFabricaConfig);
     }
 
+    public static String getNomeCompleto(ItfFabConfigModulo pPropriedades) {
+        String moduloPrincipal = UtilSBCoreStringSlugs.gerarSlugCaixaAltaByCammelCase(pPropriedades.getClass().getSimpleName().replace("FabConfig", ""));
+        moduloPrincipal = moduloPrincipal.replace("CONFIG_", "");
+        moduloPrincipal = moduloPrincipal.replace("CONF_", "");
+        String nomeCompleto = moduloPrincipal + "_" + pPropriedades.toString();
+        return nomeCompleto;
+    }
+
     @Override
     public String getPropriedade(ItfFabConfigModulo pPropriedades) {
         if (SBCore.isEmModoProducao()) {
             if (!propriedadesEnv.containsKey(pPropriedades.toString())) {
                 String propriedadeEnv = System.getenv(pPropriedades.toString());
-                propriedadesEnv.put(pPropriedades.toString(), propriedadeEnv);
+                String nomeCompleto = getNomeCompleto(pPropriedades);
+                if (propriedadeEnv == null) {
+
+                    propriedadeEnv = System.getenv(nomeCompleto);
+                } else {
+                    System.out.println("ATENÇÃO, VARIAVEL DE AMBIENTE DEFINIDA VIA ABREVIAÇÃO, ESTE TIPO DE CHAMADA SERÁ DEPRECIADO EM BREVE");
+                    System.out.println("ALTERE PARA de " + pPropriedades.toString() + ": " + nomeCompleto);
+
+                }
+                if (propriedadeEnv != null) {
+                    propriedadesEnv.put(pPropriedades.toString(), propriedadeEnv);
+                }
             }
             String valorEnv = propriedadesEnv.get(pPropriedades.toString());
             if (valorEnv != null) {
