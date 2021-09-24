@@ -15,7 +15,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public class ItemSimilarContato extends ItemSimilarGenerico {
 
     public ItemSimilarContato(ItfBeanSimples pObjetoAnalizado, String parametro) {
+
         super(pObjetoAnalizado, parametro);
+
     }
 
     @Override

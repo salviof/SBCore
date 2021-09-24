@@ -134,7 +134,7 @@ public class UtilSBCoreEmailObjetos {
     }
 
     public static String substituirCidPorUrl(String texto, Map<String, String> mapaUrls) {
-        Pattern r = Pattern.compile("((cid:\\w*))");
+        Pattern r = Pattern.compile("(cid:).*?([^\"]*)");
 
         // Now create matcher object.
         Matcher m = r.matcher(texto);
@@ -152,7 +152,7 @@ public class UtilSBCoreEmailObjetos {
 
     public static List<String> getcids(String texto) {
         try {
-            Pattern r = Pattern.compile("((cid:\\w*))");
+            Pattern r = Pattern.compile("(cid:).*?([^\"]*)");
 
             // Now create matcher object.
             Matcher m = r.matcher(texto);

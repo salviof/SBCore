@@ -74,7 +74,7 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
     }
 
     @Override
-    public ItfResposta setProximoFormulario(ItfAcaoFormulario pFormulario) {
+    public ItfRespostaAcaoDoSistema setProximoFormulario(ItfAcaoFormulario pFormulario) {
         if (pFormulario != null) {
             temFormulario = true;
         }

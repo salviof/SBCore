@@ -38,6 +38,7 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
     }
 
     public void ativarCache(int pSegundos) {
+        cacheAtivado = true;
         new Thread() {
             @Override
             public void run() {

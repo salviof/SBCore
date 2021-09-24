@@ -14,6 +14,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -37,6 +38,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtri
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
@@ -1052,6 +1054,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             } else {
                 if (isUmCampoArquivoEntidade()) {
                     return true;
+                }
+                if (isUmCampoCampoLocalizacao()) {
+                    //Caso a localização seja inválida, e este valor não for obrigatório, Configura valor nulo
+                    if (!UtilSBCoreValidacao.gerarMensagensValidacao(this, getValor(), valorModificado, false).isEmpty()) {
+                        setValor(null);
+                    }
+
                 } else {
                     if (getValor() != null) {
                         return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
@@ -1281,6 +1290,22 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             }
         }
         return validacaoLogica;
+
+    }
+
+    @Override
+    public Object getValorValidando() {
+        return super.getValorValidando(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setValorValidando(Object pValor) {
+
+        try {
+            setValorSeValido(pValor);
+        } catch (ErroValidacao ex) {
+            SBCore.enviarMensagemUsuario(ex.getMensagemAoUsuario(), FabMensagens.ALERTA);
+        }
 
     }
 

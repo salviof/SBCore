@@ -9,12 +9,12 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreDiretoriosSimples;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.RecursosExternosPorIndice;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 import org.apache.commons.io.filefilter.FileFileFilter;
@@ -50,6 +50,9 @@ public abstract class ArquivoConfiguracaoModulo {
     public final void reloadConfiguracoes() {
         String arquivo = UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
         try {
+            if (!new File(arquivo).exists()) {
+                UtilSBCoreArquivos.criarDiretorioParaArquivo(arquivo);
+            }
             if (!new File(arquivo).exists()) {
                 if (!salvarPropriedadesPadrao()) {
                     throw new UnsupportedOperationException("O modulo " + fabricaConfig.getSimpleName() + " não pôde ser configurado, Houve um erro tentando salvar" + arquivo);
@@ -91,7 +94,7 @@ public abstract class ArquivoConfiguracaoModulo {
                 new File(diretorio).mkdirs();
             }
             File arquivoConfigRuntime = new File(caminhoCOmpleto);
-            FileFileFilter teste;
+
             OutputStream out = new FileOutputStream(arquivoConfigRuntime);
             prop.store(out, "Prorpiedades do módulo " + fabricaConfig.getClass().getSimpleName() + " armazanada em");
             out.close();

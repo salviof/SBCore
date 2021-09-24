@@ -4,12 +4,17 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -26,6 +31,22 @@ public class UtilSBCoreDataHoraTest {
     public final static Long DIASMES = 30L;
 
     public UtilSBCoreDataHoraTest() {
+    }
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
     }
 
     //@Test
@@ -333,6 +354,451 @@ public class UtilSBCoreDataHoraTest {
 
     //@Test
     public void testInterTempContRegSegundos() {
+    }
+
+    /**
+     * Test of horasEntre method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testHorasEntre() {
+        System.out.println("horasEntre");
+        Date pDatainicial = null;
+        Date pDatafinal = null;
+        double expResult = 0.0;
+        double result = UtilSBCoreDataHora.horasEntre(pDatainicial, pDatafinal);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmSegundos method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmSegundos() {
+        System.out.println("quantidadeTempoEmSegundos");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmSegundos(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmMinutos method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmMinutos() {
+        System.out.println("quantidadeTempoEmMinutos");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmMinutos(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmHoras method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmHoras() {
+        System.out.println("quantidadeTempoEmHoras");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmHoras(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmDias method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmDias() {
+        System.out.println("quantidadeTempoEmDias");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        boolean contabilizarSemanas = false;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmDias(valor, divisorMaximo, contabilizarSemanas);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmMeses method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmMeses() {
+        System.out.println("quantidadeTempoEmMeses");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmMeses(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmSemanas method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmSemanas() {
+        System.out.println("quantidadeTempoEmSemanas");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmSemanas(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of quantidadeTempoEmAnos method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testQuantidadeTempoEmAnos() {
+        System.out.println("quantidadeTempoEmAnos");
+        long valor = 0L;
+        FabTipoQuantidadeTempo divisorMaximo = null;
+        Long expResult = null;
+        Long result = UtilSBCoreDataHora.quantidadeTempoEmAnos(valor, divisorMaximo);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of incrementaMes method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testIncrementaMes() {
+        System.out.println("incrementaMes");
+        Date pData = null;
+        int pNumeroMeses = 0;
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.incrementaMes(pData, pNumeroMeses);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarStringDiaMesAnoAtual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarStringDiaMesAnoAtual() {
+        System.out.println("gerarStringDiaMesAnoAtual");
+        String expResult = "";
+        String result = UtilSBCoreDataHora.gerarStringDiaMesAnoAtual();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarStringDiaMesAnoAtualFormatada method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarStringDiaMesAnoAtualFormatada() {
+        System.out.println("gerarStringDiaMesAnoAtualFormatada");
+        String expResult = "";
+        String result = UtilSBCoreDataHora.gerarStringDiaMesAnoAtualFormatada();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarInteiroDiaMesAnoAtual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarInteiroDiaMesAnoAtual() {
+        System.out.println("gerarInteiroDiaMesAnoAtual");
+        int expResult = 0;
+        int result = UtilSBCoreDataHora.gerarInteiroDiaMesAnoAtual();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarInteiroDiaMesAnoDataInformada method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarInteiroDiaMesAnoDataInformada() {
+        System.out.println("gerarInteiroDiaMesAnoDataInformada");
+        Date pData = null;
+        int expResult = 0;
+        int result = UtilSBCoreDataHora.gerarInteiroDiaMesAnoDataInformada(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarInteiroInvertidoDiaMesAnoDataInformada method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarInteiroInvertidoDiaMesAnoDataInformada() {
+        System.out.println("gerarInteiroInvertidoDiaMesAnoDataInformada");
+        Date pData = null;
+        int expResult = 0;
+        int result = UtilSBCoreDataHora.gerarInteiroInvertidoDiaMesAnoDataInformada(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gerarDataDiaMesAnoAtual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGerarDataDiaMesAnoAtual() {
+        System.out.println("gerarDataDiaMesAnoAtual");
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.gerarDataDiaMesAnoAtual();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteDataEmStringFormatada method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteDataEmStringFormatada() {
+        System.out.println("converteDataEmStringFormatada");
+        Date pData = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.converteDataEmStringFormatada(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteDataEmStringCorrida method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteDataEmStringCorrida() {
+        System.out.println("converteDataEmStringCorrida");
+        Date pData = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.converteDataEmStringCorrida(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteStringDD_MM_YYYYEmData method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteStringDD_MM_YYYYEmData() {
+        System.out.println("converteStringDD_MM_YYYYEmData");
+        String pString = "";
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pString);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteString_dd_MM_yyEmData method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteString_dd_MM_yyEmData() {
+        System.out.println("converteString_dd_MM_yyEmData");
+        String pString = "";
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.converteString_dd_MM_yyEmData(pString);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteString_dd_MM_yyEmData method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteString_hh_doisPontos_MinutosEmDate() {
+        System.out.println("converteString_hh_doisPontos_MinutosEmDate");
+        String pString = "";
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.converteString_dd_MM_yyEmData(pString);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteDateEmSTringDD_MM_YY method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteDateEmSTringDD_MM_YY() {
+        System.out.println("converteDateEmSTringDD_MM_YY");
+        Date pdata = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.converteDateEmSTringDD_MM_YY(pdata);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteDateEmSTringDD_MM_YYYY method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteDateEmSTringDD_MM_YYYY() {
+        System.out.println("converteDateEmSTringDD_MM_YYYY");
+        Date pdata = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.converteDateEmSTringDD_MM_YYYY(pdata);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of converteStringEmDataEHora method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testConverteStringEmDataEHora() {
+        System.out.println("converteStringEmDataEHora");
+        String pString = "";
+        Date expResult = null;
+        Date result = UtilSBCoreDataHora.converteStringEmDataEHora(pString);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaHoraAtual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testRetornaHoraAtual() {
+        System.out.println("retornaHoraAtual");
+        Date pData = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.retornaHoraAtual(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isDiaIgual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testIsDiaIgual() {
+        System.out.println("isDiaIgual");
+        Date pData1 = null;
+        Date pData2 = null;
+        boolean expResult = false;
+        boolean result = UtilSBCoreDataHora.isDiaIgual(pData1, pData2);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isMesFazParteDoIntevalor method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testIsMesFazParteDoIntevalor() {
+        System.out.println("isMesFazParteDoIntevalor");
+        Date pMesReferencia = null;
+        Date pMesinicial = null;
+        Date pMesFinal = null;
+        boolean expResult = false;
+        boolean result = UtilSBCoreDataHora.isMesFazParteDoIntevalor(pMesReferencia, pMesinicial, pMesFinal);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isAnoIgual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testIsAnoIgual() {
+        System.out.println("isAnoIgual");
+        Date pData1 = null;
+        Date pData2 = null;
+        boolean expResult = false;
+        boolean result = UtilSBCoreDataHora.isAnoIgual(pData1, pData2);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isMesIgual method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testIsMesIgual() {
+        System.out.println("isMesIgual");
+        Date pData1 = null;
+        Date pData2 = null;
+        boolean expResult = false;
+        boolean result = UtilSBCoreDataHora.isMesIgual(pData1, pData2);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMes method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGetMes() {
+        System.out.println("getMes");
+        Date pData = null;
+        int expResult = 0;
+        int result = UtilSBCoreDataHora.getMes(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDia method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGetDia() {
+        System.out.println("getDia");
+        Date pData = null;
+        int expResult = 0;
+        int result = UtilSBCoreDataHora.getDia(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDiaDaSemana method, of class UtilSBCoreDataHora.
+     */
+    @Test
+    public void testGetDiaDaSemana() {
+        System.out.println("getDiaDaSemana");
+        Date pData = null;
+        String expResult = "";
+        String result = UtilSBCoreDataHora.getDiaDaSemana(pData);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -39,18 +39,18 @@ public abstract class UtilSBcoreModulos {
     public static String getCaminhoAbsolutoPastaDesenvolvimento(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         String caminhoRelativo = getCaminhoRelativoConfigModulo(pFabricaConfig);
 
-        return "/home/superBits/desenvolvedor/configModuloTestes/" + caminhoRelativo;
+        return "/home/superBits/desenvolvedor/configModuloTestes/" + SBCore.getGrupoProjeto() + "/" + caminhoRelativo;
     }
 
     public static String getCaminhoAbsolutoDoContextoAtual(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
-        if (SBCore.isEmModoDesenvolvimento()) {
-            return getCaminhoAbsolutoPastaDesenvolvimento(pFabricaConfig);
+        if (SBCore.isEmModoProducao()) {
+            return getCaminhoAbsolutoPastaProducao(pFabricaConfig);
         } else {
-            return getCaminhoAbsolutoPastaProducaoEHomologacao(pFabricaConfig);
+            return getCaminhoAbsolutoPastaDesenvolvimento(pFabricaConfig);
         }
     }
 
-    public static String getCaminhoAbsolutoPastaProducaoEHomologacao(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
+    public static String getCaminhoAbsolutoPastaProducao(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         String caminhoRelativo = getCaminhoRelativoConfigModulo(pFabricaConfig);
         return getCaminhoBaseContextoAtual() + "/" + caminhoRelativo;
     }

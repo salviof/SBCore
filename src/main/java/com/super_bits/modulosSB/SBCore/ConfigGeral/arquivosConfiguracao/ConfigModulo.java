@@ -45,23 +45,25 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
     public String getPropriedade(ItfFabConfigModulo pPropriedades) {
         if (SBCore.isEmModoProducao()) {
             if (!propriedadesEnv.containsKey(pPropriedades.toString())) {
-                String propriedadeEnv = System.getenv(pPropriedades.toString());
+
                 String nomeCompleto = getNomeCompleto(pPropriedades);
+                String propriedadeEnv = System.getenv(nomeCompleto);
                 if (propriedadeEnv == null) {
 
-                    propriedadeEnv = System.getenv(nomeCompleto);
-                } else {
-                    System.out.println("ATENÇÃO, VARIAVEL DE AMBIENTE DEFINIDA VIA ABREVIAÇÃO, ESTE TIPO DE CHAMADA SERÁ DEPRECIADO EM BREVE");
-                    System.out.println("ALTERE PARA de " + pPropriedades.toString() + ": " + nomeCompleto);
-
+                    propriedadeEnv = System.getenv(pPropriedades.toString());
+                    if (propriedadeEnv != null) {
+                        System.out.println("ATENÇÃO, VARIAVEL DE AMBIENTE DEFINIDA VIA ABREVIAÇÃO, ESTE TIPO DE CHAMADA SERÁ DEPRECIADO EM BREVE");
+                        System.out.println("ALTERE PARA de " + pPropriedades.toString() + " para: " + nomeCompleto);
+                    }
                 }
+
                 if (propriedadeEnv != null) {
                     propriedadesEnv.put(pPropriedades.toString(), propriedadeEnv);
                 }
             }
             String valorEnv = propriedadesEnv.get(pPropriedades.toString());
             if (valorEnv != null) {
-                return propriedadesEnv.get(pPropriedades.toString());
+                return valorEnv;
             }
         }
         if (proppriedadesBasicas.get(pPropriedades.toString()) != null) {

@@ -5,12 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldComSerializacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -275,6 +273,11 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
     @Override
     public ItfBeanSimples getValorComoItemSimples() {
         return ItfCampoInstanciadoBase.super.getValorComoItemSimples(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean getValorComoBoolean() {
+        return ItfCampoInstanciadoBase.super.getValorComoBoolean(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

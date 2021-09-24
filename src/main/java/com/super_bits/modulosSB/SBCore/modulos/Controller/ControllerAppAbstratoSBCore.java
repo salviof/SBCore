@@ -130,7 +130,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
                     classedoMetodo = classedoMetodo.getSuperclass();
                 } while (classedoMetodo != null);
             } catch (Throwable tt) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando obter Método vinculado", tt);
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando obter ação vinculada ao Método, verifique se o método tem anotação ", tt);
             }
 
         }
@@ -261,10 +261,15 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
         if (SBCore.isIgnorarPermissoes()) {
             return true;
         }
-        if (!pAcao.isPrecisaPermissao()) {
+        if (!pAcao.isPrecisaPermissao() && !pAcao.getAcaoDeGestaoEntidade().isPrecisaPermissao()) {
+
             return true;
         } else {
-            return SBCore.getCentralPermissao().isAcaoPermitidaUsuario(SBCore.getUsuarioLogado(), pAcao);
+            if (SBCore.getCentralPermissao().isAcaoPermitidaUsuario(SBCore.getUsuarioLogado(), pAcao.getAcaoDeGestaoEntidade())) {
+                return SBCore.getCentralPermissao().isAcaoPermitidaUsuario(SBCore.getUsuarioLogado(), pAcao);
+            } else {
+                return false;
+            }
 
         }
 

@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
  */
 public abstract class UTilSBCoreInputs {
 
-    private static final int timeoutDeConexaoPadrao = 500;
+    private static final int timeoutDeConexaoPadrao = 2000;
     private static final int timeoutDeLeituraPadrao = 50000;
 
     /**
@@ -230,7 +230,17 @@ public abstract class UTilSBCoreInputs {
     }
 
     public static InputStream getStreamByURL(String pUrl) {
-        URLConnection conexao = getConexao(pUrl);
+        return getStreamByURL(pUrl, -1);
+
+    }
+
+    public static InputStream getStreamByURL(String pUrl, int pSegundosTimeout) {
+        URLConnection conexao;
+        if (pSegundosTimeout <= 0) {
+            conexao = getConexao(pUrl);
+        } else {
+            conexao = getConexao(pUrl, 8000, pSegundosTimeout * 1000);
+        }
 
         try {
 

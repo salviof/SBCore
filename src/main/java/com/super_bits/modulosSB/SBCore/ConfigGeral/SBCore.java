@@ -248,6 +248,7 @@ public class SBCore {
                                     + "a partir de  \n " + nomeClassePermissao, t);
                             if (ignorarConfigurcoesDePermissao) {
                                 System.out.println("A Classe de permissões não foi definida");
+
                             } else {
                                 throw new UnsupportedOperationException("Erro configurando classes de serviço");
                             }

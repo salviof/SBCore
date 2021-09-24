@@ -8,6 +8,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.FabTipoEmpacotamento;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo.FabTipoAcessoArquivo;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
@@ -61,13 +62,25 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
         pCampo.setValor(pNomeArquivo);
         return salvarArquivo((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
     }
+    private static final String SLUG_IMAGEM_PEQUENA = FabTipoAtributoObjeto.IMG_PEQUENA.toString();
+    private static final String SLUG_IMAGEM_MEDIA = FabTipoAtributoObjeto.IMG_MEDIA.toString();
+    private static final String SLUG_IMAGEM_GRANDE = FabTipoAtributoObjeto.IMG_GRANDE.toString();
 
     @Override
     public String getEndrLocalArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, String categoria) {
         if (categoria == null) {
             return getEndrLocalRecursosDoObjeto(pItem.getClass()) + "/" + pItem.getId() + "/" + nomeArquivo;
-        } else {
-            return getEndrLocalRecursosDoObjeto(pItem.getClass()) + "/" + pItem.getId() + "/" + categoria + "/" + nomeArquivo;
+        }
+        switch (categoria) {
+            case "IMG_PEQUENA":
+                return getEndrLocalImagem(pItem, FabTipoAtributoObjeto.IMG_PEQUENA);
+            case "IMG_MEDIA":
+                return getEndrLocalImagem(pItem, FabTipoAtributoObjeto.IMG_MEDIA);
+            case "IMG_GRANDE":
+                return getEndrLocalImagem(pItem, FabTipoAtributoObjeto.IMG_GRANDE);
+
+            default:
+                return getEndrLocalRecursosDoObjeto(pItem.getClass()) + "/" + pItem.getId() + "/" + categoria + "/" + nomeArquivo;
         }
 
     }
@@ -108,7 +121,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
 
     @Override
     public String getEndrLocalArquivoCampoInstanciado(ItfCampoInstanciado pCampo) {
-        
+
         String caminhoArquivo = getEndrLocalArquivoItem((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
         return caminhoArquivo;
     }

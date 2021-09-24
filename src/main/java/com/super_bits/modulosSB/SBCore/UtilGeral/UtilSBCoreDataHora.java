@@ -7,10 +7,8 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.YearMonth;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -237,14 +235,14 @@ public class UtilSBCoreDataHora {
      * @param pDatahoraFim
      * @return intervalo entre duas datas em minutos
      */
-    public static long intervaloTempoMinutos(Date pDatahoraInicio, Date pDatahoraFim) {
+    public static Long intervaloTempoMinutos(Date pDatahoraInicio, Date pDatahoraFim) {
 
         Long diferenca = intervaloTempoMileSegundos(pDatahoraInicio, pDatahoraFim);
 
         if (diferenca != null) {
             return intervarlTempoMinutos(diferenca);
         } else {
-            return 0;
+            return 0l;
         }
 
     }
@@ -974,21 +972,45 @@ public class UtilSBCoreDataHora {
     }
 
     /**
+     * Converte 16/05/84 em um Date contendo apenas o registro deste dia
+     * SimpleDateFormat: dd/MM/yy
      *
-     * DEVOLVE DATE COM HORA ZERADA
      *
-     * Ex: ENTRADA 29/11/16 - SAIDA Tue Nov 29 00:00:00 BRST 2016
      *
-     * @param pString DATA NO FORMATO A CONVERTER
+     * @param pString Exemplo: ENTRADA 29/11/16
      * @return DATA ATUAL
      */
-    public static Date converteStringDD_MM_YYEmData(String pString) {
+    public static Date converteString_dd_MM_yyEmData(String pString) {
         Date dataConvertida;
         try {
             if (UtilSBCoreStringValidador.isNuloOuEmbranco(pString)) {
                 return null;
             }
             SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yy");
+            dataConvertida = formatador.parse(pString);
+            return dataConvertida;
+
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Não foi possivel converter a String em Data!", t);
+            return null;
+        }
+    }
+
+    /**
+     * Converte hora e minito, em um Date contendo apenas hora e minuto
+     * SimpleDateFormat: HH:hh
+     *
+     * @see SimpleDateFormat
+     * @param pString Exemplo: 16:20
+     * @return Date representando Hora e minuto
+     */
+    public static Date converteString_HH_doisPontos_mm_EmData(String pString) {
+        Date dataConvertida;
+        try {
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pString)) {
+                return null;
+            }
+            SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
             dataConvertida = formatador.parse(pString);
             return dataConvertida;
 
@@ -1169,6 +1191,13 @@ public class UtilSBCoreDataHora {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(pData);
         return cal1.get(Calendar.MONTH);
+    }
+
+    public static String getMesTexto(Date pData) {
+
+        Locale local = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("MMMM", local);
+        return dateFormat.format(pData);
     }
 
     public static int getDia(Date pData) {

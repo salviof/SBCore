@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLiberal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioNulo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioAtributoUnico;
@@ -30,7 +31,8 @@ public enum FabTipoValidacaoUnitaria {
     CNPJ,
     CODIGO_DE_BARRAS,
     CAMPO_UNICO,
-    REGEX,;
+    REGEX,
+    LOCALIZACAO;
 
     public ItfValidacaoUnitaria getValidador(ItfCampoInstanciado pCampo) {
         switch (pCampo.getFabricaTipoAtributo()) {
@@ -39,17 +41,26 @@ public enum FabTipoValidacaoUnitaria {
                     case CODIGO_DE_BARRAS:
                         return new ValidarUnitarioCodigoDeBarass(pCampo);
                 }
+                break;
             case CPF:
                 switch (this) {
                     case CPF:
                         return new ValidarUnitarioCPF(pCampo);
                 }
+                break;
             case CNPJ:
                 switch (this) {
                     case CNPJ:
                         return new ValidarUnitarioCNPJ(pCampo);
                 }
+                break;
+            case LC_LOCALIZACAO: {
+                switch (this) {
+                    case LOCALIZACAO:
+                        return new ValidadorUnitarioLocalizacao(pCampo);
+                }
 
+            }
             default:
         }
 

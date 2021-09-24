@@ -5,16 +5,16 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TipoRecurso;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.io.File;
-import javax.persistence.EntityManager;
 
 /**
  *
@@ -134,8 +134,6 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
         }
 
     }
-    
-    
 
     @Override
     public String getCaminhoArquivoLocal() {
@@ -201,6 +199,44 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
             hashArquivoEntidade = SBCore.getServicoArquivosDeEntidade().getHashArquivoDeEntidadeRegistrado(campoInstanciado);
         }
         return hashArquivoEntidade;
+    }
+
+    @Override
+    public String getIconeTipoArquivo() {
+        if (getLinkAbrirArquivo() == null) {
+            return "fa fa-file-text-o";
+        }
+        FabTipoArquivoConhecido tipoArquivo = FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo(UtilSBCoreStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(getLinkAbrirArquivo()));
+        if (tipoArquivo == null) {
+            return "fa fa-file-text-o";
+        }
+
+        switch (tipoArquivo) {
+            case IMAGEM_WEB:
+            case IMAGE_REPRESENTATIVA_ENTIDADE_PEQUENO:
+            case IMAGE_REPRESENTATIVA_ENTIDADE_MEDIO:
+            case IMAGE_REPRESENTATIVA_ENTIDADE_GRANDE:
+                return "fa fa-file-image-o";
+
+            case VIDEO:
+                return "fa fa-file-video-o ";
+
+            case DOCUMENTO_WORD_XDOC2007:
+                return "fa fa-file-word-o";
+
+            case FOLHA_DE_ESTILO_CSS:
+            case JAVASCRIPT:
+                return "fa fa-file-code-o";
+            case DOCUMENTO_PDF:
+                return "fa fa-file-pdf-o";
+
+            case ARQUIVO_TEXTO_SIMPLES:
+                return "fa fa-file-text-o";
+
+            default:
+                return "fa fa-file-text-o";
+
+        }
     }
 
 }

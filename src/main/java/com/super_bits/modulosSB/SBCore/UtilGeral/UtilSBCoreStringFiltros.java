@@ -298,7 +298,8 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         param = Normalizer.normalize(param, Normalizer.Form.NFD);
         param = param.replaceAll("[^\\p{ASCII}]", "");
         param = param.replace(" ", "");
-
+        param = param.replace("(", "");
+        param = param.replace(")", "");
         param = param.replace("-", "");
         param = param.replace(":", "");
         return param;

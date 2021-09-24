@@ -16,7 +16,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -40,64 +39,69 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
     protected final String termoPesquisa;
 
     public ItemSimilarGenerico(ItfBeanSimples pObjetoAnalizado, String pTermpoPesquisa) {
-        this.objetoAnalizado = pObjetoAnalizado;
-        nota = 0;
-        if (pTermpoPesquisa == null) {
-            nota = -1;
-            termoPesquisa = null;
-            textoReferenciaPesquisa = null;
-            return;
-        }
-        termoPesquisa = pTermpoPesquisa.toLowerCase();
-
-        textoReferenciaPesquisa = getTextoReferencia();
         try {
-
-            if (textoReferenciaPesquisa == null || textoReferenciaPesquisa.isEmpty()) {
+            this.objetoAnalizado = pObjetoAnalizado;
+            nota = 0;
+            if (pTermpoPesquisa == null) {
                 nota = -1;
+                termoPesquisa = null;
+                textoReferenciaPesquisa = null;
                 return;
             }
+            termoPesquisa = pTermpoPesquisa.toLowerCase();
 
-            Arrays.stream(pTermpoPesquisa.split("\\s"))
-                    .forEach(parteParametro -> {
-                        Arrays.stream(textoReferenciaPesquisa.toLowerCase().replace("-", " ").split("\\s"))
-                                .forEach(parteTextoAnalizadao -> {
-                                    if (UtilSBCoreStringValidador.isNuloOuEmbranco(parteTextoAnalizadao)) {
-                                        return;
-                                    }
-                                    if (parteTextoAnalizadao.length() > parteParametro.length()) {
-                                        parteTextoAnalizadao = parteTextoAnalizadao.substring(0, parteParametro.length());
-                                    }
-                                    double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
-                                    if (nt > 0.8) {
-                                        if (nt >= 0.9) {
-                                            notasIdentico.add(nt);
-                                            if (textoReferenciaPesquisa.toLowerCase().startsWith(parteParametro)) {
-                                                notasIdenticoInicio.add(nt);
-                                            }
-                                        } else {
-                                            notasValidas.add(nt);
+            textoReferenciaPesquisa = getTextoReferencia();
+            try {
+
+                if (textoReferenciaPesquisa == null || textoReferenciaPesquisa.isEmpty()) {
+                    nota = -1;
+                    return;
+                }
+
+                Arrays.stream(pTermpoPesquisa.split("\\s"))
+                        .forEach(parteParametro -> {
+                            Arrays.stream(textoReferenciaPesquisa.toLowerCase().replace("-", " ").split("\\s"))
+                                    .forEach(parteTextoAnalizadao -> {
+                                        if (UtilSBCoreStringValidador.isNuloOuEmbranco(parteTextoAnalizadao)) {
+                                            return;
                                         }
-                                    }
-                                    if (nt > nota) {
-                                        nota = nt;
-                                    }
-                                });
+                                        if (parteTextoAnalizadao.length() > parteParametro.length()) {
+                                            parteTextoAnalizadao = parteTextoAnalizadao.substring(0, parteParametro.length());
+                                        }
+                                        double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
+                                        if (nt > 0.8) {
+                                            if (nt >= 0.9) {
+                                                notasIdentico.add(nt);
+                                                if (textoReferenciaPesquisa.toLowerCase().startsWith(parteParametro)) {
+                                                    notasIdenticoInicio.add(nt);
+                                                }
+                                            } else {
+                                                notasValidas.add(nt);
+                                            }
+                                        }
+                                        if (nt > nota) {
+                                            nota = nt;
+                                        }
+                                    });
 
-                    });
+                        });
 
-            if (!notasValidas.isEmpty()) {
-                nota = (notasValidas.stream().mapToDouble(Double::doubleValue)
-                        .sum() / notasValidas.size());
-            }
-            if (!notasIdentico.isEmpty()) {
-                nota += (notasIdentico.size() * 1);
-            }
-            if (!notasIdenticoInicio.isEmpty()) {
-                nota += (notasIdenticoInicio.size() * 2);
+                if (!notasValidas.isEmpty()) {
+                    nota = (notasValidas.stream().mapToDouble(Double::doubleValue)
+                            .sum() / notasValidas.size());
+                }
+                if (!notasIdentico.isEmpty()) {
+                    nota += (notasIdentico.size() * 1);
+                }
+                if (!notasIdenticoInicio.isEmpty()) {
+                    nota += (notasIdenticoInicio.size() * 2);
+                }
+            } catch (Throwable t) {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando indice de semelhanca", t);
             }
         } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando indice de semelhanca", t);
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro construindo objeto comparavel", t);
+            throw new UnsupportedOperationException("Falha criando objeto comparavel, com parametros" + pObjetoAnalizado + " - " + pTermpoPesquisa);
         }
     }
 

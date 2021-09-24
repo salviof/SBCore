@@ -4,8 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import java.util.stream.Stream;
-
 /**
  *
  * @author desenvolvedor
@@ -34,7 +32,7 @@ public abstract class UtilSBCoreStringSlugs {
     }
 
     public static String gerarSlugSimplesForcandoMaiusculoAposEspaco(String pValor) {
-        throw new UnsupportedOperationException("Ainda não implementado, Forca, e PullRequesta Isso! www.coletivojava.com.br ");
+        throw new UnsupportedOperationException("Ainda não implementado, Forca, e PullRequesta Isso! coletivojava.com.br ");
     }
 
     public static String gerarSlugCaixaBaixa(String pValor) {
