@@ -27,8 +27,8 @@ public abstract class ItemSimples extends ItemGenerico implements
         //			+CInfo.pastaImagens + "/SBPequeno.jpg"));
         //adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME_CURTO), true);
         //adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME), true);
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
+        // adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME), true);
+        // adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
     }
 
     public ItemSimples(Object pInstancia) {

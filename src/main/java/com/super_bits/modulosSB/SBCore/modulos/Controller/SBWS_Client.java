@@ -18,6 +18,7 @@ import javax.xml.ws.Service;
  * @author Salvio
  * @param <T> Interface do WebService
  */
+@Deprecated
 public abstract class SBWS_Client<T> {
 
     protected String getUrl() {

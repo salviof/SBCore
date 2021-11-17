@@ -85,6 +85,27 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
                                     });
 
                         });
+                if (pTermpoPesquisa.contains("@")) {
+                    String[] partesEmail = textoReferenciaPesquisa.split("@");
+
+                    String dominioDoItem;
+
+                    dominioDoItem = partesEmail[1];
+
+                    String[] partesEmailPesquisa = termoPesquisa.split("@");
+
+                    String dominioDoItemPesquisado;
+
+                    dominioDoItemPesquisado = partesEmailPesquisa[1];
+
+                    double ntaDominio = UtilSBCoreStringComparador.JaroWinkler(dominioDoItem, dominioDoItemPesquisado);
+                    notasValidas.add(ntaDominio);
+                    if (ntaDominio >= 0.9) {
+                        notasIdenticoInicio.add(ntaDominio);
+
+                    }
+
+                }
 
                 if (!notasValidas.isEmpty()) {
                     nota = (notasValidas.stream().mapToDouble(Double::doubleValue)

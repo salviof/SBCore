@@ -48,6 +48,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
+import com.super_bits.modulosSB.SBCore.modulos.erp.ItfServicoLinkDeEntidadesERP;
 
 /**
  *
@@ -101,10 +102,10 @@ public class SBCore {
     private static ArquivoConfiguracaoCliente arquivoConfigCliente;
     private static ArquivoConfiguracaoDistribuicao arquivoConfigDistribuicao;
     private static ItfServicoVisualizacao servicoVisualizacao;
-    private static ItfCentralDeArquivos centralDeArquivos;
-    private static ItfCentralComunicacao centralComunicacao;
-    private static ItfCentralLocalizacao centralLocalizacao;
-    private static ItfCentralAdministrativa centralAdministrativa;
+    private static ItfCentralDeArquivos servicoGestaoDeArquivos;
+    private static ItfCentralComunicacao servicoComunucacao;
+    private static ItfCentralLocalizacao servicoLocalizacao;
+    private static ItfCentralAdministrativa servicoInterfaceGraficaDEV;
     private static Class<? extends ItfCentralAtributosDeObjetos> centralDeAtributosPadrao;
     private static ItfCentralDados centralDados;
     private static FabTipoProjeto tipoProjeto;
@@ -328,14 +329,14 @@ public class SBCore {
 
             arquivoConfigDistribuicao = configurador.getArquivoConfiguradorDistribuicao();
             servicoVisualizacao = configuracoes.getServicoVisualizacao().newInstance();
-            centralDeArquivos = configuracoes.getCentralDeArquivo().newInstance();
-            centralComunicacao = configuracoes.getCentralComunicacao().newInstance();
+            servicoGestaoDeArquivos = configuracoes.getCentralDeArquivo().newInstance();
+            servicoComunucacao = configuracoes.getCentralComunicacao().newInstance();
             tipoProjeto = configuracoes.getTipoProjeto();
             ambienteExecucaoConfigurado = validaConfiguracoes();
 
-            centralLocalizacao = configuracoes.getCentralDeLocalizacao().newInstance();
+            servicoLocalizacao = configuracoes.getCentralDeLocalizacao().newInstance();
             centralDeAtributosPadrao = configuracoes.getCentralAtributoDados();
-            centralAdministrativa = configuracoes.getCentralAdministrativa();
+            servicoInterfaceGraficaDEV = configuracoes.getCentralAdministrativa();
 
             if (configuracoes.getCentralDados() != null) {
                 registrarCentralDeDados(configuracoes.getCentralDados());
@@ -679,7 +680,7 @@ public class SBCore {
     @Deprecated
     public static ItfCentralDeArquivos getCentralDeArquivos() {
 
-        return centralDeArquivos;
+        return servicoGestaoDeArquivos;
     }
 
     /**
@@ -690,7 +691,7 @@ public class SBCore {
      */
     public static ItfCentralDeArquivos getServicoArquivosDeEntidade() {
 
-        return centralDeArquivos;
+        return servicoGestaoDeArquivos;
     }
 
     /**
@@ -707,7 +708,7 @@ public class SBCore {
      * @return Helper framework CEP
      */
     public static ItfCentralLocalizacao getServicoLocalizacao() {
-        return centralLocalizacao;
+        return servicoLocalizacao;
     }
 
     /**
@@ -829,10 +830,10 @@ public class SBCore {
      * @return Controle de comunicação, entre Sistema, Usuário e Desenvolvedor
      */
     public static ItfCentralComunicacao getServicoComunicacao() {
-        if (centralComunicacao == null) {
+        if (servicoComunucacao == null) {
             throw new UnsupportedOperationException("A central de comunicação não foi definida");
         }
-        return centralComunicacao;
+        return servicoComunucacao;
     }
 
     public static void soutInfoDebug(String pInfo, boolean forcarExibicao) {
@@ -921,7 +922,7 @@ public class SBCore {
 
     public static ItfCentralAdministrativa getCentralAdministrativa() {
 
-        return centralAdministrativa;
+        return servicoInterfaceGraficaDEV;
     }
 
     public static FabTipoProjeto getTipoProjeto() {

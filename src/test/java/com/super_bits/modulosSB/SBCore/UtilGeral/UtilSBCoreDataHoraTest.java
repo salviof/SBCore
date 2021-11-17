@@ -723,7 +723,7 @@ public class UtilSBCoreDataHoraTest {
         Date pMesinicial = null;
         Date pMesFinal = null;
         boolean expResult = false;
-        boolean result = UtilSBCoreDataHora.isMesFazParteDoIntevalor(pMesReferencia, pMesinicial, pMesFinal);
+        boolean result = UtilSBCoreDataHora.isMesFazParteDoIntevalo(pMesReferencia, pMesinicial, pMesFinal);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

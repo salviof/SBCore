@@ -1122,7 +1122,7 @@ public class UtilSBCoreDataHora {
 
     }
 
-    public static boolean isMesFazParteDoIntevalor(Date pMesReferencia, Date pMesinicial, Date pMesFinal) {
+    public static boolean isMesFazParteDoIntevalo(Date pMesReferencia, Date pMesinicial, Date pMesFinal) {
         if (pMesinicial == null || pMesFinal == null) {
             //False por questão filosófica de não existir mês nulo
             return false;
@@ -1197,6 +1197,13 @@ public class UtilSBCoreDataHora {
 
         Locale local = new Locale("pt", "BR");
         DateFormat dateFormat = new SimpleDateFormat("MMMM", local);
+        return dateFormat.format(pData);
+    }
+
+    public static String getAnoAbreviado(Date pData) {
+
+        Locale local = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("yy", local);
         return dateFormat.format(pData);
     }
 

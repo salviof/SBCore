@@ -28,7 +28,7 @@ public class CampoInstanciadoVerdadeiroOuFalso implements Serializable, ItfCampo
 
     @Override
     public String getTextoNegativo() {
-        return campoInstanciado.getTextoPositivo();
+        return campoInstanciado.getTextoNegativo();
     }
 
     @Override

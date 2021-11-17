@@ -24,6 +24,30 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         return pTexto.replaceAll("[0-9]", "");
     }
 
+    public static String getNomeReduzido(String pNome) {
+        if (pNome == null) {
+            return null;
+        }
+        String nome = pNome;
+        String nomeCurto = "";
+        nome = nome.replace("-", " ");
+        nome = nome.replace(".", " ");
+        for (String parte : nome.split(" ")) {
+            if (parte.length() > 15) {
+                parte = parte.substring(0, parte.length());
+            }
+            if (nomeCurto.length() < 15) {
+                if (nomeCurto.length() > 0) {
+                    nomeCurto = nomeCurto + " " + parte;
+                } else {
+                    nomeCurto = nomeCurto + parte;
+                }
+            }
+        }
+
+        return nomeCurto;
+    }
+
     public static String getNuloEmEmpty(String pString) {
         if (pString == null) {
             return "";
