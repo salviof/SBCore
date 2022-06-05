@@ -50,4 +50,20 @@ public class UtilSBCoreStringsExtrator extends UtilSBCoreStringFiltros {
         return resp;
     }
 
+    public static List<String> extrairPalavrasEntreColchete(String pString) {
+        List<String> resp = new ArrayList();
+
+        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pString)) {
+            return resp;
+        } else {
+            Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+            Matcher matcher = pattern.matcher(pString);
+            while (matcher.find()) {
+                String resultado = matcher.group();
+                resp.add(resultado.substring(1, resultado.length() - 1));
+            }
+        }
+        return resp;
+    }
+
 }

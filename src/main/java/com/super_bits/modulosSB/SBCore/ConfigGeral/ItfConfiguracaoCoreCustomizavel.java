@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
@@ -35,6 +36,8 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
     public void setCentralDeEventos(Class<? extends ItfCentralEventos> centralDeEventos);
 
     public void setCentralDeArquivos(Class<? extends ItfCentralDeArquivos> centralDeArquivos);
+
+    public void setServicoController(Class<? extends ItfServicoController> pServicoController);
 
     /**
      *

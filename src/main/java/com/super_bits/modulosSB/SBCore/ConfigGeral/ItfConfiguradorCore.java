@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ArquivoConfiguracaoBase;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ArquivoConfiguracaoCliente;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ArquivoConfiguracaoDistribuicao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.ServicoControllerExecucaoLocal;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.CentralDeArquivosJar;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.CentramMensagemProgramadorMsgStop;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBCoreDeveloperSopMessagem;
@@ -75,7 +76,7 @@ public interface ItfConfiguradorCore {
             pConfig.setControleDeSessao(ControleDeSessaoPadrao.class);
             pConfig.setServicoVisualizacao(ServicoVisualizacaoSemVisualizacao.class);
             pConfig.setCentralDeArquivos(CentralDeArquivosJar.class);
-
+            pConfig.setServicoController(ServicoControllerExecucaoLocal.class);
             pConfig.setCentralAtributoDados(CentralAtributosDeObjetosSemPersistencia.class);
             pConfig.setCentralDeLocalizacao(CentralDeLocalizacaoSemPersistencia.class);
             pConfig.setTipoProjeto(FabTipoProjeto.BIBLIOTECA);
@@ -93,7 +94,7 @@ public interface ItfConfiguradorCore {
             pConfig.setControleDeSessao(ControleDeSessaoPadrao.class);
             pConfig.setServicoVisualizacao(ServicoVisualizacaoSemVisualizacao.class);
             pConfig.setCentralDeArquivos(CentralDeArquivosJar.class);
-
+            pConfig.setServicoController(ServicoControllerExecucaoLocal.class);
             pConfig.setCentralAtributoDados(CentralAtributosDeObjetosSemPersistencia.class);
             pConfig.setCentralDeLocalizacao(CentralDeLocalizacaoSemPersistencia.class);
         }

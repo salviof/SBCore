@@ -88,9 +88,10 @@ public class RespostaSimples implements ItfResposta, Serializable {
             dispararMensagens();
             return this;
         }
-
-        if (pObjetoResultante.getClass().getSimpleName().equals(tipoRetorno.getClass().getSimpleName())) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "O tipo de retorno diverge do tipo Especificado", null);
+        if (tipoRetorno != null && !tipoRetorno.equals(Void.class)) {
+            if (pObjetoResultante.getClass().getSimpleName().equals(tipoRetorno.getClass().getSimpleName())) {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "O tipo de retorno diverge do tipo Especificado", null);
+            }
         }
         retorno = pObjetoResultante;
         return this;
@@ -199,6 +200,7 @@ public class RespostaSimples implements ItfResposta, Serializable {
             }
             mensagens.removeAll(mensagensPositivas);
         }
+        calculaResultados();
         return this;
     }
 

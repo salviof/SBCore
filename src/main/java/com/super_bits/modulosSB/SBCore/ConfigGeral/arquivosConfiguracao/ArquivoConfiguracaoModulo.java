@@ -16,6 +16,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.Properties;
 import org.apache.commons.io.filefilter.FileFileFilter;
 
@@ -93,11 +95,10 @@ public abstract class ArquivoConfiguracaoModulo {
             if (!dirFile.exists()) {
                 new File(diretorio).mkdirs();
             }
-            File arquivoConfigRuntime = new File(caminhoCOmpleto);
 
-            OutputStream out = new FileOutputStream(arquivoConfigRuntime);
-            prop.store(out, "Prorpiedades do módulo " + fabricaConfig.getClass().getSimpleName() + " armazanada em");
-            out.close();
+            prop.store(new OutputStreamWriter(
+                    new FileOutputStream(caminhoCOmpleto), Charset.forName("UTF8")),
+                    "Prorpiedades do módulo " + fabricaConfig.getSimpleName() + " armazanada em " + caminhoCOmpleto);
 
             return true;
         } catch (Throwable t) {

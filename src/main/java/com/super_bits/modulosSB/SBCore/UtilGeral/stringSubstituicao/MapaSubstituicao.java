@@ -41,7 +41,10 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
             if (pString.contains(palavraChave)) {
                 System.out.println("Substituindo [" + pString + "] por" + mapaSubstituicao.get(palavraChave));
-                novaString = novaString.replace(palavraChave, mapaSubstituicao.get(palavraChave));
+                if (mapaSubstituicao.get(palavraChave) != null) {
+                    novaString = novaString.replace(palavraChave, mapaSubstituicao.get(palavraChave));
+                }
+
             }
         }
         System.out.println("Resultado=" + novaString);
@@ -165,7 +168,14 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
     @Override
     public final void adicionarImagem(String palavraChave, String valor) {
-
+        if (!palavraChave.startsWith("[") || !palavraChave.endsWith("]")) {
+            if (!palavraChave.startsWith("[")) {
+                palavraChave = "[".concat(palavraChave);
+            }
+            if (!palavraChave.endsWith("]")) {
+                palavraChave = (palavraChave).concat("]");
+            }
+        }
         mapaSubstituicaoImagem.put(palavraChave, valor);
     }
 

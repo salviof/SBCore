@@ -28,7 +28,7 @@ public class UtilSBCoreClienteRest {
         try {
             URL url = new URL(pUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(10000);
+            conn.setConnectTimeout(5000);
             conn.setRequestMethod("GET");
 
             conn.setRequestProperty("Accept", "application/json");

@@ -13,6 +13,8 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabCo
  */
 public abstract class UtilSBcoreModulos {
 
+    public final static String DIRETORIO_ARQUIVOS_CONFIG_TESTE = "/home/superBits/desenvolvedor/configModuloTestes";
+
     public static String getCaminhoRelativoConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         String nomeAmigavel = pFabricaConfig.getSimpleName().replace("Fab", "");
         nomeAmigavel = nomeAmigavel.replaceAll("config", "");
@@ -39,7 +41,7 @@ public abstract class UtilSBcoreModulos {
     public static String getCaminhoAbsolutoPastaDesenvolvimento(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         String caminhoRelativo = getCaminhoRelativoConfigModulo(pFabricaConfig);
 
-        return "/home/superBits/desenvolvedor/configModuloTestes/" + SBCore.getGrupoProjeto() + "/" + caminhoRelativo;
+        return DIRETORIO_ARQUIVOS_CONFIG_TESTE + "/" + SBCore.getGrupoProjeto() + "/" + caminhoRelativo;
     }
 
     public static String getCaminhoAbsolutoDoContextoAtual(Class<? extends ItfFabConfigModulo> pFabricaConfig) {

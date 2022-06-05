@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
@@ -40,6 +41,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private Class<? extends ItfCentralLocalizacao> classeCentralLocalizacao;
     private Class<? extends ItfCentralAtributosDeObjetos> classeCentralAtributos;
     private Class<? extends ItfCentralDados> classeCentralDados;
+    private Class<? extends ItfServicoController> classeServicoController;
     private ItfCentralAdministrativa centralAdministrativa;
     private FabTipoProjeto tipoProjeto;
 
@@ -323,6 +325,16 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     @Override
     public void setTipoProjeto(FabTipoProjeto tipoProjeto) {
         this.tipoProjeto = tipoProjeto;
+    }
+
+    @Override
+    public void setServicoController(Class<? extends ItfServicoController> pClasseServicoController) {
+        classeServicoController = pClasseServicoController;
+    }
+
+    @Override
+    public Class<? extends ItfServicoController> getServicoController() {
+        return classeServicoController;
     }
 
 }

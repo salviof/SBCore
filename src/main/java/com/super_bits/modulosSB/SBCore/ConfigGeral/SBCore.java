@@ -40,6 +40,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 
@@ -49,6 +50,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfServicoLinkDeEntidadesERP;
+import jakarta.json.JsonObject;
 
 /**
  *
@@ -106,6 +108,7 @@ public class SBCore {
     private static ItfCentralComunicacao servicoComunucacao;
     private static ItfCentralLocalizacao servicoLocalizacao;
     private static ItfCentralAdministrativa servicoInterfaceGraficaDEV;
+    private static ItfServicoController servicoController;
     private static Class<? extends ItfCentralAtributosDeObjetos> centralDeAtributosPadrao;
     private static ItfCentralDados centralDados;
     private static FabTipoProjeto tipoProjeto;
@@ -330,6 +333,7 @@ public class SBCore {
             arquivoConfigDistribuicao = configurador.getArquivoConfiguradorDistribuicao();
             servicoVisualizacao = configuracoes.getServicoVisualizacao().newInstance();
             servicoGestaoDeArquivos = configuracoes.getCentralDeArquivo().newInstance();
+            servicoController = configuracoes.getServicoController().newInstance();
             servicoComunucacao = configuracoes.getCentralComunicacao().newInstance();
             tipoProjeto = configuracoes.getTipoProjeto();
             ambienteExecucaoConfigurado = validaConfiguracoes();
@@ -927,6 +931,10 @@ public class SBCore {
 
     public static FabTipoProjeto getTipoProjeto() {
         return tipoProjeto;
+    }
+
+    public static ItfServicoController getServicoController() {
+        return servicoController;
     }
 
 }

@@ -45,17 +45,6 @@ public class UtilSBCoreStringsMaiuculoMinusculo extends UtilSBCoreStringsMaiucul
         return resp;
     }
 
-    /**
-     *
-     * Retorna a String convertendo a primeira letra para minusculo
-     *
-     * @param parametro
-     * @return
-     */
-    public static String getPrimeiraLetraMinuscula(String parametro) {
-        return String.valueOf(parametro.charAt(0)).toLowerCase() + parametro.substring(1);
-    }
-
     public static String getPrimeiraLetraMaiusculaRestanteMinusculo(String parametro) {
         return String.valueOf(parametro.charAt(0)).toUpperCase() + parametro.substring(1).toLowerCase();
     }

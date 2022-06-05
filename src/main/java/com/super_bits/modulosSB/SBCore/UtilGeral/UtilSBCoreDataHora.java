@@ -1238,24 +1238,77 @@ public class UtilSBCoreDataHora {
         return null;
     }
 
-    public static boolean isDiaIgualOuSuperior(Date pDiaReferencia, Date pDiaSuperior) {
-        if (pDiaReferencia == null || pDiaSuperior == null) {
+    public static boolean isDiaIgualOuInferior(Date pDiaReferenciaLimite, Date pPossivelDiaInferior) {
+        if (pDiaReferenciaLimite == null || pPossivelDiaInferior == null) {
             //False por questão filosófica de não existir dia nulo
             return false;
         }
 
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(pDiaReferencia);
-        cal2.setTime(pDiaSuperior);
+        Calendar dataHoraReferenciaLimite = Calendar.getInstance();
+        Calendar dataHoraPossivelDiaIterior = Calendar.getInstance();
+        dataHoraReferenciaLimite.setTime(pDiaReferenciaLimite);
+        dataHoraPossivelDiaIterior.setTime(pPossivelDiaInferior);
 
-        if (cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
-                && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)) {
+        if (dataHoraReferenciaLimite.get(Calendar.DAY_OF_MONTH) == dataHoraPossivelDiaIterior.get(Calendar.DAY_OF_MONTH)
+                && dataHoraReferenciaLimite.get(Calendar.YEAR) == dataHoraPossivelDiaIterior.get(Calendar.YEAR)
+                && dataHoraReferenciaLimite.get(Calendar.MONTH) == dataHoraPossivelDiaIterior.get(Calendar.MONTH)) {
             return true;
         }
-        return pDiaSuperior.getTime() > pDiaReferencia.getTime();
+        if (dataHoraPossivelDiaIterior.get(Calendar.YEAR) > dataHoraReferenciaLimite.get(Calendar.YEAR)) {
+            return false;
+        }
+        int diaDoAnoReferenciaLimite = dataHoraReferenciaLimite.get(Calendar.DAY_OF_YEAR);
+        int diaDoAnoPossivelDiaAnterior = dataHoraPossivelDiaIterior.get(Calendar.DAY_OF_YEAR);
+        return diaDoAnoPossivelDiaAnterior < diaDoAnoReferenciaLimite;
 
+    }
+
+    public static boolean isDiaIgualOuSuperior(Date pDiaReferenciaLimite, Date pPossivelDiaposterior) {
+        if (pDiaReferenciaLimite == null || pPossivelDiaposterior == null) {
+            //False por questão filosófica de não existir dia nulo
+            return false;
+        }
+
+        Calendar diaReferenciaLimite = Calendar.getInstance();
+        Calendar possivelDiaSuperior = Calendar.getInstance();
+        diaReferenciaLimite.setTime(pDiaReferenciaLimite);
+        possivelDiaSuperior.setTime(pPossivelDiaposterior);
+
+        if (diaReferenciaLimite.get(Calendar.DAY_OF_MONTH) == possivelDiaSuperior.get(Calendar.DAY_OF_MONTH)
+                && diaReferenciaLimite.get(Calendar.YEAR) == possivelDiaSuperior.get(Calendar.YEAR)
+                && diaReferenciaLimite.get(Calendar.MONTH) == possivelDiaSuperior.get(Calendar.MONTH)) {
+            return true;
+        }
+
+        if (possivelDiaSuperior.get(Calendar.YEAR) < diaReferenciaLimite.get(Calendar.YEAR)) {
+            return false;
+        }
+        int diaDoAnoReferenciaLimite = diaReferenciaLimite.get(Calendar.DAY_OF_YEAR);
+        int diaDoAnoPossivelDiaSuperor = possivelDiaSuperior.get(Calendar.DAY_OF_YEAR);
+        return diaDoAnoPossivelDiaSuperor > diaDoAnoReferenciaLimite;
+
+    }
+
+    public static Date getDataHora(Date pDia, Date pHorario) {
+
+        Calendar diaCalendar = Calendar.getInstance();
+        diaCalendar.setTime(pDia);
+
+        Calendar horarioCalendar = Calendar.getInstance();
+        horarioCalendar.setTime(pHorario);
+
+        Calendar dataHoraCalendario = Calendar.getInstance();
+
+        int year = diaCalendar.get(Calendar.YEAR);
+        int month = diaCalendar.get(Calendar.MONTH);
+        int day = diaCalendar.get(Calendar.DATE);
+
+        int hora = horarioCalendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = horarioCalendar.get(Calendar.MINUTE);
+
+        dataHoraCalendario.set(year, month, day, hora, minuto);
+
+        return dataHoraCalendario.getTime();
     }
 
 }

@@ -6,6 +6,7 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
@@ -62,6 +63,8 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
      * @return
      */
     public Class<? extends ItfCentralEventos> getCentralDeEventos();
+
+    public Class<? extends ItfServicoController> getServicoController();
 
     /**
      *

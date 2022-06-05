@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Entity;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -229,8 +230,12 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                     if (getFabricaTipoAtributo().getTipo_input_prime().getFamilia().equals(FabFamiliaCompVisual.SELETOR_ITEM)) {
 
                         if (campoReflection.isUmObjetoSB()) {
-
-                            int maximoRegistros = SBCore.getCentralFonteDeDados().getNumeroMaximoRegistros(this);
+                            int maximoRegistros = 100;
+                            if (this.getClass().getAnnotation(Entity.class) == null) {
+                                maximoRegistros = 100;
+                            } else {
+                                maximoRegistros = SBCore.getCentralFonteDeDados().getNumeroMaximoRegistros(this);
+                            }
                             if (maximoRegistros == 2) {
 
                                 //TODO MENU BOTOES

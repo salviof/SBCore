@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreBytes;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
@@ -15,6 +16,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -147,6 +150,15 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     @Override
     public byte[] getIntputTemporario() {
+        if (intputTemporario == null) {
+            String caminhoTemp = getCaminhoArquivoLocal();
+            try {
+                boolean arquivoRemoto = caminhoTemp.startsWith("http");
+                //  intputTemporario = UtilSBCoreBytes.gerarBytesPorArquivo(new File(getCaminhoArquivoLocal()));
+            } catch (Exception ex) {
+                Logger.getLogger(CampoInstanciadoArquivoDeEntidadeGenerico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return intputTemporario;
     }
 

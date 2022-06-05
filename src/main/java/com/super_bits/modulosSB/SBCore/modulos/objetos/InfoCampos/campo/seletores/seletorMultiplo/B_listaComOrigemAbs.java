@@ -78,7 +78,13 @@ public abstract class B_listaComOrigemAbs<T extends ItfBeanSimplesSomenteLeitura
 
     @Override
     public void selecionarTudo() {
-        throw new UnsupportedOperationException("Selecionar tudo Ainda não foi Implementado, se você precisou disso, tavez este seja o momento, colabore, coletivojava.com.br");
+        for (Object item : getOrigem()) {
+            if (!getListaObjetosSelecionados().contains(item)) {
+                getListaObjetosSelecionados().add((T) item);
+            }
+
+        }
+
     }
 
     @Override

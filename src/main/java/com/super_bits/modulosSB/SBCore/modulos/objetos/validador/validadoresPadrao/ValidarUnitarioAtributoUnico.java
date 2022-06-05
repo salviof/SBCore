@@ -40,7 +40,7 @@ public class ValidarUnitarioAtributoUnico extends ValidadorUnitarioCampoInstGene
                 return null;
             }
         } else {
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(campoInst.getValor())) {
+            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
                 return null;
             }
         }

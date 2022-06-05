@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador.TIPO_LOREN.PALAVRAS;
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador.TIPO_LOREN.PARAGRAFO;
+import com.super_bits.modulosSB.SBCore.UtilGeral.criptografia.GeradorTokenRandomico;
 import de.svenjacobs.loremipsum.LoremIpsum;
 import java.util.UUID;
 
@@ -24,13 +25,21 @@ public class UtilSBCoreStringGerador {
      *
      *
      *
-     * @param pQuantidade quantidade de caracteres retornados
+     * @param pNumeroCaracteres quantidade de caracteres retornados
      * @return Retorna uma String randomica de acordo com o n de caracteres
      */
-    public static String getStringRandomica(int pQuantidade) {
+    public static String getStringRandomicaUUID(int pNumeroCaracteres) {
         UUID uuid = UUID.randomUUID();
         String myRandom = uuid.toString();
-        return myRandom.substring(0, pQuantidade);
+        return myRandom.substring(0, pNumeroCaracteres);
+    }
+
+    public static String getStringRandomicaTokenAleatorio(int pNumero) {
+        return new GeradorTokenRandomico(pNumero).proximaString();
+    }
+
+    public static String getStringRandomicaTokenAleatorio() {
+        return getStringRandomicaTokenAleatorio(8);
     }
 
     /**

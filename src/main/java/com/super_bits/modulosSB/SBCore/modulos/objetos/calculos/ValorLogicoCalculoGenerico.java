@@ -21,7 +21,18 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
 
     private final ItfCampoInstanciado campoInst;
     private boolean cacheAtivado;
+    private int segundosPadrao = 10;
 
+    /**
+     *
+     * Você pode fazer o método isTemCacheAtivo retornar true por alguns
+     * segundos utilizando o método ativarCache(pSegundos) ou
+     * setCacheSegundosPadrao(pSegundos)
+     *
+     *
+     *
+     * @return Status atual do cache, (ativo, ou desativado)
+     */
     public boolean isCacheAtivado() {
         return cacheAtivado;
 
@@ -35,6 +46,36 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
 
     public ValorLogicoCalculoGenerico(ItfCampoInstanciado pCampo) {
         campoInst = pCampo;
+    }
+
+    /**
+     * Faz com que o isTemCacheAtivo() retorne falso
+     */
+    public void desativarCache() {
+        cacheAtivado = false;
+    }
+
+    /**
+     * Define o valor padrão, e Ativa a contagem regressiva por pSegundos onde o
+     * o metodo isCacheAtivo() deve retornar true
+     *
+     * @param pSegundos Define o valor padrão em segundos utilizado ao ativar o
+     * cache
+     */
+    public void setCacheSegundosPadrao(int pSegundos) {
+        segundosPadrao = pSegundos;
+        ativarCache();
+    }
+
+    /**
+     * Ativa a contagem regressiva de X segundos , onde o o metodo
+     * isCacheAtivo() deve retornar true
+     *
+     * por padrão são 10 segundos
+     *
+     */
+    public void ativarCache() {
+        ativarCache(segundosPadrao);
     }
 
     public void ativarCache(int pSegundos) {

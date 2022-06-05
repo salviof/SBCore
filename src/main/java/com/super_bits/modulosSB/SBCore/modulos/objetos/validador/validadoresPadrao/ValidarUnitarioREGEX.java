@@ -12,6 +12,10 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,9 +38,19 @@ public class ValidarUnitarioREGEX extends ValidadorUnitarioCampoInstGenerico imp
 
     @Override
     public String gerarMensagemErroValidacao(Object pValor) {
+
         if (!campoInstanciado.isTemValidacaoRegex()) {
             return null;
         } else {
+            if (campoInstanciado.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.URL)) {
+                try {
+                    new URL((String) pValor);
+                } catch (MalformedURLException ex) {
+                    return "Url inválida";
+                }
+                return null;
+            }
+
             if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor) || !pValor.getClass().getSimpleName().equals(String.class.getSimpleName())) {
                 return null;
             } else {

@@ -48,6 +48,7 @@ public class RecursosExternosPorIndice {
         String arquivo = pastaRepositorio + "/" + indice;
         if (!new File(pastaRepositorio + "/" + indice).exists()) {
             return null;
+
         } else {
             return UTilSBCoreInputs.getStringByArquivoLocal(arquivo);
         }

@@ -288,7 +288,7 @@ public class UtilSBCoreStringsTest {
 
     // @Test
     public void testaRandomico() {
-        JOptionPane.showMessageDialog(null, UtilSBCoreStringGerador.getStringRandomica(8));
+        JOptionPane.showMessageDialog(null, UtilSBCoreStringGerador.getStringRandomicaUUID(8));
     }
 
     @Test

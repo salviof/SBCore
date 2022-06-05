@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
@@ -25,8 +26,12 @@ public class ValidarUnitarioCPF extends ValidadorUnitarioCampoInstGenerico imple
     public String gerarMensagemErroValidacao(Object pValor) {
         switch (campoInstanciado.getFabricaTipoAtributo()) {
             case CPF:
-                if (!UtilSBCoreValidadorGoverno.validaCPF(pValor.toString())) {
-                    return "CPF Inválido";
+                if (!UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                    if (!UtilSBCoreValidadorGoverno.validaCPF(pValor.toString())) {
+                        return "CPF Inválido";
+                    } else {
+                        return null;
+                    }
                 } else {
                     return null;
                 }

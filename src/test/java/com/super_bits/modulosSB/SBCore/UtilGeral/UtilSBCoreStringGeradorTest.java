@@ -26,7 +26,7 @@ public class UtilSBCoreStringGeradorTest {
         int pQuantidade = 15;
 
         for (int i = 0; i < 10; i++) {
-            String result = UtilSBCoreStringGerador.getStringRandomica(pQuantidade);
+            String result = UtilSBCoreStringGerador.getStringRandomicaUUID(pQuantidade);
             System.out.println(result);
         }
         // TODO review the generated test code and remove the default call to fail.
