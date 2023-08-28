@@ -14,6 +14,29 @@ public enum FabTipoArquivoImportacao {
 
     JSON, XML, XLS, CVS, INDETERMINADO;
 
+    public String getTextoHeaderContentType() {
+        switch (this) {
+
+            case JSON:
+                return "application/json";
+
+            case XML:
+                return "pplication/atom+xml";
+
+            case XLS:
+                return null;
+
+            case CVS:
+                return "text/plain";
+
+            case INDETERMINADO:
+                return null;
+
+            default:
+                throw new AssertionError();
+        }
+    }
+
     public MediaType getMediaType() {
         switch (this) {
             case JSON:

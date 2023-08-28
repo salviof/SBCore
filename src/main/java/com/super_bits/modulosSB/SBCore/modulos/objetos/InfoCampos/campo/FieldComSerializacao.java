@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -17,6 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.FabTipoConversaoEnum;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -95,18 +97,27 @@ public class FieldComSerializacao implements Serializable {
     }
 
     public Class getClasseOndeOCampoEstaDeclarado() {
+
         if (campo.isEnumConstant()) {
             InfoCampoDinamico campoDinamico = campo.getAnnotation(InfoCampoDinamico.class);
             if (campoDinamico == null) {
                 //return null;
             } else {
-                return campoDinamico.classeInjecaoDeValorDireto();
+                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campoDinamico.classeInjecaoDeValorDireto().getSimpleName());
             }
 
         } else {
+            try {
+                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
+            } catch (Throwable t) {
+                return campo.getDeclaringClass();
+            }
+        }
+        try {
+            return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
+        } catch (Throwable t) {
             return campo.getDeclaringClass();
         }
-        return campo.getDeclaringClass();
     }
 
     public void setValorDesteCampoEmObjetoInstanciado(Object objeto, Object valor, boolean lancarExcecao) {

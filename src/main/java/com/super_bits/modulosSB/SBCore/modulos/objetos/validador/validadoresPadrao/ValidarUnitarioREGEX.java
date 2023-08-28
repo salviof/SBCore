@@ -43,10 +43,12 @@ public class ValidarUnitarioREGEX extends ValidadorUnitarioCampoInstGenerico imp
             return null;
         } else {
             if (campoInstanciado.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.URL)) {
-                try {
-                    new URL((String) pValor);
-                } catch (MalformedURLException ex) {
-                    return "Url inválida";
+                if (!UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                    try {
+                        new URL((String) pValor);
+                    } catch (MalformedURLException ex) {
+                        return "Url inválida";
+                    }
                 }
                 return null;
             }

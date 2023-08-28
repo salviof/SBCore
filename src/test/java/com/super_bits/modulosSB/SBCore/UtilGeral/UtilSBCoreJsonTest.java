@@ -46,6 +46,21 @@ public class UtilSBCoreJsonTest {
             + "    ]\n"
             + "}";
 
+    @Test
+    public void testeGetValorApartirDoCaminho() throws Throwable {
+        try {
+            String oi = "oi";
+            double valor = UtilSBCoreJson.getValorApartirDoCaminho("teste3", UtilSBCoreJson.getJsonObjectByTexto(corpoRestFull));
+            double valor2 = UtilSBCoreJson.getValorApartirDoCaminho("teste3", UtilSBCoreJson.getJsonObjectByTexto(corpoRestFull));
+            String valorSulista = UtilSBCoreJson.getValorApartirDoCaminho("itens[0].tipoServico.@id", UtilSBCoreJson.getJsonObjectByTexto(corpoRestFull));
+            String valorinexiste = UtilSBCoreJson.getValorApartirDoCaminho("propriedadenaoexistente", UtilSBCoreJson.getJsonObjectByTexto(corpoRestFull));
+
+            System.out.println("ok");
+        } catch (Throwable t) {
+            throw new Throwable(t);
+        }
+    }
+
     /**
      * Test of getComoDecimal method, of class UtilSBCoreJson.
      */

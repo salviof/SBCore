@@ -38,15 +38,6 @@ public class UtilSBCoreStringsTest {
 
     }
 
-    //@Test
-    public void testaInverterStringData() {
-
-        String resultado = UtilSBCoreStringFiltros.inverteStringData("09122016");
-
-        System.out.println(resultado);
-
-    }
-
     public UtilSBCoreStringsTest() {
     }
 

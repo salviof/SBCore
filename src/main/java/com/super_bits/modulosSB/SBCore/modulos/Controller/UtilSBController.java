@@ -10,6 +10,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfControlerAPP;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.fabricas.FabTipoAcaoSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import java.lang.annotation.Annotation;
@@ -126,12 +127,15 @@ public class UtilSBController extends UtilSBControllerSimples {
             if (acao == null) {
                 throw new UnsupportedOperationException("En GetAcaoByMetodo");
             }
-
+            if (!acao.getRegistro().isUmaAcaoController()) {
+                throw new UnsupportedOperationException("O Método " + pMetodo.getName() + ",na classe " + pMetodo.getDeclaringClass().getName() + " recebeu uma anotação de ação que não é to tipo " + FabTipoAcaoSistema.ACAO_CONTROLLER);
+            }
             ItfAcaoController acaoSisTema = (ItfAcaoController) acao.getRegistro().getComoController();
             acaoSisTema.setIdMetodo(pMetodo);
 
             return acaoSisTema;
         } catch (Throwable t) {
+
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Ação por Método", t);
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Ação para o  Método" + pMetodo.getName() + " em " + pMetodo.getDeclaringClass().getSimpleName(), t);
             SBCore.RelatarErro(FabErro.PARA_TUDO, "Erro Para Tudo obtendo ação pelo id do metodo" + pMetodo.getName(), t);

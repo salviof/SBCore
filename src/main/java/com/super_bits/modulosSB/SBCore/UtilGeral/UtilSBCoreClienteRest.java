@@ -5,6 +5,8 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,8 +16,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 import org.json.simple.parser.JSONParser;
 
 /**
@@ -24,7 +25,7 @@ import org.json.simple.parser.JSONParser;
  */
 public class UtilSBCoreClienteRest {
 
-    public static JSONObject getObjetoJsonPorUrl(String pUrl) {
+    public static JsonObject getObjetoJsonPorUrl(String pUrl) {
         try {
             URL url = new URL(pUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -47,9 +48,8 @@ public class UtilSBCoreClienteRest {
                 respostaStr += output;
             }
             //System.out.println(respostaStr);
-            JSONParser parser = new JSONParser();
-            JSONObject json = (JSONObject) parser.parse(respostaStr);
-            return json;
+
+            return UtilSBCoreJson.getJsonObjectByTexto(respostaStr);
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro   " + pUrl, t);
             return null;
@@ -58,7 +58,7 @@ public class UtilSBCoreClienteRest {
 
     public static void getRelatorioTesteDeAcessoGet(String pUrl) {
         try {
-            JSONObject json = getObjetoJsonPorUrl(pUrl);
+            JsonObject json = getObjetoJsonPorUrl(pUrl);
 
             Collection valores = json.values();
 
@@ -67,13 +67,13 @@ public class UtilSBCoreClienteRest {
                 try {
                     System.out.println(teste.getClass().getSimpleName());
 
-                    if (teste instanceof JSONArray) {
+                    if (teste instanceof JsonArray) {
                         System.out.println("Array de dadados ------------>");
-                        JSONArray array = (JSONArray) teste;
+                        JsonArray array = (JsonArray) teste;
 
                         for (Iterator iterator = array.iterator(); iterator.hasNext();) {
                             Object next = iterator.next();
-                            if (next instanceof JSONObject) {
+                            if (next instanceof JsonObject) {
                                 Map<String, Object> informacao = (Map<String, Object>) next;
                                 for (String key : informacao.keySet()) {
                                     System.out.println("-------------" + key + "(" + informacao.get(key).getClass().getSimpleName() + ")--------");
@@ -89,7 +89,7 @@ public class UtilSBCoreClienteRest {
 
                     }
 
-                    if (teste instanceof JSONObject) {
+                    if (teste instanceof JsonObject) {
                         Map<String, Object> informacao = (Map<String, Object>) teste;
                         for (String key : informacao.keySet()) {
                             System.out.println("-------------" + key + "(" + informacao.get(key).getClass().getSimpleName() + ")--------");

@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,12 @@ public class UtilSBCoreDataHoraCalendarioLocal {
                 .atZone(ZoneId.systemDefault())
                 .toLocalTime();
         return localDate;
+    }
+
+    public static Date gerarDateByLocalTime(LocalTime pLocalTime) {
+
+        return Timestamp.valueOf(pLocalTime.atDate(LocalDate.now()));
+
     }
 
     public static LocalDate gerarLocalDateByDate(Date pData) {

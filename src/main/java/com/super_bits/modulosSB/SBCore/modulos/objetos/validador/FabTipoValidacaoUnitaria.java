@@ -4,9 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioEmail;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLiberal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioNulo;
@@ -17,11 +16,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadr
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMaximo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMinimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioREGEX;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 /**
  *
@@ -37,6 +31,7 @@ public enum FabTipoValidacaoUnitaria {
     CODIGO_DE_BARRAS,
     CAMPO_UNICO,
     REGEX,
+    EMAIL,
     LOCALIZACAO;
 
     public ItfValidacaoUnitaria getValidador(ItfCampoInstanciado pCampo) {
@@ -66,6 +61,13 @@ public enum FabTipoValidacaoUnitaria {
                 }
 
             }
+            break;
+            case EMAIL:
+                switch (this) {
+                    case EMAIL:
+                        return new ValidadorUnitarioEmail(pCampo);
+                }
+                break;
             default:
         }
 

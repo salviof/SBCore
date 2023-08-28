@@ -7,6 +7,8 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +49,71 @@ public class UtilSBCoreDataHoraTest {
 
     @After
     public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void testesDataBuilder() {
+        int diaVencimento = 15;
+        int mesVencimento = UtilSBCoreDataHora.getMes(new Date());
+        int ano = UtilSBCoreDataHora.getMes(new Date());
+        Date dataVencimento = UtilSBCoreDataHora.converteStringEmData(diaVencimento + "/" + mesVencimento + "/" + ano);
+        System.out.println(dataVencimento);
+
+        diaVencimento = 15;
+        mesVencimento = 1;
+        ano = UtilSBCoreDataHora.getMes(new Date());
+        dataVencimento = UtilSBCoreDataHora.converteStringEmData(diaVencimento + "/" + mesVencimento + "/" + ano);
+        System.out.println(dataVencimento);
+
+        diaVencimento = 15;
+        mesVencimento = 1;
+        ano = 22;
+        dataVencimento = UtilSBCoreDataHora.converteStringEmData(diaVencimento + "/" + mesVencimento + "/" + ano);
+        System.out.println(dataVencimento);
+    }
+
+    @Test
+    public void getMesTextoAbreviado() {
+        try {
+            SimpleDateFormat formatoDataPadrao = new SimpleDateFormat("dd/MM/yyyy");
+
+            assertEquals("janeiro falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/01/23")), "jan");
+            assertEquals("feverierio falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/02/23")), "fev");
+            assertEquals("março falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/03/23")), "mar");
+            assertEquals("abril falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/04/23")), "abr");
+            assertEquals("maio falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/05/23")), "mai");
+            assertEquals("junho falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/06/23")), "jun");
+            assertEquals("julho falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/07/23")), "jul");
+            assertEquals("agosto falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/08/23")), "ago");
+            assertEquals("setembro falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/09/23")), "set");
+            assertEquals("outubro falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/10/23")), "out");
+            assertEquals("novembro falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/11/23")), "nov");
+            assertEquals("dezembro falhou", UtilSBCoreDataHora.getMesTextoAbreviado(formatoDataPadrao.parse("01/12/23")), "dez");
+        } catch (ParseException ex) {
+            fail("Data testes invalida" + ex.getMessage());
+        }
+    }
+
+    @Test
+    public void getMesAnoTextoAbreviado() {
+        try {
+            SimpleDateFormat formatoDataPadrao = new SimpleDateFormat("dd/MM/yyyy");
+
+            assertEquals("janeiro falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/01/23")), "jan de 23");
+            assertEquals("feverierio falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/02/23")), "fev de 23");
+            assertEquals("março falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/03/23")), "mar de 23");
+            assertEquals("abril falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/04/23")), "abr de 23");
+            assertEquals("maio falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/05/23")), "mai de 23");
+            assertEquals("junho falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/06/23")), "jun de 23");
+            assertEquals("julho falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/07/23")), "jul de 23");
+            assertEquals("agosto falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/08/23")), "ago de 23");
+            assertEquals("setembro falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/09/23")), "set de 23");
+            assertEquals("outubro falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/10/23")), "out de 23");
+            assertEquals("novembro falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/11/23")), "nov de 23");
+            assertEquals("dezembro falhou", UtilSBCoreDataHora.getMesAnoTextoAbreviado(formatoDataPadrao.parse("01/12/23")), "dez de 23");
+        } catch (ParseException ex) {
+            fail("Data testes invalida" + ex.getMessage());
+        }
     }
 
     //@Test
@@ -506,7 +573,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of gerarStringDiaMesAnoAtualFormatada method, of class UtilSBCoreDataHora.
+     * Test of gerarStringDiaMesAnoAtualFormatada method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testGerarStringDiaMesAnoAtualFormatada() {
@@ -532,7 +600,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of gerarInteiroDiaMesAnoDataInformada method, of class UtilSBCoreDataHora.
+     * Test of gerarInteiroDiaMesAnoDataInformada method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testGerarInteiroDiaMesAnoDataInformada() {
@@ -540,20 +609,6 @@ public class UtilSBCoreDataHoraTest {
         Date pData = null;
         int expResult = 0;
         int result = UtilSBCoreDataHora.gerarInteiroDiaMesAnoDataInformada(pData);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of gerarInteiroInvertidoDiaMesAnoDataInformada method, of class UtilSBCoreDataHora.
-     */
-    @Test
-    public void testGerarInteiroInvertidoDiaMesAnoDataInformada() {
-        System.out.println("gerarInteiroInvertidoDiaMesAnoDataInformada");
-        Date pData = null;
-        int expResult = 0;
-        int result = UtilSBCoreDataHora.gerarInteiroInvertidoDiaMesAnoDataInformada(pData);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -573,7 +628,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of converteDataEmStringFormatada method, of class UtilSBCoreDataHora.
+     * Test of converteDataEmStringFormatada method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testConverteDataEmStringFormatada() {
@@ -601,7 +657,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of converteStringDD_MM_YYYYEmData method, of class UtilSBCoreDataHora.
+     * Test of converteStringDD_MM_YYYYEmData method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testConverteStringDD_MM_YYYYEmData() {
@@ -615,7 +672,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of converteString_dd_MM_yyEmData method, of class UtilSBCoreDataHora.
+     * Test of converteString_dd_MM_yyEmData method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testConverteString_dd_MM_yyEmData() {
@@ -629,7 +687,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of converteString_dd_MM_yyEmData method, of class UtilSBCoreDataHora.
+     * Test of converteString_dd_MM_yyEmData method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testConverteString_hh_doisPontos_MinutosEmDate() {
@@ -657,7 +716,8 @@ public class UtilSBCoreDataHoraTest {
     }
 
     /**
-     * Test of converteDateEmSTringDD_MM_YYYY method, of class UtilSBCoreDataHora.
+     * Test of converteDateEmSTringDD_MM_YYYY method, of class
+     * UtilSBCoreDataHora.
      */
     @Test
     public void testConverteDateEmSTringDD_MM_YYYY() {
@@ -799,6 +859,36 @@ public class UtilSBCoreDataHoraTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void getUltimoDiaDoMes() {
+
+        String dataReferencia = "27/02/23";
+        SimpleDateFormat dataParser = new SimpleDateFormat("dd/MM/yy");
+        try {
+            Date data = dataParser.parse(dataReferencia);
+            System.out.println(dataParser.format(data));
+            data = gerarDataPagamentoTerceirizado(data, 5);
+            System.out.println(dataParser.format(data));
+            assertEquals("", "28/02/23", dataParser.format(data));
+        } catch (ParseException ex) {
+            Logger.getLogger(UtilSBCoreDataHoraTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public Date gerarDataPagamentoTerceirizado(Date dataCliente, int diasFuturo) {
+        SimpleDateFormat dataParser = new SimpleDateFormat("dd/MM/yy");
+        Date dataPrevistaIdeal = UtilSBCoreDataHora.incrementaDias(dataCliente, diasFuturo);
+        System.out.println(dataParser.format(dataPrevistaIdeal));
+        if (UtilSBCoreDataHora.isDataMesmoMes(dataCliente, dataPrevistaIdeal)) {
+            return dataPrevistaIdeal;
+        } else {
+            Date dataFimDoMes = UtilSBCoreDataHora.getUltimoDiaDoMes(dataCliente);
+            return dataFimDoMes;
+        }
+
     }
 
 }

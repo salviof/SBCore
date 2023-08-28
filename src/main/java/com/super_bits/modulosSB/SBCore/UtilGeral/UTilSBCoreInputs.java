@@ -21,6 +21,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 
@@ -49,7 +50,7 @@ public abstract class UTilSBCoreInputs {
 
         File arquivo = new File(pCaminhoArquivoLocal);
         List<String> conteudo = new ArrayList();
-        try (Scanner scanner = new Scanner(arquivo)) {
+        try ( Scanner scanner = new Scanner(arquivo)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 conteudo.add(line);
@@ -69,7 +70,7 @@ public abstract class UTilSBCoreInputs {
         File arquivo = new File(pCaminhoArquivoLocal);
         String conteudo = "";
         File file = new File(pCaminhoArquivoLocal);
-        try (FileInputStream fis = new FileInputStream(file)) {
+        try ( FileInputStream fis = new FileInputStream(file)) {
             int content;
             while ((content = fis.read()) != -1) {
                 conteudo += ((char) content);
@@ -131,7 +132,7 @@ public abstract class UTilSBCoreInputs {
 
     }
 
-    private static URLConnection getConexao(String pURL, int pTimeOutConexao, int pTimeoutLeitura) {
+    private static URLConnection getConexao(String pURL, int pTimeOutConexao, int pTimeoutLeitura, Map<String, String> pHeaders) {
         try {
             if (pTimeOutConexao == 0) {
                 pTimeOutConexao = timeoutDeConexaoPadrao;
@@ -144,10 +145,19 @@ public abstract class UTilSBCoreInputs {
             try {
                 URLConnection c;
                 c = url.openConnection();
-                c.setReadTimeout(timeoutDeLeituraPadrao);
-                c.setConnectTimeout(timeoutDeConexaoPadrao);
-                c.addRequestProperty("User-Agent",
-                        "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+                c.setReadTimeout(pTimeoutLeitura);
+                c.setConnectTimeout(pTimeOutConexao);
+                if (pHeaders == null || pHeaders.isEmpty()) {
+                    c.addRequestProperty("User-Agent",
+                            "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+                } else {
+                    for (Map.Entry<String, String> entry : pHeaders.entrySet()) {
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        c.addRequestProperty(key,
+                                value);
+                    }
+                }
                 return c;
             } catch (IOException e) {
 
@@ -161,7 +171,7 @@ public abstract class UTilSBCoreInputs {
     }
 
     private static URLConnection getConexao(String pURL) {
-        return getConexao(pURL, 0, 0);
+        return getConexao(pURL, 0, 0, null);
     }
 
     /**
@@ -239,7 +249,7 @@ public abstract class UTilSBCoreInputs {
         if (pSegundosTimeout <= 0) {
             conexao = getConexao(pUrl);
         } else {
-            conexao = getConexao(pUrl, 8000, pSegundosTimeout * 1000);
+            conexao = getConexao(pUrl, 8000, pSegundosTimeout * 1000, null);
         }
 
         try {
@@ -267,6 +277,11 @@ public abstract class UTilSBCoreInputs {
         }
     }
 
+    public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura) {
+        return getStreamBuffredByURL(pUrl, pTimeoutConexao, pTimeoutLeitura, null);
+
+    }
+
     /**
      * Obtem um BufferedInputStream por URL
      *
@@ -275,8 +290,8 @@ public abstract class UTilSBCoreInputs {
      * @param pTimeoutLeitura Limite de tempo de Leitura
      * @return
      */
-    public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura) {
-        URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura);
+    public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura, Map<String, String> pCabecalho) {
+        URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura, pCabecalho);
 
         if (c != null) {
             try {

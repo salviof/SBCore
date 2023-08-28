@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
 import java.io.File;
 import java.util.Properties;
@@ -46,8 +47,8 @@ public class ArquivoConfiguracaoDistribuicao {
         }
 
         if (propriedadesImplantacao == null) {
-            System.out.println("Nenhum arquivo de implantação foi encontrado,(Nem em pastas de desenvolvimento, nem em pastas de produção) isto não é importante se você não pretende implantar este projeto, caso prentenda certifique de configurar o arquivo" + getCaminhoArquivoReleaseLocal());
 
+//                System.out.println("Nenhum arquivo de implantação foi encontrado,(Nem em pastas de desenvolvimento, nem em pastas de produção) isto não é importante se você não pretende implantar este projeto, caso prentenda certifique de configurar o arquivo" + getCaminhoArquivoReleaseLocal());
             return;
         }
         SERVIDOR_HOMOLOGACAO = propriedadesImplantacao.getProperty("SERVIDOR_HOMOLOGACAO");
@@ -90,8 +91,9 @@ public class ArquivoConfiguracaoDistribuicao {
     private void checaArquivoReleaseImplantado() {
 
         File arquivoRelease = new File(getCaminhoArquivoReleaseImplantado());
-        System.out.println("Verificando existencia de arquivo de implantação em:");
-        System.out.println(getCaminhoArquivoReleaseImplantado());
+
+        //     System.out.println("Verificando existencia de arquivo de implantação em:");
+        //      System.out.println(getCaminhoArquivoReleaseImplantado());
         temArquivoImplantacao = arquivoRelease.exists();
     }
 

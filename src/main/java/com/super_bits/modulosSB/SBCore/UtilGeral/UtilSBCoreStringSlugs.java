@@ -32,7 +32,10 @@ public abstract class UtilSBCoreStringSlugs {
     }
 
     public static String gerarSlugSimplesForcandoMaiusculoAposEspaco(String pValor) {
-        throw new UnsupportedOperationException("Ainda não implementado, Forca, e PullRequesta Isso! coletivojava.com.br ");
+
+        String slug = UtilSBCoreStringsCammelCase.getCamelByTextoPrimeiraLetraMaiuscula(pValor);
+        String slugfinalizada = UtilSBCoreStringSlugs.gerarSlugSimples(slug);
+        return slugfinalizada;
     }
 
     public static String gerarSlugCaixaBaixa(String pValor) {

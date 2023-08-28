@@ -94,7 +94,9 @@ public class SessaoOffline implements ItfSessao {
     public void setUsuario(ItfUsuario pUsuario) {
 
         usuarioLogado = pUsuario;
-        menusDaSessao = (MenusDaSessao) SBCore.getCentralPermissao().definirMenu(pUsuario.getGrupo());
+        if (SBCore.getCentralPermissao() != null) {
+            menusDaSessao = (MenusDaSessao) SBCore.getCentralPermissao().definirMenu(pUsuario.getGrupo());
+        }
 
     }
 

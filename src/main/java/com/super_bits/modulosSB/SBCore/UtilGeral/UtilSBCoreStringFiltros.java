@@ -7,6 +7,9 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador.isNuloOuEmbranco;
 import java.text.Normalizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreStringFiltrosSimples;
@@ -32,17 +35,26 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         String nomeCurto = "";
         nome = nome.replace("-", " ");
         nome = nome.replace(".", " ");
-        for (String parte : nome.split(" ")) {
-            if (parte.length() > 15) {
-                parte = parte.substring(0, parte.length());
-            }
-            if (nomeCurto.length() < 15) {
-                if (nomeCurto.length() > 0) {
-                    nomeCurto = nomeCurto + " " + parte;
-                } else {
-                    nomeCurto = nomeCurto + parte;
+        String[] nomeReduzidoSplit = nome.split(" ");
+        int indice = 0;
+        int indicefinal = nomeReduzidoSplit.length - 1;
+        for (String parte : nomeReduzidoSplit) {
+            // Tamanho máximo da parte é 15
+            if (!parte.isEmpty()) {
+                if (parte.length() > 15) {
+                    parte = parte.substring(0, parte.length());
+                }
+                // enquanto o total não deu 15 letras
+                if (nomeCurto.length() < 15) {
+                    //se for uma abreviação do meio pega só a primeira letra
+                    if (indice != 0 && indice != indicefinal) {
+                        nomeCurto = nomeCurto + " " + parte.substring(0, 1);
+                    } else {
+                        nomeCurto = nomeCurto + " " + parte;
+                    }
                 }
             }
+            indice++;
         }
 
         return nomeCurto;
@@ -144,9 +156,17 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
              resultado = resultado.replace(" ", digito);
              return resultado;
              */
-            pValor = String.format(pValor, "%" + pCasas + "s").replace(" ", pDigito);
+            String result
+                    = String
+                            // First right pad the string
+                            // with space up to length L
+                            .format("%" + (-pCasas) + "s", pValor)
+                            // Then replace all the spaces
+                            // with the given character ch
+                            .replace(' ', pDigito.charAt(0));
 
-            return pValor;
+            // Return the resultant string
+            return result;
 
         } catch (Exception e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro ao formatar Lpad", e);
@@ -210,7 +230,9 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
      * @return string Contendo apenas as numeros
      */
     public static String getNumericosDaString(String pString) {
-
+        if (pString == null) {
+            return null;
+        }
         return pString.replaceAll("\\D*", ""); //To numeric digits only
     }
 
@@ -224,12 +246,15 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
      * @return string Contendo apenas as numeros
      */
     public static String filtrarApenasNumeros(String pString) {
-
+        if (pString == null) {
+            return null;
+        }
         return getNumericosDaString(removeCaracteresEspeciaisEspacosETracos(pString));
     }
 
     public static String filtrarApenasLetra(String pString) {
-        return pString.replaceAll("[A-Za-z]", "");
+        return pString.replaceAll("\\d", "");
+
     }
 
     /**
@@ -245,56 +270,6 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         } else {
             return "";
         }
-    }
-
-    /**
-     *
-     * RECEBE STRING CORRIDA DE UMA DATA E RETORNA A STRING INVERTIDA
-     *
-     * Ex: 30122016 para 20161230
-     *
-     * @param pString
-     * @return DATA INVERTIDA ANO / MES / DIA
-     */
-    public static String inverteStringData(String pString) {
-
-        char auxiliar[] = pString.toCharArray();
-
-        int passo = 0;
-
-        pString = "";
-
-        int i = auxiliar.length - 1;
-
-        for (int j = i; j >= 0; j--) {
-
-            if (passo == 3) {
-
-                pString += auxiliar[j];
-                pString += auxiliar[j + 1];
-                pString += auxiliar[j + 2];
-                pString += auxiliar[j + 3];
-            }
-
-            if (passo == 5) {
-
-                pString += auxiliar[j];
-                pString += auxiliar[j + 1];
-
-            }
-
-            if (passo == 7) {
-
-                pString += auxiliar[j];
-                pString += auxiliar[j + 1];
-
-            }
-            passo++;
-
-        }
-
-        return pString;
-
     }
 
     public static String removeEspacamentoDuplo(String param) {
@@ -375,5 +350,48 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
 
         return pString;
 
+    }
+
+    public static String substituirUsandoInicioFimTrechoPesquisado(String pTextoOriginal, String inicioTrechoPesquisado, String pFinalTrechoPesquisado, String pconteudoSubstituto) {
+        //String line = "${env1}sojods${env2}${env3}";
+        final String regex = "(" + inicioTrechoPesquisado + ".*?" + pFinalTrechoPesquisado + ")";
+
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        final Matcher matcher = pattern.matcher(pTextoOriginal);
+
+        // The substituted value will be contained in the result variable
+        final String result = matcher.replaceAll(pconteudoSubstituto);
+
+        return result;
+    }
+
+    public static String substituirUsandoRegexPersonalizado(final String pTextoOriginal, String pRegex, String pconteudoSubstituto) {
+        //String line = "${env1}sojods${env2}${env3}";
+
+        final Pattern pattern = Pattern.compile(pRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        final Matcher matcher = pattern.matcher(pTextoOriginal);
+
+        // The substituted value will be contained in the result variable
+        final String result = matcher.replaceAll(pconteudoSubstituto);
+        int letrasAnterior = pTextoOriginal.length();
+        int letrasFim = result.length();
+        System.out.println("Diferenca = " + (letrasAnterior - letrasFim));
+        //  System.out.println("Substitution result: " + result);
+        return result;
+    }
+
+    public static String substituirUsandoLiteralPersonalizado(final String pTextoOriginal, String pLiteral, String pconteudoSubstituto) {
+        //String line = "${env1}sojods${env2}${env3}";
+
+        final Pattern pattern = Pattern.compile(pLiteral, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE | Pattern.LITERAL);
+        final Matcher matcher = pattern.matcher(pTextoOriginal);
+
+        // The substituted value will be contained in the result variable
+        final String result = matcher.replaceAll(pconteudoSubstituto);
+        int letrasAnterior = pTextoOriginal.length();
+        int letrasFim = result.length();
+        System.out.println("Diferenca = " + (letrasAnterior - letrasFim));
+        //  System.out.println("Substitution result: " + result);
+        return result;
     }
 }

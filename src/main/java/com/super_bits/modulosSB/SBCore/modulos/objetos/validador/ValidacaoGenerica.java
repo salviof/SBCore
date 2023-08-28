@@ -6,7 +6,9 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.view.widgetsFormulario.WidgetsFormulario;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -17,7 +19,7 @@ public class ValidacaoGenerica<T> implements ItfValidacao<T>, Serializable {
     private final ItfCampoInstanciado campoInst;
 
     @Override
-    public Object validar(Object pValor) throws ErroValidacao {
+    public List<WidgetsFormulario> validar(Object pValor) throws ErroValidacao {
 
         throw new ErroValidacao("O validador do  campo" + getCampoInstanciado().getObjetoDoAtributo().getClass().getSimpleName() + "." + getCampoInstanciado().getLabel() + " não foi impplementado em " + this.getClass().getSimpleName());
 

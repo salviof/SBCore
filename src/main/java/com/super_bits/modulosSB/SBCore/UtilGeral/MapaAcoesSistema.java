@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfModuloAcaoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerAutoExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoEntidade;
@@ -232,6 +233,10 @@ public abstract class MapaAcoesSistema {
         }
 
         return mapaAcoes.getListaTodasAcoes();
+    }
+
+    public static List<ItfAcaoControllerAutoExecucao> getListaAcoesAutomatizadas() {
+        return mapaAcoes.getAcoesControlerAutoexecucao();
     }
 
     /**

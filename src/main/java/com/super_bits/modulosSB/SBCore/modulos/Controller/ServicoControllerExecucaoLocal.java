@@ -6,12 +6,15 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,11 +26,20 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
     public ItfRespostaAcaoDoSistema getResposta(ItfFabricaAcoes pAcao, Object... pParametros) throws ErroChamadaController {
 
         if (true) {
-            throw new ErroChamadaController("A chamada com multiplos parametros não foi implementado");
+            //      throw new ErroChamadaController("A chamada com multiplos parametros não foi implementado");
         }
         Method metodo = UtilSBController.getMetodoByAcaoController(pAcao.getRegistro().getComoController());
         if (metodo.getParameterCount() != pParametros.length) {
             throw new ErroChamadaController("A quantidade de parametros para " + pAcao.getNomeUnico() + " é divergente dos parametros enviados");
+        }
+        try {
+            return (ItfRespostaAcaoDoSistema) metodo.invoke(null, pParametros[0]);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ServicoControllerExecucaoLocal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(ServicoControllerExecucaoLocal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(ServicoControllerExecucaoLocal.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -46,6 +58,7 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
 
         String tipoMetodoParametro = metodo.getParameterTypes()[0].getSimpleName();
         String tipoEntidadeSelecionada = pEntidade.getClass().getSimpleName();
+
         if (!tipoMetodoParametro.equals(tipoEntidadeSelecionada)) {
             throw new ErroChamadaController("" + pAcao.getNomeUnico() + " não suporta  parametro  do tipo " + tipoMetodoParametro + " Apenas:" + tipoMetodoParametro);
         }

@@ -8,6 +8,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
 import org.json.simple.JSONArray;
@@ -24,11 +25,20 @@ public class RecursosExternosPorIndice {
     private final String pastaRepositorio;
 
     public RecursosExternosPorIndice(Class<? extends ItfFabConfigModulo> pClasse) {
+        if (SBCore.isEmModoProducao()) {
+            pastaRepositorio = SBCore.getCentralDeArquivos().getEndrLocalResources() + "/" + pClasse.getSimpleName();
+        } else {
+            pastaRepositorio = UtilSBcoreModulos.DIRETORIO_ARQUIVOS_CONFIG_TESTE + "/" + SBCore.getGrupoProjeto()
+                    + "/modulos/" + pClasse.getSimpleName();
+        }
 
-        pastaRepositorio = SBCore.getCentralDeArquivos().getEndrLocalResources() + "/" + pClasse.getSimpleName();
         if (!new File(pastaRepositorio).exists()) {
             new File(pastaRepositorio).mkdirs();
         }
+    }
+
+    public String getCaminhoArquivosRepositorio() {
+        return pastaRepositorio;
     }
 
     private String getCaminhoArquivo(String pIndice) {

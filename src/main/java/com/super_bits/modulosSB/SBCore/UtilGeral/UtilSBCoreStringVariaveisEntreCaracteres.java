@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author SalvioF
  */
-public class UtilSBCoreStringVariaveisEmTexto {
+public class UtilSBCoreStringVariaveisEntreCaracteres {
 
     public static List<String> extrairVariaveisEntreColchete(String pValor) {
         return UtilSBCoreStringValidador.getListaStringEntreCaracter(pValor, UtilSBCoreStringValidador.TIPO_SINALIZADOR.COLCHETE);

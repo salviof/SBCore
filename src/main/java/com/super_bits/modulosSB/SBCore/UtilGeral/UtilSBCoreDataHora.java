@@ -8,13 +8,23 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang3.time.DateUtils;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
@@ -47,12 +57,17 @@ public class UtilSBCoreDataHora {
         DATA_SEM_SEPARADOR,
         HORA_SEM_SEPARADOR,
         MES,
-        PERSONALIZADO
+        PERSONALIZADO,
+        ANO_MES_CARTAO,
+        /**
+         * Exemplo 2023-12-25
+         */
+        ANO_MES_DIA_POR_TRACO
 
     }
 
-    public static SimpleDateFormat datahoraSistemaFr = new SimpleDateFormat("dd-MM-yy [HH-mm-ssss]");
-    public static SimpleDateFormat horaUsuarioFr = new SimpleDateFormat("HH:mm:ss");
+    public final static SimpleDateFormat datahoraSistemaFr = new SimpleDateFormat("dd-MM-yy [HH-mm-ssss]");
+    public final static SimpleDateFormat horaUsuarioFr = new SimpleDateFormat("HH:mm:ss");
 
     public static String getDataSTRFormatoUsuario(Date pData) {
         return getDatePaternByFormatoTempo(FORMATO_TEMPO.DATA_USUARIO).format(pData);
@@ -85,7 +100,7 @@ public class UtilSBCoreDataHora {
             case DATA_SISTEMA:
                 return new SimpleDateFormat("dd-MM-yy");
             case DATA_USUARIO:
-                return new SimpleDateFormat("dd-MM-yy");
+                return new SimpleDateFormat("dd/MM/yy");
             case HORA_SISTEMA:
                 return new SimpleDateFormat("[HH-mm-ss]");
             case HORA_USUARIO:
@@ -110,6 +125,11 @@ public class UtilSBCoreDataHora {
             case MES:
 
                 return new SimpleDateFormat("MMMM", localPadrao);
+            case ANO_MES_CARTAO:
+                return new SimpleDateFormat("yyy-MM");
+
+            case ANO_MES_DIA_POR_TRACO:
+                return new SimpleDateFormat("yyy-MM-dd");
 
             default:
                 throw new AssertionError(pFormato.name());
@@ -599,7 +619,7 @@ public class UtilSBCoreDataHora {
         if (pMinutos == 0) {
             return pData;
         }
-        long novadata = pData.getTime() - pMinutos * QTD_SEGUNDOS_EM1MINUTO * QTD_MILISEGUNDOS_EM1SEGUNDO;
+        long novadata = pData.getTime() - (pMinutos * QTD_SEGUNDOS_EM1MINUTO * QTD_MILISEGUNDOS_EM1SEGUNDO);
 
         return new Date(novadata);
     }
@@ -834,26 +854,6 @@ public class UtilSBCoreDataHora {
 
     /**
      *
-     * DESCOBRE A DATA ATUAL SEM FORMATAÇÃO
-     *
-     * Ex: 29112016
-     *
-     * @return ANO, MES, DIA ATUAL EM UM NUMERO INTEIRO
-     */
-    public static int gerarInteiroInvertidoDiaMesAnoDataInformada(Date pData) {
-
-        String textoData = converteDataEmStringCorrida(pData);
-
-        textoData = UtilSBCoreStringFiltros.inverteStringData(textoData);
-
-        int numData = Integer.parseInt(textoData);
-
-        return numData;
-
-    }
-
-    /**
-     *
      * DESCOBRE A DATA ATUAL COM HORA ZERADA
      *
      * Ex: Tue Nov 29 00:00:00 BRST 2016
@@ -931,15 +931,10 @@ public class UtilSBCoreDataHora {
         dataFormatada = "";
 
         for (int i = 0; i < auxiliar.length; i++) {
-
             lista.add(auxiliar[i]);
-
             if ((!lista.get(i).equals('/')) && (!lista.get(i).equals('-')) && (!lista.get(i).equals(' '))) {
-
                 dataFormatada += lista.get(i);
-
             }
-
         }
 
         return dataFormatada;
@@ -1048,24 +1043,16 @@ public class UtilSBCoreDataHora {
     }
 
     /**
-     *
-     * DEVOLVE DATE COM HORA
-     *
-     * Ex: ENTRADA 29/11/2016 12:30:15 - SAIDA Tue Nov 29 12:30:15 BRST 2016
-     *
-     * @param pString DATA NO FORMATO A CONVERTER
-     * @return DATA ATUAL
+     * @param pString '29/11/2016 12:30:15'
+     * @return Registro Date() -> Tue Nov 29 12:30:15 BRST 2016
      */
     public static Date converteStringEmDataEHora(String pString) {
 
         Date dataConvertida;
 
         try {
-
             SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
             dataConvertida = formatador.parse(pString);
-
             return dataConvertida;
 
         } catch (Throwable t) {
@@ -1075,6 +1062,22 @@ public class UtilSBCoreDataHora {
 
         }
 
+    }
+
+    /**
+     * @param pString '29/11/2016 12:30:15'
+     * @return Registro Date() -> Tue Nov 29 12:30:15 BRST 2016
+     */
+    public static Date converteStringEmData(String pString) {
+        Date dataConvertida;
+        try {
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+            dataConvertida = formatador.parse(pString);
+            return dataConvertida;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Não foi possivel converter a String em Data!", t);
+            return null;
+        }
     }
 
     /**
@@ -1187,16 +1190,53 @@ public class UtilSBCoreDataHora {
                 && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
     }
 
+    /**
+     *
+     * @param pData 10/01/22
+     * @return (0) ATENÇÃO, Mes modelo Api calendario, onde 0 é janeiro, 11 é
+     * dezembro.
+     */
     public static int getMes(Date pData) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(pData);
         return cal1.get(Calendar.MONTH);
     }
 
+    /**
+     *
+     * @param 10/01/22
+     * @return 1
+     */
+    public static int getMesFormatoHumano(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.MONTH) + 1;
+    }
+
+    public static int getAno(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.YEAR);
+    }
+
     public static String getMesTexto(Date pData) {
 
         Locale local = new Locale("pt", "BR");
         DateFormat dateFormat = new SimpleDateFormat("MMMM", local);
+        return dateFormat.format(pData);
+    }
+
+    public static String getMesTextoAbreviado(Date pData) {
+
+        Locale local = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("MMM", local);
+        return dateFormat.format(pData);
+    }
+
+    public static String getMesAnoTextoAbreviado(Date pData) {
+
+        Locale local = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("MMM 'de' yy", local);
         return dateFormat.format(pData);
     }
 
@@ -1213,6 +1253,18 @@ public class UtilSBCoreDataHora {
         return cal1.get(Calendar.DAY_OF_MONTH);
     }
 
+    public static int getHora(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static int getMinuto(Date pData) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(pData);
+        return cal1.get(Calendar.MINUTE);
+    }
+
     public static String getDiaDaSemana(Date pData) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(pData);
@@ -1224,7 +1276,7 @@ public class UtilSBCoreDataHora {
             case Calendar.MONDAY:
                 return "Segunda";
             case Calendar.TUESDAY:
-                return "terça";
+                return "Terça";
             case Calendar.WEDNESDAY:
                 return "Quarta";
             case Calendar.THURSDAY:
@@ -1257,6 +1309,10 @@ public class UtilSBCoreDataHora {
         if (dataHoraPossivelDiaIterior.get(Calendar.YEAR) > dataHoraReferenciaLimite.get(Calendar.YEAR)) {
             return false;
         }
+        if (dataHoraPossivelDiaIterior.get(Calendar.YEAR) < dataHoraReferenciaLimite.get(Calendar.YEAR)) {
+
+            return true;
+        }
         int diaDoAnoReferenciaLimite = dataHoraReferenciaLimite.get(Calendar.DAY_OF_YEAR);
         int diaDoAnoPossivelDiaAnterior = dataHoraPossivelDiaIterior.get(Calendar.DAY_OF_YEAR);
         return diaDoAnoPossivelDiaAnterior < diaDoAnoReferenciaLimite;
@@ -1282,6 +1338,9 @@ public class UtilSBCoreDataHora {
 
         if (possivelDiaSuperior.get(Calendar.YEAR) < diaReferenciaLimite.get(Calendar.YEAR)) {
             return false;
+        }
+        if (possivelDiaSuperior.get(Calendar.YEAR) > diaReferenciaLimite.get(Calendar.YEAR)) {
+            return true;
         }
         int diaDoAnoReferenciaLimite = diaReferenciaLimite.get(Calendar.DAY_OF_YEAR);
         int diaDoAnoPossivelDiaSuperor = possivelDiaSuperior.get(Calendar.DAY_OF_YEAR);
@@ -1311,4 +1370,94 @@ public class UtilSBCoreDataHora {
         return dataHoraCalendario.getTime();
     }
 
+    public static Date getFinalDoDIa(Date pDate) {
+
+        LocalDateTime localDateTime = Instant.ofEpochMilli(pDate.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);
+        return Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static Date getUltimoDiaDoMes(Date pDdata) {
+
+        LocalDate calendario = UtilSBCoreDataHoraCalendarioLocal.gerarLocalDateByDate(pDdata);
+        calendario = calendario.with(TemporalAdjusters.lastDayOfMonth());
+        String dataVencimento = calendario.format(DateTimeFormatter.ISO_DATE);
+        SimpleDateFormat novadata = new SimpleDateFormat("yyyy-MM-dd");
+        Date dataUltimoDia;
+        try {
+            dataUltimoDia = novadata.parse(dataVencimento);
+            return dataUltimoDia;
+        } catch (ParseException ex) {
+            Logger.getLogger(UtilSBCoreDataHora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static Date getPrimeiroDiaDoMes(Date pDia) {
+
+        int mesVencimento = UtilSBCoreDataHora.getMes(pDia) + 1;
+        int ano = UtilSBCoreDataHora.getAno(pDia);
+        Date dataVencimento = converteStringEmData(1 + "/" + mesVencimento + "/" + ano);
+        return dataVencimento;
+    }
+
+    public static boolean isDataMesmoMes(Date pData, Date pMesReferencia) {
+        int mesData = getMes(pData);
+        int mesReferencia = getMes(pMesReferencia);
+        int ano = getAno(pData);
+        int anoReferencia = getAno(pMesReferencia);
+        return (mesData == mesReferencia && ano == anoReferencia);
+    }
+
+    /**
+     *
+     * @param pData DAta questionavel
+     * @param pMesReferencia data referencia
+     * @return
+     */
+    public static boolean isDataMesmoMesOuSuperior(Date pData, Date pMesReferencia) {
+        if (pData == null || pMesReferencia == null) {
+            return false;
+        }
+
+        int mesReferencia = getMes(pMesReferencia);
+        int anoReferencia = getAno(pMesReferencia);
+        int anoData = getAno(pData);
+        int mesData = getMes(pData);
+
+        if (anoData > anoReferencia) {
+            return true;
+        }
+        if (anoData < anoReferencia) {
+            return false;
+        }
+
+        return (mesData >= mesReferencia);
+    }
+
+    /**
+     *
+     * @param pData DAta questionavel
+     * @param pMesReferencia data referencia
+     * @return
+     */
+    public static boolean isDataMesmoMesOuInferior(Date pData, Date pMesReferencia) {
+        if (pData == null || pMesReferencia == null) {
+            return false;
+        }
+
+        int mesReferencia = getMes(pMesReferencia);
+        int anoReferencia = getAno(pMesReferencia);
+        int anoData = getAno(pData);
+        int mesData = getMes(pData);
+        if (anoData < anoReferencia) {
+            return true;
+        }
+        if (anoData > anoReferencia) {
+            return false;
+        }
+        return (mesData <= mesReferencia);
+    }
 }

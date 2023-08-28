@@ -20,7 +20,7 @@ public abstract class AtributoObjetoSBAbstrato extends ItemSimples implements It
 
     protected final TipoAtributoObjetoSB tipoAtributo;
     protected String nomeClasseOrigemAtributo;
-    protected String nomeClasseAtributo;
+    protected final String nomeClasseAtributo;
     protected String caminhoListagem;
     protected String nomeDeclaracao;
 

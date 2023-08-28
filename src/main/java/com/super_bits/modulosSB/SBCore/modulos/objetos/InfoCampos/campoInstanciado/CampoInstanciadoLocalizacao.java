@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.LocalizacaoInputAssistente;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
@@ -31,7 +32,12 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     public CampoInstanciadoLocalizacao(ItfCampoInstanciado pCampo) {
-
+        if (pCampo.getValor() == null) {
+            if (pCampo.getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
+                ItfBeanEnderecavel benEnderecavel = (ItfBeanEnderecavel) pCampo.getObjetoDoAtributo();
+                benEnderecavel.instanciarNovoEndereco();
+            }
+        }
         TipoOrganizacaoDadosEndereco tipo = TipoOrganizacaoDadosEndereco.getTipoOrganizacaoByCampoInstanciado(pCampo);
         ItfBeanSimples beanArmazenamentoAssitente = tipo.getBeanDeArmazenamento(pCampo);
 

@@ -23,23 +23,25 @@ import java.util.stream.Collectors;
  */
 public class UtilSBCoreListasObjeto {
 
-    private static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo,boolean pReverso) {
-        ComparadorGenerico comparador=null;
-        switch (pAtributo){
+    private static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo, boolean pReverso) {
+        ComparadorGenerico comparador = null;
+        switch (pAtributo) {
             case ID:
-                comparador=new ComparadorPorId(pReverso);
+                comparador = new ComparadorPorId(pReverso);
                 break;
-                default:
-        ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, false);
-        
+            default:
+                ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, false);
+
         }
-        
+
         pLista.sort(comparador);
 
     }
+
     public static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo) {
         ordernarPorTipoCampo(pLista, pAtributo, false);
     }
+
     public static void ordernarPorTipoCampoReverso(List pLista, FabTipoAtributoObjeto pAtributo) {
         ordernarPorTipoCampo(pLista, pAtributo, true);
 
@@ -53,13 +55,13 @@ public class UtilSBCoreListasObjeto {
     }
 
     public static void ordernarPorCampoReverso(List pLista, String pAtributo) {
-
+        if (pLista == null) {
+            return;
+        }
         ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, true);
         pLista.sort(cpGenerico);
 
     }
-
-    
 
     public static <T> List<T> filtrarOrdenandoMaisParecidos(List<T> pLista, String pParametro, int pLimite) {
         List resp = new ArrayList();

@@ -436,7 +436,7 @@ public class SBCore {
         if (!isAmbienteExecucaoConfigurado()) {
             pErroJava.printStackTrace();
             soutInfoDebug("O sistema encontrou um erro antes de configurar a classe que lida com erros", true);
-            soutInfoDebug("O erro encontrado foi:" + pMensagem, true);
+            soutInfoDebugVerde("O erro encontrado foi:" + pMensagem);
             soutInfoDebug(pErroJava.getMessage(), true);
             soutInfoDebug(pErroJava.getLocalizedMessage(), true);
 
@@ -648,7 +648,7 @@ public class SBCore {
         return infoAplicacao.getClass().getClassLoader();
     }
 
-    public static ConfigModulo getConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
+    public static synchronized ConfigModulo getConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         ConfigModulo config = null;
         try {
             return new ConfigModulo(pFabricaConfig, getClasseLoaderAplicacao());
@@ -846,9 +846,17 @@ public class SBCore {
         }
 
     }
+    public static final String GREEN = "\033[0;32m";   // GREEN
 
     public static void soutInfoDebug(String pInfo) {
         soutInfoDebug(pInfo, false);
+    }
+
+    public static void soutInfoDebugVerde(String pInfo) {
+        if (estadoAplicativo != ESTADO_APP.PRODUCAO) {
+            System.out.println(GREEN + "SBCoreInfo:" + pInfo);
+        }
+
     }
 
     /**

@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfModuloAcaoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerAutoExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoSecundaria;
@@ -39,6 +40,7 @@ public class MapaDeAcoes {
     private final Map<ItfAcaoGerenciarEntidade, List<ItfAcaoSecundaria>> SUBACOES_BY_ACAO_GERENCIAR_MB = new HashMap<>();
     private final Map<String, List<ItfAcaoDoSistema>> ACOES_BY_DOMINIO = new HashMap<>();
     private final Map<String, ItfAcaoFormulario> ACAO_BY_XHTML_FORM = new HashMap<>();
+    private final Map<ItfFabricaAcoes, ItfAcaoControllerAutoExecucao> ACAO_AUTOEXECUCAO_BY_ENUM = new HashMap<>();
 
     /// cria mapeamentos relacionais dos Objetos todos os (OneToMany) Ex: adiciona as açoes do modulo no objeto Modulo
     private void buildRelacoes() {
@@ -76,6 +78,9 @@ public class MapaDeAcoes {
                             ACAO_BY_NOME_UNICO.put(acao.getNomeUnico(), acao);
                             ACAO_BY_ENUM.put(fabricaAcao, acao);
                             ACAO_BY_ID.put(UtilSBController.gerarIDAcaoDoSistema(acao.getEnumAcaoDoSistema()), acao);
+                            if (acao instanceof ItfAcaoControllerAutoExecucao) {
+                                ACAO_AUTOEXECUCAO_BY_ENUM.put(acao.getEnumAcaoDoSistema(), (ItfAcaoControllerAutoExecucao) acao);
+                            }
                             if (acao.isUmaAcaoFormulario()) {
                                 ACAO_BY_XHTML_FORM.put(acao.getComoFormulario().getXhtml(), acao.getComoFormulario());
                             }
@@ -151,6 +156,7 @@ public class MapaDeAcoes {
         ACOES_MANAGED_BEAN_BY_MODULO.clear();
         SUBACOES_BY_ACAO_GERENCIAR_MB.clear();
         ACOES_BY_DOMINIO.clear();
+        ACAO_AUTOEXECUCAO_BY_ENUM.clear();
     }
 
     /**
@@ -182,6 +188,12 @@ public class MapaDeAcoes {
             }
         }
         return acoesDeGestao;
+    }
+
+    public List<ItfAcaoControllerAutoExecucao> getAcoesControlerAutoexecucao() {
+        List< ItfAcaoControllerAutoExecucao> listaAutoexec = new ArrayList<>();
+        ACAO_AUTOEXECUCAO_BY_ENUM.values().stream().forEach(listaAutoexec::add);
+        return listaAutoexec;
     }
 
     /**

@@ -109,7 +109,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     @Override
     public List<ItfComunicacao> getComunicacoesAguardandoRespostaDoRemetente(ItfUsuario pRemetente) {
         List<ItfComunicacao> comunicacoesEncontradas = new ArrayList<>();
-        comunicacoesAtivas.values().stream().filter((cm) -> (cm.getUsuarioRemetente().equals(pRemetente))).forEachOrdered((cm) -> {
+        comunicacoesAtivas.values().stream().filter((cm) -> (cm.getUsuarioRemetente().equals(pRemetente))).limit(5).forEachOrdered((cm) -> {
             comunicacoesEncontradas.add(cm);
         });
         return comunicacoesEncontradas;

@@ -217,11 +217,8 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
                 return;
             }
 
-            if (SBCore.getCentralPermissao().isAcaoPermitidaUsuario(usuario, acao)) {
-                return;
-            } else {
+            if (!SBCore.getCentralPermissao().isAcaoPermitidaUsuario(usuario, acao)) {
                 pResp.addErro(usuario.getNome() + ",parece que o acesso a esta ação do sistema ainda não foi liberada para você, entre em contato com o responsável e tente novamente");
-                return;
             }
 
         } catch (Throwable t) {

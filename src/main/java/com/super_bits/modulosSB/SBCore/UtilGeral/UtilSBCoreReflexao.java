@@ -510,7 +510,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                         }
                     }
 
-                    throw new UnsupportedOperationException("Anotação do tipo fabrica não foi encontrada no método" + pNomeMetodoAnotacao + " na classe " + pClasse.getName()
+                    throw new UnsupportedOperationException("método de atributo da anotação " + pNomeMetodoAnotacao + " não foi encontrado em nenhuma anotação da classe " + pClasse.getName()
                     );
 
                 }

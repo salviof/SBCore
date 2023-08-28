@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEmTexto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
@@ -106,7 +106,7 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
         InfoTipoAcaoController anotacao = UtilSBCoreReflexao.getAnotacaoEmEnum(InfoTipoAcaoController.class, (Enum) acaoVinculada.getEnumAcaoDoSistema());
 
         if (anotacao != null && UtilSBCoreStringValidador.isNAO_NuloNemBranco(anotacao.fraseComunicação())) {
-            return UtilSBCoreStringVariaveisEmTexto.gerarTextoSubstituindoAtributosSimples(anotacao.fraseComunicação(), beanVinculado);
+            return UtilSBCoreStringVariaveisEntreCaracteres.gerarTextoSubstituindoAtributosSimples(anotacao.fraseComunicação(), beanVinculado);
         }
         if (tipoComunicacao.getMensagemModeloPredefinida() == null
                 || tipoComunicacao.getMensagemModeloPredefinida().isEmpty()) {

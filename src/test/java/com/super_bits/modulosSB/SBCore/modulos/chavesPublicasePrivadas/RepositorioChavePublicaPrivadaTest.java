@@ -35,13 +35,13 @@ public class RepositorioChavePublicaPrivadaTest {
         int indiceFInal = texto.indexOf("\nexemplofim\n");
         String resposta = texto.substring(indiceInicio, indiceFInal);
         System.out.println(resposta);
-        String indiceParDeChaves = RepositorioChavePublicaPrivada.getIndentificadorParDeChaves(parDeChaves);
+        String indiceParDeChaves = RepositorioChavePublicaPrivada.getIdentificacaoChavePublica(parDeChaves);
         String chavePublica = parDeChaves.keySet().iterator().next();
         String chavePrivada = parDeChaves.values().iterator().next();
-        String identificacao = RepositorioChavePublicaPrivada.getIndentificadorParDeChaves(parDeChaves);
+        String identificacao = RepositorioChavePublicaPrivada.getIdentificacaoChavePublica(parDeChaves);
         RepositorioChavePublicaPrivada.persistirChavePublica(parDeChaves);
 
-        Map<String, String> parDeChavesPersistida = RepositorioChavePublicaPrivada.geParDeChavesPubPrivada(indiceParDeChaves);
+        Map<String, String> parDeChavesPersistida = RepositorioChavePublicaPrivada.getParDeChavesPubPrivada(indiceParDeChaves);
         assertEquals("", parDeChavesPersistida.keySet().iterator().next(), chavePublica);
         assertEquals("", parDeChavesPersistida.values().iterator().next(), chavePrivada);
 

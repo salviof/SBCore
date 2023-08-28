@@ -48,6 +48,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.HibernateProxyHelper;
 
@@ -544,17 +545,15 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
-        try {
-            InfoPreparacaoObjeto anotacaoConstructor = UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class);
-            if (anotacaoConstructor == null) {
-                throw new UnsupportedOperationException("A anotação" + InfoPreparacaoObjeto.class.getSimpleName() + " é nescessária no método PrepararNovoObjeto do " + this.getClass().getSimpleName());
-            }
-            return UtilSBCoreReflexaoObjeto.getParametroPrepararObjeto(pTipoParametro,
-                    anotacaoConstructor,
-                    parametros);
-        } catch (Throwable t) {
-            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) getInstancia(), "Erro procurando parametro por tipo anotação " + InfoPreparacaoObjeto.class.getSimpleName() + " Não foi encontrada");
+
+        InfoPreparacaoObjeto anotacaoConstructor = UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class);
+        if (anotacaoConstructor == null) {
+            throw new UnsupportedOperationException("A anotação" + InfoPreparacaoObjeto.class.getSimpleName() + " é nescessária no método PrepararNovoObjeto do " + this.getClass().getSimpleName());
         }
+        return UtilSBCoreReflexaoObjetoSimples.getParametroPrepararObjeto((ItfBeanSimplesSomenteLeitura) this, pTipoParametro,
+                anotacaoConstructor,
+                parametros);
+
     }
 
     /**
@@ -1087,9 +1086,17 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         try {
             ItfBeanSimplesSomenteLeitura itemSimples = (ItfBeanSimplesSomenteLeitura) getInstancia();
             if (getInstancia().getClass().getSimpleName().contains("$")) {
-                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
+                if (itemSimples.getId() != 0) {
+                    return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
+                } else {
+                    return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
+                }
+
             } else {
-                return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId();
+                if (itemSimples.getId() != 0) {
+                    return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId();
+                }
+                return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
             }
 
         } catch (Throwable t) {

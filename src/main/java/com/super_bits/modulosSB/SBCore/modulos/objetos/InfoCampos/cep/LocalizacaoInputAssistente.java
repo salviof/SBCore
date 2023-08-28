@@ -183,6 +183,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
             if (cpBairro == null) {
                 return null;
             } else {
+
                 return (ItfBairro) cpBairro.getValor();
             }
 

@@ -13,10 +13,31 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
  */
 public class UtilSBCoreNumerosOperacoes {
 
-    public static boolean compararDouble(double f1, double f2) {
-        final double LIMITE = .0001;
+    /**
+     *
+     * @param f1
+     * @param f2
+     * @return Retorna verdadeiro se o valor for menor que 3 centavos
+     */
+    public static boolean compararDoubleAproximado(double f1, double f2) {
 
-        boolean resultado = Math.abs(f1 - f2) < LIMITE;
+        return compararDoubleAproximado(.03, f1, f2);
+
+    }
+
+    /**
+     *
+     * @param plimiteTolerancia Limite de toleráncia exemplo: 0.03 centavos
+     * @param f1 Valor 1
+     * @param f2 Valor 2
+     * @return Verdadeiro se a diferença for menor que o limite de tolerância
+     */
+    public static boolean compararDoubleAproximado(final double plimiteTolerancia, double f1, double f2) {
+        if (plimiteTolerancia > 1) {
+            throw new UnsupportedOperationException("O Limite de tolerância precisa ser menor que 1");
+        }
+
+        boolean resultado = Math.abs(f1 - f2) < plimiteTolerancia;
         return resultado;
 
     }

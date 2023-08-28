@@ -46,6 +46,9 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
 
     public ValorLogicoCalculoGenerico(ItfCampoInstanciado pCampo) {
         campoInst = pCampo;
+        if (!SBCore.isEmModoProducao()) {
+            System.out.println("Iniciando valor lógico de atributo: " + pCampo.getObjetoDoAtributo().getClass().getSimpleName() + "." + pCampo.getNomeCompostoIdentificador());
+        }
     }
 
     /**

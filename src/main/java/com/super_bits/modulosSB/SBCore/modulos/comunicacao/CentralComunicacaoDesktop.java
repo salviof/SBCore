@@ -109,4 +109,9 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
     public ItffabricaTrasporteComunicacao getFabricaTransportePadrao() {
         return ERPTransporteComunicacao.INTRANET_MENU;
     }
+
+    @Override
+    public String getTokenDispositivoNotificacao(ItfUsuario pUsuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -22,14 +22,15 @@ import java.util.Map;
  */
 public class RepositorioChavePublicaPrivada {
 
-    public static String getIdentificacaoChave(String pChave) {
-        return String.valueOf(pChave.hashCode());
+    public static String getIdentificacaoChavePublica(String pChavePublica) {
+        return String.valueOf(pChavePublica.hashCode());
     }
 
-    public static String getIndentificadorParDeChaves(Map<String, String> pParPublicoPrivado) {
-        String texto = pParPublicoPrivado.keySet().iterator().next() + pParPublicoPrivado.values().iterator().next();
-        int codigo = texto.hashCode();
-        return String.valueOf(codigo);
+    public static String getIdentificacaoChavePublica(Map<String, String> pParPublicoPrivado) {
+        if (pParPublicoPrivado.size() != 1) {
+            throw new UnsupportedOperationException("Este método suporta a identificação de um único par de chaves, vários foram enviados");
+        }
+        return getIdentificacaoChavePublica(pParPublicoPrivado.keySet().iterator().next());
     }
 
     public static String getChavePublicaByHash(String pHash) {
@@ -46,7 +47,7 @@ public class RepositorioChavePublicaPrivada {
         return chavePublica;
     }
 
-    public static Map<String, String> geParDeChavesPubPrivada(String pHash) {
+    public static Map<String, String> getParDeChavesPubPrivada(String pHash) {
         try {
             String diretorio = getCaminhoBaseRepositorio();
             File arquivo = new File(diretorio + "/" + pHash);
@@ -59,7 +60,11 @@ public class RepositorioChavePublicaPrivada {
             Map<String, String> mapa = new HashMap<>();
 
             String chavePublica = stringwrap.substring(indexInicio, indexFinal);
-
+            System.out.println("hash chave pública =");
+            System.out.println(chavePublica.hashCode());
+            if (!pHash.equals(String.valueOf(chavePublica.hashCode()))) {
+                throw new UnsupportedOperationException("falha definindo hash de chave pública");
+            }
             int indexInicioPrivada = stringwrap.indexOf(MARCADOR_INICIO_CHAVE_PRIVADA) + MARCADOR_INICIO_CHAVE_PRIVADA.length();
             int indexFinalPricada = stringwrap.indexOf(MARCADOR_FINAL_CHAVE_PRIVADA);
             String chavePrivada = stringwrap.substring(indexInicioPrivada, indexFinalPricada);
@@ -91,7 +96,7 @@ public class RepositorioChavePublicaPrivada {
         if (!diretorioRepostiorio.isDirectory()) {
             diretorioRepostiorio.mkdirs();
         }
-        String identificacao = getIndentificadorParDeChaves(pParPublicoPrivado);
+        String identificacao = RepositorioChavePublicaPrivada.getIdentificacaoChavePublica(pParPublicoPrivado);
         String arquivoArmazenamento = diretorio + "/" + identificacao;
         String conteudoArquivo = MARCADOR_INICIO_CHAVE_PUBLIC + pParPublicoPrivado.keySet().iterator().next()
                 + MARCADOR_FINAL_CHAVE_PUBLIC

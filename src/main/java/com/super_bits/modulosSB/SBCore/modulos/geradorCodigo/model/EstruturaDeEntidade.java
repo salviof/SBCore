@@ -385,4 +385,8 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
         }
     }
 
+    public boolean isTemAtributoComEsteNome(String pNome) {
+        return getCampos().stream().filter(cp -> cp.getNomeDeclarado().equals(pNome)).findFirst().isPresent();
+    }
+
 }

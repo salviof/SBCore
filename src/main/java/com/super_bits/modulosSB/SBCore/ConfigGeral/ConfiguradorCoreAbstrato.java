@@ -35,7 +35,8 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
             arquivoConfiguradorDistribuicao = distro;
             System.out.println(arquivoConfiguradorDistribuicao);
         } catch (Throwable t) {
-            SBCore.soutInfoDebug("O arquivo de distribuição não foi encontrado, você não precisa se preocupar com isso caso não pretenda executar este projeto fora do ambiente de desenvolvimento");
+
+            // SBCore.soutInfoDebug("O arquivo de distribuição não foi encontrado, você não precisa se preocupar com isso caso não pretenda executar este projeto fora do ambiente de desenvolvimento");
         }
     }
 

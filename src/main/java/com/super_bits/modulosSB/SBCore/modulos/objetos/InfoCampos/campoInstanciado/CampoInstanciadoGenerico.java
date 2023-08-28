@@ -36,8 +36,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORI
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanLocalizavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.financeiro.ItfPessoa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
@@ -753,6 +756,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public ItfAssistenteDeLocalizacao getComoCampoLocalizacao() {
         if (campoLocalizacao != null) {
+
             return campoLocalizacao;
         }
         try {
@@ -782,6 +786,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             if (campoLocalizacao == null) {
                 campoLocalizacao = new CampoInstanciadoLocalizacao(this);
             }
+
+            if (getValor() == null) {
+                if (getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
+                    ((ItfBeanEnderecavel) getObjetoDoAtributo()).instanciarNovoEndereco();
+                }
+            }
+
             return campoLocalizacao;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro otendo campo de arquivo de entidade em" + getObjetoDoAtributo() + " campo" + getNomeCamponaClasse(), t);
@@ -1069,6 +1080,10 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                 } else {
                     if (getValor() != null) {
                         return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
+                    }
+                    if (atributoAssociado.isTemValidadacaoLogica()) {
+                        //UtilSBCoreValidacao.gerarMensagensValidacao(campoInstanciadoPai, this, valorModificado, false);
+
                     }
                 }
             }

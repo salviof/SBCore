@@ -60,7 +60,7 @@ public class UtilSBCoreNumeros {
 
         // nextInt is normally exclusive of the top value,
         // so add 1 to make it inclusive
-        int randomNum = rand.nextInt((pMaximo) + 1) + pMinimo;
+        int randomNum = rand.nextInt((pMaximo) - pMinimo) + pMinimo;
 
         return randomNum;
 
@@ -79,6 +79,38 @@ public class UtilSBCoreNumeros {
         return valor;
     }
 
+    public static Double converterMoedaPadraoBancoParaDouble(final String pValor) {
+        try {
+            if (pValor.contains(".") || pValor.contains(",")) {
+                throw new UnsupportedOperationException("o padrão banco é representado sem pontos e virculas, exempo R$10,50 seria representado como 1050");
+            }
+            int tamanhoTotal = pValor.length();
+            String valor;
+            if (tamanhoTotal >= 3) {
+                valor = pValor.substring(0, tamanhoTotal - 2) + "." + pValor.substring(tamanhoTotal - 2, tamanhoTotal);
+            } else {
+                valor = "0." + pValor;
+            }
+            if (pValor.contains("-")) {
+                valor = valor.replace("-", "");
+                valor = "-" + valor;
+            }
+            return Double.valueOf(valor);
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro interpretando valor" + pValor, t);
+            return null;
+        }
+    }
+
+    public static Integer converterNumeroDoubleToMoedaPadraoBancoEmCentavos(double pValor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String valor = formatter.format(pValor);
+        valor = valor.replace(",", "");
+        valor = valor.replace(".", "");
+
+        return Integer.valueOf(valor);
+    }
+
     public static String converterMoeda(Object pValor) {
         if (pValor == null) {
             return " - ";
@@ -86,7 +118,7 @@ public class UtilSBCoreNumeros {
         try {
             //    Currency currency = Currency.getInstance("BRL");
             //currency.getSymbol();
-            String simbolo = "R$";
+            String simbolo = "R$ ";
             DecimalFormat formato = new DecimalFormat("#,##0.00");
 
             return simbolo + formato.format(pValor);
@@ -101,13 +133,33 @@ public class UtilSBCoreNumeros {
         return nf.format(pNumero);
     }
 
-    public static final double doubleArredondamento(double value, int places) {
-        if (places < 0) {
+    public static final double doubleArredondamento(double value, int pCasasDecimais) {
+        if (pCasasDecimais < 0) {
             throw new IllegalArgumentException();
         }
 
         BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        bd = bd.setScale(pCasasDecimais, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static final double doubleArredondamentoMetadeParaCima(double value, int pCasasDecimais) {
+        if (pCasasDecimais < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(pCasasDecimais, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static final double doubleArredondamentoMetadeParaBaixo(double value, int pacasasDecimais) {
+        if (pacasasDecimais < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(pacasasDecimais, RoundingMode.HALF_DOWN);
         return bd.doubleValue();
     }
 
@@ -135,11 +187,14 @@ public class UtilSBCoreNumeros {
         try {
             if (!pValorDouble.contains(",") && !pValorDouble.contains(".")) {
                 //Adicionar virgula automaticamente após 2 casas caso não envie
-                //este padrão foi adotado devido a ser uma especificação comum nas integrações bancárias
+                //este padrão foi adotado devido a ser uma especificação legadas comum nas integrações bancárias
+                if (pValorDouble.length() < 3) {
+                    pValorDouble = "0." + pValorDouble;
+                } else {
+                    throw new Throwable("o caracter separador decimal é imperativo, exteto no caso dos centavos");
+                }
             }
-            if (pValorDouble.length() < 3) {
 
-            }
             char caracterSeparadorDecimal;
             boolean separadorExplicito = true;
             try {

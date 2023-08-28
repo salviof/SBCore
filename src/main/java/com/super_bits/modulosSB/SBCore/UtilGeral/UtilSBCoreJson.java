@@ -4,9 +4,10 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import static com.jayway.restassured.internal.assertion.AssertionSupport.properties;
+import com.jayway.restassured.path.json.JsonPath;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.erros.ErroDeteccaoSeparadorDecimal;
+import com.super_bits.modulosSB.SBCore.UtilGeral.erros.ErroLeituraJson;
 import com.super_bits.modulosSB.SBCore.UtilGeral.json.ErroProcessandoJson;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,6 +18,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
@@ -26,6 +28,8 @@ import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -43,12 +47,33 @@ public class UtilSBCoreJson {
     private static final Pattern REGEX_NUMERO_ENTRE_COLCHETE = Pattern.compile(PADRAO_REGEX_NUMERO_ENTRE_CONXETE);
 
     public static JsonObject getJsonObjectByTexto(String pStringJson) {
-        if (pStringJson == null) {
+        try {
+            if (pStringJson == null) {
+                return null;
+            }
+            JsonReader jsonReader = Json.createReader(new StringReader(pStringJson));
+            JsonObject json = jsonReader.readObject();
+            return json;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha processando " + pStringJson, t);
             return null;
         }
-        JsonReader jsonReader = Json.createReader(new StringReader(pStringJson));
-        JsonObject json = jsonReader.readObject();
-        return json;
+
+    }
+
+    public static JsonArray getJsonArrayByTexto(String pStringJson) {
+        try {
+            if (pStringJson == null) {
+                return null;
+            }
+
+            JsonReader jsonReader = Json.createReader(new StringReader(pStringJson));
+            JsonArray json = jsonReader.readArray();
+            return json;
+        } catch (Throwable t) {
+            return null;
+        }
+
     }
 
     public static String getTextoByJsonArray(JsonArray pArray) {
@@ -62,7 +87,58 @@ public class UtilSBCoreJson {
         return (sw.toString());
     }
 
+    public static JsonObject getJsonObjectIncrementandoCampo(JsonObject pOrigem, String pChave, Object pValor) {
+
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        pOrigem.entrySet().
+                forEach(e -> builder.add(e.getKey(), e.getValue()));
+        if (pValor instanceof BigDecimal) {
+            builder.add(pChave, (BigDecimal) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof BigInteger) {
+            builder.add(pChave, (BigDecimal) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof JsonArrayBuilder) {
+            builder.add(pChave, (JsonArrayBuilder) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof JsonObjectBuilder) {
+            builder.add(pChave, (JsonObjectBuilder) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof JsonValue) {
+            builder.add(pChave, (JsonValue) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof String) {
+            builder.add(pChave, (String) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof Boolean) {
+            builder.add(pChave, (Boolean) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof Double) {
+            builder.add(pChave, (Double) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof Integer) {
+            builder.add(pChave, (Integer) pValor);
+            return builder.build();
+        }
+        if (pValor instanceof Long) {
+            builder.add(pChave, (Long) pValor);
+            return builder.build();
+        }
+        return builder.build();
+    }
+
     public static String getTextoByJsonObjeect(JsonObject pJson) {
+        if (pJson == null) {
+            return null;
+        }
         StringWriter sw = new StringWriter();
         Map<String, Object> properties = new HashMap<>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
@@ -73,17 +149,17 @@ public class UtilSBCoreJson {
         return (sw.toString());
     }
 
-    private static Map<String, Object> getMapBySequencia(String... pSequencia) throws ErroProcessandoJson {
+    private static Map<String, Object> getMapBySequencia(Object... pSequencia) throws ErroProcessandoJson {
         Map<String, Object> chaveValor = new HashMap();
         int i = 0;
         if (pSequencia.length % 2 != 0) {
             throw new ErroProcessandoJson("O total de parâmetros deve ser par, a sequencia atributo,será processada da seguinte forma: (atributo1,valor1,atributo2,valor2), foram enviados " + pSequencia.length + " parametros");
         }
-        for (String texto : pSequencia) {
+        for (Object texto : pSequencia) {
             if (i == 0 || (i % 2 == 0)) {
-                String chave = texto;
+                String chave = (String) texto;
                 int indicevalor = i + 1;
-                String valor = pSequencia[indicevalor];
+                Object valor = pSequencia[indicevalor];
 
                 if (chave == null) {
                     throw new ErroProcessandoJson("Eviado nulo em nome do atributo, no parâmetro com indice " + i + ". "
@@ -105,13 +181,52 @@ public class UtilSBCoreJson {
         return construtor.build();
     }
 
-    public static JsonObjectBuilder getJsonBuilderBySequenciaChaveValor(String... pSequencia) throws ErroProcessandoJson {
+    public static JsonObjectBuilder getJsonBuilderBySequenciaChaveValor(Object... pSequencia) throws ErroProcessandoJson {
         if (pSequencia.length == 0) {
             throw new ErroProcessandoJson("Nenhum parâmetro enviado");
         }
         Map<String, Object> chaveValor = getMapBySequencia(pSequencia);
         JsonObjectBuilder construtor = Json.createObjectBuilder(chaveValor);
         return construtor;
+    }
+
+    public static String getJsonStringBySequenciaChaveValor(Object... pSequencia) throws ErroProcessandoJson {
+        if (pSequencia.length == 0) {
+            throw new ErroProcessandoJson("Nenhum parâmetro enviado");
+        }
+        Map<String, Object> chaveValor = getMapBySequencia(pSequencia);
+        JsonObjectBuilder construtor = Json.createObjectBuilder(chaveValor);
+        JsonObject jsonObj = construtor.build();
+        String jsonString = UtilSBCoreJson.getTextoByJsonObjeect(jsonObj);
+        return jsonString;
+    }
+
+    public static <T> T getValorApartirDoCaminho(String pCaminho, JsonObject pJsonSimple) {
+
+        try {
+            //to do split do caminho, e extração manipulando o JsonObjet para ganho de performance
+            return getValorApartirDoCaminho(pCaminho, pJsonSimple, false);
+        } catch (ErroLeituraJson ex) {
+            return null;
+        }
+    }
+
+    public static <T> T getValorApartirDoCaminho(String pCaminho, JsonObject pJson, boolean pCampoObrigatorio) throws ErroLeituraJson {
+        String jsonStr = UtilSBCoreJson.getTextoByJsonObjeect(pJson);
+        Object resposta = JsonPath.from(jsonStr).get(pCaminho);
+        if (resposta == null) {
+            if (pCampoObrigatorio) {
+                throw new ErroLeituraJson(jsonStr, pCaminho);
+            }
+        }
+        if (resposta instanceof Float) {
+            Float repostaFloat = (Float) resposta;
+            Double valorDouble = UtilSBCoreNumeros.doubleArredondamentoMetadeParaBaixo(repostaFloat.doubleValue(), 2);
+
+            return (T) valorDouble;
+        }
+        //to do split do caminho, e extração manipulando o JsonObjet para ganho de performance
+        return (T) resposta;
     }
 
     public static String getValorApartirDoCaminho(String pCaminho, JSONObject pJsonSimple) {

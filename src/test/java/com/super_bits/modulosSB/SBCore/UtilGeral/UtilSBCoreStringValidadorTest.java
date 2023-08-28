@@ -30,6 +30,9 @@ public class UtilSBCoreStringValidadorTest {
 
     @Before
     public void setUp() {
+
+        String teste = new String("a\"sdfadf \"");
+        System.out.println(teste.replace("\"", ""));
     }
 
     @After
