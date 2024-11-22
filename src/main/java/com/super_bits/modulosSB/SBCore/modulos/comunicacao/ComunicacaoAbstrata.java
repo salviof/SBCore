@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
@@ -31,16 +32,14 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
 
     @Override
     public void selarComunicacao() {
-        if (!foiSelado) {
-            String usuario = getUsuarioRemetente().getEmail();
-            String destinatario = getDestinatario().getEmailsConcatenados();
-            Long idDataHora = dataHoraDisparo.getTime();
-            id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
-            codigoSelo = String.valueOf(id);
-            if (status == null) {
-                status = FabStatusComunicacao.SELADO;
-            }
+        SBCore.getServicoComunicacao().selarComunicacao(this);
+    }
+
+    public void setCodigoSelo(String codigoSelo) {
+        if (codigoSelo != null) {
+            this.codigoSelo = codigoSelo;
         }
+
     }
 
     @Override

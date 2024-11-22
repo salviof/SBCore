@@ -22,25 +22,25 @@ public class ErroCaminhoCampoNaoExiste extends Throwable {
 
     public ErroCaminhoCampoNaoExiste(String nomeClasse, String pCaminhoCampo) {
 
-        super("O caminho campo " + pCaminhoCampo + " não foi encontrado em " + nomeClasse);
+        super("O caminho campo [" + pCaminhoCampo + "] não foi encontrado em " + nomeClasse);
 
     }
 
     public ErroCaminhoCampoNaoExiste(Class pClasse, String pCaminhoCampo) {
 
-        super("O caminho campo " + pCaminhoCampo + " não foi encontrado em " + getNomeDaClasse(pClasse));
+        super("O caminho campo [" + pCaminhoCampo + "] não foi encontrado em " + getNomeDaClasse(pClasse));
 
     }
 
     public ErroCaminhoCampoNaoExiste(String nomeClasse, String pCaminhoCampo, Throwable causa) {
 
-        super("O caminho campo " + pCaminhoCampo + " não foi encontrado em " + nomeClasse);
+        super("O caminho campo [" + pCaminhoCampo + "] não foi encontrado em " + nomeClasse);
 
     }
 
     public ErroCaminhoCampoNaoExiste(Class pClasse, String pCaminhoCampo, Throwable causa) {
 
-        super("O caminho campo " + pCaminhoCampo + " não foi encontrado em " + getNomeDaClasse(pClasse));
+        super("O caminho campo [" + pCaminhoCampo + "] não foi encontrado em " + getNomeDaClasse(pClasse));
 
     }
 

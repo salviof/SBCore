@@ -33,6 +33,9 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
             throw new ErroChamadaController("A quantidade de parametros para " + pAcao.getNomeUnico() + " é divergente dos parametros enviados");
         }
         try {
+            if (metodo.getParameterCount() == 0) {
+                return (ItfRespostaAcaoDoSistema) metodo.invoke(null);
+            }
             return (ItfRespostaAcaoDoSistema) metodo.invoke(null, pParametros[0]);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(ServicoControllerExecucaoLocal.class.getName()).log(Level.SEVERE, null, ex);

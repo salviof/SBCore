@@ -6,8 +6,12 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
 
 /**
@@ -45,5 +49,25 @@ public class UtilSBCoreReflexaoObjeto extends UtilSBCoreReflexaoObjetoSimples {
 
         return UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, pInterface);
 
+    }
+
+    public static List<Class> getClassesEntidadeComHeranca(Class pClasse) {
+
+        List<Class> classes = new ArrayList<>();
+
+        Class classeAtual = pClasse;
+        boolean temEntidade = pClasse.getAnnotation(Entity.class) != null;
+        while (temEntidade) {
+
+            if (classeAtual == ItemGenerico.class
+                    || classeAtual == Object.class) {
+                return classes;
+            }
+
+            classes.add(classeAtual);
+            classeAtual = classeAtual.getSuperclass();
+            temEntidade = classeAtual.getAnnotation(Entity.class) != null;
+        }
+        return classes;
     }
 }

@@ -30,6 +30,7 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
     }
 
     public ConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) throws IOException {
+
         super(pFabricaConfig);
     }
 
@@ -68,6 +69,16 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
         }
         if (proppriedadesBasicas.get(pPropriedades.toString()) != null) {
             return proppriedadesBasicas.getProperty(pPropriedades.toString());
+        }
+        if (pPropriedades instanceof ItfFabrica) {
+            ItfFabrica anotacao = (ItfFabrica) pPropriedades;
+            try {
+                if (getPropriedadePorAnotacao(anotacao) != null) {
+                    return getPropriedadePorAnotacao(anotacao);
+                }
+            } catch (Exception e) {
+            }
+
         }
         // ATENÇÃO, SUPORTE LEGADO NÃO REMOVER ATÉ O ANO DE  2025 OU ATÉ A VERSÃO 2.0
         return proppriedadesBasicas.getProperty(pPropriedades.getNomePropriedade());

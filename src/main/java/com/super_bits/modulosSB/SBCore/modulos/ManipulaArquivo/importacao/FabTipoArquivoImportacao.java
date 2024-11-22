@@ -21,7 +21,7 @@ public enum FabTipoArquivoImportacao {
                 return "application/json";
 
             case XML:
-                return "pplication/atom+xml";
+                return "application/atom+xml";
 
             case XLS:
                 return null;

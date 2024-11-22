@@ -39,9 +39,9 @@ public class RepositorioChavePublicaPrivadaTest {
         String chavePublica = parDeChaves.keySet().iterator().next();
         String chavePrivada = parDeChaves.values().iterator().next();
         String identificacao = RepositorioChavePublicaPrivada.getIdentificacaoChavePublica(parDeChaves);
-        RepositorioChavePublicaPrivada.persistirChavePublica(parDeChaves);
+        RepositorioChavePublicaPrivada.persistirChavePublicaPrivada(parDeChaves);
 
-        Map<String, String> parDeChavesPersistida = RepositorioChavePublicaPrivada.getParDeChavesPubPrivada(indiceParDeChaves);
+        Map<String, String> parDeChavesPersistida = RepositorioChavePublicaPrivada.getParDeChavesPubPrivadaByHash(indiceParDeChaves);
         assertEquals("", parDeChavesPersistida.keySet().iterator().next(), chavePublica);
         assertEquals("", parDeChavesPersistida.values().iterator().next(), chavePrivada);
 

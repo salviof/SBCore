@@ -28,8 +28,8 @@ public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_LOGRADOURO)
     private String logradouro;
-    private long longitude;
-    private long latitude;
+    private double longitude;
+    private double latitude;
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_BAIRRO)
     private ItemBairro bairro;
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_COMPLEMENTO_E_NUMERO)
@@ -55,22 +55,22 @@ public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
     }
 
     @Override
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
     @Override
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
     @Override
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
     @Override
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 

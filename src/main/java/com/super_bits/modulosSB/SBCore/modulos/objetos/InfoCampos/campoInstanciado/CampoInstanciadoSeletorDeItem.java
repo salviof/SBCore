@@ -31,4 +31,9 @@ public class CampoInstanciadoSeletorDeItem extends CampoInstanciadoComSelecao im
         return super.filtrarPorAutoComplet(pParametro); //chamada super do metodo (implementação classe pai)
     }
 
+    @Override
+    public List getOrigem() {
+        return super.getOrigem(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
 }

@@ -37,6 +37,14 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
         tipoEstruturaCaminhoFormPadrao = pTipoEstruturaCaminhoFormPadrao;
     }
 
+    public String getEnderecoLocalAlternativo(ItfBeanSimplesSomenteLeitura entidade, String pCategoria, String pNome) {
+        if (entidade.getId() == 0) {
+            return getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
+        } else {
+            return getEndrLocalArquivoItem(entidade, pNome, pCategoria);
+        }
+    }
+
     @Override
     public boolean salvarArquivo(ItfBeanSimplesSomenteLeitura entidade, byte[] arqivo, String pCategoria, String pNome) {
         String caminhoArquivo = null;

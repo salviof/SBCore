@@ -52,6 +52,7 @@ public class UtilSBCoreDataHora {
         HORA_SISTEMA,
         HORA_USUARIO,
         DATA_HORA_USUARIO,
+        DATA_HORA_EXTENSO,
         DATA_HORA_SISTEMA,
         DATA_HORA_AMERICANO,
         DATA_SEM_SEPARADOR,
@@ -62,7 +63,46 @@ public class UtilSBCoreDataHora {
         /**
          * Exemplo 2023-12-25
          */
-        ANO_MES_DIA_POR_TRACO
+        ANO_MES_DIA_POR_TRACO;
+
+        public String getSimpleDateFormatStr() {
+            switch (this) {
+                case DATA_HORA_SISTEMA:
+                    return "dd-MM-yy HH-mm-ss";
+                case PERSONALIZADO:
+                case DATA_HORA_USUARIO:
+                    return "dd/MM/yy HH:mm";
+                case DATA_SISTEMA:
+                    return "dd-MM-yy";
+                case DATA_USUARIO:
+                    return "dd/MM/yy";
+                case HORA_SISTEMA:
+                    return "[HH-mm-ss]";
+                case HORA_USUARIO:
+                    return "[HH-mm-ss]";
+                case DATA_HORA_AMERICANO:
+                    return "yyyy-MM-dd HH:mm:ss";
+                case DATA_SEM_SEPARADOR:
+                    return "ddMMyyyy";
+                case HORA_SEM_SEPARADOR:
+                    return "HHmmss";
+
+                case MES:
+
+                    return "MMMM";
+                case ANO_MES_CARTAO:
+                    return "yyy-MM";
+
+                case ANO_MES_DIA_POR_TRACO:
+                    return "yyy-MM-dd";
+                case DATA_HORA_EXTENSO:
+                    return "EE, dd, 'de' MMMM 'às' HH:mm";
+
+                default:
+                    throw new AssertionError(this.name());
+
+            }
+        }
 
     }
 
@@ -91,50 +131,22 @@ public class UtilSBCoreDataHora {
     }
 
     private static SimpleDateFormat getDatePaternByFormatoTempo(FORMATO_TEMPO pFormato, String pPersonalizado) {
-        Locale localPadrao = new Locale("pt", "BR");
-        switch (pFormato) {
-            case DATA_HORA_SISTEMA:
-                return new SimpleDateFormat("dd-MM-yy HH-mm-ss");
-            case DATA_HORA_USUARIO:
-                return new SimpleDateFormat("dd-MM-yy HH:mm:ss");
-            case DATA_SISTEMA:
-                return new SimpleDateFormat("dd-MM-yy");
-            case DATA_USUARIO:
-                return new SimpleDateFormat("dd/MM/yy");
-            case HORA_SISTEMA:
-                return new SimpleDateFormat("[HH-mm-ss]");
-            case HORA_USUARIO:
-                return new SimpleDateFormat("[HH-mm-ss]");
-            case DATA_HORA_AMERICANO:
-                return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            case DATA_SEM_SEPARADOR:
-                return new SimpleDateFormat("ddMMyyyy");
-            case HORA_SEM_SEPARADOR:
-                return new SimpleDateFormat("HHmmss");
-            case PERSONALIZADO:
+        //Locale localPadrao = new Locale("pt", "BR");
 
-                if (pPersonalizado == null) {
-                    throw new UnsupportedOperationException("Criou formato de data personalizado sem espeficar o formato");
-                }
-                try {
-                    return new SimpleDateFormat(pPersonalizado);
-                } catch (Throwable e) {
+        Locale local = new Locale("pt", "BR");
+        if (pFormato.equals(FORMATO_TEMPO.PERSONALIZADO)) {
+            if (pPersonalizado == null) {
+                throw new UnsupportedOperationException("Criou formato de data personalizado sem espeficar o formato");
+            }
+            try {
+                return new SimpleDateFormat(pPersonalizado);
 
-                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "erro criando um SimpleDateFormat no UtilCoreDAtaHora", e);
-                }
-            case MES:
+            } catch (Throwable e) {
 
-                return new SimpleDateFormat("MMMM", localPadrao);
-            case ANO_MES_CARTAO:
-                return new SimpleDateFormat("yyy-MM");
-
-            case ANO_MES_DIA_POR_TRACO:
-                return new SimpleDateFormat("yyy-MM-dd");
-
-            default:
-                throw new AssertionError(pFormato.name());
-
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "erro criando um SimpleDateFormat no UtilCoreDAtaHora", e);
+            }
         }
+        return new SimpleDateFormat(pFormato.getSimpleDateFormatStr());
 
     }
 
@@ -188,6 +200,14 @@ public class UtilSBCoreDataHora {
     public static String getDataHoraString(Date pDAta, FORMATO_TEMPO pFormato) {
 
         SimpleDateFormat sdf = getDatePaternByFormatoTempo(pFormato);
+
+        return sdf.format(pDAta);
+
+    }
+
+    public static String getHoraString(Date pDAta) {
+
+        SimpleDateFormat sdf = getDatePaternByFormatoTempo(FORMATO_TEMPO.HORA_USUARIO);
 
         return sdf.format(pDAta);
 
@@ -1065,13 +1085,25 @@ public class UtilSBCoreDataHora {
     }
 
     /**
-     * @param pString '29/11/2016 12:30:15'
+     * @param pString '29/11/2016'
      * @return Registro Date() -> Tue Nov 29 12:30:15 BRST 2016
      */
     public static Date converteStringEmData(String pString) {
         Date dataConvertida;
         try {
             SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+            dataConvertida = formatador.parse(pString);
+            return dataConvertida;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Não foi possivel converter a String em Data!", t);
+            return null;
+        }
+    }
+
+    public static Date converteStringEmData(String pString, FORMATO_TEMPO pFormato) {
+        Date dataConvertida;
+        try {
+            SimpleDateFormat formatador = new SimpleDateFormat(pFormato.getSimpleDateFormatStr());
             dataConvertida = formatador.parse(pString);
             return dataConvertida;
         } catch (Throwable t) {
@@ -1123,6 +1155,52 @@ public class UtilSBCoreDataHora {
                 && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
                 && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
 
+    }
+
+    /**
+     *
+     * @param pHorarioReferencia Ex: 22:30
+     * @param pHorarioInicial ex: 22:00
+     * @param pHorarioFinal ex: 23:00
+     * @return positivo se o horario deferencia estiver entre o horario inicial
+     * e final, caso o horario inicial seja maior que o horário final, deve
+     * retornar true considerando que o horário ultrapassa um intervalo durante
+     * a madrugada, exemplo: inicial 22:00 final as 05:00, retonra true para
+     * 22:30 e 3:00 e falso para 21:00
+     */
+    public static boolean isHorarioFazParteDoIntevalo(String pHorarioReferencia, String pHorarioInicial, String pHorarioFinal) {
+        SimpleDateFormat FORMATADOR_HORA_MINUTOS = new SimpleDateFormat("HH:mm");
+
+        Calendar horarioInicial = Calendar.getInstance();
+        try {
+            horarioInicial.setTime(FORMATADOR_HORA_MINUTOS.parse(pHorarioInicial));
+
+            Calendar horarioFinal = Calendar.getInstance();
+            horarioFinal.setTime(FORMATADOR_HORA_MINUTOS.parse(pHorarioFinal));
+            Calendar horarioReferencia = Calendar.getInstance();
+            horarioReferencia.setTime(FORMATADOR_HORA_MINUTOS.parse(pHorarioReferencia));
+
+            boolean horarioMadruga = horarioFinal.before(horarioInicial);
+            if (horarioInicial.equals(horarioReferencia)) {
+                return true;
+            }
+            if (horarioFinal.equals(horarioReferencia)) {
+                return false;
+            }
+            if (!horarioMadruga) {
+                return (horarioReferencia.after(horarioInicial) && horarioReferencia.before(horarioFinal));
+            } else {
+                if (horarioReferencia.before(horarioInicial)) {
+                    return horarioReferencia.before(horarioFinal);
+                }
+                if (horarioReferencia.after(horarioInicial)) {
+                    return horarioReferencia.before(horarioFinal);
+                }
+            }
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        }
     }
 
     public static boolean isMesFazParteDoIntevalo(Date pMesReferencia, Date pMesinicial, Date pMesFinal) {

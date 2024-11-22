@@ -20,9 +20,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import javax.imageio.ImageIO;
 
 /**
@@ -133,11 +135,15 @@ public abstract class UTilSBCoreInputs {
     }
 
     private static URLConnection getConexao(String pURL, int pTimeOutConexao, int pTimeoutLeitura, Map<String, String> pHeaders) {
+        return getConexao(pURL, pTimeOutConexao, pTimeoutLeitura, pHeaders, new HashMap<>());
+    }
+
+    private static URLConnection getConexao(String pURL, int pTimeOutConexao, int pTimeoutLeitura, Map<String, String> pHeaders, Map<String, String> pCookie) {
         try {
-            if (pTimeOutConexao == 0) {
+            if (pTimeOutConexao <= 0) {
                 pTimeOutConexao = timeoutDeConexaoPadrao;
             }
-            if (pTimeoutLeitura == 0) {
+            if (pTimeoutLeitura <= 0) {
                 pTimeoutLeitura = timeoutDeLeituraPadrao;
             }
 
@@ -147,6 +153,20 @@ public abstract class UTilSBCoreInputs {
                 c = url.openConnection();
                 c.setReadTimeout(pTimeoutLeitura);
                 c.setConnectTimeout(pTimeOutConexao);
+                StringBuilder cookie = new StringBuilder();
+                int contadorCookie = 0;
+                for (Map.Entry<String, String> item : pCookie.entrySet()) {
+                    if (contadorCookie > 0) {
+                        cookie.append(";");
+                    }
+                    cookie.append(item.getKey());
+                    cookie.append("=");
+                    cookie.append(item.getValue());
+                    contadorCookie++;
+                }
+                if (cookie.length() > 0) {
+                    c.setRequestProperty("Cookie", cookie.toString());
+                }
                 if (pHeaders == null || pHeaders.isEmpty()) {
                     c.addRequestProperty("User-Agent",
                             "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
@@ -292,6 +312,22 @@ public abstract class UTilSBCoreInputs {
      */
     public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura, Map<String, String> pCabecalho) {
         URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura, pCabecalho);
+
+        if (c != null) {
+            try {
+                BufferedInputStream arq = new BufferedInputStream(c.getInputStream());
+
+                return arq;
+            } catch (IOException ex) {
+
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Frame:" + pUrl, ex);
+            }
+        }
+        return null;
+    }
+
+    public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura, Map<String, String> pCabecalho, Map<String, String> pCookie) {
+        URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura, pCabecalho, pCookie);
 
         if (c != null) {
             try {

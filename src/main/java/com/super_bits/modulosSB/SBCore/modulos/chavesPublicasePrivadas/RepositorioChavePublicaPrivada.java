@@ -26,6 +26,11 @@ public class RepositorioChavePublicaPrivada {
         return String.valueOf(pChavePublica.hashCode());
     }
 
+    public static String gerarPathPersistenciaIdentificadorChave(String pCodigoChavePrivada) {
+        String diretorio = getCaminhoBaseRepositorio() + "/" + pCodigoChavePrivada;
+        return diretorio;
+    }
+
     public static String getIdentificacaoChavePublica(Map<String, String> pParPublicoPrivado) {
         if (pParPublicoPrivado.size() != 1) {
             throw new UnsupportedOperationException("Este método suporta a identificação de um único par de chaves, vários foram enviados");
@@ -34,7 +39,7 @@ public class RepositorioChavePublicaPrivada {
     }
 
     public static String getChavePublicaByHash(String pHash) {
-        UTilSBCoreInputs.getStringByArquivoLocal(pHash);
+
         String diretorio = getCaminhoBaseRepositorio();
         File arquivo = new File(diretorio + "/" + pHash);
         if (!arquivo.exists()) {
@@ -47,10 +52,11 @@ public class RepositorioChavePublicaPrivada {
         return chavePublica;
     }
 
-    public static Map<String, String> getParDeChavesPubPrivada(String pHash) {
+    public static Map<String, String> getParDeChavesPubPrivadaByHash(String pHash) {
         try {
             String diretorio = getCaminhoBaseRepositorio();
             File arquivo = new File(diretorio + "/" + pHash);
+            System.out.println("EM" + arquivo.getPath());
             if (!arquivo.exists()) {
                 throw new UnsupportedOperationException("Arquivo do hash não encontrado");
             }
@@ -90,7 +96,7 @@ public class RepositorioChavePublicaPrivada {
     public final static String MARCADOR_INICIO_CHAVE_PUBLIC = "\n-----BEGIN RSA PUBLIC KEY-----\n";
     public final static String MARCADOR_FINAL_CHAVE_PUBLIC = "\n-----END RSA PUBLIC KEY-----\n";
 
-    public static boolean persistirChavePublica(Map<String, String> pParPublicoPrivado) {
+    public static boolean persistirChavePublicaPrivada(Map<String, String> pParPublicoPrivado) {
         String diretorio = getCaminhoBaseRepositorio();
         File diretorioRepostiorio = new File(diretorio);
         if (!diretorioRepostiorio.isDirectory()) {

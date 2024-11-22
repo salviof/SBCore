@@ -50,6 +50,48 @@ public class UtilSBCoreEmailObjetos {
         return str.toString();
     }
 
+    public static List<String> getListaDestinatarios(Message pMensagem) {
+        List<String> destinatarios = new ArrayList<>();
+        try {
+            for (Address para : pMensagem.getRecipients(Message.RecipientType.TO)) {
+                if (para != null) {
+                    String remetente = UtilSBCoreStringsExtrator.extrairEmail(para.toString());
+                    if (!destinatarios.contains(remetente)) {
+                        destinatarios.add(remetente);
+                    }
+                }
+            }
+            try {
+                for (Address para : pMensagem.getRecipients(Message.RecipientType.CC)) {
+                    if (para != null) {
+                        String remetente = UtilSBCoreStringsExtrator.extrairEmail(para.toString());
+                        if (!destinatarios.contains(remetente)) {
+                            destinatarios.add(remetente);
+                        }
+                    }
+                }
+            } catch (Throwable t) {
+
+            }
+            try {
+                for (Address para : pMensagem.getRecipients(Message.RecipientType.BCC)) {
+                    if (para != null) {
+                        String remetente = UtilSBCoreStringsExtrator.extrairEmail(para.toString());
+                        if (!destinatarios.contains(remetente)) {
+                            destinatarios.add(remetente);
+                        }
+                    }
+                }
+            } catch (Throwable t) {
+
+            }
+
+        } catch (MessagingException ex) {
+            Logger.getLogger(UtilSBCoreEmailObjetos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return destinatarios;
+    }
+
     /**
      * Extrai o e-mail de um texto de e-mail padrão, caso tenha vários e-mails
      * retorna o primeiro

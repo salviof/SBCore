@@ -7,11 +7,13 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.GeradorCpfCnpj;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreNumeros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreRandomico;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
@@ -142,7 +144,7 @@ public final class TipoAtributoMetodosBase {
                 break;
             case LATITUDE:
                 break;
-            case Longitude:
+            case LONGITUDE:
                 break;
             case LC_LOGRADOURO:
                 break;
@@ -345,7 +347,18 @@ public final class TipoAtributoMetodosBase {
     }
 
     public static Object converterStringDinamicoEmValorReal(CampoInstanciadoDinamico pCampo, String pValor) {
+        try {
+            ItfCalculoValorLogicoAtributoObjeto logicaValorPadrao = pCampo.getValorLogicaEstrategia();
+            if (logicaValorPadrao != null) {
+                if (pCampo.getObjetoDoAtributo() instanceof ItfDadoDinamico) {
+                    ((ItfDadoDinamico) pCampo.getObjetoDoAtributo()).setValorEmpacotado((String) logicaValorPadrao.getValor());
+                    pValor = ((ItfDadoDinamico) pCampo.getObjetoDoAtributo()).getValorEnpacotado();
+                }
 
+            }
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha processando logica padrão para" + pCampo.getNome(), t);
+        }
         try {
             switch (pCampo.getFabricaTipoAtributo()) {
                 case DATA:
@@ -353,7 +366,13 @@ public final class TipoAtributoMetodosBase {
                 case DATAHORA:
                     return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pValor);
                 case MOEDA_REAL:
-                    return pValor;
+                    try {
+                    double valorDouble = UtilSBCoreNumeros.getDoublePorString(pValor);
+                    return valorDouble;
+                } catch (Throwable t) {
+                    return 0;
+                }
+
                 case VERDADEIRO_FALSO:
                     if (pValor.equals("true") || pValor.toUpperCase().equals("SIM")) {
                         return true;
@@ -459,7 +478,7 @@ public final class TipoAtributoMetodosBase {
                 break;
             case LATITUDE:
                 break;
-            case Longitude:
+            case LONGITUDE:
                 break;
             case LC_LOGRADOURO:
                 break;

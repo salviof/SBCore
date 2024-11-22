@@ -401,4 +401,6 @@ public interface ItfCentralDeArquivos {
 
     public String getHashArquivoDeEntidadeRegistrado(ItfCampoInstanciado pCampo);
 
+    public String getEnderecoLocalAlternativo(ItfBeanSimplesSomenteLeitura entidade, String pCategoria, String pNome);
+
 }

@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoSimples;
 import org.reflections.Reflections;
@@ -510,7 +511,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                         }
                     }
 
-                    throw new UnsupportedOperationException("método de atributo da anotação " + pNomeMetodoAnotacao + " não foi encontrado em nenhuma anotação da classe " + pClasse.getName()
+                    throw new UnsupportedOperationException("método de atributo da anotação [" + pNomeMetodoAnotacao + "] não foi encontrado em nenhuma anotação da classe " + pClasse.getName()
                     );
 
                 }

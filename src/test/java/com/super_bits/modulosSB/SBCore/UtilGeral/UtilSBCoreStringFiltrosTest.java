@@ -140,9 +140,13 @@ public class UtilSBCoreStringFiltrosTest {
      */
     @Test
     public void testFiltrarApenasNumeros() {
-        final String LETRASENUMEROS = "123ADASDA SDAasdasd asd asd asd 123 asd123";
+        final String LETRASENUMEROS = "123ADASDA SDAasda/sd .asd  -asd asd 123 asd123";
         final String APENASNUMEROS = UtilSBCoreStringFiltros.filtrarApenasNumeros(LETRASENUMEROS);
         assertFalse("lETRAS eforam encontrados", APENASNUMEROS.contains("a"));
+        assertEquals("caracteres inválidos tentando obter número", "123123123", APENASNUMEROS);
+        String documento = "32371685000179?22,7";
+        documento = documento.substring(0, documento.indexOf("?"));
+        System.out.println(documento);
     }
 
     /**

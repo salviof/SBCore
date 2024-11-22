@@ -204,7 +204,7 @@ public class UtilSBCoreLayoutComponenteEmTelas {
             case SENHA_SEGURANCA_MAXIMA:
             case IMG_GRANDE:
             case LATITUDE:
-            case Longitude:
+            case LONGITUDE:
             case RESPONSAVEL:
             case LC_BAIRRO:
 

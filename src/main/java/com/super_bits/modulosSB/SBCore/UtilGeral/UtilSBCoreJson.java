@@ -52,6 +52,7 @@ public class UtilSBCoreJson {
                 return null;
             }
             JsonReader jsonReader = Json.createReader(new StringReader(pStringJson));
+
             JsonObject json = jsonReader.readObject();
             return json;
         } catch (Throwable t) {

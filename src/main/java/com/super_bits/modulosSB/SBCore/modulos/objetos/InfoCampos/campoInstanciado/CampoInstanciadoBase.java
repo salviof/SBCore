@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldComSerializacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
@@ -170,23 +171,9 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
         String infomensagemErro = "";
         try {
 
-            /*  if (indiceValorLista > 0) {
-
-                List lista = (List) campoReflection.getValorDesteCampoEmObjetoInstanciado(pInstancia, true);
-                if (lista == null) {
-                    return null;
-
-                }
-                if (indiceValorLista <= lista.size() - 1) {
-                    return lista.get(indiceValorLista);
-                } else {
-                    return null;
-                }
-
-            } else {
-             */
             infomensagemErro = campoReflection.getNomeDeclaracao();
             try {
+
                 if (campoReflection.isPossuiValorDinamicoCalculado()) {
                     ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
                     ItfCalculoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();

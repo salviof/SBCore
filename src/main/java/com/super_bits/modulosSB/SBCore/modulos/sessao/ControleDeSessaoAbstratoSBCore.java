@@ -54,7 +54,7 @@ public abstract class ControleDeSessaoAbstratoSBCore implements ItfControleDeSes
                 SBCore.enviarMensagemUsuario("Erro gerando token de acesso", FabMensagens.ERRO);
                 return;
             }
-            if (UtilSBCoreEmail.enviarPorServidorPadrao(
+            if (UtilSBCoreEmail.enviarPorServidorPadraoV2(
                     pEmail,
                     UtilSBCoreComunicacao.getSaudacao() + ", " + usuarioEncontrado.getNome()
                     + ", utilize este token: " + token.getCodigo() + ", para recuperar sua senha",

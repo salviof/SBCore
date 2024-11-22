@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.UtilSBCoreErros;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 
@@ -159,6 +160,11 @@ public class SBCore {
         return ambienteExecucaoConfigurado;
     }
 
+    /**
+     *
+     * @return @deprecated Utilize getSErvicovisualizacao
+     */
+    @Deprecated
     public static ItfServicoVisualizacao getCentralVisualizacao() {
         return servicoVisualizacao;
     }
@@ -648,20 +654,27 @@ public class SBCore {
         return infoAplicacao.getClass().getClassLoader();
     }
 
+    private static final Map<Class<? extends ItfFabConfigModulo>, ConfigModulo> MAPA_CONFIGURACOES_MODULO = new HashMap<>();
+
     public static synchronized ConfigModulo getConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         ConfigModulo config = null;
-        try {
-            return new ConfigModulo(pFabricaConfig, getClasseLoaderAplicacao());
 
+        try {
+            if (!MAPA_CONFIGURACOES_MODULO.containsKey(pFabricaConfig)) {
+                MAPA_CONFIGURACOES_MODULO.put(pFabricaConfig, new ConfigModulo(pFabricaConfig, getClasseLoaderAplicacao()));
+                if (!SBCore.isEmModoProducao()) {
+                    if (config != null) {
+                        UtilSBCoreSystemOut.exibirMensagemEmDestaque("Um módulo foi configurado: " + config.toString());
+                    }
+                }
+            }
+            config = MAPA_CONFIGURACOES_MODULO.get(pFabricaConfig);
+            return config;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo configuração do modulo", t);
             return null;
         } finally {
-            if (!SBCore.isEmModoProducao()) {
-                if (config != null) {
-                    UtilSBCoreSystemOut.exibirMensagemEmDestaque("Um módulo foi configurado: " + config.toString());
-                }
-            }
+
         }
 
     }
@@ -943,6 +956,10 @@ public class SBCore {
 
     public static ItfServicoController getServicoController() {
         return servicoController;
+    }
+
+    public static ItfServicoVisualizacao getServicoVisualizacao() {
+        return servicoVisualizacao;
     }
 
 }

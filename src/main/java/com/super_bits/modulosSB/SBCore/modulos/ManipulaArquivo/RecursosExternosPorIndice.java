@@ -7,8 +7,10 @@ package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
+import jakarta.json.JsonObject;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
 import org.json.simple.JSONArray;
@@ -64,15 +66,15 @@ public class RecursosExternosPorIndice {
         }
     }
 
-    public JSONObject getJsonObjeto(String pIndice) {
+    public JsonObject getJsonObjeto(String pIndice) {
         try {
             String texto = getTexto(pIndice);
             if (UtilSBCoreStringValidador.isNuloOuEmbranco(texto)) {
-                return null;
+                return JsonObject.EMPTY_JSON_OBJECT;
             }
-            JSONParser parser = new JSONParser();
-            return (JSONObject) parser.parse(texto);
-        } catch (ParseException t) {
+
+            return UtilSBCoreJson.getJsonObjectByTexto(texto);
+        } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo objeto Json" + t.getMessage(), t);
             return null;
         }

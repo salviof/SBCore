@@ -29,7 +29,7 @@ import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.F
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_LOCALIDADE;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_LOGRADOURO;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA;
-import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.Longitude;
+
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfTipoAtributoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
@@ -37,10 +37,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRI
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanLocalizavel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenericoSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanReflexoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.financeiro.ItfPessoa;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalPostagem;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
@@ -764,7 +766,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             switch (getFabricaTipoAtributo()) {
 
                 case LATITUDE:
-                case Longitude:
+                case LONGITUDE:
                 case LC_LOGRADOURO:
                 case LCCEP:
                 case LC_BAIRRO:
@@ -987,13 +989,63 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                         return "Não";
                     }
                 }
+            case REG_ATIVO_INATIVO:
+                if (valor == null) {
+                    return "Não";
+                } else {
+                    boolean valorComoboolean = (boolean) valor;
+                    if (valorComoboolean) {
+                        return "Sim";
+                    } else {
+                        return "Não";
+                    }
+                }
+            case LC_LOCALIZACAO:
+                if (valor == null) {
+                    return "End. nao cadastrado";
+                } else {
+                    if (valor instanceof ItfLocalPostagem) {
+                        ItfLocalPostagem local = (ItfLocalPostagem) valor;
+                        StringBuilder enderecoBuilder = new StringBuilder();
+                        try {
+                            enderecoBuilder.append(local.getLogradouro());
+                            if (local.isTemCampoAnotado(FabTipoAtributoObjeto.LC_COMPLEMENTO_E_NUMERO)) {
+                                enderecoBuilder.append(", ");
+                                enderecoBuilder.append(local.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LC_COMPLEMENTO_E_NUMERO).getValor());
+                            }
+                            enderecoBuilder.append(", ");
+                            enderecoBuilder.append(local.getBairro().getNome());
+                            enderecoBuilder.append(", ");
+                            enderecoBuilder.append(local.getBairro().getCidade().getNome());
+                            enderecoBuilder.append(" | ");
+                            enderecoBuilder.append(local.getBairro().getCidade().getUnidadeFederativa().getSigla());
+                        } catch (Throwable t) {
 
+                        }
+                        return enderecoBuilder.toString();
+                    }
+
+                }
             default: {
-                if (getValor() == null) {
+                if (valor == null) {
                     return "Ñ Informado";
                 } else {
                     if (valor instanceof ItfBeanSimplesSomenteLeitura) {
+                        if (valor instanceof ItfBeanReflexoes) {
+                            ItfBeanReflexoes itemTextoFormatado = (ItfBeanReflexoes) valor;
+                            if (((ItfBeanGenericoSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.AAA_DESCRITIVO)) {
+
+                                String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.AAA_DESCRITIVO).getValor().toString();
+
+                                if (!UtilSBCoreStringValidador.isNuloOuEmbranco(descricao)) {
+                                    return descricao;
+                                }
+
+                            }
+                        }
+
                         return ((ItfBeanSimplesSomenteLeitura) valor).getNome();
+
                     }
                     return getValor().toString();
                 }

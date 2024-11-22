@@ -32,12 +32,12 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     public CampoInstanciadoLocalizacao(ItfCampoInstanciado pCampo) {
-        if (pCampo.getValor() == null) {
-            if (pCampo.getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
-                ItfBeanEnderecavel benEnderecavel = (ItfBeanEnderecavel) pCampo.getObjetoDoAtributo();
-                benEnderecavel.instanciarNovoEndereco();
-            }
-        }
+        //if (pCampo.getValor() == null) {
+        //     if (pCampo.getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
+        //         ItfBeanEnderecavel benEnderecavel = (ItfBeanEnderecavel) pCampo.getObjetoDoAtributo();
+        //         benEnderecavel.instanciarNovoEndereco();
+        //     }
+        // }
         TipoOrganizacaoDadosEndereco tipo = TipoOrganizacaoDadosEndereco.getTipoOrganizacaoByCampoInstanciado(pCampo);
         ItfBeanSimples beanArmazenamentoAssitente = tipo.getBeanDeArmazenamento(pCampo);
 

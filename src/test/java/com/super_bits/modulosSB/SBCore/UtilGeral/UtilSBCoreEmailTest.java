@@ -47,7 +47,7 @@ public class UtilSBCoreEmailTest {
     @Test
     public void testEnviarPorServidorPadrao() {
         UtilSBCoreEmail.configurar(new ConfigEmailServersProjeto("", "", ""));
-        UtilSBCoreEmail.enviarPorServidorPadrao("salviof@gmail.com", "sdjflkajsdflkajsdf <b> asasdfasdfa </b>", "asdfasdfa");
+        UtilSBCoreEmail.enviarPorServidorPadraoV2("salviof@gmail.com", "sdjflkajsdflkajsdf <b> asasdfasdfa </b>", "asdfasdfa");
 
     }
 

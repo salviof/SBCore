@@ -28,32 +28,37 @@ import org.coletivojava.fw.api.objetoNativo.mensagem.Mensagem;
 public class UtilSBCoreJsonRest {
 
     public static ItfResposta getResposta(JsonObject pJsonResposta) {
-        boolean sucesso = pJsonResposta.getBoolean("sucesso");
-        String resultadoSTR = pJsonResposta.getString("resultado");
-        ItfResposta.Resultado resultado = ItfResposta.Resultado.getRespostaByTexto(resultadoSTR);
-        JsonArray mensagem = pJsonResposta.getJsonArray("mensagem");
-        List<ItfMensagem> mensagens = new ArrayList<>();
+
         RespostaSimples resp = new RespostaSimples(Object.class);
-        for (JsonValue msg : mensagem) {
+        if (pJsonResposta.containsKey("retorno")) {
+            resp.setRetorno(pJsonResposta.get("retorno"));
+        }
+        if (pJsonResposta.containsKey("mensagens")) {
 
-            switch (msg.getValueType()) {
+            JsonArray mensagem = pJsonResposta.getJsonArray("mensagens");
+            List<ItfMensagem> mensagens = new ArrayList<>();
 
-                case OBJECT:
+            for (JsonValue msg : mensagem) {
 
-                    String tipoMsg = msg.asJsonObject().getString("tipoMensagem");
-                    String tipoAgente = msg.asJsonObject().getString("tipoAgente");
-                    String mensagemTexto = msg.asJsonObject().getString("mensagem");
-                    FabMensagens tipoMSG = FabMensagens.getTipoMensagemByTexto(tipoMsg);
+                switch (msg.getValueType()) {
 
-                    ItfMensagem mensagemItem;
-                    if (tipoAgente.equals(FabTipoAgenteDoSistema.USUARIO.name())) {
-                        mensagemItem = tipoMSG.getMsgUsuario(mensagemTexto);
-                    } else {
-                        mensagemItem = tipoMSG.getMsgDesenvolvedor(mensagemTexto);
-                    }
-                    resp.addMensagem(mensagemItem);
-                    break;
+                    case OBJECT:
 
+                        String tipoMsg = msg.asJsonObject().getString("tipo");
+                        String tipoAgente = msg.asJsonObject().getString("agenteDestino");
+                        String mensagemTexto = msg.asJsonObject().getString("texto");
+                        FabMensagens tipoMSG = FabMensagens.getTipoMensagemByTexto(tipoMsg);
+
+                        ItfMensagem mensagemItem;
+                        if (tipoAgente.equals(FabTipoAgenteDoSistema.USUARIO.name())) {
+                            mensagemItem = tipoMSG.getMsgUsuario(mensagemTexto);
+                        } else {
+                            mensagemItem = tipoMSG.getMsgDesenvolvedor(mensagemTexto);
+                        }
+                        resp.addMensagem(mensagemItem);
+                        break;
+
+                }
             }
         }
         return resp;

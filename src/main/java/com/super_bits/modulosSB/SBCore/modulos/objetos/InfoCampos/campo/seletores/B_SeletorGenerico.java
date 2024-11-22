@@ -6,8 +6,10 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletor
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto;
+import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
@@ -39,7 +41,7 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
     protected int quantidadeExibicaoPesquisa = 10;
     private String nomeListaOrigem;
     private String filtro = "";
-    int quantidadeMinimaPesquisa = 4;
+    int quantidadeMinimaPesquisa = 6;
 
     public B_SeletorGenerico(ItfCampoInstanciado pCampoInstanciado) {
         this.campoInstanciado = pCampoInstanciado;
@@ -86,15 +88,32 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
 
         if (UtilSBCoreStringValidador.isNuloOuEmbranco(filtro)) {
             getListaCompletaLasyMode().forEach(origem::add);
+            if (campoInstanciado.getValor() instanceof List) {
+                UtilSBCoreListasObjeto.ordernarPorCampoComSelecionadosPrimeiro(origem, FabTipoAtributoObjeto.AAA_NOME, (List) campoInstanciado.getValor());
+            } else {
+                UtilSBCoreListasObjeto.ordernarPorTipoCampo(origem, FabTipoAtributoObjeto.AAA_NOME);
+            }
         } else {
             try {
 
                 if (!apenasNumero) {
-                    UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa).forEach(origem::add);
+                    if (campoInstanciado.getValor() instanceof List) {
+                        UtilSBCoreListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor())
+                                .forEach(getOrigemSincronized()::add);
+                    } else {
+                        UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa)
+                                .forEach(getOrigemSincronized()::add);
+                        //(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa).forEach(origem::add);
+                    }
                 } else {
-                    getListaCompletaLasyMode().parallelStream().filter(item
-                            -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
-                            .forEach(getOrigemSincronized()::add);
+                    if (campoInstanciado.getValor() instanceof List) {
+                        UtilSBCoreListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(origem, filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor());
+                    } else {
+                        getListaCompletaLasyMode().parallelStream().filter(item
+                                -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
+                                .forEach(getOrigemSincronized()::add);
+                    }
+
                 }
 
             } catch (Throwable t) {

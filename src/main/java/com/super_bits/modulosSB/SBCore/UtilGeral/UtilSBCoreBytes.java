@@ -3,12 +3,15 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -69,11 +72,17 @@ public class UtilSBCoreBytes {
 
     public static byte[] gerarBytePorUrltream(String pUrl) {
         try {
-            byte[] bytes = IOUtils.toByteArray(UTilSBCoreInputs.getStreamBuffredByURL(pUrl));
+
+            BufferedInputStream item = UTilSBCoreInputs.getStreamBuffredByURL(pUrl);
+
+            if (item == null) {
+                return null;
+            }
+            byte[] bytes = IOUtils.toByteArray(item);
 
             return bytes;
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha obtendo bytes dos arquivos" + pUrl, e);
             return null;
         }
     }

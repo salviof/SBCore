@@ -88,7 +88,7 @@ public enum FabTipoArquivoConhecido implements ItfFabrica {
             return ARQUIVO_TEXTO_SIMPLES;
         }
         String extencao = UtilSBCoreStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(pNomeArquivo);
-        switch (extencao) {
+        switch (extencao.toLowerCase()) {
             case ".js":
                 return JAVASCRIPT;
             case ".css":

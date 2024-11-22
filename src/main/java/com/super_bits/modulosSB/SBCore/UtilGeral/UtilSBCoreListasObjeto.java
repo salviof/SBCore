@@ -6,7 +6,9 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilarComPrioridade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenericoListaEspecialPrimeiro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorPorId;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import java.util.ArrayList;
@@ -51,6 +53,36 @@ public class UtilSBCoreListasObjeto {
 
         ComparadorGenerico cpGenerico = new ComparadorGenerico(pAtributo, false);
         pLista.sort(cpGenerico);
+
+    }
+
+    public static void ordernarPorCampoComSelecionadosPrimeiro(List pLista, FabTipoAtributoObjeto pAtributo, List pSelecao) {
+        if (pSelecao != null && !pSelecao.isEmpty()) {
+            ComparadorGenericoListaEspecialPrimeiro cpGenerico = new ComparadorGenericoListaEspecialPrimeiro(pAtributo, pSelecao, false);
+            pLista.sort(cpGenerico);
+        } else {
+            ordernarPorTipoCampo(pLista, pAtributo);
+        }
+
+    }
+
+    public static <T> List<T> filtrarPorCampoComSelecionadosPrimeiro(List<T> pLista, String pParametro, int pLimite, List pSelecao) {
+        if (pSelecao == null || pSelecao.isEmpty()) {
+            return filtrarOrdenandoMaisParecidos(pLista, pParametro, pLimite);
+        }
+        List resp = new ArrayList();
+        Map<Integer, ItemSimilarComPrioridade> itens = pLista.stream().parallel()
+                .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
+                        n -> new ItemSimilarComPrioridade((ItfBeanSimples) n, pParametro, pSelecao.contains(n))));
+
+        List<ItemSimilarComPrioridade> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
+        Collections.sort(itensOrdenados);
+        //Collections.reverse(itensOrdenados);
+
+        ComparadorGenericoListaEspecialPrimeiro cpGenerico = new ComparadorGenericoListaEspecialPrimeiro(FabTipoAtributoObjeto.AAA_NOME, pSelecao, false);
+
+        itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getObjetoAnalizado()));
+        return resp;
 
     }
 

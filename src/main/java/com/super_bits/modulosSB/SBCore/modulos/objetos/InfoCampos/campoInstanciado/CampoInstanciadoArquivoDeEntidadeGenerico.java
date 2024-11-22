@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreBytes;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
@@ -248,6 +249,21 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
             default:
                 return "fa fa-file-text-o";
 
+        }
+    }
+
+    @Override
+    public boolean uploadArquivoRemoto(String pNomeArquivo, String pLinkRemoto) {
+        return uploadArquivo(pNomeArquivo, UtilSBCoreBytes.gerarBytePorUrltream(pLinkRemoto));
+    }
+
+    @Override
+    public boolean uploadArquivoLocal(String pNomeArquivo, String pLinkCAminhoCompleto) {
+        try {
+            return uploadArquivo(pNomeArquivo, UtilSBCoreBytes.gerarBytesPorArquivo(new File(pLinkCAminhoCompleto)));
+        } catch (Exception ex) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha lendo arquivo local" + pLinkCAminhoCompleto, ex);
+            return false;
         }
     }
 

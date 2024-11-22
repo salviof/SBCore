@@ -14,6 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 
 import java.lang.reflect.Method;
@@ -249,6 +250,11 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
 
     public static Method getMetodoByAcaoController(ItfAcaoController pAcaoController) {
         return METODO_BY_ACAO.get(pAcaoController.getNomeUnico());
+    }
+
+    @Override
+    public boolean isObjetoPermitidoUsuario(ItfUsuario pUsuario, ItfBeanSimplesSomenteLeitura pObjeto) {
+        return true;
     }
 
 }

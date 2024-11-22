@@ -19,6 +19,9 @@ public class UtilSBCoreCriptoRSATest {
 
     @Test
     public void testChavePublicaPrivada() {
+
+        String encript = UtilSBCoreCriptoAES.encrypt("semSenha@123", "hIDo6HA#GRXDnZk4");
+        System.out.println(encript);
         Map<String, String> parDeChaves = UtilSBCoreCriptoRSA.chavePublicaPrivada();
         String frase = "Olá Mundo";
         String fraseCriptografada = UtilSBCoreCriptoRSA.getTextoCriptografado(frase, parDeChaves.values().stream().findFirst().get());

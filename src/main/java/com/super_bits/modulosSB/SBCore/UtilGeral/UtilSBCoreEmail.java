@@ -5,21 +5,18 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ConfigModulo;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.email.ConfigEmailServersProjeto;
+import com.super_bits.modulosSB.SBCore.modulos.email.FabConfigModuloEmailService;
 import com.super_bits.modulosSB.SBCore.modulos.email.ItfServidordisparoEmail;
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados)____________
- * Função: Lidar com envio de Email
+ * Função: Lidar com envio de Email FabConfigModuloEmailService
  *
  * @author Sálvio Furbino <salviof@gmail.com>
  */
@@ -27,8 +24,48 @@ public abstract class UtilSBCoreEmail {
 
     private static ConfigEmailServersProjeto configuracao;
 
+    private static final String TEMPLATE_GERAL_EMAIL = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "<head>\n"
+            + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n"
+            + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+            + "<meta name=\"format-detection\" content=\"telephone=yes\">\n"
+            + "<meta name=\"format-detection\" content=\"date=yes\">\n"
+            + "<meta name=\"format-detection\" content=\"address=yes\">\n"
+            + "<meta name=\"format-detection\" content=\"email=yes\">\n"
+            + "</head>\n"
+            + "<body>\n"
+            + "\n"
+            + "[CONTEUDO]"
+            + "\n"
+            + "</body>\n"
+            + "</html>";
+
+    public static String gerarConteudoEmailNormatizado(String pConteudo) {
+        if (!pConteudo.contains("<html>")) {
+
+            String conteudo = TEMPLATE_GERAL_EMAIL.replace("[CONTEUDO]", pConteudo);
+            //conteudo = StringEscapeUtils.escapeHtml4(pConteudo);
+            return conteudo;
+        } else {
+            return pConteudo;
+        }
+    }
+
+    public static void configurarEmailPorVariavelDeAmbiente() {
+        ConfigModulo configuracao = SBCore.getConfigModulo(FabConfigModuloEmailService.class);
+        String hostname = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_HOSTNAME);
+        String usuario = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_USUARIO);
+        String senha = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_SENHA);
+        String nomeRemetente = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_NOME_REMETENTE);
+        String emailREmetente = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_EMAIL_REMETENTE);
+        configurar(new ConfigEmailServersProjeto(hostname, emailREmetente, nomeRemetente, usuario, senha));
+
+    }
+
     public static void verificarConfiguracao() {
         if (configuracao == null) {
+
             throw new UnsupportedOperationException("O servidor padrão para email transacional não foi enviado, execute " + UtilSBCoreEmail.class.getSimpleName() + ".configurar(configuracao); ao iniciar o projeto ");
         }
     }
@@ -37,67 +74,94 @@ public abstract class UtilSBCoreEmail {
         configuracao = pConfig;
     }
 
-    public static boolean enviarPorServidorPadrao(String pDestinatario, String pMensagem, String pAssunto) {
+    public static boolean enviarPorServidorPadraoV2(
+            ItfUsuario pDestinatario,
+            String pMensagem,
+            String pAssunto) {
         verificarConfiguracao();
-        return enviaporSSL(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
+        return enviarEmail(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
                 configuracao.getFromEmail(),
+                configuracao.getServidorPrincipalTransacional().getFromNome(),
+                configuracao.getServidorPrincipalTransacional().getUsuarioSMTP(),
+                configuracao.getServidorPrincipalTransacional().getSenhaSMTP(), pMensagem,
+                pDestinatario.getEmail(), pAssunto);
+    }
+
+    public static boolean enviarPorServidorPadraoV2(
+            String pDestinatario,
+            String pMensagem,
+            String pAssunto) {
+        verificarConfiguracao();
+        return enviarEmail(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
+                configuracao.getFromEmail(),
+                configuracao.getServidorPrincipalTransacional().getFromNome(),
                 configuracao.getServidorPrincipalTransacional().getUsuarioSMTP(),
                 configuracao.getServidorPrincipalTransacional().getSenhaSMTP(), pMensagem,
                 pDestinatario, pAssunto);
     }
 
-    public static boolean enviarPorServidorPadrao(String pDestinatario, String pMensagem, String pAssunto, Object... pAnexos) {
-        return enviarPorServidorPadrao(pDestinatario, pMensagem, pAssunto);
-
-    }
-
     public static boolean enviaporSSL(final String servidor, final String pFromEmail, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
-        return enviarEmail(getPropriedadesEmailSMTP(servidor), pFromEmail, pUsuario, pSenha, mensagem, para, pAssunto);
+        return enviarEmail(servidor, pFromEmail, null, pUsuario, pSenha, mensagem, para, pAssunto);
     }
 
-    private static Properties getPropriedadesEmailSMTP(String enderecoServidorSMTP) {
-        Properties props = new Properties();
-        props.put("mail.smtp.host", enderecoServidorSMTP);
-        props.put("mail.smtp.socketFactory.port", "587");
-        props.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "587");
-        return props;
-    }
-
-    private static boolean enviarEmail(Properties props, final String pFromEmail, final String pUsuario,
-            final String pSenha, String mensagem, String para, String pAssunto) {
-        boolean envioucomsucesso = true;
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(pUsuario, pSenha);
-            }
-        });
+    private static boolean enviarEmail(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
+            final String pSenha, String pMensagem, String para, String pAssunto) {
+        boolean envioucomsucesso = false;
 
         try {
 
-            Message message = new MimeMessage(session);
+            HtmlEmail email = new HtmlEmail();
+            //email.setCharset("text/html; charset=utf-8");
+            email.setCharset("UTF-8");
+            email.setAuthentication(pUsuario, pSenha);
+            email.setHostName(pEnderecoServidor); // o servidor SMTP para envio do e-mail
 
-            message.setFrom(new InternetAddress(pFromEmail));
+            if (pFromEmail.isEmpty()) {
 
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(para));
-            message.setSubject(pAssunto);
-            message.setText(mensagem);
-            message.setContent(mensagem, "text/html; charset=utf-8");
+                throw new UnsupportedOperationException("Você precisa especificar os contatos que irão receber o documento");
 
-            Transport.send(message);
+            }
 
-        } catch (MessagingException e) {
+            email.addTo(para);
 
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando e-mail", e);
-            envioucomsucesso = false;
+            if (email.getToAddresses().isEmpty()) {
+                throw new Throwable("Nenhum destinatário foi adicionando no campo para");
+            }
+            if (pNomeFrom == null) {
+                email.setFrom(pFromEmail);
+            } else {
+                email.setFrom(pFromEmail, pNomeFrom);
+            }
+
+            email.setSubject(pAssunto); //Assunto
+            //pConteudo = "<html> <head> <link rel=\"stylesheet\" "
+            //      + "href=\"https://fonts.googleapis.com/css?family=Montserrat:200,600,amp;lang=br\" /> </head> \n"
+            //    + pConteudo + "\n </html>";
+
+            email.setMsg(UtilSBCoreEmail.gerarConteudoEmailNormatizado(pMensagem));
+            //email.setMsg(pConteudo);
+            //email.setSmtpPort(465);
+
+            email.setSmtpPort(587);
+            email.setSSL(true);
+            email.setTLS(true);
+
+            //email.attach(); // adiciona o anexo à mensagem
+            String resp = email.send();// envia o e-mail
+            System.out.println(resp);
+
+            return true;
+
+        } catch (EmailException t) {
+
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando email" + t.getMessage(), t);
+            return false;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando email" + t.getMessage(), t);
+            return false;
         }
-        return envioucomsucesso;
+
     }
 
     /**
@@ -111,8 +175,7 @@ public abstract class UtilSBCoreEmail {
      */
     public static boolean enviaGmailporSSL(final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
-        Properties props = getPropriedadesEmailSMTP("smtp.gmail.com");
-        return enviarEmail(props, pUsuario, pUsuario, pSenha, mensagem, para, pAssunto);
+        return enviarEmail("smtp.gmail.com", pUsuario, null, pUsuario, pSenha, mensagem, para, pAssunto);
 
     }
 

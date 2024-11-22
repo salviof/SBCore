@@ -31,9 +31,17 @@ public abstract class UtilSBCoreReflexaoFabrica {
 
         try {
             for (ItfFabrica enumFab : classeFabrica.getEnumConstants()) {
-                if (enumFab.toString().equals(pString)) {
+                if (enumFab.toString().toLowerCase().equals(pString.toLowerCase())) {
                     return enumFab.getRegistro();
                 }
+            }
+            for (ItfFabrica enumFab : classeFabrica.getEnumConstants()) {
+                if (enumFab.getRegistro() instanceof ItfBeanSimplesSomenteLeitura) {
+                    if (((ItfBeanSimplesSomenteLeitura) enumFab.getRegistro()).getNome().toLowerCase().equals(pString.toLowerCase())) {
+                        return enumFab.getRegistro();
+                    }
+                }
+
             }
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo objeto via fabrica de " + classeFabrica + " -" + pString, t);

@@ -49,6 +49,10 @@ public abstract class ArquivoConfiguracaoModulo {
 
     }
 
+    public String getPatchArquivoConfig() {
+        return UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
+    }
+
     public final void reloadConfiguracoes() {
         String arquivo = UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
         try {
@@ -115,6 +119,14 @@ public abstract class ArquivoConfiguracaoModulo {
 
         return salvarPropriedades(null);
 
+    }
+
+    public Properties getProppriedadesBasicas() {
+        return proppriedadesBasicas;
+    }
+
+    public Class<? extends ItfFabConfigModulo> getFabricaConfig() {
+        return fabricaConfig;
     }
 
 }

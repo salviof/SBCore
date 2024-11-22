@@ -20,7 +20,7 @@ public class ItemEndereco extends ItemNormal implements ItfBeanLocalizavel {
         super();
 
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.LATITUDE, "-19.8225864"));
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.Longitude, "-43.926274"));
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.LONGITUDE, "-43.926274"));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.LCCEP, null), true);
 
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.LC_LOGRADOURO, null));

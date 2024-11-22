@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
@@ -38,17 +39,31 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
         }
         String novaString = pString;
         for (String palavraChave : mapaSubstituicao.keySet()) {
+            try {
 
-            if (pString.contains(palavraChave)) {
-                System.out.println("Substituindo [" + pString + "] por" + mapaSubstituicao.get(palavraChave));
-                if (mapaSubstituicao.get(palavraChave) != null) {
-                    novaString = novaString.replace(palavraChave, mapaSubstituicao.get(palavraChave));
+                List<String> valoresEncontradas = UtilSBCoreStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pString);
+                for (String chave : valoresEncontradas) {
+                    String valorConformidade = chave.replaceAll("<[^>]*>", "");
+                    if (mapaSubstituicao.containsKey(valorConformidade)) {
+
+                        novaString = novaString.replace(valorConformidade.replace("]", "").replace("[", ""), mapaSubstituicao.get(valorConformidade));
+                    }
                 }
+                //if (!SBCore.isEmModoProducao()) {
+                //     System.out.println("Verificando substituição em [" + pString + "] por" + mapaSubstituicao.get(palavraChave));
+                // }
+                // if (pString.contains(palavraChave)) {
 
+                //if (mapaSubstituicao.get(palavraChave) != null) {
+                //   novaString = novaString.replace(palavraChave, mapaSubstituicao.get(palavraChave));
+                //}
+                //}
+            } catch (Throwable t) {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha subistituindo" + palavraChave, t);
             }
         }
         System.out.println("Resultado=" + novaString);
-        return novaString;
+        return novaString.replace("[", "").replace("]", "");
 
     }
 
@@ -127,6 +142,7 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
                     } else {
                         if (!campo.isCampoNaoInstanciado()) {
+                            String valorCampo = "Valor não informado";
                             switch (campo.getFabricaTipoAtributo()) {
 
                                 case LC_BAIRRO:
@@ -143,17 +159,15 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
                                 case GRUPOS_DE_CAMPO:
                                 case FORMULARIO_DE_ACAO:
                                 case TIPO_PADRAO_POR_DECLARACAO:
-                                    break;
+                                    continue;
                                 default:
-                                    String valorCampo = "Valor não informado";
-                                    if (campo.getValor() != null) {
-                                        valorCampo = campo.getValor().toString();
-
-                                    }
-
-                                    mapaSubstituicao.put("[" + prefixo + nomeVariavelCampo + "]", valorCampo);
+                                    valorCampo = campo.getValorTextoFormatado();
 
                             }
+                            switch (campo.getFabricaTipoAtributo()) {
+                                //TODO outras personalizações
+                            }
+                            mapaSubstituicao.put("[" + prefixo + nomeVariavelCampo + "]", valorCampo);
 
                         }
                     }

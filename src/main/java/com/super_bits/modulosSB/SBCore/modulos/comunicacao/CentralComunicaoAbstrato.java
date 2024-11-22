@@ -40,12 +40,12 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
         ItfComunicacao comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro(), gerarListaTransportes(pTiposTransporte));
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
-        comunicacao.setAssunto(pAssunto);
 
         if (getAramazenamento().registrarInicioComunicacao(comunicacao)) {
             for (ItffabricaTrasporteComunicacao<ItfDisparoComunicacao> transp : pTiposTransporte) {
                 try {
-                    transp.getImplementacaoDoContexto().dispararInicioComunicacao(comunicacao);
+                    ItfDisparoComunicacao execucaoTransporteCM = transp.getImplementacaoDoContexto();
+                    execucaoTransporteCM.dispararInicioComunicacao(comunicacao);
                 } catch (Throwable t) {
                     LogManager.getLogger(LogPadraoSB.class).error("A tentativa de Comunicação foi registrada, mas houve um erro em um dos transportes" + transp, t);
                 }
@@ -77,6 +77,28 @@ public abstract class CentralComunicaoAbstrato implements ItfCentralComunicacao 
             transportes.add((ItfTipoTransporteComunicacao) fab.getRegistro());
         }
         return transportes;
+    }
+
+    @Override
+    public boolean selarComunicacao(ItfComunicacao pcomunicacao) {
+        try {
+            if (!pcomunicacao.isFoiSelado()) {
+                String usuario = pcomunicacao.getUsuarioRemetente().getEmail();
+                String destinatario = pcomunicacao.getDestinatario().getEmailsConcatenados();
+                Long idDataHora = pcomunicacao.getDataHoraDisparo().getTime();
+                int id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
+                String codigoSelo = String.valueOf(id);
+
+                pcomunicacao.setCodigoSelo(codigoSelo);
+                if (pcomunicacao.getStatusComunicacao() == null) {
+                    pcomunicacao.setStatusComunicacao(FabStatusComunicacao.SELADO);
+                }
+                return true;
+            }
+        } catch (Throwable t) {
+
+        }
+        return pcomunicacao.isFoiSelado();
     }
 
 }

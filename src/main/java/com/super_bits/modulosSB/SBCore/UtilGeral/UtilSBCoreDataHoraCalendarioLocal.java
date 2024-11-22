@@ -35,6 +35,15 @@ public class UtilSBCoreDataHoraCalendarioLocal {
 
     }
 
+    public static Date gerarDateByLocalDate(LocalDate pLocalDate) {
+        if (pLocalDate == null) {
+            return null;
+        }
+        Date date = Date.from(pLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return date;
+
+    }
+
     public static LocalDate gerarLocalDateByDate(Date pData) {
 
         LocalDate localDate = Instant.ofEpochMilli(pData.getTime())

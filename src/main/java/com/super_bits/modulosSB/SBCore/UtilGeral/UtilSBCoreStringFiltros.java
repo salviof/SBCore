@@ -4,9 +4,12 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador.isNuloOuEmbranco;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +28,17 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
             return null;
         }
         return pTexto.replaceAll("[0-9]", "");
+    }
+
+    public static String removerCaracteres(final String pCaracteres, Integer... indices) {
+        StringBuilder strb = new StringBuilder();
+        List<Integer> letrasExcluidas = Lists.newArrayList(indices);
+        for (int i = 0; i < pCaracteres.length(); i++) {
+            if (!letrasExcluidas.contains(i)) {
+                strb.append(pCaracteres.charAt(i));
+            }
+        }
+        return strb.toString();
     }
 
     public static String getNomeReduzido(String pNome) {
@@ -211,9 +225,9 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
                 return pString;
             }
             if (pString.length() < pNumeroDeCasas) {
-                pNumeroDeCasas = pString.length() - 1;
+                pNumeroDeCasas = pString.length();
             }
-            return pString.substring(0, pNumeroDeCasas + 1);
+            return pString.substring(0, pNumeroDeCasas);
 
         } catch (Throwable e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo primeiras letras da string" + pString, e);

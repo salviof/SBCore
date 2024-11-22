@@ -93,16 +93,17 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
                     dominioDoItem = partesEmail[1];
 
                     String[] partesEmailPesquisa = termoPesquisa.split("@");
+                    if (partesEmailPesquisa.length > 1) {
+                        String dominioDoItemPesquisado;
 
-                    String dominioDoItemPesquisado;
+                        dominioDoItemPesquisado = partesEmailPesquisa[1];
 
-                    dominioDoItemPesquisado = partesEmailPesquisa[1];
+                        double ntaDominio = UtilSBCoreStringComparador.JaroWinkler(dominioDoItem, dominioDoItemPesquisado);
+                        notasValidas.add(ntaDominio);
+                        if (ntaDominio >= 0.9) {
+                            notasIdenticoInicio.add(ntaDominio);
 
-                    double ntaDominio = UtilSBCoreStringComparador.JaroWinkler(dominioDoItem, dominioDoItemPesquisado);
-                    notasValidas.add(ntaDominio);
-                    if (ntaDominio >= 0.9) {
-                        notasIdenticoInicio.add(ntaDominio);
-
+                        }
                     }
 
                 }

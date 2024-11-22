@@ -121,4 +121,13 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
         return comunicacoesAtivas.get(pCodigoSelo);
     }
 
+    @Override
+    public boolean removerComunicacaoByCodigoSelo(String pCodigoSelo) {
+        if (!comunicacoesAtivas.containsKey(pCodigoSelo)) {
+            return false;
+        }
+        comunicacoesAtivas.remove(pCodigoSelo);
+        return true;
+    }
+
 }

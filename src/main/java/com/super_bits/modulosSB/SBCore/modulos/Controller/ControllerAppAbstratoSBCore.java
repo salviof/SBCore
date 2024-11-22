@@ -201,6 +201,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
             if (!pResp.getAcaoVinculada().isPrecisaPermissao()) {
                 return;
             }
+
             ItfUsuario usuario = SBCore.getControleDeSessao().getSessaoAtual().getUsuario();
 
             if (usuario.getEmail().equals(new UsuarioSistemaRoot().getEmail())) {

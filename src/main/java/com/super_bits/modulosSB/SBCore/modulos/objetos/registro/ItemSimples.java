@@ -2,6 +2,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -45,19 +46,15 @@ public abstract class ItemSimples extends ItemGenerico implements
 
     @Override
     public String getNomeCurto() {
+        try {
+            String nomeCurto = UtilSBCoreStringFiltros.getNomeReduzido((String) getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.AAA_NOME).getValor());
 
-        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_NOME);
+            return nomeCurto;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo o campo nome da classe" + this.getClass().getSimpleName() + " certifique que o nome tenha sido anotado, e que o tipo retornado seja String", t);
+        }
+        return null;
 
-        /**
-         *
-         * TODO String nome = (String)
-         * getValorByTipoCampoEsperado(FabCampos.AAA_NOME_CURTO); String
-         * nomeCurto = ""; nome = nome.replace("-", " "); nome =
-         * nome.replace(".", " "); for (String parte : nome.split(" ")) { if
-         * (nomeCurto.length() < 25) {
-         * if (nomeCurto.length() > 0) { nomeCurto = nomeCurto + " " + parte; }
-         * else { nomeCurto = nomeCurto + parte; } } } return nomeCurto;
-         */
     }
 
     public String getNomeCurtoURLAmigavel() {

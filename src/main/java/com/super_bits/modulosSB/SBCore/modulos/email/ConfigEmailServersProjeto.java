@@ -13,11 +13,8 @@ import java.util.Map;
  */
 public class ConfigEmailServersProjeto {
 
-    /**
-     *
-     */
     public static final String NOME_SERVIDOR_SMTP_PRINCIPAL = "smtpPrincipal";
-    ServidorSaidaSmtp servidorPrincipalTransacional;
+    private ServidorSaidaSmtp servidorPrincipalTransacional;
 
     Map<String, ItfServidorEmailReceptor> servidoresEntrada = new HashMap<>();
     Map<String, ServidorSaidaSmtp> servidoresSaidaSMTP = new HashMap<>();
@@ -37,6 +34,22 @@ public class ConfigEmailServersProjeto {
         servidorPrincipalTransacional.setUsarSSL(true);
         servidorPrincipalTransacional.setUsarTSL(true);
         servidorPrincipalTransacional.setNome(NOME_SERVIDOR_SMTP_PRINCIPAL);
+        servidoresSaidaSMTP.put(NOME_SERVIDOR_SMTP_PRINCIPAL, servidorPrincipalTransacional);
+
+    }
+
+    public ConfigEmailServersProjeto(String servidor, String pFromEmail, String pFromNome, String Usuario, String senha) {
+
+        servidorPrincipalTransacional = new ServidorSaidaSmtp();
+        servidorPrincipalTransacional.setPorta(587);
+        servidorPrincipalTransacional.setEnderecoServidor(servidor);
+        servidorPrincipalTransacional.setFromEmail(pFromEmail);
+        servidorPrincipalTransacional.setUsuario(Usuario);
+        servidorPrincipalTransacional.setSenha(senha);
+        servidorPrincipalTransacional.setUsarSSL(true);
+        servidorPrincipalTransacional.setUsarTSL(true);
+        servidorPrincipalTransacional.setNome(NOME_SERVIDOR_SMTP_PRINCIPAL);
+        servidorPrincipalTransacional.setFromNome(pFromNome);
         servidoresSaidaSMTP.put(NOME_SERVIDOR_SMTP_PRINCIPAL, servidorPrincipalTransacional);
 
     }

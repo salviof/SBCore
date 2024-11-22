@@ -203,6 +203,11 @@ public class MapaObjetosProjetoAtual {
 
     }
 
+    public static final boolean isNomeEntidadeRegistrada(String pNomeClasse) {
+        return getClasseDoObjetoByNome(pNomeClasse, true) != null;
+
+    }
+
     public static final EstruturaDeEntidade getEstruturaObjeto(String pNomeClasse) {
         Class classe = getClasseDoObjetoByNome(pNomeClasse);
         EstruturaDeEntidade estrutura = ESTRUTURA_BY_CLASSE.get(classe);

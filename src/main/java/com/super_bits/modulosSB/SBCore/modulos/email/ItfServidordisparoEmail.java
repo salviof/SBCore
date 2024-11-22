@@ -35,4 +35,12 @@ public interface ItfServidordisparoEmail extends ItfServidorEmail {
         return true;
     }
 
+    public String getRemetenteNome();
+
+    public default String getRemetenteEmail() {
+        return getFromEmail();
+    }
+
+    public String getFromNome();
+
 }

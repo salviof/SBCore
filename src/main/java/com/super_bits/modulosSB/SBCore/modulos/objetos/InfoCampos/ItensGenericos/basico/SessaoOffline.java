@@ -29,7 +29,7 @@ import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTelaUsuario;
  */
 public class SessaoOffline implements ItfSessao {
 
-    private int idSessao;
+    protected String idSessao;
     private ItfUsuario usuarioLogado;
     private final Date dataInicial;
     private Date dataFinal;
@@ -158,6 +158,7 @@ public class SessaoOffline implements ItfSessao {
     }
 
     public List<ItfComunicacao> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
+
         List<ItfComunicacao> lista = new ArrayList();
         SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
                 .stream().limit(6).forEach(lista::add);
@@ -182,9 +183,9 @@ public class SessaoOffline implements ItfSessao {
     }
 
     @Override
-    public int getIdSessao() {
-        if (idSessao == 0) {
-            idSessao = Thread.currentThread().toString().hashCode();
+    public String getIdSessao() {
+        if (idSessao == null) {
+            idSessao = String.valueOf(Thread.currentThread().toString().hashCode());
         }
         return idSessao;
     }

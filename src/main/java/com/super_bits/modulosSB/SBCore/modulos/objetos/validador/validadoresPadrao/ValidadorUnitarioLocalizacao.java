@@ -26,6 +26,13 @@ public class ValidadorUnitarioLocalizacao extends ValidadorUnitarioCampoInstGene
     @Override
     public String gerarMensagemErroValidacao(Object pValor) {
         if (localAnalizado != null) {
+            if (campoInstanciado.getComoCampoLocalizacao() == null) {
+                if (campoInstanciado.isObrigatorio()) {
+                    return "Informe o endereço";
+                } else {
+                    return null;
+                }
+            }
             if (localAnalizado.getBairro() != null
                     && UtilSBCoreStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
                 campoInstanciado.setValor(null);
