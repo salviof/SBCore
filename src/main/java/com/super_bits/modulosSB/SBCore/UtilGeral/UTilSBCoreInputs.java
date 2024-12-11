@@ -326,6 +326,21 @@ public abstract class UTilSBCoreInputs {
         return null;
     }
 
+    public static InputStream getStreamByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura, Map<String, String> pCabecalho) {
+        URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura, pCabecalho);
+
+        if (c != null) {
+            try {
+
+                return c.getInputStream();
+            } catch (IOException ex) {
+
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo Frame:" + pUrl, ex);
+            }
+        }
+        return null;
+    }
+
     public static BufferedInputStream getStreamBuffredByURL(String pUrl, int pTimeoutConexao, int pTimeoutLeitura, Map<String, String> pCabecalho, Map<String, String> pCookie) {
         URLConnection c = getConexao(pUrl, pTimeoutConexao, pTimeoutLeitura, pCabecalho, pCookie);
 
