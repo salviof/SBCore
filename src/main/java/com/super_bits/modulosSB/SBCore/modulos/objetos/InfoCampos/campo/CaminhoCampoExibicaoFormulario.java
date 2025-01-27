@@ -299,4 +299,10 @@ public class CaminhoCampoExibicaoFormulario implements ItfCampoExibicaoFormulari
     public void setSomenteLeitura(boolean b) {
         somenteLeitura = b;
     }
+
+    @Override
+    public String getNomePrimeiroAtributo() {
+        return caminhoCampo.getNomePrimeiroAtributo();
+    }
+
 }

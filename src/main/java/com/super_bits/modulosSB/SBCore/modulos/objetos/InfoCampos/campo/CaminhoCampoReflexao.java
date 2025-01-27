@@ -502,4 +502,11 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
 
     }
 
+    @Override
+    public String getNomePrimeiroAtributo() {
+        String nomePrimeiroAtributo = getPrimeiroCaminhoSemNomeClasse();
+        nomePrimeiroAtributo = nomePrimeiroAtributo.replace("[]", "");
+        return nomePrimeiroAtributo;
+    }
+
 }

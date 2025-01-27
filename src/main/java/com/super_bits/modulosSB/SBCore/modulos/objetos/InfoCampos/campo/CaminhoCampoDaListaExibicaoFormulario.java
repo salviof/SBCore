@@ -272,4 +272,9 @@ public class CaminhoCampoDaListaExibicaoFormulario implements ItfCaminhoCampoDaL
         campoVinculado.setSomenteLeitura(b);
     }
 
+    @Override
+    public String getNomePrimeiroAtributo() {
+        return campoVinculado.getNomePrimeiroAtributo();
+    }
+
 }

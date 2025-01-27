@@ -274,4 +274,9 @@ public class CaminhoCampoListagemExibicaoFormulario implements ItfCampoListagemE
         caminhoCampoReflexao.setSomenteLeitura(b);
     }
 
+    @Override
+    public String getNomePrimeiroAtributo() {
+        return caminhoCampoReflexao.getNomePrimeiroAtributo();
+    }
+
 }
