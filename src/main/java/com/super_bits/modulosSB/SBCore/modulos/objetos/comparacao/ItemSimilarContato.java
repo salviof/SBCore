@@ -16,7 +16,7 @@ public class ItemSimilarContato extends ItemSimilarGenerico {
 
     public ItemSimilarContato(ItfBeanSimples pObjetoAnalizado, String parametro) {
 
-        super(pObjetoAnalizado, parametro);
+        super(pObjetoAnalizado, parametro, FabTipoPesquisaGenerica.PERSONALIZADA);
 
     }
 

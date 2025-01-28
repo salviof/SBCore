@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.FabTipoPesquisaGenerica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilarComPrioridade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenerico;
@@ -96,10 +97,12 @@ public class UtilSBCoreListasObjeto {
     }
 
     public static <T> List<T> filtrarOrdenandoMaisParecidos(List<T> pLista, String pParametro, int pLimite) {
+        final String parametro = UtilSBCoreStringComparador.normalizarTexto(pParametro);
+        FabTipoPesquisaGenerica tipoPesquisa = FabTipoPesquisaGenerica.getTipoPesquisaByTermo(pParametro);
         List resp = new ArrayList();
         Map<Integer, ItemSimilar> itens = pLista.stream().parallel()
                 .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
-                        n -> new ItemSimilar((ItfBeanSimples) n, pParametro)));
+                        n -> new ItemSimilar((ItfBeanSimples) n, parametro, tipoPesquisa)));
 
 //(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
         List<ItemSimilar> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());

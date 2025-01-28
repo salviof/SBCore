@@ -9,14 +9,15 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCamin
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo.ObjetoNativoComoItemSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import mtfn.MetaphonePtBr;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
 import org.coletivojava.fw.api.objetoNativo.ObjetoNativoCoreDoSistema;
-import org.coletivojava.fw.api.objetoNativo.view.icone.IconeSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -68,6 +69,46 @@ public class UtilSBCoreStringComparador {
         } else {
             return new MetaphonePtBr(pReferencia).toString().contains(new MetaphonePtBr(pParamentro).toString());
         }
+    }
+
+    private static final Map<String, String> substituicoes = new HashMap<>();
+
+    static {
+        // Substituições de caracteres individuais
+        substituicoes.put("ç", "c");
+        substituicoes.put("y", "i");
+        substituicoes.put("ã", "a");
+        substituicoes.put("õ", "o");
+        substituicoes.put("á", "a");
+        substituicoes.put("à", "a");
+        substituicoes.put("â", "a");
+        substituicoes.put("é", "e");
+        substituicoes.put("ê", "e");
+        substituicoes.put("í", "i");
+        substituicoes.put("ó", "o");
+        substituicoes.put("ô", "o");
+        substituicoes.put("ú", "u");
+        substituicoes.put("ü", "u");
+
+        // Substituições de combinações de letras
+        substituicoes.put("ão", "ao");
+        substituicoes.put("õe", "oe");
+        substituicoes.put("ss", "s");
+        substituicoes.put("rr", "r");
+        substituicoes.put("ch", "x");
+        substituicoes.put("lh", "li");
+        substituicoes.put("nh", "ni");
+    }
+
+    public static String normalizarTexto(String texto) {
+        texto = texto.toLowerCase();
+
+        // Substituir combinações de letras primeiro
+        for (Map.Entry<String, String> entry : substituicoes.entrySet()) {
+            texto = texto.replace(entry.getKey(), entry.getValue());
+        }
+
+        return texto;
     }
 
     public static boolean isParecido(ItfBeanSimples pReferencia, List<? extends ItfCaminhoCampo> pCampos, String pParametro, boolean pParametroNumerico) {

@@ -30,6 +30,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  */
 public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemSimilarGenerico<T> {
 
+    protected final FabTipoPesquisaGenerica tipoPesquisaGenerica;
     protected final ItfBeanSimples objetoAnalizado;
     protected double nota;
     protected final List<Double> notasValidas = new ArrayList<>();
@@ -38,8 +39,9 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
     protected final String textoReferenciaPesquisa;
     protected final String termoPesquisa;
 
-    public ItemSimilarGenerico(ItfBeanSimples pObjetoAnalizado, String pTermpoPesquisa) {
+    public ItemSimilarGenerico(ItfBeanSimples pObjetoAnalizado, String pTermpoPesquisa, FabTipoPesquisaGenerica pTipoPesquisaGenerica) {
         try {
+            tipoPesquisaGenerica = pTipoPesquisaGenerica;
             this.objetoAnalizado = pObjetoAnalizado;
             nota = 0;
             if (pTermpoPesquisa == null) {

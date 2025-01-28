@@ -4,6 +4,10 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
@@ -22,4 +26,17 @@ public class UtilSBCoreHtmlFormat {
         return WordUtils.wrap(pConteudo, pNumeroLinhas, "</br>", false);
     }
 
+    public static String getHyperlink(String pTexto, String pUrl) {
+        StringBuilder conteudoBuilder = new StringBuilder();
+        conteudoBuilder.append("<a href='");
+        try {
+            conteudoBuilder.append(new URL(pUrl).toString());
+            conteudoBuilder.append("' >");
+            conteudoBuilder.append(pTexto);
+            conteudoBuilder.append("</a>");
+            return conteudoBuilder.toString();
+        } catch (MalformedURLException ex) {
+            return pTexto + " (Url inválida)";
+        }
+    }
 }
