@@ -18,6 +18,10 @@ public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoT
         this.valor = valor;
 
     }
+    public ItemDadoGraficoTotal(int codigo, String label, double valor,Object pItemSelecionado) {
+        this(codigo, label, valor);
+        this.itemRelacionado=pItemSelecionado;
+    }
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final int codigo;
@@ -26,6 +30,8 @@ public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoT
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.QUANTIDADE)
     private final double valor;
+    
+    private Object itemRelacionado;
 
     @Override
     public int getId() {
@@ -57,4 +63,11 @@ public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoT
     public ItfDadoGraficoTotalData getComoDadoGraficoTotalData() {
         return (ItfDadoGraficoTotalData) this;
     }
+
+    @Override
+    public Object getItemRelacionado() {
+        return itemRelacionado;
+    }
+    
+    
 }

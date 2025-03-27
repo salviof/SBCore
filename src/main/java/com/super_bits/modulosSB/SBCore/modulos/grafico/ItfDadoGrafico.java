@@ -13,7 +13,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public interface ItfDadoGrafico extends ItfBeanSimplesSomenteLeitura {
 
     public double getValor();
-
+    
+    public Object getItemRelacionado();
+    
     public default String getLabel() {
         return getNome();
     }

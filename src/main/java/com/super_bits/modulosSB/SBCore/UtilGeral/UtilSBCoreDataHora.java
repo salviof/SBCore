@@ -700,6 +700,22 @@ public class UtilSBCoreDataHora {
         return novadata;
     }
 
+    /**
+     *
+     * @param pData Data de referência
+     * @param pNumeroMeses numero de dias para incrementar
+     * @return
+     */
+    public static Date decrementaMes(Date pData, int pNumeroMeses) {
+        if (pNumeroMeses == 0) {
+            return pData;
+        }
+
+        Date novadata = DateUtils.addMonths(pData, pNumeroMeses * -1);
+
+        return novadata;
+    }
+
     public static long interTempContRegSegundos(Date pDataInicial, Date pDataFinal) {
 
         long diferencaSegundos = intervaloTempoSegundos(pDataInicial, pDataFinal);

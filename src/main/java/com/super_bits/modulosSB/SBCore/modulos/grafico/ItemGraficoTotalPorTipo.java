@@ -24,4 +24,9 @@ public class ItemGraficoTotalPorTipo extends ItemDadoGraficoTotal implements Itf
         return tipoEntidade;
     }
 
+    @Override
+    public Object getItemRelacionado() {
+       return tipoEntidade;
+    }
+
 }

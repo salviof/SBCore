@@ -118,10 +118,10 @@ public class UtilSBCoreNumeros {
         try {
             //    Currency currency = Currency.getInstance("BRL");
             //currency.getSymbol();
-            String simbolo = "R$ ";
-            DecimalFormat formato = new DecimalFormat("#,##0.00");
+            DecimalFormat df = new DecimalFormat("R$ #,##0.00");
+            String valorFormatado = df.format(pValor);
 
-            return simbolo + formato.format(pValor);
+            return valorFormatado;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro convertendo Moeda" + pValor, t);
             return pValor.toString();
@@ -139,7 +139,7 @@ public class UtilSBCoreNumeros {
         }
 
         BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(pCasasDecimais, RoundingMode.HALF_UP);
+        bd = bd.setScale(pCasasDecimais, RoundingMode.HALF_DOWN);
         return bd.doubleValue();
     }
 

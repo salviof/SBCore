@@ -36,6 +36,8 @@ public class MesDoAnoCalendario extends ItemSimples {
     @InfoCampo(tipo = FabTipoAtributoObjeto.DATAHORA)
     private Date dataHoraFinal;
 
+    private int ordenador;
+
     @Override
     public int getId() {
         return id;
@@ -70,6 +72,7 @@ public class MesDoAnoCalendario extends ItemSimples {
         localTimeUltimoDiaMes.with(LocalTime.MAX);
         dataHoraFinal = Date.from(localTimeUltimoDiaMes.atZone(ZoneId.systemDefault()).toInstant());
         dataHoraFinal = UtilSBCoreDataHora.getFinalDoDIa(dataHoraFinal);
+        ordenador = (ano.getId() * 356) + getId();
     }
 
     public Date getDataHoraInicio() {
@@ -87,6 +90,18 @@ public class MesDoAnoCalendario extends ItemSimples {
 
     public void setDataHoraFinal(Date dataHoraFinal) {
         this.dataHoraFinal = dataHoraFinal;
+    }
+
+    @Override
+    public String toString() {
+        if (getAno() != null && getDataHoraInicio() != null) {
+            return getAno().getNome() + getNome();
+        }
+        return super.toString(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    public int getOrdenador() {
+        return ordenador;
     }
 
 }

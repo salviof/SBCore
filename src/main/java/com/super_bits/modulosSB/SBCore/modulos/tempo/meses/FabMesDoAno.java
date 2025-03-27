@@ -7,8 +7,10 @@ package com.super_bits.modulosSB.SBCore.modulos.tempo.meses;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.anos.AnoCalendario;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Year;
+import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,40 +26,60 @@ public enum FabMesDoAno implements ItfFabrica {
 
     private final static Locale br = new Locale("pt", "BR");
 
-    public static FabMesDoAno getMesAtual() {
-        Date date = new Date(); // sua instancia Date
+    public static MesDoAnoCalendario getRegistro(Date pData) {
+
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(pData);
+
+        LocalDateTime localDateTime = pData.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        int year = localDateTime.getYear();
+
         int mesID = calendar.get(Calendar.MONTH) + 1;
         switch (mesID) {
             case 1:
-                return JANEIRO;
+                return JANEIRO.getRegistro(year);
             case 2:
-                return FEVEREIRO;
+                return FEVEREIRO.getRegistro(year);
+
             case 3:
-                return MARCO;
+                return MARCO.getRegistro(year);
+
             case 4:
-                return ABRIL;
+                return ABRIL.getRegistro(year);
+
             case 5:
-                return MAIO;
+                return MAIO.getRegistro(year);
+
             case 6:
-                return JUNHO;
+                return JUNHO.getRegistro(year);
+
             case 7:
-                return JULHO;
+                return JULHO.getRegistro(year);
+
             case 8:
-                return AGOSTO;
+                return AGOSTO.getRegistro(year);
+
             case 9:
-                return SETEMBRO;
+                return SETEMBRO.getRegistro(year);
+
             case 10:
-                return OUTUBRO;
+                return OUTUBRO.getRegistro(year);
+
             case 11:
-                return NOVEMBRO;
+                return NOVEMBRO.getRegistro(year);
+
             case 12:
-                return DEZEMBRO;
+                return DEZEMBRO.getRegistro(year);
 
             default:
                 throw new AssertionError();
         }
+    }
+
+    public static MesDoAnoCalendario getRegistroMesAtual() {
+
+        return getRegistro(new Date());
 
     }
 
@@ -116,9 +138,11 @@ public enum FabMesDoAno implements ItfFabrica {
         return mes;
     }
 
-    public MesDoAnoCalendario getMesSetAno(int pAno) {
+    public MesDoAnoCalendario getRegistro(int pAno) {
         MesDoAnoCalendario mes = getRegistro();
-        mes.getAno().setId(pAno);
+
+        mes.setAno(new AnoCalendario(pAno));
+
         return mes;
     }
 
