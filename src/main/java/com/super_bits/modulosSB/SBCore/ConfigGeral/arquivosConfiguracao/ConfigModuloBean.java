@@ -28,7 +28,7 @@ public class ConfigModuloBean extends ItemSimples implements Serializable {
     private final ConfigModulo configuracao;
     private List<String> campos;
     private Map<String, String> mapaValores;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeModulo;
 
     @Deprecated

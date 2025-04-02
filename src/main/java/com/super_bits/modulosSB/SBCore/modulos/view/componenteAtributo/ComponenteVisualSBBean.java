@@ -29,9 +29,9 @@ public class ComponenteVisualSBBean extends ItemSimples implements ItfComponente
     private final ComponenteVisualBase base;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código")
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME, label = "Nome")
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME, label = "Nome")
     private String nome;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_DESCRITIVO, label = "Descrição")
+    @InfoCampo(tipo = FabTipoAtributoObjeto.DESCRITIVO, label = "Descrição")
     private String descricao;
     private FabFamiliaCompVisual familia;
 

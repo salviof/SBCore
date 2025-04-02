@@ -128,9 +128,9 @@ public final class TipoAtributoMetodosBase {
     public ItfResposta validar(Object pValor, ItfResposta pResp) {
 
         switch (tipo) {
-            case AAA_NOME:
+            case NOME:
                 break;
-            case AAA_NOME_LONGO:
+            case NOME_LONGO:
                 break;
             case IMG_PEQUENA:
                 break;
@@ -138,7 +138,7 @@ public final class TipoAtributoMetodosBase {
                 break;
             case IMG_GRANDE:
                 break;
-            case AAA_DESCRITIVO:
+            case DESCRITIVO:
                 break;
             case ID:
                 break;
@@ -460,9 +460,9 @@ public final class TipoAtributoMetodosBase {
 
     public void validarTipoCompativel(FieldComSerializacao pCampo) {
         switch (tipo) {
-            case AAA_NOME:
+            case NOME:
                 break;
-            case AAA_NOME_LONGO:
+            case NOME_LONGO:
                 break;
             case IMG_PEQUENA:
                 break;
@@ -470,7 +470,7 @@ public final class TipoAtributoMetodosBase {
                 break;
             case IMG_GRANDE:
                 break;
-            case AAA_DESCRITIVO:
+            case DESCRITIVO:
                 break;
             case ID:
                 break;
@@ -666,7 +666,7 @@ public final class TipoAtributoMetodosBase {
             case PERCENTUAL:
                 return 50;
 
-            case AAA_NOME:
+            case NOME:
                 if (pAtributo != null) {
                     EstruturaDeEntidade estrutura = MapaObjetosProjetoAtual.getEstruturaObjeto(pAtributo.getNomeClasseOrigemAtributo());
                     return estrutura.getTags().get(0) + UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.NUMERO, 4);

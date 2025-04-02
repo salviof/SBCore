@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class AcaoTransient implements ItfAcaoDoSistema {
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeAcao;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ICONE)
     private String iconeAcao;

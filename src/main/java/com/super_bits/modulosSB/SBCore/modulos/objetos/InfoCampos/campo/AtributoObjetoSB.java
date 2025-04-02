@@ -25,9 +25,9 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String label;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_DESCRITIVO)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.DESCRITIVO)
     private String descricao;
     private ItfGrupoCampos grupoSubCamposExibicao;
 

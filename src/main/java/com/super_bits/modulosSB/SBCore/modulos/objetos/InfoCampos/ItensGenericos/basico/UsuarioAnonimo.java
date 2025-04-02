@@ -32,7 +32,7 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome = "Anônimo ";
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.REG_DATAALTERACAO)

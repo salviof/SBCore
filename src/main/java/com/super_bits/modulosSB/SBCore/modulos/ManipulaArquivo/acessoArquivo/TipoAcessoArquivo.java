@@ -22,7 +22,7 @@ public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAE
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ENUM_FABRICA)

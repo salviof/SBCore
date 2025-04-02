@@ -1033,9 +1033,9 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                     if (valor instanceof ItfBeanSimplesSomenteLeitura) {
                         if (valor instanceof ItfBeanReflexoes) {
                             ItfBeanReflexoes itemTextoFormatado = (ItfBeanReflexoes) valor;
-                            if (((ItfBeanGenericoSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.AAA_DESCRITIVO)) {
+                            if (((ItfBeanGenericoSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.DESCRITIVO)) {
 
-                                String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.AAA_DESCRITIVO).getValor().toString();
+                                String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor().toString();
 
                                 if (!UtilSBCoreStringValidador.isNuloOuEmbranco(descricao)) {
                                     return descricao;

@@ -58,11 +58,11 @@ public class ItemSimilar<T> extends ItemSimilarGenerico<T> {
                 return defineValorTextoReferencia(String.valueOf(objetoAnalizado.getId()));
 
             case NOME:
-                return defineValorTextoReferenciaNormalizando(String.valueOf(objetoAnalizado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.AAA_NOME).getValor()));
+                return defineValorTextoReferenciaNormalizando(String.valueOf(objetoAnalizado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME).getValor()));
 
             case DESCRICAO:
-                if (objetoAnalizado.isTemCampoAnotado(FabTipoAtributoObjeto.AAA_DESCRITIVO)) {
-                    return String.valueOf(objetoAnalizado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.AAA_DESCRITIVO).getValor());
+                if (objetoAnalizado.isTemCampoAnotado(FabTipoAtributoObjeto.DESCRITIVO)) {
+                    return String.valueOf(objetoAnalizado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor());
                 }
                 break;
             case TELEFONE:

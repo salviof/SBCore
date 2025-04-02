@@ -16,7 +16,7 @@ public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final Integer id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private final String descricao;
     private final String slugEnviado;
 

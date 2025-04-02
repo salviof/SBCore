@@ -25,7 +25,7 @@ public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoT
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final int codigo;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private final String label;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.QUANTIDADE)

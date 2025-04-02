@@ -25,7 +25,7 @@ public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFede
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     private String sigla;

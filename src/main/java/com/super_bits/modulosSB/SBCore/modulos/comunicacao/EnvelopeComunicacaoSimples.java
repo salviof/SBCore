@@ -26,7 +26,7 @@ public class EnvelopeComunicacaoSimples extends ItemSimples {
     private ItfUsuario destinatario;
     @InfoCampo(tipo = FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
     private ItfUsuario remetente;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String assunto;
     private String texto;
 

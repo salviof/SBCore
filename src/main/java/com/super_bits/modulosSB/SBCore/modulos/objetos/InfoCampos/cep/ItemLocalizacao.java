@@ -24,7 +24,7 @@ public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_LOGRADOURO)
     private String logradouro;

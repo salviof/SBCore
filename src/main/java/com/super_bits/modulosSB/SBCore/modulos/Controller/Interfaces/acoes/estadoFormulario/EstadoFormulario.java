@@ -18,7 +18,7 @@ public class EstadoFormulario extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código", descricao = "Numero de identificação")
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME, label = "Nome", descricao = "Nome do Estado do Formulario")
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME, label = "Nome", descricao = "Nome do Estado do Formulario")
     private String nome;
 
     @Override

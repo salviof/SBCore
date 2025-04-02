@@ -36,7 +36,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
     private List<String> listaEnum;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeEntidade;
 
     private List<ItfEstruturaCampoEntidade> campos;

@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
 
-    @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.AAA_NOME, obrigatorio = true)
+    @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.NOME, obrigatorio = true)
     private final String nomeGrupo;
     private final String nomeIdentificadorSlug;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)

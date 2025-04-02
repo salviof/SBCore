@@ -25,7 +25,7 @@ public class PermissaoSBTransient extends ItemSimples implements ItfPermissao {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomePermissao;
     private final ItfAcaoDoSistema acao;
 

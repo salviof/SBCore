@@ -23,7 +23,7 @@ public class AnoCalendario extends ItemSimples {
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @Override

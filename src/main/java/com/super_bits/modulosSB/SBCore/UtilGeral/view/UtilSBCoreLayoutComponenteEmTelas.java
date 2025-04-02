@@ -150,10 +150,10 @@ public class UtilSBCoreLayoutComponenteEmTelas {
 
     public static int getPrioridadePadraoPorTipoCampo(FabTipoAtributoObjeto pTipoATributo) {
         switch (pTipoATributo) {
-            case AAA_NOME:
+            case NOME:
             case IMG_PEQUENA:
-            case AAA_NOME_LONGO:
-            case AAA_DESCRITIVO:
+            case NOME_LONGO:
+            case DESCRITIVO:
                 return 0;
             case IMG_MEDIA:
             case ID:

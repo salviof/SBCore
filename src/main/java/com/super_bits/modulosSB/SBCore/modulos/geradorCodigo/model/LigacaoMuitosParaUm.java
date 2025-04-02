@@ -31,7 +31,7 @@ public class LigacaoMuitosParaUm extends ItemSimples implements ItfLigacaoMuitos
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
     private String label, descricao;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeDeclarado;
     private final ItfEstruturaDeEntidade estruturaObjeto;
     private final Class classeObjetoVinculado;

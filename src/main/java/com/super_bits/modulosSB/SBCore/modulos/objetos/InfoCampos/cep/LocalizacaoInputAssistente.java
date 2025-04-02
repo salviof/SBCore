@@ -704,7 +704,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     public ItfCampoInstanciado getCampoInstNomeLocal() {
-        return tipoOrganizacao.getCampoInstanciadoPorTipo(entidadePai, FabTipoAtributoObjeto.AAA_NOME, identificacaoMapa);
+        return tipoOrganizacao.getCampoInstanciadoPorTipo(entidadePai, FabTipoAtributoObjeto.NOME, identificacaoMapa);
     }
 
     public ItfCampoInstanciado getCampoInstBairro() {

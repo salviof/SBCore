@@ -23,7 +23,7 @@ public class GrupoCampoInstanciado extends ItemSimples {
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
     private final List<ItfCampoInstanciado> campos = new ArrayList<>();
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeCampo;
 
     public GrupoCampoInstanciado(String nomeCampo) {

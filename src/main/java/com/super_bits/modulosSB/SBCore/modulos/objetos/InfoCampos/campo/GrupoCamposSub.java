@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class GrupoCamposSub extends ItemSimples implements ItfGrupoCampos {
 
-    @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.NOME)
     private final String nomeGrupo;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;

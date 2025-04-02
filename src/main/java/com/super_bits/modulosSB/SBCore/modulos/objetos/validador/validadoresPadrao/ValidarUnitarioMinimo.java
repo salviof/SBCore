@@ -42,9 +42,9 @@ public class ValidarUnitarioMinimo extends ValidadorUnitarioCampoInstGenerico im
             }
 
             switch (campoInstanciado.getFabricaTipoAtributo()) {
-                case AAA_NOME:
+                case NOME:
                 case NOME_COMPLETO:
-                case AAA_DESCRITIVO:
+                case DESCRITIVO:
                 case TEXTO_SIMPLES:
                     if (pValor.toString().length() < campoInstanciado.getValorMinimo()) {
                         throw new ErroValidacao(campoInstanciado.getLabel()

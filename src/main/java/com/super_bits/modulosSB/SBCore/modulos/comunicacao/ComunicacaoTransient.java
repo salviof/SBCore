@@ -19,7 +19,7 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComunicacao {
 
     private final ItfDestinatario destinatario;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String descricao;
     private final ItfUsuario usuarioRemetente;
     private final List<ItfRespostaComunicacao> respostasPossiveis;

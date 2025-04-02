@@ -17,16 +17,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public enum FabGruposPadrao implements ItfFabrica {
     @InfoGrupoCampo(camposPorTipoAtributo = {FabTipoAtributoObjeto.ID,
-        FabTipoAtributoObjeto.AAA_NOME})
+        FabTipoAtributoObjeto.NOME})
     GRUPO_PADRAO_ITEM_SIMPLES,
     @InfoGrupoCampo(camposPorTipoAtributo = {FabTipoAtributoObjeto.ID,
-        FabTipoAtributoObjeto.AAA_NOME, FabTipoAtributoObjeto.AAA_DESCRITIVO})
+        FabTipoAtributoObjeto.NOME, FabTipoAtributoObjeto.DESCRITIVO})
     GRUPO_PADRAO_ITEM_NORMAL,
     @InfoGrupoCampo(camposPorTipoAtributo = {FabTipoAtributoObjeto.ID,
-        FabTipoAtributoObjeto.AAA_NOME, FabTipoAtributoObjeto.AAA_DESCRITIVO, FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, FabTipoAtributoObjeto.REG_DATAINSERCAO})
+        FabTipoAtributoObjeto.NOME, FabTipoAtributoObjeto.DESCRITIVO, FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, FabTipoAtributoObjeto.REG_DATAINSERCAO})
     GRUPO_PADRAO_ITEM_NORMAL_AVANCADO,
     @InfoGrupoCampo(camposPorTipoAtributo = {FabTipoAtributoObjeto.ID,
-        FabTipoAtributoObjeto.AAA_NOME, FabTipoAtributoObjeto.AAA_DESCRITIVO, FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, FabTipoAtributoObjeto.REG_DATAINSERCAO,
+        FabTipoAtributoObjeto.NOME, FabTipoAtributoObjeto.DESCRITIVO, FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, FabTipoAtributoObjeto.REG_DATAINSERCAO,
         FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO, FabTipoAtributoObjeto.REG_DATAALTERACAO})
     GRUPO_PADRAO_ITEM_NORMAL_AVANCADO_COMPLETO;
 

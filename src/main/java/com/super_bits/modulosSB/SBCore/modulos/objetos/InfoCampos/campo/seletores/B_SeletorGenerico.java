@@ -89,9 +89,9 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
         if (UtilSBCoreStringValidador.isNuloOuEmbranco(filtro)) {
             getListaCompletaLasyMode().forEach(origem::add);
             if (campoInstanciado.getValor() instanceof List) {
-                UtilSBCoreListasObjeto.ordernarPorCampoComSelecionadosPrimeiro(origem, FabTipoAtributoObjeto.AAA_NOME, (List) campoInstanciado.getValor());
+                UtilSBCoreListasObjeto.ordernarPorCampoComSelecionadosPrimeiro(origem, FabTipoAtributoObjeto.NOME, (List) campoInstanciado.getValor());
             } else {
-                UtilSBCoreListasObjeto.ordernarPorTipoCampo(origem, FabTipoAtributoObjeto.AAA_NOME);
+                UtilSBCoreListasObjeto.ordernarPorTipoCampo(origem, FabTipoAtributoObjeto.NOME);
             }
         } else {
             try {

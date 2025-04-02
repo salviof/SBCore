@@ -19,7 +19,7 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     private String enderecoServidor;
     private int porta;

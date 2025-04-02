@@ -41,7 +41,7 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     }
 
     private String tipoRetorno;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeEnum;
     private String descricao;
     private String javaDoc;

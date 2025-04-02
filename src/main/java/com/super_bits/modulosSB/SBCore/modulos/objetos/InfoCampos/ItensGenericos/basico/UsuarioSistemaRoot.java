@@ -29,7 +29,7 @@ public class UsuarioSistemaRoot extends ItemNormal implements ItfUsuario, ItfBea
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.REG_DATAALTERACAO)

@@ -848,10 +848,10 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     public int configIDPeloNome() {
         try {
 
-            String nomeparaHash = (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_NOME);
+            String nomeparaHash = (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.NOME);
 
             if (nomeparaHash == null) {
-                throw new UnsupportedOperationException("Erro configurando id pelo nome, o campo que identifica" + FabTipoAtributoObjeto.AAA_NOME + " retornou nulo");
+                throw new UnsupportedOperationException("Erro configurando id pelo nome, o campo que identifica" + FabTipoAtributoObjeto.NOME + " retornou nulo");
             }
 
             int id = UtilSBCoreGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);

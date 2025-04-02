@@ -27,7 +27,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
 
     private boolean somenteLeitura;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     private String mascara;

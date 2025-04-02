@@ -23,28 +23,28 @@ public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, I
     public ItemNormal() {
         super();
 
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME, getNomeCurto()));
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.NOME, getNomeCurto()));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.IMG_GRANDE, getNomeCurto()));
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_NOME_LONGO, getNomeCurto()));
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.NOME_LONGO, getNomeCurto()));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_DATAINSERCAO, null));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_DATAALTERACAO, null));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO, null));
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_INSERCAO, null));
 
-        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.AAA_DESCRITIVO, UtilSBCoreStringGerador.getLorenIpsilum(TIPO_LOREN.PARAGRAFO)));
+        adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.DESCRITIVO, UtilSBCoreStringGerador.getLorenIpsilum(TIPO_LOREN.PARAGRAFO)));
 
     }
 
     @Override
     public String getNomeLongo() {
-        camposEsperados.getCampo(FabTipoAtributoObjeto.AAA_NOME_LONGO).setValorPadrao(getNomeCurto());
-        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_NOME_LONGO);
+        camposEsperados.getCampo(FabTipoAtributoObjeto.NOME_LONGO).setValorPadrao(getNomeCurto());
+        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.NOME_LONGO);
 
     }
 
     @Override
     public String getDescritivo() {
-        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_DESCRITIVO);
+        return (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.DESCRITIVO);
     }
 
     @Override
@@ -103,12 +103,12 @@ public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, I
 
     @Override
     public void setNomeLongo(String pnomeLongo) {
-        setValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_NOME, pnomeLongo);
+        setValorByTipoCampoEsperado(FabTipoAtributoObjeto.NOME, pnomeLongo);
     }
 
     @Override
     public void setDescritivo(String pDescritivo) {
-        setValorByTipoCampoEsperado(FabTipoAtributoObjeto.AAA_DESCRITIVO, pDescritivo);
+        setValorByTipoCampoEsperado(FabTipoAtributoObjeto.DESCRITIVO, pDescritivo);
     }
 
     @Override

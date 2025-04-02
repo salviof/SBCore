@@ -29,7 +29,7 @@ public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @Override

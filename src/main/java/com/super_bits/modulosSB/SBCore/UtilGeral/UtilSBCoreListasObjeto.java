@@ -80,7 +80,7 @@ public class UtilSBCoreListasObjeto {
         Collections.sort(itensOrdenados);
         //Collections.reverse(itensOrdenados);
 
-        ComparadorGenericoListaEspecialPrimeiro cpGenerico = new ComparadorGenericoListaEspecialPrimeiro(FabTipoAtributoObjeto.AAA_NOME, pSelecao, false);
+        ComparadorGenericoListaEspecialPrimeiro cpGenerico = new ComparadorGenericoListaEspecialPrimeiro(FabTipoAtributoObjeto.NOME, pSelecao, false);
 
         itensOrdenados.stream().limit(pLimite).forEach(item -> resp.add(item.getObjetoAnalizado()));
         return resp;

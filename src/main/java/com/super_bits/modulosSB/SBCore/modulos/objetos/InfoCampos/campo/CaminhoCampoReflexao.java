@@ -31,7 +31,7 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
     private final List<String> partesCaminho = new ArrayList<>();
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String caminhoComleto;
 
     private boolean umCampoListavel;

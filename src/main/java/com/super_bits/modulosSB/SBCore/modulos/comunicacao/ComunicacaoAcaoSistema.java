@@ -44,7 +44,7 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
 
     private ItfRespostaComunicacao respostaEscolhida;
     private String mensagem;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String assunto;
 
     public String gerarMensagemPAdrao() {

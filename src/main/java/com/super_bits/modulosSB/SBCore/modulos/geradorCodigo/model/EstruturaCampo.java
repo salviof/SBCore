@@ -42,7 +42,7 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     private final AtributoObjetoSB campoVinculado;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeDeclarado;
     private ItfEstruturaDeEntidade estruturaPai;
     private TIPO_DECLARACAO tipoDeclaracao;

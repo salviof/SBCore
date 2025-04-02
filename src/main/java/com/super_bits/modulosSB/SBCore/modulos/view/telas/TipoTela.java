@@ -17,7 +17,7 @@ public class TipoTela extends ItemSimples implements ItfTipoTela {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private int id;
-    @InfoCampo(tipo = FabTipoAtributoObjeto.AAA_NOME)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.QUANTIDADE)
     private int xMinimo;
