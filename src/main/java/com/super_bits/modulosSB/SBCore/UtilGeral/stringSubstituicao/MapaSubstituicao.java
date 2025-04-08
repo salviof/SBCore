@@ -31,6 +31,10 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
     protected final Map<String, Map<String, String>> mapaSubstituicaoListas = new HashMap<>();
     protected final Map<String, Map<Integer, List<String>>> ordemMapaSubstituicaoListas = new HashMap<>();
 
+    public String getValorImagem(String pValorChave) {
+        return mapaSubstituicaoImagem.get(pValorChave);
+    }
+
     @Override
     public String substituirEmString(String pString) {
 
@@ -71,16 +75,24 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
         return mapaSubstituicao;
     }
 
-    protected final String getChaveListas(String texto) {
+    public final String getChaveiLstasByTextoencontrado(String texto) {
         String chave = UtilSBCoreStringFiltros.getStringSemNumeros(texto);
         chave = UtilSBCoreStringBuscaTrecho.getStringAteEncontrarIsto(chave, "[]");
         return chave;
     }
 
+    public final Map<String, String> getValoresListas(String pChaveLista) {
+        return mapaSubstituicaoListas.get(pChaveLista);
+    }
+
+    public Map<Integer, List<String>> getOrdemItensLista(String pNomeLista) {
+        return ordemMapaSubstituicaoListas.get(pNomeLista);
+    }
+
     @Override
     public final void adicionarPalavraChave(String palavra, String valor) {
         if (!palavra.replaceAll("\\[[0-9]", "-").equals(palavra)) {
-            String chavelista = getChaveListas(palavra);
+            String chavelista = getChaveiLstasByTextoencontrado(palavra);
             Integer palavraIndice = Integer.valueOf(UtilSBCoreStringFiltros.getNumericosDaString(palavra));
 
             if (mapaSubstituicaoListas.get(chavelista) == null) {
