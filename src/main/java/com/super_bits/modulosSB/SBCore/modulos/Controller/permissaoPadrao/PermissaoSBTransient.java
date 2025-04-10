@@ -24,7 +24,7 @@ import java.util.List;
 public class PermissaoSBTransient extends ItemSimples implements ItfPermissao {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomePermissao;
     private final ItfAcaoDoSistema acao;
@@ -32,7 +32,7 @@ public class PermissaoSBTransient extends ItemSimples implements ItfPermissao {
     public PermissaoSBTransient(ItfAcaoDoSistema pAcao) {
         acao = pAcao;
         nomePermissao = pAcao.getNomeUnico();
-        id = pAcao.getNomeUnico().hashCode();
+        id = (long) pAcao.getNomeUnico().hashCode();
     }
 
     @Override

@@ -119,7 +119,7 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     @Override
     public void removerItem(ItfBeanSimples pItem) {
         try {
-            int idremover = pItem.getId();
+            long idremover = pItem.getId();
             List lista = (List) campoInstanciado.getValor();
             int indiceRemocao = 0;
 

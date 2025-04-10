@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioEmail;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidadorUnitarioLocalizacao;
@@ -16,6 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadr
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMaximo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioMinimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao.ValidarUnitarioREGEX;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -35,61 +37,70 @@ public enum FabTipoValidacaoUnitaria {
     LOCALIZACAO;
 
     public ItfValidacaoUnitaria getValidador(ItfCampoInstanciado pCampo) {
-        switch (pCampo.getFabricaTipoAtributo()) {
-            case CODIGO_DE_BARRAS:
-                switch (this) {
-                    case CODIGO_DE_BARRAS:
-                        return new ValidarUnitarioCodigoDeBarass(pCampo);
+        try {
+            switch (pCampo.getFabricaTipoAtributo()) {
+                case CODIGO_DE_BARRAS:
+                    switch (this) {
+                        case CODIGO_DE_BARRAS:
+                            return new ValidarUnitarioCodigoDeBarass(pCampo);
+                    }
+                    break;
+                case CPF:
+                    switch (this) {
+                        case CPF:
+                            return new ValidarUnitarioCPF(pCampo);
+                    }
+                    break;
+                case CNPJ:
+                    switch (this) {
+                        case CNPJ:
+                            return new ValidarUnitarioCNPJ(pCampo);
+                    }
+                    break;
+                case LC_LOCALIZACAO: {
+                    switch (this) {
+                        case LOCALIZACAO:
+                            return new ValidadorUnitarioLocalizacao(pCampo);
+                    }
+
                 }
                 break;
-            case CPF:
-                switch (this) {
-                    case CPF:
-                        return new ValidarUnitarioCPF(pCampo);
-                }
-                break;
-            case CNPJ:
-                switch (this) {
-                    case CNPJ:
-                        return new ValidarUnitarioCNPJ(pCampo);
-                }
-                break;
-            case LC_LOCALIZACAO: {
-                switch (this) {
-                    case LOCALIZACAO:
-                        return new ValidadorUnitarioLocalizacao(pCampo);
-                }
+                case EMAIL:
+                    switch (this) {
+                        case EMAIL:
+                            return new ValidadorUnitarioEmail(pCampo);
+                    }
+                    break;
+                default:
+            }
+
+            switch (this) {
+                case NULO:
+                    return new ValidadorUnitarioNulo(pCampo);
+                case MINIMO:
+                    return new ValidarUnitarioMinimo(pCampo);
+                case MAXIMO:
+                    return new ValidarUnitarioMaximo(pCampo);
+
+                case CAMPO_UNICO:
+                    return new ValidarUnitarioAtributoUnico(pCampo);
+                case REGEX:
+
+                    return new ValidarUnitarioREGEX(pCampo);
+
+                default:
+                    return new ValidadorUnitarioLiberal();
 
             }
-            break;
-            case EMAIL:
-                switch (this) {
-                    case EMAIL:
-                        return new ValidadorUnitarioEmail(pCampo);
-                }
-                break;
-            default:
+        } catch (Throwable t) {
+            if (pCampo != null) {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha detectando classse de implantação para " + this.name() + " em " + pCampo.getNomeCompostoIdentificador(), t);
+            } else {
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha tentando validar campoinstanciado nulo", t);
+            }
+
+            return new ValidadorUnitarioLiberal();
         }
-
-        switch (this) {
-            case NULO:
-                return new ValidadorUnitarioNulo(pCampo);
-            case MINIMO:
-                return new ValidarUnitarioMinimo(pCampo);
-            case MAXIMO:
-                return new ValidarUnitarioMaximo(pCampo);
-
-            case CAMPO_UNICO:
-                return new ValidarUnitarioAtributoUnico(pCampo);
-            case REGEX:
-
-                return new ValidarUnitarioREGEX(pCampo);
-
-            default:
-                return new ValidadorUnitarioLiberal();
-
-        }
-
     }
 
 }

@@ -17,19 +17,19 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class EstadoFormulario extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código", descricao = "Numero de identificação")
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME, label = "Nome", descricao = "Nome do Estado do Formulario")
     private String nome;
 
     @Override
-    public int getId() {
+    public Long getId() {
 
         return this.id;
 
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
 
         this.id = pID;
 

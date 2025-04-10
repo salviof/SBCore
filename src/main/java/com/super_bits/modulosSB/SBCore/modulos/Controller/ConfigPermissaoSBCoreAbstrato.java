@@ -34,8 +34,8 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
 
     private final Class[] classesControllers;
 
-    protected static final Map<Integer, String> ACOES_NOME_UNICO_BY_HASH_METODO = new HashMap<>();
-    private static final Map<Integer, Method> METODOS_BY_HASH_METODO = new HashMap<>();
+    protected static final Map<Long, String> ACOES_NOME_UNICO_BY_HASH_METODO = new HashMap<>();
+    private static final Map<Long, Method> METODOS_BY_HASH_METODO = new HashMap<>();
     private static final Map<String, Method> METODO_BY_ACAO = new HashMap<>();
 
     public static List<ItfAcaoDoSistema> getAcoesDoSistema() {

@@ -18,7 +18,7 @@ import java.util.Date;
 public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComunicacao, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     private boolean foiSelado;
     private String codigoSelo;
@@ -56,7 +56,7 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

@@ -34,7 +34,7 @@ import java.util.Map;
 public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEntidade {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private List<String> listaEnum;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeEntidade;
@@ -183,7 +183,7 @@ public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEn
     public void setNomeEntidade(String nomeEntidade
     ) {
         this.nomeEntidade = nomeEntidade;
-        id = nomeEntidade.hashCode();
+        id = (long) nomeEntidade.hashCode();
     }
 
     @Override

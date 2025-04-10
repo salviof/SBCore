@@ -323,8 +323,8 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     }
 
     @Override
-    public int getId() {
-        return getNome().hashCode();
+    public Long getId() {
+        return (long) getNome().hashCode();
     }
 
     @Override
@@ -333,7 +333,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

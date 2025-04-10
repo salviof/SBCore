@@ -28,7 +28,7 @@ public abstract class AtributoObjetoSBAbstrato extends ItemSimples implements It
 
     protected Class classeDeclaracaoObjeto;
 
-    protected final int idAtributo;
+    protected final Long idAtributo;
 
     public AtributoObjetoSBAbstrato(PropriedadesReflexaoCampo pPropriedadesReflexao) {
 
@@ -37,7 +37,7 @@ public abstract class AtributoObjetoSBAbstrato extends ItemSimples implements It
             throw new UnsupportedOperationException("Erro criando atributo de Objeto, o tipo do atributo não pôde ser determinado " + pPropriedadesReflexao.getLabel());
         }
 
-        idAtributo = (pPropriedadesReflexao.getClasseOrigemAtributo() + getLabel()).hashCode();
+        idAtributo = (long) (pPropriedadesReflexao.getClasseOrigemAtributo() + getLabel()).hashCode();
         classeDeclaracaoObjeto = pPropriedadesReflexao.getClasseDeclaracaoAtributo();
         nomeClasseOrigemAtributo = pPropriedadesReflexao.getClasseOrigemAtributo().toString();
         if (nomeClasseOrigemAtributo.contains(".")) {

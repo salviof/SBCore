@@ -33,7 +33,7 @@ import java.util.List;
 public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuario {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String usuario;
 
@@ -47,8 +47,8 @@ public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuar
     }
 
     @Override
-    public int getId() {
-        return -99;
+    public Long getId() {
+        return -99l;
     }
 
     @Override

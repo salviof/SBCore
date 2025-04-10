@@ -28,7 +28,7 @@ public class ComponenteVisualSBBean extends ItemSimples implements ItfComponente
 
     private final ComponenteVisualBase base;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código")
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME, label = "Nome")
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.DESCRITIVO, label = "Descrição")
@@ -49,7 +49,7 @@ public class ComponenteVisualSBBean extends ItemSimples implements ItfComponente
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return base.getId();
     }
 

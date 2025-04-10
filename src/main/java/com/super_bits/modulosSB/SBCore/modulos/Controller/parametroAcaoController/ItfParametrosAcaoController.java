@@ -12,10 +12,10 @@ public interface ItfParametrosAcaoController {
 
     public String getEntidadePrincial();
 
-    public int getIdEntidadePrincipal();
+    public Long getIdEntidadePrincipal();
 
     public ParametroAcaoControllerSimples setEntidadePrincial(String entidadePrincial);
 
-    public ParametroAcaoControllerSimples setIdEntidadePrincipal(int idEntidadePrincipal);
+    public ParametroAcaoControllerSimples setIdEntidadePrincipal(Long idEntidadePrincipal);
 
 }

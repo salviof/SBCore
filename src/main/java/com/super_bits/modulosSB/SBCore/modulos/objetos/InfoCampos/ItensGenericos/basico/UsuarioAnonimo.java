@@ -30,7 +30,7 @@ import java.util.List;
 public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome = "Anônimo ";
@@ -88,8 +88,8 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     }
 
     @Override
-    public int getId() {
-        return getNome().hashCode();
+    public Long getId() {
+        return (long) getNome().hashCode();
     }
 
     @Override

@@ -108,7 +108,7 @@ public class AcaoTransient implements ItfAcaoDoSistema {
     }
 
     @Override
-    public void setId(int pId) {
+    public void setId(Long pId) {
         throw new UnsupportedOperationException("A Ação transient, não suporta este método"); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -329,8 +329,8 @@ public class AcaoTransient implements ItfAcaoDoSistema {
     }
 
     @Override
-    public int getId() {
-        return -1;
+    public Long getId() {
+        return -1l;
     }
 
     @Override
@@ -339,7 +339,7 @@ public class AcaoTransient implements ItfAcaoDoSistema {
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         throw new UnsupportedOperationException("A Ação transient, não suporta este método"); //To change body of generated methods, choose Tools | Templates.
     }
 

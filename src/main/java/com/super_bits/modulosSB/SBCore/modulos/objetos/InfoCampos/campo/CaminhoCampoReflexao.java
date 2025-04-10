@@ -29,7 +29,7 @@ import javax.persistence.ManyToOne;
 public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminhoCampo {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private final List<String> partesCaminho = new ArrayList<>();
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String caminhoComleto;
@@ -96,7 +96,7 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
 
             configuraInformacoesBasicasDoCampoPorReflexao(validaCampo(null));
             makePartesCaminho();
-            id = caminhoComleto.hashCode();
+            id = (long) caminhoComleto.hashCode();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Ocorreu um erro criando o campo" + pCaminho, t);
             throw new UnsupportedOperationException("Não foi possível executar o contructor para o caminhoCampoReflexão, utilizando o paramentro" + pCaminho);
@@ -125,7 +125,7 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
         defineNomeCompleto(pCaminho, pClasse);
         configuraInformacoesBasicasDoCampoPorReflexao(validaCampo(pClasse));
         makePartesCaminho();
-        id = caminhoComleto.hashCode();
+        id = (long) caminhoComleto.hashCode();
 
     }
 
@@ -171,7 +171,7 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
         makeCaminhoCompleto();
         defineNomeCompleto(caminhoComleto);
         configuraInformacoesBasicasDoCampoPorReflexao(validaCampo(null));
-        id = caminhoComleto.hashCode();
+        id = (long) caminhoComleto.hashCode();
 
     }
 
@@ -328,12 +328,12 @@ public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminh
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
         setId(pID); //To change body of generated methods, choose Tools | Templates.
     }
 

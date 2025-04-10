@@ -63,9 +63,9 @@ public class CampoNaoImplementado extends CampoInstanciadoGenerico implements It
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         System.out.println("Config id pelo nome não se aplica ");
-        return 0;
+        return 0l;
     }
 
     @Override

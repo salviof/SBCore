@@ -12,29 +12,30 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 @InfoObjetoSB(tags = "Item totalizador gráfico", plural = "Itens totalizadores de gráfico")
 public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoTotal {
 
-    public ItemDadoGraficoTotal(int codigo, String label, double valor) {
+    public ItemDadoGraficoTotal(Long codigo, String label, double valor) {
         this.codigo = codigo;
         this.label = label;
         this.valor = valor;
 
     }
-    public ItemDadoGraficoTotal(int codigo, String label, double valor,Object pItemSelecionado) {
+
+    public ItemDadoGraficoTotal(Long codigo, String label, double valor, Object pItemSelecionado) {
         this(codigo, label, valor);
-        this.itemRelacionado=pItemSelecionado;
+        this.itemRelacionado = pItemSelecionado;
     }
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final int codigo;
+    private final Long codigo;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private final String label;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.QUANTIDADE)
     private final double valor;
-    
+
     private Object itemRelacionado;
 
     @Override
-    public int getId() {
+    public Long getId() {
         return codigo;
     }
 
@@ -68,6 +69,5 @@ public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoT
     public Object getItemRelacionado() {
         return itemRelacionado;
     }
-    
-    
+
 }

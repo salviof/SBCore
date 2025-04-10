@@ -32,7 +32,7 @@ import java.util.Map;
 public class MapaDeAcoes {
 
     private final Map<String, ItfAcaoDoSistema> ACAO_BY_NOME_UNICO = new HashMap<>();
-    private final Map<Integer, ItfAcaoDoSistema> ACAO_BY_ID = new HashMap<>();
+    private final Map<Long, ItfAcaoDoSistema> ACAO_BY_ID = new HashMap<>();
     private final Map<ItfFabricaAcoes, ItfAcaoDoSistema> ACAO_BY_ENUM = new HashMap<>();
     private final Map<Class, List<ItfAcaoDoSistema>> ACOES_BY_CLASSE = new HashMap<>();
     private final Map<ItfModuloAcaoSistema, List<ItfAcaoDoSistema>> ACOES_BY_MODULO = new HashMap<>();
@@ -379,7 +379,7 @@ public class MapaDeAcoes {
         return new ArrayList<>(ACAO_BY_ENUM.values());
     }
 
-    public ItfAcaoDoSistema getAcaoByIdAcao(int id) {
+    public ItfAcaoDoSistema getAcaoByIdAcao(Long id) {
         return ACAO_BY_ID.get(id);
     }
 

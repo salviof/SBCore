@@ -11,11 +11,11 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.parametroAcaoControll
 public class ParametroAcaoControllerSimples implements ItfParametrosAcaoController {
 
     private String entidadePrincial;
-    private int idEntidadePrincipal;
+    private Long idEntidadePrincipal;
 
-    public ParametroAcaoControllerSimples(String entidadePrincial, int idEntidadePrincipal) {
+    public ParametroAcaoControllerSimples(String entidadePrincial, Long idEntidadePrincipal) {
         this.entidadePrincial = entidadePrincial;
-        this.idEntidadePrincipal = idEntidadePrincipal;
+        this.idEntidadePrincipal = (long) idEntidadePrincipal;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ParametroAcaoControllerSimples implements ItfParametrosAcaoControll
     }
 
     @Override
-    public ParametroAcaoControllerSimples setIdEntidadePrincipal(int idEntidadePrincipal) {
+    public ParametroAcaoControllerSimples setIdEntidadePrincipal(Long idEntidadePrincipal) {
         this.idEntidadePrincipal = idEntidadePrincipal;
         return this;
     }
@@ -36,7 +36,7 @@ public class ParametroAcaoControllerSimples implements ItfParametrosAcaoControll
     }
 
     @Override
-    public int getIdEntidadePrincipal() {
+    public Long getIdEntidadePrincipal() {
         return idEntidadePrincipal;
     }
 

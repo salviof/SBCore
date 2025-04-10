@@ -17,14 +17,14 @@ public class ListaDeEntidade extends ItemSimples implements ItfListaDeEntidade {
 
     public ListaDeEntidade(String nomeEnum, String nomeDeclaracao, String nomeEntidade, String nomeObjetoListado, String javaDoc, EstruturaDeEntidade pEstrutura) {
         this.nomeEnum = nomeEnum;
-        id = nomeEnum.hashCode();
+        id = (long) nomeEnum.hashCode();
         this.nomeDeclaracao = nomeDeclaracao;
         this.nomeEntidade = nomeEntidade;
         this.nomeObjetoListado = nomeObjetoListado;
         this.javaDoc = javaDoc;
         estrutura = pEstrutura;
     }
-    private int id;
+    private Long id;
     private String javaDoc;
     private String nomeEntidade;
     private String nomeEnum;
@@ -93,7 +93,7 @@ public class ListaDeEntidade extends ItemSimples implements ItfListaDeEntidade {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

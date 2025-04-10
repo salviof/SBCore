@@ -39,7 +39,7 @@ public enum FabTipoArquivoConhecido implements ItfFabrica {
     @Override
     public TipoRecurso getRegistro() {
         TipoRecurso novoRecurso = new TipoRecurso(this);
-        novoRecurso.setId(this.ordinal() + 1);
+        novoRecurso.setId((long) this.ordinal() + 1);
         novoRecurso.setNome(this.toString());
         switch (this) {
             case IMAGEM_WEB:

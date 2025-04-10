@@ -22,7 +22,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;

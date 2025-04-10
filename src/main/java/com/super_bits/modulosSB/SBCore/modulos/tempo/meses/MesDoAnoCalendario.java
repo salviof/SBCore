@@ -26,7 +26,7 @@ import javax.persistence.Id;
 public class MesDoAnoCalendario extends ItemSimples {
 
     @Id
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
@@ -39,12 +39,12 @@ public class MesDoAnoCalendario extends ItemSimples {
     private int ordenador;
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,14 +65,14 @@ public class MesDoAnoCalendario extends ItemSimples {
     public void setAno(AnoCalendario ano) {
         this.ano = ano;
         int anoAtual = Year.now().getValue();
-        LocalDateTime navgadorCalendario = LocalDateTime.of(anoAtual, getId(), 1, 0, 0);
+        LocalDateTime navgadorCalendario = LocalDateTime.of(anoAtual, getId().intValue(), 1, 0, 0);
         navgadorCalendario = navgadorCalendario.with(TemporalAdjusters.firstDayOfMonth());
         dataHoraInicio = Date.from(navgadorCalendario.atZone(ZoneId.systemDefault()).toInstant());
         LocalDateTime localTimeUltimoDiaMes = navgadorCalendario.with(TemporalAdjusters.lastDayOfMonth());
         localTimeUltimoDiaMes.with(LocalTime.MAX);
         dataHoraFinal = Date.from(localTimeUltimoDiaMes.atZone(ZoneId.systemDefault()).toInstant());
         dataHoraFinal = UtilSBCoreDataHora.getFinalDoDIa(dataHoraFinal);
-        ordenador = (ano.getId() * 356) + getId();
+        ordenador = (ano.getId().intValue() * 356) + getId().intValue();
     }
 
     public Date getDataHoraInicio() {

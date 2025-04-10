@@ -21,7 +21,7 @@ public enum FabUnidadesFederativasSemPersistencia implements ItfFabrica {
     public ItemUnidadeFederativa getRegistro() {
         ItemUnidadeFederativa uf = new ItemUnidadeFederativa();
         uf.setSigla(this.toString());
-        uf.setId(this.ordinal() + 1);
+        uf.setId((long) this.ordinal() + 1);
         uf.setNome(this.name());
         switch (this) {
             case AC:
@@ -46,7 +46,7 @@ public enum FabUnidadesFederativasSemPersistencia implements ItfFabrica {
             case MA:
                 break;
             case MG:
-                uf.setId(1);
+                uf.setId(1l);
                 uf.setNome("Minas Gerais");
 
                 break;

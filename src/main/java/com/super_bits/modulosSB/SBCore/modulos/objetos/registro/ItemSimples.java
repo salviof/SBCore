@@ -64,8 +64,8 @@ public abstract class ItemSimples extends ItemGenerico implements
     }
 
     @Override
-    public int getId() {
-        return Integer.parseInt(getValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID).toString());
+    public Long getId() {
+        return Long.parseLong(getValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID).toString());
     }
 
     public String getCampoSQLNomeCurto() {
@@ -91,7 +91,7 @@ public abstract class ItemSimples extends ItemGenerico implements
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
         setValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID, pID);
     }
 

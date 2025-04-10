@@ -160,7 +160,7 @@ public abstract class MapaAcoesSistema {
         return mapaAcoes.getAcaoDoSistemaByNomeUnico(pFabAcao);
     }
 
-    public static ItfAcaoDoSistema getAcaoDoSistemaById(int pId) {
+    public static ItfAcaoDoSistema getAcaoDoSistemaById(Long pId) {
 
         if (!mapaCriado) {
             MapaAcoesSistema.makeMapaAcoesSistema();

@@ -15,7 +15,7 @@ import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfCompon
  */
 public class ColunaTela implements ItfColunaTela {
 
-    private int id;
+    private Long id;
     private ComponenteVisualEmLayout componenteVinculado;
     private double unidadePesoLayoutAtual;
     private int pesoLarguraIdeal;
@@ -26,12 +26,12 @@ public class ColunaTela implements ItfColunaTela {
     private boolean umComponenteAtributoObjeto;
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

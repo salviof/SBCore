@@ -105,7 +105,7 @@ public class CaminhoCampoExibicaoFormulario implements ItfCampoExibicaoFormulari
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return caminhoCampo.getId();
     }
 
@@ -186,7 +186,7 @@ public class CaminhoCampoExibicaoFormulario implements ItfCampoExibicaoFormulari
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
         caminhoCampo.setId(pID);
     }
 

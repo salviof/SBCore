@@ -367,11 +367,11 @@ public final class TipoAtributoMetodosBase {
                     return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pValor);
                 case MOEDA_REAL:
                     try {
-                    double valorDouble = UtilSBCoreNumeros.getDoublePorString(pValor);
-                    return valorDouble;
-                } catch (Throwable t) {
-                    return 0;
-                }
+                        double valorDouble = UtilSBCoreNumeros.getDoublePorString(pValor);
+                        return valorDouble;
+                    } catch (Throwable t) {
+                        return 0;
+                    }
 
                 case VERDADEIRO_FALSO:
                     if (pValor.equals("true") || pValor.toUpperCase().equals("SIM")) {
@@ -395,7 +395,7 @@ public final class TipoAtributoMetodosBase {
                         return null;
                     }
                     if (entidade.getAnnotation(Entity.class) != null) {
-                        return SBCore.getCentralDados().getRegistroByID(null, entidade, Integer.valueOf(pValor));
+                        return SBCore.getCentralDados().getRegistroByID(null, entidade, Long.valueOf(pValor));
 
                     } else {
                         return null;

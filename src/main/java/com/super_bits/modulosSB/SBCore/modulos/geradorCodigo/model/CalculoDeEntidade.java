@@ -47,7 +47,7 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     private String javaDoc;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     public String getTipoRetorno() {
         return tipoRetorno;
@@ -354,12 +354,12 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return estruturaCampo.getId();
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         return estruturaCampo.configIDPeloNome();
     }
 

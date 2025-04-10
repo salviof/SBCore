@@ -13,34 +13,34 @@ import java.util.List;
  */
 public interface ItfModeloFormularioSBFW extends ItfBeanSimples {
 
-    String getAreaExtra1();
+    public String getAreaExtra1();
 
-    String getAreaExtra2();
+    public String getAreaExtra2();
 
-    String getAreaExtra3();
+    public String getAreaExtra3();
 
-    String getAreaPrincipal();
+    public String getAreaPrincipal();
 
-    String getAreaSecundaria();
+    public String getAreaSecundaria();
 
-    List<String> getAreas();
+    public List<String> getAreas();
 
-    String getDescricao();
+    public String getDescricao();
 
-    int getId();
+    public Long getId();
 
-    String getNomeModelo();
+    public String getNomeModelo();
 
-    String getXhtmlVinculado();
+    public String getXhtmlVinculado();
 
-    void setAreas(List<String> areas);
+    public void setAreas(List<String> areas);
 
-    void setDescricao(String descricao);
+    public void setDescricao(String descricao);
 
-    void setId(int id);
+    public void setId(Long id);
 
-    void setNomeModelo(String nomeModelo);
+    public void setNomeModelo(String nomeModelo);
 
-    void setXhtmlVinculado(String xhtmlVinculado);
+    public void setXhtmlVinculado(String xhtmlVinculado);
 
 }

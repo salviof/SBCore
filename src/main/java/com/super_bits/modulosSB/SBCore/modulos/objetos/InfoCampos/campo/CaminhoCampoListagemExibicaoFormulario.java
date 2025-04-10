@@ -72,7 +72,7 @@ public class CaminhoCampoListagemExibicaoFormulario implements ItfCampoListagemE
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return caminhoCampoReflexao.getId();
     }
 
@@ -152,7 +152,7 @@ public class CaminhoCampoListagemExibicaoFormulario implements ItfCampoListagemE
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
         caminhoCampoReflexao.setId(pID);
     }
 

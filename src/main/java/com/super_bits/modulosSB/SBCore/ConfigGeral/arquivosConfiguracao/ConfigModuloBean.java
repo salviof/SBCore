@@ -24,7 +24,7 @@ import java.util.Properties;
 public class ConfigModuloBean extends ItemSimples implements Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private final ConfigModulo configuracao;
     private List<String> campos;
     private Map<String, String> mapaValores;
@@ -43,7 +43,7 @@ public class ConfigModuloBean extends ItemSimples implements Serializable {
         configuracao = pConfig;
 
         nomeModulo = "Configurações do Modulo " + pConfig.fabricaConfig.getSimpleName();
-        id = nomeModulo.hashCode();
+        id = (long) nomeModulo.hashCode();
         buildCampos();
     }
 
@@ -64,7 +64,7 @@ public class ConfigModuloBean extends ItemSimples implements Serializable {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

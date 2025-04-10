@@ -19,7 +19,7 @@ import java.util.List;
 public class ItemBairro extends ItemSimples implements ItfBairro {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
@@ -34,7 +34,7 @@ public class ItemBairro extends ItemSimples implements ItfBairro {
     }
 
     @Override
-    public void setId(int pId) {
+    public void setId(Long pId) {
 
         this.id = pId;
 

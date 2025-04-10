@@ -27,7 +27,7 @@ import java.util.List;
 public class UsuarioSistemaRoot extends ItemNormal implements ItfUsuario, ItfBeanComIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
@@ -87,8 +87,8 @@ public class UsuarioSistemaRoot extends ItemNormal implements ItfUsuario, ItfBea
     }
 
     @Override
-    public int getId() {
-        return -1;
+    public Long getId() {
+        return -1l;
     }
 
     @Override

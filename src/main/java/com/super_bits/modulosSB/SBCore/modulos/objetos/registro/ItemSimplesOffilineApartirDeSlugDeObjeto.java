@@ -15,12 +15,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final Integer id;
+    private final Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private final String descricao;
     private final String slugEnviado;
 
-     public ItemSimplesOffilineApartirDeSlugDeObjeto(String pSlug) {
+    public ItemSimplesOffilineApartirDeSlugDeObjeto(String pSlug) {
 
         if (pSlug == null) {
             throw new UnsupportedOperationException("O valor não foi enviado");
@@ -35,7 +35,7 @@ public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
             idx++;
         }
         if (indexCodigo != null) {
-            id = Integer.parseInt(valores[indexCodigo]);
+            id = Long.parseLong(valores[indexCodigo]);
         } else {
             id = null;
         }
@@ -52,9 +52,9 @@ public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         if (id == null) {
-            return -1;
+            return -1l;
         }
         return id;
     }

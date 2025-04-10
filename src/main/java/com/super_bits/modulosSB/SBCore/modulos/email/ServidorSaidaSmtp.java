@@ -17,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparoEmail {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
@@ -36,8 +36,8 @@ public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparo
     }
 
     @Override
-    public int getId() {
-        return super.getNome().hashCode();
+    public Long getId() {
+        return (long) super.getNome().hashCode();
     }
 
     @Override

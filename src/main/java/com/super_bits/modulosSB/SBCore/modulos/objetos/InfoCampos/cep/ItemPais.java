@@ -19,7 +19,7 @@ import java.util.List;
 public class ItemPais extends ItemSimples implements ItfPais {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
@@ -27,7 +27,7 @@ public class ItemPais extends ItemSimples implements ItfPais {
     private final List<ItfUnidadeFederativa> unidadesFederativas = new ArrayList<>();
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
 
         this.id = pID;
 

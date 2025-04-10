@@ -22,12 +22,12 @@ public enum FabTipoAcessoArquivo implements ItfFabrica {
         tipoAcesso.setEnumVinculado(this);
         switch (this) {
             case VISUALIZAR:
-                tipoAcesso.setId(1);
+                tipoAcesso.setId(1l);
                 tipoAcesso.setNome("Visualizar Arquivo");
 
                 break;
             case BAIXAR:
-                tipoAcesso.setId(2);
+                tipoAcesso.setId(2l);
                 tipoAcesso.setNome("Baixar Arquivo");
 
                 break;

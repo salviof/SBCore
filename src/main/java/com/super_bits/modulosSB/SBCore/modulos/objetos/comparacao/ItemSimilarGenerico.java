@@ -200,12 +200,12 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return objetoAnalizado.getId();
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         return objetoAnalizado.configIDPeloNome();
     }
 
@@ -235,7 +235,7 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
 
     }
 

@@ -33,7 +33,7 @@ public enum FabMesDoAno implements ItfFabrica {
 
         LocalDateTime localDateTime = pData.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        int year = localDateTime.getYear();
+        Long year = (long) localDateTime.getYear();
 
         int mesID = calendar.get(Calendar.MONTH) + 1;
         switch (mesID) {
@@ -89,48 +89,48 @@ public enum FabMesDoAno implements ItfFabrica {
         MesDoAnoCalendario mes = new MesDoAnoCalendario();
         switch (this) {
             case JANEIRO:
-                mes.setId(Month.JANUARY.getValue());
+                mes.setId((long) Month.JANUARY.getValue());
                 break;
             case FEVEREIRO:
-                mes.setId(Month.FEBRUARY.getValue());
+                mes.setId((long) Month.FEBRUARY.getValue());
                 break;
             case MARCO:
-                mes.setId(Month.MARCH.getValue());
+                mes.setId((long) Month.MARCH.getValue());
                 break;
             case ABRIL:
-                mes.setId(Month.APRIL.getValue());
+                mes.setId((long) Month.APRIL.getValue());
                 break;
             case MAIO:
-                mes.setId(Month.MAY.getValue());
+                mes.setId((long) Month.MAY.getValue());
                 break;
             case JUNHO:
-                mes.setId(Month.JUNE.getValue());
+                mes.setId((long) Month.JUNE.getValue());
                 break;
             case JULHO:
-                mes.setId(Month.JULY.getValue());
+                mes.setId((long) Month.JULY.getValue());
                 break;
             case AGOSTO:
-                mes.setId(Month.AUGUST.getValue());
+                mes.setId((long) Month.AUGUST.getValue());
                 break;
             case SETEMBRO:
-                mes.setId(Month.SEPTEMBER.getValue());
+                mes.setId((long) Month.SEPTEMBER.getValue());
                 break;
             case OUTUBRO:
-                mes.setId(Month.OCTOBER.getValue());
+                mes.setId((long) Month.OCTOBER.getValue());
                 break;
             case NOVEMBRO:
-                mes.setId(Month.NOVEMBER.getValue());
+                mes.setId((long) Month.NOVEMBER.getValue());
                 break;
             case DEZEMBRO:
-                mes.setId(Month.DECEMBER.getValue());
+                mes.setId((long) Month.DECEMBER.getValue());
                 break;
             default:
                 throw new AssertionError(this.name());
 
         }
-        int anoAtual = Year.now().getValue();
-        int mesID = mes.getId();
-        LocalDate date = LocalDate.ofYearDay(anoAtual, mesID * 28);
+        Long anoAtual = Long.valueOf(Year.now().getValue());
+        Long mesID = mes.getId();
+        LocalDate date = LocalDate.ofYearDay(anoAtual.intValue(), mesID.intValue() * 28);
         mes.setNome(date.getMonth().getDisplayName(TextStyle.FULL, br));
 
         AnoCalendario anoCalendario = new AnoCalendario(anoAtual);
@@ -138,7 +138,7 @@ public enum FabMesDoAno implements ItfFabrica {
         return mes;
     }
 
-    public MesDoAnoCalendario getRegistro(int pAno) {
+    public MesDoAnoCalendario getRegistro(Long pAno) {
         MesDoAnoCalendario mes = getRegistro();
 
         mes.setAno(new AnoCalendario(pAno));

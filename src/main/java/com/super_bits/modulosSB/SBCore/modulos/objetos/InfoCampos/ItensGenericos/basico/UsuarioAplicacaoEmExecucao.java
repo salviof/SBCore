@@ -28,7 +28,7 @@ import java.util.List;
 public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario, ItfBeanComIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 

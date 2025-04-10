@@ -18,14 +18,14 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class SBInfoProjetoAtual extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @Override
-    public int getId() {
+    public Long getId() {
         if (id == 0) {
-            return SBCore.getNomeProjeto().hashCode();
+            return (long) SBCore.getNomeProjeto().hashCode();
         }
         return id;
     }

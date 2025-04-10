@@ -18,7 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
-import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfCentralDados;
+import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 
 /**
  *
@@ -143,7 +143,7 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
 
     public ItfCentralAdministrativa getCentralAdministrativa();
 
-    public Class<? extends ItfCentralDados> getCentralDados();
+    public Class<? extends ItfServicoRepositorioEntidades> getCentralDados();
 
     public FabTipoProjeto getTipoProjeto();
 }

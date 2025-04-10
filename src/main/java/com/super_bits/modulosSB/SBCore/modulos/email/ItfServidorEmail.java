@@ -13,8 +13,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public interface ItfServidorEmail extends ItfBeanSimples {
 
     @Override
-    public default int getId() {
-        return getEmail().hashCode();
+    public default Long getId() {
+        return (long) getEmail().hashCode();
     }
 
     @Override

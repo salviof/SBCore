@@ -45,13 +45,13 @@ import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.UtilSBCoreErros
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 
-import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfCentralDados;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfServicoLinkDeEntidadesERP;
 import jakarta.json.JsonObject;
+import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 
 /**
  *
@@ -111,7 +111,7 @@ public class SBCore {
     private static ItfCentralAdministrativa servicoInterfaceGraficaDEV;
     private static ItfServicoController servicoController;
     private static Class<? extends ItfCentralAtributosDeObjetos> centralDeAtributosPadrao;
-    private static ItfCentralDados centralDados;
+    private static ItfServicoRepositorioEntidades centralDados;
     private static FabTipoProjeto tipoProjeto;
 
     /**
@@ -679,9 +679,9 @@ public class SBCore {
 
     }
 
-    public static void registrarCentralDeDados(Class<? extends ItfCentralDados> pCentralDeDados) {
+    public static void registrarCentralDeDados(Class<? extends ItfServicoRepositorioEntidades> pCentralDeDados) {
         try {
-            centralDados = (ItfCentralDados) pCentralDeDados.newInstance();
+            centralDados = (ItfServicoRepositorioEntidades) pCentralDeDados.newInstance();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro registrando central de dados", t);
         }
@@ -929,16 +929,16 @@ public class SBCore {
 
     /**
      *
-     * @see ItfCentralDados
+     * @see ItfServicoRepositorioEntidades
      * @deprecated Usar getServicoRepositorio
      * @return Recupera Entidades persistidas
      */
     @Deprecated
-    public static ItfCentralDados getCentralDados() {
+    public static ItfServicoRepositorioEntidades getCentralDados() {
         return getServicoRepositorio();
     }
 
-    public static ItfCentralDados getServicoRepositorio() {
+    public static ItfServicoRepositorioEntidades getServicoRepositorio() {
         if (centralDados == null) {
             throw new UnsupportedOperationException("A central de dados não foi registrada");
         }

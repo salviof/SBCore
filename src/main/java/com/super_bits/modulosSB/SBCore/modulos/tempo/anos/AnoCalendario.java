@@ -16,23 +16,23 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 @InfoObjetoSB(tags = "Ano", plural = "Anos")
 public class AnoCalendario extends ItemSimples {
 
-    public AnoCalendario(int pAno) {
+    public AnoCalendario(Long pAno) {
         id = pAno;
     }
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final int id;
+    private final Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(Long id) {
         System.out.println("INSTANCIE UM NOVO ANO DE CALENDÁRIO, O ANO É DO TIPO FINAL");
     }
 

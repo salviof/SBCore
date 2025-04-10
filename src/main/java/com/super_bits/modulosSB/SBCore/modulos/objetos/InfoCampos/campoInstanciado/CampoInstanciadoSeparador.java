@@ -201,8 +201,8 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public int getId() {
-        return -1;
+    public Long getId() {
+        return (long) -1;
     }
 
     @Override
@@ -211,8 +211,8 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public int configIDPeloNome() {
-        return 0;
+    public Long configIDPeloNome() {
+        return 0l;
     }
 
     @Override

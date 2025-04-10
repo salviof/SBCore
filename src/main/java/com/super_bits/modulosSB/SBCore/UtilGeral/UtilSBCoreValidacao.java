@@ -12,6 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,10 +33,28 @@ public abstract class UtilSBCoreValidacao {
     }
 
     public static String getPrimeiraInconsistenciaDeValidacao(ItfBeanSimples pObjeto) {
+
         Optional<ItfCampoInstanciado> cpEncontrado = pObjeto.getCamposInstanciados().stream().
                 filter(cp
                         -> (!cp.validarCampo())
                 ).findFirst();
+
+        List<ItfCampoInstanciado> camposLogicosDaEntidade = new ArrayList<>();
+
+        pObjeto.getCamposInstanciados().stream().
+                filter(cp
+                        -> (cp.isTemValidadacaoLogica())).forEach(camposLogicosDaEntidade::add);
+        for (ItfCampoInstanciado cp : camposLogicosDaEntidade) {
+            try {
+                if (pObjeto.getId() == 0) {
+                    cp.getValidacaoLogicaEstrategia().validarModoNovo(cp.getValor());
+                } else {
+                    cp.getValidacaoLogicaEstrategia().validarModoEdicao(cp.getValor());
+                }
+            } catch (ErroValidacao e) {
+                return e.getMensagemAoUsuario();
+            }
+        }
 
         if (cpEncontrado.isPresent()) {
             return gerarMensagensValidacao(cpEncontrado.get(), cpEncontrado.get().getValor(), pObjeto.getId() == 0, true).get(0);

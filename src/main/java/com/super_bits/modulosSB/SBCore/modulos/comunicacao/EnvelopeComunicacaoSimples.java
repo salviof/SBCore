@@ -20,7 +20,7 @@ import java.util.List;
 public class EnvelopeComunicacaoSimples extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
     private ItfUsuario destinatario;

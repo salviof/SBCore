@@ -32,8 +32,8 @@ public class BeanTodosSelecionados implements ItfBeanSimplesSomenteLeitura {
     }
 
     @Override
-    public int getId() {
-        return -2;
+    public Long getId() {
+        return -2l;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BeanTodosSelecionados implements ItfBeanSimplesSomenteLeitura {
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

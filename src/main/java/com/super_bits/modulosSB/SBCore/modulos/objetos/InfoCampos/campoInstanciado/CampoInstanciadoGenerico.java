@@ -597,7 +597,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         return atributoAssociado.configIDPeloNome();
     }
 
@@ -629,7 +629,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return atributoAssociado.getId();
     }
 
@@ -1103,42 +1103,37 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public boolean validarCampo() {
         try {
-            if (atributoAssociado.isUmValorLogico()) {
+            //  if (atributoAssociado.isUmValorLogico()) {
 
-                if (!atributoAssociado.isTemValidadacaoLogica()) {
-                    return true;
-                }
-
-            }
-            if (atributoAssociado.isObrigatorio()) {
-                if (isUmCampoArquivoEntidade()) {
+            //      if (!atributoAssociado.isTemValidadacaoLogica()) {
+            //          return true;
+            //      }
+            //}
+            //todo Implementar validação básica para atributo do tipo arquivos.
+            if (isUmCampoArquivoEntidade()) {
+                if (atributoAssociado.isObrigatorio()) {
                     if (!getComoArquivoDeEntidade().isExisteArquivo()) {
                         return false;
                     } else {
                         return true;
                     }
                 }
-                return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
-            } else {
-                if (isUmCampoArquivoEntidade()) {
-                    return true;
-                }
-                if (isUmCampoCampoLocalizacao()) {
-                    //Caso a localização seja inválida, e este valor não for obrigatório, Configura valor nulo
-                    if (!UtilSBCoreValidacao.gerarMensagensValidacao(this, getValor(), valorModificado, false).isEmpty()) {
-                        setValor(null);
-                    }
+                return true;
+            }
 
-                } else {
-                    if (getValor() != null) {
-                        return UtilSBCoreValidacao.validacoesBasicas(this, getValor());
-                    }
-                    if (atributoAssociado.isTemValidadacaoLogica()) {
-                        //UtilSBCoreValidacao.gerarMensagensValidacao(campoInstanciadoPai, this, valorModificado, false);
-
-                    }
+            if (isUmCampoCampoLocalizacao()) //Caso a localização seja inválida, e este valor não for obrigatório, Configura valor nulo
+            {
+                if (!UtilSBCoreValidacao.gerarMensagensValidacao(this, getValor(), valorModificado, false).isEmpty()) {
+                    setValor(null);
+                    return false;
                 }
             }
+
+            boolean validacoesBasicas = UtilSBCoreValidacao.validacoesBasicas(this, getValor());
+            if (!validacoesBasicas) {
+                return false;
+            }
+
             return true;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Indetermnando tentando validar: " + getNomeCompostoIdentificador(), t);

@@ -845,7 +845,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @return
      */
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         try {
 
             String nomeparaHash = (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.NOME);
@@ -854,13 +854,13 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 throw new UnsupportedOperationException("Erro configurando id pelo nome, o campo que identifica" + FabTipoAtributoObjeto.NOME + " retornou nulo");
             }
 
-            int id = UtilSBCoreGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);
+            Long id = UtilSBCoreGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);
             setValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID, id);
             return id;
         } catch (Throwable t) {
 
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando definir o ID para o item" + getInstancia().getClass().getName(), t);
-            return 0;
+            return 0l;
         }
     }
 

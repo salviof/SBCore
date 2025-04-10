@@ -124,11 +124,11 @@ public class SessaoMenuSB implements ItfSessaoDeMenuSB, Serializable {
     }
 
     @Override
-    public void setId(int pId) {
+    public void setId(Long pId) {
         acaoSessao.setId(pId);
     }
 
-    public void setIdMetodo(int pID) {
+    public void setIdMetodo(Long pID) {
         acaoSessao.setId(pID);
     }
 
@@ -148,7 +148,7 @@ public class SessaoMenuSB implements ItfSessaoDeMenuSB, Serializable {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return acaoSessao.getId();
     }
 
@@ -294,7 +294,7 @@ public class SessaoMenuSB implements ItfSessaoDeMenuSB, Serializable {
     }
 
     @Override
-    public int configIDPeloNome() {
+    public Long configIDPeloNome() {
         return acaoSessao.configIDPeloNome();
     }
 

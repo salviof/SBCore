@@ -64,7 +64,7 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
 
     private List<T> filtroSimilaridadeEmListaCompleta(final String pParamentro) {
         List resp = new ArrayList();
-        Map<Integer, ItemSimilar> itens = listaCompleta.stream().parallel()
+        Map<Long, ItemSimilar> itens = listaCompleta.stream().parallel()
                 .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
                         n -> new ItemSimilar((ItfBeanSimples) n, pParamentro)));
 

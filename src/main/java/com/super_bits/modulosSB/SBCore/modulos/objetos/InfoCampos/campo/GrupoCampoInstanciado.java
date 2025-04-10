@@ -21,7 +21,7 @@ import java.util.List;
 public class GrupoCampoInstanciado extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private final List<ItfCampoInstanciado> campos = new ArrayList<>();
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeCampo;
@@ -47,7 +47,7 @@ public class GrupoCampoInstanciado extends ItemSimples {
             return;
         }
         this.nomeCampo = nomeCampo;
-        id = nomeCampo.hashCode();
+        id = (long) nomeCampo.hashCode();
     }
 
 }

@@ -56,7 +56,7 @@ public enum FabCidadesSemPersistencia implements ItfFabrica {
         ItemCidade novaCidade = new ItemCidade();
         novaCidade.setUnidadeFederativa(FabUnidadesFederativasSemPersistencia.MG.getRegistro());
         novaCidade.setNome(this.toString());
-        novaCidade.setId(1);
+        novaCidade.setId(1l);
 
         switch (this) {
             case BELO_HORIZONTE:
@@ -64,13 +64,13 @@ public enum FabCidadesSemPersistencia implements ItfFabrica {
                 ItemBairro bairro1 = new ItemBairro();
                 bairro1.setCidade(novaCidade);
                 bairro1.setNome("Nova Suissa");
-                bairro1.setId(1);
+                bairro1.setId(1l);
                 ItemBairro bairro2 = new ItemBairro();
-                bairro2.setId(2);
+                bairro2.setId(2l);
                 bairro2.setCidade(novaCidade);
                 bairro2.setNome("Centro");
                 ItemBairro bairro3 = new ItemBairro();
-                bairro1.setId(3);
+                bairro1.setId(3l);
                 bairro3.setCidade(novaCidade);
                 bairro3.setNome("Teste 1");
 

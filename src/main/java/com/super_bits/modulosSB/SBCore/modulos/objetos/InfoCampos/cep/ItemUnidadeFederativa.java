@@ -23,7 +23,7 @@ import javax.persistence.Transient;
 public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFederativa {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
@@ -36,13 +36,13 @@ public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFede
     private List<ItfCidade> cidades;
 
     @Override
-    public int getId() {
+    public Long getId() {
         configIDPeloNome();
         return super.getId(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setId(int pId) {
+    public void setId(Long pId) {
 
         this.id = pId;
 

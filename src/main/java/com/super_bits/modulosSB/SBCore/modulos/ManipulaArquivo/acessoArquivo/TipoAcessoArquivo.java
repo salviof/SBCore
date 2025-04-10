@@ -21,7 +21,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
@@ -29,12 +29,12 @@ public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAE
     private FabTipoAcessoArquivo tipoAcessoArquivo;
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

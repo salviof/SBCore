@@ -72,7 +72,7 @@ public class UtilSBCoreListasObjeto {
             return filtrarOrdenandoMaisParecidos(pLista, pParametro, pLimite);
         }
         List resp = new ArrayList();
-        Map<Integer, ItemSimilarComPrioridade> itens = pLista.stream().parallel()
+        Map<Long, ItemSimilarComPrioridade> itens = pLista.stream().parallel()
                 .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
                         n -> new ItemSimilarComPrioridade((ItfBeanSimples) n, pParametro, pSelecao.contains(n))));
 
@@ -100,7 +100,7 @@ public class UtilSBCoreListasObjeto {
         final String parametro = UtilSBCoreStringComparador.normalizarTexto(pParametro);
         FabTipoPesquisaGenerica tipoPesquisa = FabTipoPesquisaGenerica.getTipoPesquisaByTermo(pParametro);
         List resp = new ArrayList();
-        Map<Integer, ItemSimilar> itens = pLista.stream().parallel()
+        Map<Long, ItemSimilar> itens = pLista.stream().parallel()
                 .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
                         n -> new ItemSimilar((ItfBeanSimples) n, parametro, tipoPesquisa)));
 

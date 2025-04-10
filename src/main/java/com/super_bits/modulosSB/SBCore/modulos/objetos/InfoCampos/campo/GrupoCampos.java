@@ -32,7 +32,7 @@ public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
     private final String nomeGrupo;
     private final String nomeIdentificadorSlug;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     protected final Map<String, ItfCampoExibicaoFormulario> campos = new HashMap<>();
     private final Map<Integer, String> ordemCampos = new HashMap();
 
@@ -50,12 +50,12 @@ public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         if (id == 0) {
             StringBuilder codigoGrupoSTR = new StringBuilder();
             codigoGrupoSTR.append(getNomeGrupo());
             getCampos().forEach(cp -> codigoGrupoSTR.append(cp.getCaminhoComleto()));
-            id = codigoGrupoSTR.toString().hashCode();
+            id = (long) codigoGrupoSTR.toString().hashCode();
         }
         return id;
     }

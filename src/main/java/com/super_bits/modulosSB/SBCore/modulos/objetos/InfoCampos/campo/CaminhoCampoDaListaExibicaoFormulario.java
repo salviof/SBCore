@@ -63,7 +63,7 @@ public class CaminhoCampoDaListaExibicaoFormulario implements ItfCaminhoCampoDaL
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return campoVinculado.getId();
     }
 
@@ -143,7 +143,7 @@ public class CaminhoCampoDaListaExibicaoFormulario implements ItfCaminhoCampoDaL
     }
 
     @Override
-    public void setId(int pID) {
+    public void setId(Long pID) {
         campoVinculado.setId(pID);
     }
 

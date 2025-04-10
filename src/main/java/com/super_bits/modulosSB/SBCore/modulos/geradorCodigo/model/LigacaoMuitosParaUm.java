@@ -29,7 +29,7 @@ import java.util.List;
 public class LigacaoMuitosParaUm extends ItemSimples implements ItfLigacaoMuitosParaUm {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private String label, descricao;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeDeclarado;

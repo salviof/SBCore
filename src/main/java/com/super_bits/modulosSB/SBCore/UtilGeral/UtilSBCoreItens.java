@@ -26,17 +26,17 @@ public abstract class UtilSBCoreItens {
      */
     public static List<ItfBeanSimples> ordernarPorId(List<ItfBeanSimples> pLista) {
 
-        Map<Integer, ItfBeanSimples> mapaItens = new HashMap();
+        Map<Long, ItfBeanSimples> mapaItens = new HashMap();
 
         List<ItfBeanSimples> ordenado = new ArrayList<>();
-        List<Integer> ordem = new ArrayList<>();
+        List<Long> ordem = new ArrayList<>();
         for (ItfBeanSimples item : pLista) {
-            mapaItens.put(item.getId(), item);
+            mapaItens.put((long) item.getId(), item);
             ordem.add(item.getId());
         }
         Collections.sort(ordem);
 
-        for (Integer id : ordem) {
+        for (Long id : ordem) {
             ordenado.add(mapaItens.get(id));
         }
         return ordenado;

@@ -27,7 +27,7 @@ public class GrupoCamposSub extends ItemSimples implements ItfGrupoCampos {
     @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.NOME)
     private final String nomeGrupo;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id;
+    private Long id;
     private final CaminhoCampoListagemExibicaoFormulario campoListaPai;
     private final String nomeIdentificadorSlug;
     private CaminhoCampoExibicaoFormulario[] camposArray;

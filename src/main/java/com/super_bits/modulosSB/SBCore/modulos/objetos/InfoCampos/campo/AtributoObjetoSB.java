@@ -24,7 +24,7 @@ import java.util.List;
 public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final int id;
+    private final Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String label;
     @InfoCampo(tipo = FabTipoAtributoObjeto.DESCRITIVO)
@@ -331,7 +331,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

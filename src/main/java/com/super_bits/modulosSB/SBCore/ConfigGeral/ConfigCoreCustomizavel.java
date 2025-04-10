@@ -11,7 +11,6 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfCentralDados;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
@@ -19,6 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
+import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 
 /**
  *
@@ -40,7 +40,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private Class<? extends ItfCentralComunicacao> classeCentralComunicacao;
     private Class<? extends ItfCentralLocalizacao> classeCentralLocalizacao;
     private Class<? extends ItfCentralAtributosDeObjetos> classeCentralAtributos;
-    private Class<? extends ItfCentralDados> classeCentralDados;
+    private Class<? extends ItfServicoRepositorioEntidades> classeCentralDados;
     private Class<? extends ItfServicoController> classeServicoController;
     private ItfCentralAdministrativa centralAdministrativa;
     private FabTipoProjeto tipoProjeto;
@@ -308,12 +308,12 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public void setCentralDados(Class<? extends ItfCentralDados> pCentral) {
+    public void setCentralDados(Class<? extends ItfServicoRepositorioEntidades> pCentral) {
         classeCentralDados = pCentral;
     }
 
     @Override
-    public Class<? extends ItfCentralDados> getCentralDados() {
+    public Class<? extends ItfServicoRepositorioEntidades> getCentralDados() {
         return classeCentralDados;
     }
 

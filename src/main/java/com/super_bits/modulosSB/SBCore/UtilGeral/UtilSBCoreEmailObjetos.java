@@ -132,7 +132,7 @@ public class UtilSBCoreEmailObjetos {
 
     public static class ArquivoAnexoEmail {
 
-        private int id;
+        private Long id;
         private String nome;
         private String tipo;
         private InputStream arquivo;
@@ -145,7 +145,7 @@ public class UtilSBCoreEmailObjetos {
             cid = pCid;
         }
 
-        public int getId() {
+        public Long getId() {
             return id;
         }
 

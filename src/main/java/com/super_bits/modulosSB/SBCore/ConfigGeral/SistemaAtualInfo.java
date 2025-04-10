@@ -17,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 public class SistemaAtualInfo extends ItemSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private int id = 0;
+    private Long id = 0l;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.DESCRITIVO)
@@ -25,11 +25,11 @@ public class SistemaAtualInfo extends ItemSimples {
 
     private String empresa;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

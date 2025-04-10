@@ -13,11 +13,11 @@ import javax.persistence.EntityManager;
  *
  * @author SalvioF
  */
-public interface ItfCentralDados {
+public interface ItfServicoRepositorioEntidades {
 
     public List<?> selecaoRegistros(ItfTokenAcessoDados pEM, String pSQL, String pPQL, Integer maximo, Class tipoRegisto, FabTipoSelecaoRegistro pTipoSelecao, Object... parametros);
 
-    public <T> T getRegistroByID(ItfTokenAcessoDados pToken, Class<T> pClasse, int id);
+    public <T> T getRegistroByID(ItfTokenAcessoDados pToken, Class<T> pClasse, Long id);
 
     public long getQuantidadeRegistros(ItfTokenAcessoDados pToken, Class pClasseObjeto);
 
