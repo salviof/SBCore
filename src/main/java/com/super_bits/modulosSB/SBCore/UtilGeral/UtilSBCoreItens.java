@@ -31,8 +31,12 @@ public abstract class UtilSBCoreItens {
         List<ItfBeanSimples> ordenado = new ArrayList<>();
         List<Long> ordem = new ArrayList<>();
         for (ItfBeanSimples item : pLista) {
-            mapaItens.put((long) item.getId(), item);
-            ordem.add(item.getId());
+            if (item.getId() != null) {
+                mapaItens.put((Long) item.getId(), item);
+                ordem.add(item.getId());
+            } else {
+                System.out.println("Enviou registro com id nulo para ser ordenado" + item);
+            }
         }
         Collections.sort(ordem);
 

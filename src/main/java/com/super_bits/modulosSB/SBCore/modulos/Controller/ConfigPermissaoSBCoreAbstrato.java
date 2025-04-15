@@ -59,8 +59,12 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
     }
 
     @Override
-    public void logarEmailESenha(String pEmail, String pSenha) {
-        ItfUsuario usuarioEncontrado = SBCore.getCentralPermissao().getUsuarioByEmail(pEmail);
+    public synchronized void logarEmailESenha(String pEmail, String pSenha) {
+
+        ItfUsuario usuarioEncontrado = SBCore.getServicoPermissao().getUsuarioByEmail(pEmail);
+        if (SBCore.getServicoSessao().getSessaoAtual().isIdentificado()) {
+            SBCore.getServicoSessao().efetuarLogOut();
+        }
         EntityManager em = null;
         if (usuarioEncontrado != null) {
 
@@ -76,7 +80,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
                         return;
                     }
 
-                    SBCore.getControleDeSessao().getSessaoAtual().setUsuario(usuarioEncontrado);
+                    SBCore.getServicoSessao().getSessaoAtual().setUsuario(usuarioEncontrado);
                     SBCore.enviarAvisoAoUsuario("Bem vindo " + usuarioEncontrado.getNome());
 
                     return;

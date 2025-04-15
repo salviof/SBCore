@@ -226,7 +226,7 @@ public class CentralDeArquivosJar extends CentralDeArquivosAbstrata {
     @Override
     public String getEndrLocalImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo, ItfSessao pSessao) {
         String diretorioBase = "ERRO";
-        if (item.getId() == 0) {
+        if (item.getId() == null || item.getId() == null) {
             diretorioBase = pSessao.getPastaTempDeSessao() + "/" + item.getClass().getSimpleName() + "/0/";
         } else {
             diretorioBase = getEndrLocalImagens() + "/" + item.getClass().getSimpleName() + "/" + item.getId() + "/";

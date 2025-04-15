@@ -38,7 +38,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     }
 
     public String getEnderecoLocalAlternativo(ItfBeanSimplesSomenteLeitura entidade, String pCategoria, String pNome) {
-        if (entidade.getId() == 0) {
+        if (entidade.getId() == null || entidade.getId() == null) {
             return getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
         } else {
             return getEndrLocalArquivoItem(entidade, pNome, pCategoria);
@@ -48,7 +48,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     @Override
     public boolean salvarArquivo(ItfBeanSimplesSomenteLeitura entidade, byte[] arqivo, String pCategoria, String pNome) {
         String caminhoArquivo = null;
-        if (entidade.getId() == 0) {
+        if (entidade.getId() == null) {
             caminhoArquivo = getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
         } else {
             caminhoArquivo = getEndrLocalArquivoItem(entidade, pNome, pCategoria);

@@ -43,7 +43,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     private void configuracoesIniciais() {
         ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
-        if (entidadeVinculada.getId() == 0) {
+        if (entidadeVinculada.getId() == null) {
             if (isExisteArquivo()) {
                 excluirArquivo();
             }
@@ -65,7 +65,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
             //campoInstanciado.setValor(pNomeArquivo);
             ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
-            if (entidadeVinculada.getId() == 0) {
+            if (entidadeVinculada.getId() == null) {
                 intputTemporario = pInputStream;
                 campoInstanciado.setValor(nomeArquivoCompativel);
 
@@ -127,7 +127,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     public boolean isExisteArquivo() {
         switch (getCampoInstanciado().getFabricaTipoAtributo()) {
             case ARQUIVO_DE_ENTIDADE:
-                if (getCampoInstanciado().getObjetoDoAtributo().getId() == 0) {
+                if (getCampoInstanciado().getObjetoDoAtributo().getId() == null) {
                     return intputTemporario != null;
                 } else {
                     return SBCore.getServicoArquivosDeEntidade().isExisteArquivo(campoInstanciado);

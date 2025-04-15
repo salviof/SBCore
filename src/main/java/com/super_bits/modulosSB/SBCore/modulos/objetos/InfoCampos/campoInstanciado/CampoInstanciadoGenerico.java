@@ -1216,7 +1216,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                 if (isUmItemDeUmaLista()) {
                     try {
                         ItfBeanSimplesSomenteLeitura itemSelecionado = (ItfBeanSimplesSomenteLeitura) getValor();
-                        if (itemSelecionado.getId() == 0 && UtilSBCoreStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
+                        if (itemSelecionado.getId() == null || itemSelecionado.getId() == null && UtilSBCoreStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
                             valorNaoPrenchido = true;
                         }
                     } catch (Throwable t) {

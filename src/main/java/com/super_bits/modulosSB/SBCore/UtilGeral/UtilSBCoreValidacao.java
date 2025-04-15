@@ -46,7 +46,7 @@ public abstract class UtilSBCoreValidacao {
                         -> (cp.isTemValidadacaoLogica())).forEach(camposLogicosDaEntidade::add);
         for (ItfCampoInstanciado cp : camposLogicosDaEntidade) {
             try {
-                if (pObjeto.getId() == 0) {
+                if (pObjeto.getId() == null || pObjeto.getId() == null) {
                     cp.getValidacaoLogicaEstrategia().validarModoNovo(cp.getValor());
                 } else {
                     cp.getValidacaoLogicaEstrategia().validarModoEdicao(cp.getValor());
@@ -57,7 +57,7 @@ public abstract class UtilSBCoreValidacao {
         }
 
         if (cpEncontrado.isPresent()) {
-            return gerarMensagensValidacao(cpEncontrado.get(), cpEncontrado.get().getValor(), pObjeto.getId() == 0, true).get(0);
+            return gerarMensagensValidacao(cpEncontrado.get(), cpEncontrado.get().getValor(), pObjeto.getId() == null, true).get(0);
         } else {
             return null;
         }
@@ -68,7 +68,7 @@ public abstract class UtilSBCoreValidacao {
         List<String> lista = new ArrayList<>();
 
         pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo()))
-                .forEach(cp -> lista.add(gerarMensagensValidacao(cp, cp.getValor(), pObjeto.getId() == 0, true).get(0)));
+                .forEach(cp -> lista.add(gerarMensagensValidacao(cp, cp.getValor(), pObjeto.getId() == null, true).get(0)));
         return lista;
 
     }

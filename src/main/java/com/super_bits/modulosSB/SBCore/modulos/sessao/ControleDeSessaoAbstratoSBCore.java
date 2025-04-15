@@ -26,13 +26,13 @@ public abstract class ControleDeSessaoAbstratoSBCore implements ItfControleDeSes
     @Override
     public void registrarAcao(ItfPermissao pAcesso) {
         getSessaoAtual().getAcoesRealizadas().add(pAcesso);
+
     }
 
     @Override
     @Deprecated
     public void logarEmailESenha(String pEmail, String pSenha) {
-
-        SBCore.getCentralPermissao().logarEmailESenha(pEmail, pSenha);
+        SBCore.getServicoPermissao().logarEmailESenha(pEmail, pSenha);
 
     }
 

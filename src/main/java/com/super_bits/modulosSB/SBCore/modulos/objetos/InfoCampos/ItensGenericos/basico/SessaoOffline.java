@@ -106,7 +106,7 @@ public class SessaoOffline implements ItfSessao {
 
             return false;
         }
-        if (usuarioLogado.getId() == 0) {
+        if (usuarioLogado.getId() == null || usuarioLogado.getId() == null) {
 
             return false;
         }

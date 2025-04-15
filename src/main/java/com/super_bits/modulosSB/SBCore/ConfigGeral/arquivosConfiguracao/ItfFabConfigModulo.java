@@ -16,7 +16,11 @@ public interface ItfFabConfigModulo {
     public String getValorPadrao();
 
     public default String getValorParametroSistema() {
-        return SBCore.getConfigModulo(this.getClass()).getPropriedade(this);
+        String valor = SBCore.getConfigModulo(this.getClass()).getPropriedade(this);
+        if (valor == null || valor.isEmpty()) {
+            return getValorPadrao();
+        }
+        return getValorPadrao();
     }
 
     /**
