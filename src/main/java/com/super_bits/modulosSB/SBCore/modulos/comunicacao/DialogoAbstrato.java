@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
@@ -15,7 +14,7 @@ import java.util.Date;
  *
  * @author SalvioF
  */
-public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComunicacao, Serializable {
+public abstract class DialogoAbstrato extends ItemSimples implements ItfDialogo, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -26,13 +25,8 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
     private final Date dataHoraDisparo;
     private Date dataHoraResposta;
 
-    public ComunicacaoAbstrata() {
+    public DialogoAbstrato() {
         dataHoraDisparo = new Date();
-    }
-
-    @Override
-    public void selarComunicacao() {
-        SBCore.getServicoComunicacao().selarComunicacao(this);
     }
 
     public void setCodigoSelo(String codigoSelo) {
@@ -66,6 +60,7 @@ public abstract class ComunicacaoAbstrata extends ItemSimples implements ItfComu
      */
     @Override
     public boolean isFoiSelado() {
+        foiSelado = codigoSelo == null || codigoSelo.isEmpty();
         return foiSelado;
     }
 

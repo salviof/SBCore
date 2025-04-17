@@ -4,12 +4,11 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
+import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.ItfMenusDeSessao;
@@ -22,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTelaUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogo;
 
 /**
  *
@@ -152,33 +152,16 @@ public class SessaoOffline implements ItfSessao {
 
     }
 
-    public List<ItfComunicacao> getComunicacaoAguardandoRespostaUsuarioSesso() {
-        List<ItfComunicacao> comunicacoesEncontradas = SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario());
+    public List<ItfDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
+        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario());
         return comunicacoesEncontradas;
     }
 
-    public List<ItfComunicacao> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
+    public List<ItfDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
 
-        List<ItfComunicacao> lista = new ArrayList();
-        SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
+        List<ItfDialogo> lista = new ArrayList();
+        SBCore.getServicoComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
                 .stream().limit(6).forEach(lista::add);
-        return lista;
-    }
-
-    public List<ItfComunicacao> getUltimasNotificacoesMenuAguardandoRespostaUsuarioSessao() {
-        List<ItfComunicacao> lista = new ArrayList();
-        SBCore.getCentralComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario()).stream()
-                .filter(cm -> cm
-                .getTransportes().stream().filter(tp -> tp.toString().equals(ERPTransporteComunicacao.INTRANET_MENU.getRegistro().toString()))
-                .findFirst().isPresent())
-                .limit(6).forEach(lista::add);
-        for (ItfComunicacao teste : lista) {
-            teste.getTransportes().stream().forEach(tf -> {
-                System.out.println(tf.toString());
-            });
-            System.out.println(ERPTransporteComunicacao.INTRANET_MENU.getRegistro().toString());
-            System.out.println(teste.getTransportes().contains(ERPTransporteComunicacao.INTRANET_MENU.getRegistro()));
-        }
         return lista;
     }
 

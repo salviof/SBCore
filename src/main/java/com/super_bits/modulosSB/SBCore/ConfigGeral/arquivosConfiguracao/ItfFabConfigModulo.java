@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 
 /**
  *
@@ -20,7 +21,7 @@ public interface ItfFabConfigModulo {
         if (valor == null || valor.isEmpty()) {
             return getValorPadrao();
         }
-        return getValorPadrao();
+        return valor;
     }
 
     /**
@@ -39,4 +40,7 @@ public interface ItfFabConfigModulo {
         return this.getClass().getSimpleName();
     }
 
+    public default String getCaminhoArquivoVariaveisAmbiente() {
+        return UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(this.getClass());
+    }
 }

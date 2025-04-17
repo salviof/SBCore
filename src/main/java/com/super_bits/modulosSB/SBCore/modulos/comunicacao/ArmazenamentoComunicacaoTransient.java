@@ -20,12 +20,12 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  */
 public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComunicacao {
 
-    private final Map<String, ItfComunicacao> comunicacoesAtivas = new HashMap<>();
+    private final Map<String, ItfDialogo> comunicacoesAtivas = new HashMap<>();
 
     @Override
-    public boolean registrarInicioComunicacao(ItfComunicacao pComunicacao) {
+    public boolean registrarDialogo(ItfDialogo pComunicacao) {
         try {
-            pComunicacao.selarComunicacao();
+
             comunicacoesAtivas.put(pComunicacao.getCodigoSelo(), pComunicacao);
             return true;
         } catch (Throwable t) {
@@ -35,9 +35,9 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public boolean regsitrarRespostaComunicacao(String codigoComunicacao, ItfRespostaComunicacao pResposta) {
+    public boolean regsitrarRespostaDialogo(String codigoComunicacao, ItfRespostaComunicacao pResposta) {
         try {
-            ItfComunicacao comunicacao = comunicacoesAtivas.get(codigoComunicacao);
+            ItfDialogo comunicacao = comunicacoesAtivas.get(codigoComunicacao);
             if (codigoComunicacao == null) {
                 throw new UnsupportedOperationException("Comunicação não encontrada no sistema");
             }
@@ -56,10 +56,10 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ItfComunicacao> {
+    private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ItfDialogo> {
 
         @Override
-        public int compare(ItfComunicacao o1, ItfComunicacao o2) {
+        public int compare(ItfDialogo o1, ItfDialogo o2) {
 
             return (o1.getDataHoraDisparo().getTime() < o2.getDataHoraDisparo().getTime() ? 1 : -1);
 
@@ -67,7 +67,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
 
     }
 
-    private boolean isComunicacaoEdousuario(ItfUsuario pUsuario, ItfComunicacao pComunicacao) {
+    private boolean isComunicacaoEdousuario(ItfUsuario pUsuario, ItfDialogo pComunicacao) {
         switch (pComunicacao.getDestinatario().getTipoDestinatario()) {
             case USUARIO:
                 if (pUsuario.equals(pComunicacao.getDestinatario().getUsuario())) {
@@ -96,8 +96,8 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public List<ItfComunicacao> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario) {
-        List<ItfComunicacao> comunicacoes = new ArrayList<>();
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario) {
+        List<ItfDialogo> comunicacoes = new ArrayList<>();
 
         comunicacoesAtivas.values().stream().
                 filter(cm -> isComunicacaoEdousuario(pDestinatario, cm)).
@@ -107,8 +107,8 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public List<ItfComunicacao> getComunicacoesAguardandoRespostaDoRemetente(ItfUsuario pRemetente) {
-        List<ItfComunicacao> comunicacoesEncontradas = new ArrayList<>();
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ItfUsuario pRemetente) {
+        List<ItfDialogo> comunicacoesEncontradas = new ArrayList<>();
         comunicacoesAtivas.values().stream().filter((cm) -> (cm.getUsuarioRemetente().equals(pRemetente))).limit(5).forEachOrdered((cm) -> {
             comunicacoesEncontradas.add(cm);
         });
@@ -117,12 +117,12 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public ItfComunicacao getComunicacaoByCodigoSelo(String pCodigoSelo) {
+    public ItfDialogo getDialogoByCodigoSelo(String pCodigoSelo) {
         return comunicacoesAtivas.get(pCodigoSelo);
     }
 
     @Override
-    public boolean removerComunicacaoByCodigoSelo(String pCodigoSelo) {
+    public boolean removerDialogoByCodigoSelo(String pCodigoSelo) {
         if (!comunicacoesAtivas.containsKey(pCodigoSelo)) {
             return false;
         }

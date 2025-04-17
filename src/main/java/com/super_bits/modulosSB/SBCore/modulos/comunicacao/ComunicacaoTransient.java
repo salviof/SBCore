@@ -16,14 +16,14 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Comunicações", tags = "Comunicação")
-public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComunicacao {
+public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo {
 
     private final ItfDestinatario destinatario;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String descricao;
     private final ItfUsuario usuarioRemetente;
     private final List<ItfRespostaComunicacao> respostasPossiveis;
-    private final List<ItfTipoTransporteComunicacao> transportes;
+
     private final ItfTipoComunicacao tipoComunicacao;
     private String mensgem;
     private String assunto;
@@ -32,12 +32,11 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
     private long tempoAceitavelResposta = -1;
 
     public ComunicacaoTransient(ItfUsuario usuarioRemetente,
-            ItfUsuario destinatario, ItfTipoComunicacao tipoComunicacao,
-            List<ItfTipoTransporteComunicacao> transportes) {
+            ItfUsuario destinatario, ItfTipoComunicacao tipoComunicacao
+    ) {
         this.destinatario = new DestinatarioTransiente(destinatario);
         this.usuarioRemetente = usuarioRemetente;
 
-        this.transportes = transportes;
         this.tipoComunicacao = tipoComunicacao;
         this.respostasPossiveis = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
         defineMensagem();
@@ -50,13 +49,12 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
 
     }
 
-    public ComunicacaoTransient(ItfUsuario usuarioRemetente, ItfDestinatario destinatario, ItfTipoComunicacao tipoComunicacao,
-            List<ItfTipoTransporteComunicacao> transportes) {
+    public ComunicacaoTransient(ItfUsuario usuarioRemetente, ItfDestinatario destinatario, ItfTipoComunicacao tipoComunicacao
+    ) {
         this.destinatario = destinatario;
         this.usuarioRemetente = usuarioRemetente;
         this.tipoComunicacao = tipoComunicacao;
         this.respostasPossiveis = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
-        this.transportes = transportes;
 
         defineMensagem();
 
@@ -80,11 +78,6 @@ public class ComunicacaoTransient extends ComunicacaoAbstrata implements ItfComu
     @Override
     public List<ItfRespostaComunicacao> getRepostasPossiveis() {
         return respostasPossiveis;
-    }
-
-    @Override
-    public List<ItfTipoTransporteComunicacao> getTransportes() {
-        return transportes;
     }
 
     @Override

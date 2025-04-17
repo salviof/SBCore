@@ -5,8 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
+import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringUrl;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -24,19 +26,15 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfComunicacao gerarComunicacaoEntre_Usuairos(FabTipoComunicacao tipocomunicacao,
-            ItfUsuario pRemetente, ItfDestinatario pDestinatario,
-            String mensagem,
-            ItffabricaTrasporteComunicacao... tiposTransporte
-    ) {
-
+    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuarioRemetente, ItfUsuario pUsuarioDestinatario, String mensagem, String pAssunto) {
         try {
-            ItfComunicacao comunicacao
-                    = new ComunicacaoTransient(pRemetente, pDestinatario, tipocomunicacao.getRegistro(), gerarListaTransportes(tiposTransporte));
+            ItfDialogo comunicacao
+                    = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario, tipocomunicacao.getRegistro());
 
             comunicacao.setMensagem(mensagem);
+            comunicacao.setAssunto(pAssunto);
             comunicacao.setNome(mensagem);
-            if (getAramazenamento().registrarInicioComunicacao(comunicacao)) {
+            if (getArmazenamento().registrarDialogo(comunicacao)) {
                 return comunicacao;
             } else {
                 return null;
@@ -48,27 +46,29 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfComunicacao iniciarComunicacaoEntre_Usuairos(FabTipoComunicacao tipocomunicacao, ItfUsuario pRemetente, ItfDestinatario pDestinatario, ItfModeloMensagem mensagem, ItffabricaTrasporteComunicacao... tiposTransporte) {
-        ItfComunicacao comunicacao = new ComunicacaoTransient(pRemetente, pDestinatario, tipocomunicacao.getRegistro(), gerarListaTransportes(tiposTransporte));
+    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String mensagem, String pAssunto) {
+        try {
+            ItfDialogo comunicacao
+                    = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
 
-        getAramazenamento().registrarInicioComunicacao(comunicacao);
-
-        for (ItffabricaTrasporteComunicacao tipoTranposporte : tiposTransporte) {
-            try {
-
-                ItfDisparoComunicacao disparo = (ItfDisparoComunicacao) tipoTranposporte.getImplementacaoDoContexto();
-                disparo.dispararInicioComunicacao(comunicacao);
-            } catch (Throwable t) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando mensagem de comunicação", t);
+            comunicacao.setMensagem(mensagem);
+            comunicacao.setNome(mensagem);
+            comunicacao.setAssunto(pAssunto);
+            if (getArmazenamento().registrarDialogo(comunicacao)) {
+                return comunicacao;
+            } else {
+                return null;
             }
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando comunicação entre usuários", t);
+            return null;
         }
-        throw new UnsupportedOperationException("Processador de mensagem ainda não implementado;");
 
     }
 
     @Override
-    public FabTipoRespostaComunicacao aguardarRespostaComunicacao(ItfTipoTransporteComunicacao pTransporte,
-            ItfComunicacao pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
+    public FabTipoRespostaComunicacao aguardarRespostaComunicacao(ItfTipoCanalComunicacao pTransporte,
+            ItfDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
         FabTipoComunicacao tipocomunicacao = pComunicacao.getTipoComunicacao().getFabTipoComunicacao();
 
         return FabTipoRespostaComunicacao.NAO;
@@ -76,32 +76,18 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfComunicacao gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao tipocomunicacao, String mensagem, ItffabricaTrasporteComunicacao... tiposTransporte) {
-        ItfComunicacao comunicacao
-                = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), SBCore.getUsuarioLogado(),
-                        tipocomunicacao.getRegistro(), gerarListaTransportes(tiposTransporte));
-        comunicacao.setMensagem(mensagem);
-        comunicacao.setNome(mensagem);
-        if (getAramazenamento().registrarInicioComunicacao(comunicacao)) {
-
-            return comunicacao;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public ItfArmazenamentoComunicacao getAramazenamento() {
+    public ItfArmazenamentoComunicacao getArmazenamento() {
         return aramazenamento;
-    }
-
-    @Override
-    public ItffabricaTrasporteComunicacao getFabricaTransportePadrao() {
-        return ERPTransporteComunicacao.INTRANET_MENU;
     }
 
     @Override
     public String getTokenDispositivoNotificacao(ItfUsuario pUsuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public ItffabricaCanalComunicacao getFabricaCanalPadrao() {
+        return ERPTipoCanalComunicacao.INTRANET_MENU;
+    }
+
 }

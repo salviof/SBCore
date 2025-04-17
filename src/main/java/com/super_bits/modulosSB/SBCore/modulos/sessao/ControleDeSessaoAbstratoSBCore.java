@@ -58,7 +58,7 @@ public abstract class ControleDeSessaoAbstratoSBCore implements ItfControleDeSes
                     pEmail,
                     UtilSBCoreComunicacao.getSaudacao() + ", " + usuarioEncontrado.getNome()
                     + ", utilize este token: " + token.getCodigo() + ", para recuperar sua senha",
-                    "Recuperação de senha")) {
+                    "Recuperação de senha") != null) {
                 SBCore.enviarAvisoAoUsuario("Um e-mail com a senha foi enviado para " + pEmail);
             } else {
                 SBCore.enviarMensagemUsuario("Um erro ocorreu ao tentar enviar o e-mail com a senha para: " + pEmail + " entre em contato conosco para recuperar a senha", FabMensagens.ALERTA);

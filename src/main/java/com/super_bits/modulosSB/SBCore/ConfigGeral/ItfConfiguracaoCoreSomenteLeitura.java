@@ -11,7 +11,6 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
@@ -19,6 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
 
 /**
  *
@@ -135,7 +135,7 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
      */
     public Class<? extends ItfCentralDeArquivos> getCentralDeArquivo();
 
-    public Class<? extends ItfCentralComunicacao> getCentralComunicacao();
+    public Class<? extends ItfServicoComunicacao> getCentralComunicacao();
 
     public Class<? extends ItfCentralLocalizacao> getCentralDeLocalizacao();
 

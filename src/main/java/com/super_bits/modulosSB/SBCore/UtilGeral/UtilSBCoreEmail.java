@@ -11,6 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.email.ConfigEmailServersProjeto;
 import com.super_bits.modulosSB.SBCore.modulos.email.FabConfigModuloEmailService;
 import com.super_bits.modulosSB.SBCore.modulos.email.ItfServidordisparoEmail;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import javax.mail.Transport;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
@@ -53,28 +54,32 @@ public abstract class UtilSBCoreEmail {
     }
 
     public static void configurarEmailPorVariavelDeAmbiente() {
-        ConfigModulo configuracao = SBCore.getConfigModulo(FabConfigModuloEmailService.class);
-        String hostname = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_HOSTNAME);
-        String usuario = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_USUARIO);
-        String senha = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_SERVICE_SENHA);
-        String nomeRemetente = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_NOME_REMETENTE);
-        String emailREmetente = configuracao.getPropriedade(FabConfigModuloEmailService.EMAIL_EMAIL_REMETENTE);
+        String variaveisAmbiente = FabConfigModuloEmailService.EMAIL_SERVICE_EMAIL_REMETENTE.getCaminhoArquivoVariaveisAmbiente();
+        String hostname = FabConfigModuloEmailService.EMAIL_SERVICE_HOSTNAME.getValorParametroSistema();
+        String usuario = FabConfigModuloEmailService.EMAIL_SERVICE_USUARIO.getValorParametroSistema();
+        String senha = FabConfigModuloEmailService.EMAIL_SERVICE_SENHA.getValorParametroSistema();
+        String nomeRemetente = FabConfigModuloEmailService.EMAIL_SERVICE_NOME_REMETENTE.getValorParametroSistema();
+        String emailREmetente = FabConfigModuloEmailService.EMAIL_SERVICE_EMAIL_REMETENTE.getValorParametroSistema();
         configurar(new ConfigEmailServersProjeto(hostname, emailREmetente, nomeRemetente, usuario, senha));
 
     }
 
     public static void verificarConfiguracao() {
         if (configuracao == null) {
-
-            throw new UnsupportedOperationException("O servidor padrão para email transacional não foi enviado, execute " + UtilSBCoreEmail.class.getSimpleName() + ".configurar(configuracao); ao iniciar o projeto ");
+            configurarEmailPorVariavelDeAmbiente();
         }
+        if (configuracao == null) {
+            throw new UnsupportedOperationException("O servidor padrão para email transacional não foi enviado,"
+                    + " execute " + UtilSBCoreEmail.class.getSimpleName() + ".configurar(configuracao); ao iniciar o projeto, ou defina as variaveis de ambiente do  " + FabConfigModuloEmailService.class.getSimpleName() + ".class");
+        }
+
     }
 
     public static void configurar(ConfigEmailServersProjeto pConfig) {
         configuracao = pConfig;
     }
 
-    public static boolean enviarPorServidorPadraoV2(
+    public static String enviarPorServidorPadraoV2(
             ItfUsuario pDestinatario,
             String pMensagem,
             String pAssunto) {
@@ -87,7 +92,7 @@ public abstract class UtilSBCoreEmail {
                 pDestinatario.getEmail(), pAssunto);
     }
 
-    public static boolean enviarPorServidorPadraoV2(
+    public static String enviarPorServidorPadraoV2(
             String pDestinatario,
             String pMensagem,
             String pAssunto) {
@@ -100,12 +105,12 @@ public abstract class UtilSBCoreEmail {
                 pDestinatario, pAssunto);
     }
 
-    public static boolean enviaporSSL(final String servidor, final String pFromEmail, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
+    public static String enviaporSSL(final String servidor, final String pFromEmail, final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
         return enviarEmail(servidor, pFromEmail, null, pUsuario, pSenha, mensagem, para, pAssunto);
     }
 
-    private static boolean enviarEmail(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
+    private static String enviarEmail(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
             final String pSenha, String pMensagem, String para, String pAssunto) {
         boolean envioucomsucesso = false;
 
@@ -114,6 +119,7 @@ public abstract class UtilSBCoreEmail {
             HtmlEmail email = new HtmlEmail();
             //email.setCharset("text/html; charset=utf-8");
             email.setCharset("UTF-8");
+
             email.setAuthentication(pUsuario, pSenha);
             email.setHostName(pEnderecoServidor); // o servidor SMTP para envio do e-mail
 
@@ -144,22 +150,22 @@ public abstract class UtilSBCoreEmail {
             //email.setSmtpPort(465);
 
             email.setSmtpPort(587);
-            email.setSSL(true);
-            email.setTLS(true);
+            //  email.setSSL(true);
+            //   email.setTLS(true);
 
             //email.attach(); // adiciona o anexo à mensagem
-            String resp = email.send();// envia o e-mail
+            String resp = email.send();
+            // Transport.send(msg);// envia o e-mail
             System.out.println(resp);
-
-            return true;
+            return resp;
 
         } catch (EmailException t) {
 
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando email" + t.getMessage(), t);
-            return false;
+            return null;
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro enviando email" + t.getMessage(), t);
-            return false;
+            return null;
         }
 
     }
@@ -173,7 +179,7 @@ public abstract class UtilSBCoreEmail {
      * @param pAssunto Assunto do e-mail
      * @return
      */
-    public static boolean enviaGmailporSSL(final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
+    public static String enviaGmailporSSL(final String pUsuario, final String pSenha, String mensagem, String para, String pAssunto) {
 
         return enviarEmail("smtp.gmail.com", pUsuario, null, pUsuario, pSenha, mensagem, para, pAssunto);
 

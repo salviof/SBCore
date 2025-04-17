@@ -29,7 +29,7 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
  *
  * @author desenvolvedor
  */
-public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfComunicacaoAcaoVinculada {
+public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComunicacaoAcaoVinculada {
 
     private final ItfAcaoController acaoVinculada;
     private final ItfTipoComunicacao tipoComunicacao;
@@ -37,7 +37,7 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
     private final ItfBeanSimples beanVinculado;
     private final ItfDestinatario destinatario;
     private final ItfUsuario usuarioRemetente;
-    private final List<ItfTipoTransporteComunicacao> transportes;
+
     private long tempoAceitavelResposta;
 
     private FabStatusComunicacao status;
@@ -96,9 +96,6 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
         }
         String mensagemModeloPredefinida = pAcaoVinculada.getTipoComunicacao().getMensagemModeloPredefinida();
 
-        transportes = new ArrayList<>();
-        transportes.add(SBCore.getCentralComunicacao().getFabricaTransportePadrao().getRegistro());
-
     }
 
     @Override
@@ -151,11 +148,6 @@ public class ComunicacaoAcaoSistema extends ComunicacaoAbstrata implements ItfCo
     @Override
     public List<ItfRespostaComunicacao> getRepostasPossiveis() {
         return repostas;
-    }
-
-    @Override
-    public List<ItfTipoTransporteComunicacao> getTransportes() {
-        return transportes;
     }
 
     @Override

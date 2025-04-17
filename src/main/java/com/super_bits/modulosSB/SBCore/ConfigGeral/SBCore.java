@@ -26,7 +26,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
@@ -52,6 +51,7 @@ import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfServicoLinkDeEntidadesERP;
 import jakarta.json.JsonObject;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
 
 /**
  *
@@ -106,7 +106,7 @@ public class SBCore {
     private static ArquivoConfiguracaoDistribuicao arquivoConfigDistribuicao;
     private static ItfServicoVisualizacao servicoVisualizacao;
     private static ItfCentralDeArquivos servicoGestaoDeArquivos;
-    private static ItfCentralComunicacao servicoComunucacao;
+    private static ItfServicoComunicacao servicoComunucacao;
     private static ItfCentralLocalizacao servicoLocalizacao;
     private static ItfCentralAdministrativa servicoInterfaceGraficaDEV;
     private static ItfServicoController servicoController;
@@ -825,7 +825,7 @@ public class SBCore {
      * @return
      */
     @Deprecated
-    public static ItfCentralComunicacao getCentralDeComunicacao() {
+    public static ItfServicoComunicacao getCentralDeComunicacao() {
         return getServicoComunicacao();
     }
 
@@ -836,17 +836,17 @@ public class SBCore {
      * @return
      */
     @Deprecated
-    public static ItfCentralComunicacao getCentralComunicacao() {
+    public static ItfServicoComunicacao getCentralComunicacao() {
         return getServicoComunicacao();
     }
 
     /**
      *
-     * @see ItfCentralComunicacao
+     * @see ItfServicoComunicacao
      *
      * @return Controle de comunicação, entre Sistema, Usuário e Desenvolvedor
      */
-    public static ItfCentralComunicacao getServicoComunicacao() {
+    public static ItfServicoComunicacao getServicoComunicacao() {
         if (servicoComunucacao == null) {
             throw new UnsupportedOperationException("A central de comunicação não foi definida");
         }

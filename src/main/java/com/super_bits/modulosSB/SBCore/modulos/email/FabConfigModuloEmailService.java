@@ -15,8 +15,8 @@ public enum FabConfigModuloEmailService implements ItfFabConfigModulo {
     EMAIL_SERVICE_USUARIO,
     EMAIL_SERVICE_SENHA,
     EMAIL_SERVICE_HOSTNAME,
-    EMAIL_NOME_REMETENTE,
-    EMAIL_EMAIL_REMETENTE,;
+    EMAIL_SERVICE_NOME_REMETENTE,
+    EMAIL_SERVICE_EMAIL_REMETENTE,;
 
     @Override
     public String getValorPadrao() {
@@ -28,9 +28,9 @@ public enum FabConfigModuloEmailService implements ItfFabConfigModulo {
                 return "minhaSenha";
             case EMAIL_SERVICE_HOSTNAME:
                 return "servicoSMTP.coletivojava.com.br";
-            case EMAIL_NOME_REMETENTE:
+            case EMAIL_SERVICE_NOME_REMETENTE:
                 return "João da Silva";
-            case EMAIL_EMAIL_REMETENTE:
+            case EMAIL_SERVICE_EMAIL_REMETENTE:
                 return "joao@coletivojava.com.br";
 
             default:

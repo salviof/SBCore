@@ -4,14 +4,15 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTransporteComunicacao;
+import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfComunicacao;
 import com.super_bits.modulosSB.SBCore.testes.TestesCore;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
 import org.junit.Before;
 import org.junit.Test;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 
 /**
  *
@@ -28,7 +29,8 @@ public class UtilSBCoreComunicacaoTest extends TestesCore {
     @Test
     public void testGetSaudacao() {
         System.out.println(UtilSBCoreComunicacao.getSaudacao());
-        ItfComunicacao cm = SBCore.getCentralDeComunicacao().gerarComunicacaoSistema_UsuairoLogado(FabTipoComunicacao.CONFIRMAR_CANCELAR, "Teste", "asfasdf", ERPTransporteComunicacao.AUTOMATICO);
+        ItfDialogo cm = SBCore.getServicoComunicacao().
+                gerarComunicacaoSistema_Usuario(FabTipoComunicacao.CONFIRMAR_CANCELAR, new UsuarioAnonimo(), "Teste", "asfasdf");
         cm.getRepostasPossiveis().forEach(rp -> System.out.println(rp.getTipoResposta().getNome()));
     }
 

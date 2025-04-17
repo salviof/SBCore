@@ -10,7 +10,6 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
@@ -18,6 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
 
 /**
  *
@@ -74,7 +74,7 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
 
     public void setServicoVisualizacao(Class<? extends ItfServicoVisualizacao> classeVisualizacao);
 
-    public void setCentralComunicacao(Class<? extends ItfCentralComunicacao> pCentral);
+    public void setCentralComunicacao(Class<? extends ItfServicoComunicacao> pCentral);
 
     public void setCentralDeLocalizacao(Class<? extends ItfCentralLocalizacao> pCentralLocalizacao);
 
