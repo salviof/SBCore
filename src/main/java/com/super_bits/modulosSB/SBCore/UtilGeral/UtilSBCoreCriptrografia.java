@@ -38,6 +38,7 @@ public class UtilSBCoreCriptrografia {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando chave Rsa 1024", ex);
             return null;
         }
+
     }
 
     public KeyPair gerarParChaveRSA2048() {
