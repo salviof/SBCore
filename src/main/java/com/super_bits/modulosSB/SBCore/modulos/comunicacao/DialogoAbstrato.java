@@ -60,7 +60,7 @@ public abstract class DialogoAbstrato extends ItemSimples implements ItfDialogo,
      */
     @Override
     public boolean isFoiSelado() {
-        foiSelado = codigoSelo == null || codigoSelo.isEmpty();
+        foiSelado = codigoSelo != null && codigoSelo.isEmpty();
         return foiSelado;
     }
 

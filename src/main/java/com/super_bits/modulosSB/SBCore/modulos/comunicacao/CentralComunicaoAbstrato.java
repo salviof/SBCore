@@ -107,7 +107,8 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
         }
 
         try {
-            ItfDisparoComunicacao execucaoTransporteCM = (ItfDisparoComunicacao) pTipoCanalComunicacao.getImplementacaoDoContexto();
+            Object implementacao = pTipoCanalComunicacao.getImplementacaoDoContexto();
+            ItfDisparoComunicacao execucaoTransporteCM = (ItfDisparoComunicacao) implementacao;
             String codigoReciboDisparo = execucaoTransporteCM.dispararInicioComunicacao(pComunicacao);
             if (codigoReciboDisparo == null) {
                 throw new ErroAcessandoCanalComunicacao("Codigo do recibo de disparo recebido é nulo " + pTipoCanalComunicacao);
