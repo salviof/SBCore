@@ -116,6 +116,9 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
             return codigoReciboDisparo;
             //getArmazenamento().getDialogoByCodigoSelo(codigoReciboDisparo)
         } catch (Throwable t) {
+            if (t instanceof ErroAcessandoCanalComunicacao) {
+                throw t;
+            }
             throw new ErroAcessandoCanalComunicacao("Falha enviando dialogo, usando canal " + pTipoCanalComunicacao);
         }
 
