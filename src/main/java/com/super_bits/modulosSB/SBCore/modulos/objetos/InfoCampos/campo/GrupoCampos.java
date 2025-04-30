@@ -51,7 +51,7 @@ public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
 
     @Override
     public Long getId() {
-        if (id == 0) {
+        if (id == null || id == 0) {
             StringBuilder codigoGrupoSTR = new StringBuilder();
             codigoGrupoSTR.append(getNomeGrupo());
             getCampos().forEach(cp -> codigoGrupoSTR.append(cp.getCaminhoComleto()));

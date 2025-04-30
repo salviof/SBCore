@@ -263,7 +263,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             InfoPreparacaoObjeto infoPreparacaoObjeto = UtilSBCoreReflexaoObjeto.getInfoPreparacaoObjeto(this.getClass());
 
             if (infoPreparacaoObjeto != null) {
-                UtilSBCoreReflexaoObjeto.validarMetodoPrepararObjeto(infoPreparacaoObjeto, parametros);
+                UtilSBCoreReflexaoObjeto.validarMetodoPrepararObjeto((ItfBeanSimplesSomenteLeitura) this, infoPreparacaoObjeto, parametros);
             }
             UtilSBCoreReflexao.instanciarListas(this);
         } catch (Throwable t) {
