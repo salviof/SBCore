@@ -16,8 +16,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import static java.lang.Math.log;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -326,5 +329,48 @@ public abstract class UtilSBCoreArquivos {
         String id = ManagementFactory.getRuntimeMXBean().getName();
         String[] ids = id.split("@");
         return Integer.parseInt(ids[0]);
+    }
+
+    /**
+     * Renomeia (e/ou move) um arquivo com segurança.
+     *
+     * @param caminhoOrigem Caminho completo do arquivo de origem.
+     * @param caminhoDestino Novo caminho completo do arquivo (pode incluir novo
+     * nome e/ou diretório).
+     * @return true se a operação for bem-sucedida, false caso contrário.
+     */
+    public static boolean renomearArquivo(String caminhoOrigem, String caminhoDestino) {
+        Path origem = Paths.get(caminhoOrigem);
+        Path destino = Paths.get(caminhoDestino);
+
+        try {
+            // Garante que o diretório de destino existe
+            Path diretorioDestino = destino.getParent();
+            if (diretorioDestino != null && !Files.exists(diretorioDestino)) {
+                Files.createDirectories(diretorioDestino);
+            }
+
+            // Move o arquivo (pode renomear e/ou mover para outro diretório)
+            Files.move(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+            return true;
+
+        } catch (IOException e) {
+            System.err.println("Erro ao mover/renomear arquivo: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Exemplo de uso
+    public static void main(String[] args) {
+        String origem = "/home/salvio/arquivo.txt";
+        String destino = "/home/salvio/Documentos/renomeado.txt";
+
+        boolean sucesso = renomearArquivo(origem, destino);
+
+        if (sucesso) {
+            System.out.println("Arquivo renomeado com sucesso!");
+        } else {
+            System.out.println("Falha ao renomear o arquivo.");
+        }
     }
 }

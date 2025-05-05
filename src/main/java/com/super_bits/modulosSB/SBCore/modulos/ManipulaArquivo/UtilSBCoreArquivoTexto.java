@@ -17,6 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -239,6 +243,35 @@ public abstract class UtilSBCoreArquivoTexto {
             return false;
         }
 
+    }
+
+    /**
+     * Substitui um texto específico dentro de um arquivo.
+     *
+     * @param caminhoArquivo Caminho completo do arquivo
+     * @param textoOriginal Texto que será substituído
+     * @param novoTexto Novo texto para colocar no lugar
+     * @return true se a substituição foi feita com sucesso
+     */
+    public static boolean substituirTextoNoArquivo(String caminhoArquivo, String textoOriginal, String novoTexto) {
+        Path caminho = Paths.get(caminhoArquivo);
+
+        try {
+            // Lê todo o conteúdo do arquivo como uma String
+            String conteudo = new String(Files.readAllBytes(caminho), StandardCharsets.UTF_8);
+
+            // Substitui o texto
+            String conteudoModificado = conteudo.replace(textoOriginal, novoTexto);
+
+            // Escreve de volta no mesmo arquivo
+            Files.write(caminho, conteudoModificado.getBytes(StandardCharsets.UTF_8));
+
+            return true;
+
+        } catch (IOException e) {
+            System.err.println("Erro ao processar o arquivo: " + e.getMessage());
+            return false;
+        }
     }
 
     public static boolean isTemPalavraNoArquivo(String pArquivo, String pPalavra) {

@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.testes;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import javax.persistence.EntityManager;
 
 /**
@@ -13,5 +14,14 @@ import javax.persistence.EntityManager;
 public class UtilSBCoreTestes {
 
     public static EntityManager emContextoTEste;
+
+    public static EntityManager renovarConexao() {
+        if (UtilSBCoreTestes.emContextoTEste != null) {
+            UtilSBCoreTestes.emContextoTEste.close();
+        }
+        UtilSBCoreTestes.emContextoTEste = null;
+        UtilSBCoreTestes.emContextoTEste = SBCore.getServicoRepositorio().gerarNovoEntityManagerPadrao();
+        return UtilSBCoreTestes.emContextoTEste;
+    }
 
 }

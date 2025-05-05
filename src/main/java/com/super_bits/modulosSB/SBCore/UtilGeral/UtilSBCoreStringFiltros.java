@@ -30,6 +30,26 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         return pTexto.replaceAll("[0-9]", "");
     }
 
+    public static String substituirPrimeiro(String pOrignial, String pValorReferencia, String pNovoValor) {
+        String resultado = pOrignial.replaceFirst(Pattern.quote(pValorReferencia), pNovoValor);
+        return resultado;
+    }
+
+    public static String replaceFirst(String pOrignial, String pValorReferencia, String pNovoValor) {
+        return substituirPrimeiro(pOrignial, pValorReferencia, pNovoValor);
+    }
+
+    /**
+     * Retorna apenas letras (vogais e consoantes) da string, ignorando números
+     * e símbolos.
+     *
+     * @param texto Entrada de texto
+     * @return String contendo apenas letras (com ou sem acento)
+     */
+    public static String getApenasLetras(String texto) {
+        return texto.replaceAll("[^\\p{L}]", "");
+    }
+
     public static String removerCaracteres(final String pCaracteres, Integer... indices) {
         StringBuilder strb = new StringBuilder();
         List<Integer> letrasExcluidas = Lists.newArrayList(indices);

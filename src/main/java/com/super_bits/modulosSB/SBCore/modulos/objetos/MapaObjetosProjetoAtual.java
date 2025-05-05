@@ -61,6 +61,12 @@ public class MapaObjetosProjetoAtual {
             String[] lista = pNome.split("\\.");
             pNome = lista[lista.length - 1];
         }
+        if (pNome.contains("$")) {
+            int idx = pNome.indexOf("$");
+            if (idx > 0) {
+                pNome = pNome.substring(0, idx);
+            }
+        }
 
         Class classe = CLASSE_ENTIDADE_BY_NOME.get(pNome);
 
