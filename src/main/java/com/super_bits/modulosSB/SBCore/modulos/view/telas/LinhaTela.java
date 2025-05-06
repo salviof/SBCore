@@ -64,11 +64,11 @@ public class LinhaTela implements ItfLinhaTela {
             if (gridLayout.getLinhas().get(0) == this) {
                 return "OrganizadorContainer";
             }
-
+            String margemContainer = getLinhaSuperior().getColunas().size() <= 2 ? "MargemEsquerdaCamposGrande" : "MargemEsquerdaCamposPequena";
             if (colunasRestante > 3) {
-                return "OrganizadorContainerEsquerda";
+                return "OrganizadorContainerEsquerda " + margemContainer;
             } else {
-                return "OrganizadorContainerExpandido";
+                return "OrganizadorContainerExpandido" + margemContainer;
             }
 
         } else {
@@ -76,6 +76,21 @@ public class LinhaTela implements ItfLinhaTela {
             return "OrganizadorContainer";
         }
 
+    }
+
+    public ItfLinhaTela getLinhaSuperior() {
+        if (gridLayout == null) {
+            return null;
+        }
+
+        List<ItfLinhaTela> linhas = gridLayout.getLinhas();
+        int index = linhas.indexOf(this);
+
+        if (index > 0) {
+            return linhas.get(index - 1); // a linha logo acima
+        }
+
+        return null; // não tem linha acima (é a primeira)
     }
 
 }
