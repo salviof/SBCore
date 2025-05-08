@@ -218,8 +218,8 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
                 return;
             }
 
-            if (!SBCore.getCentralPermissao().isAcaoPermitidaUsuario(usuario, acao)) {
-                pResp.addErro(usuario.getNome() + ",parece que o acesso a esta ação do sistema ainda não foi liberada para você, entre em contato com o responsável e tente novamente");
+            if (!SBCore.getServicoPermissao().isAcaoPermitidaUsuario(usuario, acao)) {
+                pResp.addErro(usuario.getNome() + ", você não tem acesso para realizar a ação: " + acao.getNomeAcao() + " entre em contato com o administrador");
             }
 
         } catch (Throwable t) {
