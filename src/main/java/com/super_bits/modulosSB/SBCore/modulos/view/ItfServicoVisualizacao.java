@@ -80,6 +80,8 @@ public interface ItfServicoVisualizacao {
 
     public String getCaminhoLocalPastaImagem();
 
+    public String getCaminhoWebAppDeveloper();
+
     public String getRemotoPastaResource();
 
     public String getCaminhoPastaContainerLaboratorio(Class pEntidade);

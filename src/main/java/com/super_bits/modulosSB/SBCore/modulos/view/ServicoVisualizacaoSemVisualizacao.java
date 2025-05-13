@@ -124,4 +124,9 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
         return getEndrRemotoFormulario("FabAcaoPaginasDoSistema.PAGINA_NATIVA_TOKEN_DINAMICO_MB", token);
     }
 
+    @Override
+    public String getCaminhoWebAppDeveloper() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
