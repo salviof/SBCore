@@ -70,19 +70,23 @@ public abstract class ItemSimilarGenerico<T> implements ItfBeanSimples, ItfItemS
                                         if (parteTextoAnalizadao.length() > parteParametro.length()) {
                                             parteTextoAnalizadao = parteTextoAnalizadao.substring(0, parteParametro.length());
                                         }
-                                        double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
-                                        if (nt > 0.8) {
-                                            if (nt >= 0.9) {
-                                                notasIdentico.add(nt);
-                                                if (textoReferenciaPesquisa.toLowerCase().startsWith(parteParametro)) {
-                                                    notasIdenticoInicio.add(nt);
+                                        if (!((parteParametro.length() - parteTextoAnalizadao.length()) > 2)) {
+
+                                            double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
+                                            if (nt > 0.8) {
+                                                if (nt >= 0.9) {
+                                                    notasIdentico.add(nt);
+                                                    if (textoReferenciaPesquisa.toLowerCase().startsWith(parteParametro)) {
+                                                        notasIdenticoInicio.add(nt);
+                                                    }
+                                                } else {
+                                                    notasValidas.add(nt);
                                                 }
-                                            } else {
-                                                notasValidas.add(nt);
                                             }
-                                        }
-                                        if (nt > nota) {
-                                            nota = nt;
+
+                                            if (nt > nota) {
+                                                nota = nt;
+                                            }
                                         }
                                     });
 

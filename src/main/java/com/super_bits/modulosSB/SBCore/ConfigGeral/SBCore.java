@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
-import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.UtilSBCoreErros;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 
@@ -48,8 +47,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
-import com.super_bits.modulosSB.SBCore.modulos.erp.ItfServicoLinkDeEntidadesERP;
-import jakarta.json.JsonObject;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
 
