@@ -7,13 +7,17 @@ package com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao;
 import org.coletivojava.fw.api.analiseDados.ItfMapaSubstituicao;
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
+import com.super_bits.modulosSB.SBCore.UtilGeral.MapaDeAcoes;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.view.formulario.ItfFormularioAcao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +34,7 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
     protected final Map<String, String> mapaSubstituicaoImagem = new HashMap<>();
     protected final Map<String, Map<String, String>> mapaSubstituicaoListas = new HashMap<>();
     protected final Map<String, Map<Integer, List<String>>> ordemMapaSubstituicaoListas = new HashMap<>();
+    protected final List<ItfBeanSimples> entidadesVinculada = new ArrayList<>();
 
     public String getValorImagem(String pValorChave) {
         return mapaSubstituicaoImagem.get(pValorChave);
@@ -47,10 +52,27 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
                 List<String> valoresEncontradas = UtilSBCoreStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pString);
                 for (String chave : valoresEncontradas) {
-                    String valorConformidade = chave.replaceAll("<[^>]*>", "");
-                    if (mapaSubstituicao.containsKey(valorConformidade)) {
+                    if (chave.startsWith("[link:")) {
+                        String nomeAcao = chave.replace("[link:", "").replace("]", "");
 
-                        novaString = novaString.replace(valorConformidade.replace("]", "").replace("[", ""), mapaSubstituicao.get(valorConformidade));
+                        ItfBeanSimples entidade = null;
+
+                        ItfAcaoDoSistema pAcao = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
+                        //ItfFormularioAcao formulario = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao, paramentros);
+                        //formulario.getParametrosURL().stream().fo
+                        String link = null;
+                        if (entidade == null) {
+                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao.getEnumAcaoDoSistema());
+                        } else {
+                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao.getEnumAcaoDoSistema(), entidade);
+                        }
+                        novaString = novaString.replace(chave, link);
+                    } else {
+                        String valorConformidade = chave.replaceAll("<[^>]*>", "");
+                        if (mapaSubstituicao.containsKey(valorConformidade)) {
+
+                            novaString = novaString.replace(valorConformidade.replace("]", "").replace("[", ""), mapaSubstituicao.get(valorConformidade));
+                        }
                     }
                 }
                 //if (!SBCore.isEmModoProducao()) {

@@ -80,8 +80,9 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
         if (pCodigoRegistroDialogo == null || pCodigoRegistroDialogo.isEmpty()) {
             throw new ErroRegistrandoDialogo("O Código enviado não pode ser nulo");
         }
-        if (getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo) != null) {
-            throw new ErroRegistrandoDialogo("O Código já foi registrado");
+        ItfDialogo dialogoJaResgistrado = getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo);
+        if (dialogoJaResgistrado != null) {
+            return dialogoJaResgistrado;
         }
         pDialogo.setCodigoSelo(pCodigoRegistroDialogo);
         getArmazenamento().registrarDialogo(pDialogo);
