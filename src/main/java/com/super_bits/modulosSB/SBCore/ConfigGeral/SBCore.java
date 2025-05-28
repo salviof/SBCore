@@ -49,6 +49,7 @@ import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
 
 /**
  *

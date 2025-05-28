@@ -9,20 +9,26 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaDeAcoes;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.TIPO_PARTE_URL;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.formulario.ItfFormularioAcao;
+import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  *
@@ -57,16 +63,41 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
                         ItfBeanSimples entidade = null;
 
-                        ItfAcaoDoSistema pAcao = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
-                        //ItfFormularioAcao formulario = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao, paramentros);
+                        ItfAcaoDoSistema acaoDOLink = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
+                        ItfEstruturaDeFormuario formulario = SBCore.getServicoVisualizacao().getEstruturaFormulario(acaoDOLink);
+                        Optional<ItfParametroRequisicao> pesquisaPArametro = formulario.getParametrosURL()
+                                .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
+                                && acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada().equals(pr.getTipoEntidade())).findFirst();
+
+                        if (!pesquisaPArametro.isPresent()) {
+                            pesquisaPArametro = formulario.getParametrosURL()
+                                    .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE) && pr.isUmParametoEntidadeMBPrincipal()
+                                    && UtilSBCoreReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
+                        }
+
+                        if (!pesquisaPArametro.isPresent()) {
+                            pesquisaPArametro = formulario.getParametrosURL()
+                                    .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
+                                    && UtilSBCoreReflexao.isClasseIgualOuExetende(pr.getTipoEntidade(), acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada())).findFirst();
+                        }
+
+                        if (pesquisaPArametro.isPresent()) {
+                            ItfParametroRequisicao parametro = pesquisaPArametro.get();
+                            Optional<ItfBeanSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(parametro.getTipoEntidade(), et.getClass())).findFirst();
+                            if (pesquisaEntidade.isPresent()) {
+                                entidade = pesquisaEntidade.get();
+                            }
+                        }
+
                         //formulario.getParametrosURL().stream().fo
                         String link = null;
                         if (entidade == null) {
-                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao.getEnumAcaoDoSistema());
+                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema());
                         } else {
-                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(pAcao.getEnumAcaoDoSistema(), entidade);
+                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema(), entidade);
                         }
-                        novaString = novaString.replace(chave, link);
+                        String linkHtml = "<a href='".concat(link).concat("'>").concat(acaoDOLink.getNomeAcao()).concat("</a>");
+                        novaString = novaString.replace(chave, linkHtml);
                     } else {
                         String valorConformidade = chave.replaceAll("<[^>]*>", "");
                         if (mapaSubstituicao.containsKey(valorConformidade)) {
@@ -143,6 +174,9 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
     @Override
     public void adicionarPalavrasChaveDoObjeto(String prefixo, ItfBeanSimples pObjeto) {
+        if (!entidadesVinculada.contains(pObjeto)) {
+            entidadesVinculada.add(pObjeto);
+        }
         if (pObjeto == null) {
             return;
         }
