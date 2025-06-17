@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import br.org.coletivoJava.fw.api.erp.transportecomunicacao.MsgDisparoEmail;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ConfigModulo;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -43,6 +44,9 @@ public abstract class UtilSBCoreEmail {
             + "</html>";
 
     public static String gerarConteudoEmailNormatizado(String pConteudo) {
+        if (pConteudo == null) {
+            return null;
+        }
         if (!pConteudo.contains("<html>")) {
 
             String conteudo = TEMPLATE_GERAL_EMAIL.replace("[CONTEUDO]", pConteudo);

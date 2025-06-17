@@ -8,11 +8,9 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador.isNuloOuEmbranco;
 import java.text.Normalizer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreStringFiltrosSimples;
@@ -244,15 +242,16 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
             if (pString == null || pString.isEmpty()) {
                 return pString;
             }
-            if (pString.length() < pNumeroDeCasas) {
-                pNumeroDeCasas = pString.length();
+            if (pString.length() <= pNumeroDeCasas) {
+                return pString;
             }
             return pString.substring(0, pNumeroDeCasas);
 
         } catch (Throwable e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo primeiras letras da string" + pString, e);
+            return null;
         }
-        return null;
+
     }
 
     /**
@@ -264,10 +263,8 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
      * @return string Contendo apenas as numeros
      */
     public static String getNumericosDaString(String pString) {
-        if (pString == null) {
-            return null;
-        }
-        return pString.replaceAll("\\D*", ""); //To numeric digits only
+        String numeros = pString.replaceAll("\\D", "");
+        return numeros.isEmpty() ? null : numeros;
     }
 
     /**
@@ -283,7 +280,7 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         if (pString == null) {
             return null;
         }
-        return getNumericosDaString(removeCaracteresEspeciaisEspacosETracos(pString));
+        return getNumericosDaString(pString);
     }
 
     public static String filtrarApenasLetra(String pString) {
@@ -327,6 +324,25 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         }
     }
 
+    public static String removeCaracteresEspeciaisAcentoMantendoApenasLetrasNumerosEspaco(String pTExto) {
+        pTExto = Normalizer.normalize(pTExto, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+
+        // Remove traços e outros caracteres especiais (mantém letras, números e espaços)
+        pTExto = pTExto.replaceAll("[^a-zA-Z0-9 ]", "");
+        return pTExto;
+
+    }
+
+    /**
+     *
+     * Código legado por ser utilizado em gerador de ID
+     *
+     * @param param
+     * @return
+     * @deprecated
+     */
+    @Deprecated
     public static String removeCaracteresEspeciaisEspacosETracos(String param) {
         param = Normalizer.normalize(param, Normalizer.Form.NFD);
         param = param.replaceAll("[^\\p{ASCII}]", "");
@@ -336,7 +352,6 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         param = param.replace("-", "");
         param = param.replace(":", "");
         return param;
-
     }
 
     public static String removeCaracteresEspeciaisEspacosTracosEPontos(String param) {
@@ -344,27 +359,6 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         param = param.replace(" ", "").replace(".", "_").replace("-", "").replace(":", "");
 
         return param;
-
-    }
-
-    /**
-     *
-     * Percorre cada caracter, extrai o char criando uma nova string.
-     *
-     * é útil quando você precisa retirar tudo o que não for caracter da string
-     *
-     *
-     * @param s
-     * @return
-     */
-    public static String limparCacteresEstranhosDaStringComNumeros(String s) {
-
-        StringBuilder sb = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            int cr = Integer.getInteger(Character.toString(c));
-            sb.append(cr);
-        }
-        return sb.toString();
 
     }
 

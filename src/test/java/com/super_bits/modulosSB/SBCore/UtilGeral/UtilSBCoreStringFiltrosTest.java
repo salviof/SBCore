@@ -237,21 +237,6 @@ public class UtilSBCoreStringFiltrosTest {
     }
 
     /**
-     * Test of limparCacteresEstranhosDaStringComNumeros method, of class
-     * UtilSBCoreStringFiltros.
-     */
-    @Test
-    public void testLimparCacteresEstranhosDaStringComNumeros() {
-        System.out.println("limparCacteresEstranhosDaStringComNumeros");
-        String s = "";
-        String expResult = "";
-        String result = UtilSBCoreStringFiltros.limparCacteresEstranhosDaStringComNumeros(s);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of inverteString method, of class UtilSBCoreStringFiltros.
      */
     @Test

@@ -36,4 +36,11 @@ public class UtilSBCoreCriptrografiaTest {
 
     }
 
+    @Test
+    public void hash128HexaMD5AsString() {
+        String valor = UtilSBCoreCriptrografia.getHash128HexaMD5AsString("Olá!");
+        System.out.println(valor);
+        Assert.assertEquals(valor, "ce0a1f646efc94a60b1bc2296ecd0df8");
+    }
+
 }

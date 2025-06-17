@@ -9,9 +9,10 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.It
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
@@ -36,6 +37,15 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
     public boolean isCacheAtivado() {
         return cacheAtivado;
 
+    }
+
+    public Object getValorLogicoPorReflexao() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        try {
+            return getCampoInst().getMetodoGet().invoke(getCampoInst().getObjetoRaizDoAtributo());
+        } catch (NoSuchMethodException ex) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha obtendo valor do atributo por reflexão" + getCampoInst().getNome(), ex);
+            return null;
+        }
     }
 
     public void setValorPorReflexao(Object pValor) {

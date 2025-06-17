@@ -51,6 +51,11 @@ public class UtilSBCoreStringTelefone {
      * for inválida.
      */
     public static String gerarCeluarInternacional(final String pTelefone) {
+
+        if (pTelefone == null) {
+            return null;
+        }
+
         if (pTelefone.length() < 10) {
             return null;
         }

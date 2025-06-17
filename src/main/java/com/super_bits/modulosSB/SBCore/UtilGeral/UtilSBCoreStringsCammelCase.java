@@ -16,6 +16,14 @@ public abstract class UtilSBCoreStringsCammelCase extends UtilSBCoreStringsCamme
         return getCammelByTexto(UtilSBCoreStringFiltros.removeCaracteresEspeciais(pString));
     }
 
+    public static String getCamelCaseTextoSemAcentuacaoECaracterEspecial(String pTExto) {
+
+        pTExto = UtilSBCoreStringFiltros.removeCaracteresEspeciaisAcentoMantendoApenasLetrasNumerosEspaco(pTExto);
+
+        return getCammelByTexto(pTExto);
+
+    }
+
     /**
      * Mantido por compatibilidade
      *

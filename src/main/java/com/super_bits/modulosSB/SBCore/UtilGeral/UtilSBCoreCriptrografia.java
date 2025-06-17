@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -116,6 +117,23 @@ public class UtilSBCoreCriptrografia {
         }
         return null;
 
+    }
+
+    public static String getHash128HexaMD5AsString(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5"); // 128 bits
+            byte[] hashBytes = md.digest(input.getBytes("UTF-8"));
+
+            // Converte os bytes para hexadecimal
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
