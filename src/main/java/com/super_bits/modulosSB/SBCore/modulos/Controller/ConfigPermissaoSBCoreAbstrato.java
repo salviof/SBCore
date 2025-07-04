@@ -9,7 +9,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCriptrografia;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfServicoPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 
 /**
@@ -30,7 +31,7 @@ import javax.persistence.EntityManager;
  *
  * @author Salvio
  */
-public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermissoes {
+public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermissao {
 
     private final Class[] classesControllers;
 
@@ -116,17 +117,19 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfCentralPermiss
 
     @Override
     public ItfUsuario getUsuarioByEmail(String pEmail) {
+        if (pEmail == null || pEmail.isEmpty()) {
+            return null;
+        }
         ItfUsuario usuarioNativo = getUsuarioNativoByEmail(pEmail);
         if (usuarioNativo != null) {
             return usuarioNativo;
         }
         List<ItfUsuario> usuarios = configuraUsuarios();
-        for (ItfUsuario usr : usuarios) {
-            if (usr.getEmail().equals(pEmail)) {
-                return usr;
-            }
+        Optional<ItfUsuario> pesquisaUsuario = usuarios.stream().filter(usr -> usr.getEmail() != null && usr.getEmail().equals(pEmail)).findFirst();
+        if (pesquisaUsuario.isPresent()) {
+            return pesquisaUsuario.get();
         }
-        return null;
+        return pesquisaUsuario.get();
     }
 
     /**

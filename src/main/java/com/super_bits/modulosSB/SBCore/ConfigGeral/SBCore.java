@@ -38,7 +38,8 @@ import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfCentralPermissoes;
+
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfServicoPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -49,7 +50,7 @@ import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
+import java.util.ServiceLoader;
 
 /**
  *
@@ -94,7 +95,7 @@ public class SBCore {
     private static boolean ignorarConfigurcoesDePermissao = false;
     private static boolean ignorarConfigurcoesDeAcoes = false;
 
-    private static ItfCentralPermissoes configuradorDePermissao;
+    private static ItfServicoPermissao configuradorDePermissao;
     private static final Map<String, ItfFabricaAcoes> ENUMACAO_BY_NOMEUNICO = new HashMap<>();
     private static final Map<String, Class<? extends ItfFabrica>> FABRICAS_OBJETO_ESTATICO = new HashMap<>();
 
@@ -228,8 +229,11 @@ public class SBCore {
                 MapaAcoesSistema.makeMapaAcoesSistema();
             }
             if (!ignorarConfigurcoesDePermissao) {
-                if (infoAplicacao.getFabricaDeAcoes() == null) {
-                    throw new UnsupportedOperationException("As configurações de permissão não foram definidas, você pode declarar desuso na classe de configuração, ou criar uma implementação");
+                if (!ignorarConfigurcoesDeAcoes) {
+                    SBCore.getServicoMensagens().enviarMsgAlertaAoUsuario("ATENÇÃO, SERVIÇO DE PERMIÇÃO ATIVADO SEM O SERVIÇO DE AÇÕES DO SISTEMA, IMPOSSÍVEL VINCULAR USUÁRIOS AS AÇÕES, ESSE MODELO DE APLICAÇÃO SE APLICA APENAS PARA WEB-SERVICES DE SERVIÇOS ESPECÍFICOS QUE NÃO RODAM AS REGRAS DE NEGÓCIO DO SISTEMA");
+                    if (infoAplicacao.getFabricaDeAcoes() == null) {
+                        throw new UnsupportedOperationException("As configurações de permissão não foram definidas, você pode declarar desuso na classe de configuração, ou criar uma implementação");
+                    }
                 }
                 //MapaAcoesSistema.makeMapaAcoesSistema();
 
@@ -237,16 +241,27 @@ public class SBCore {
                     // Caso a classe não tenha sido definida na mão, utilizando primeira classe encontrada que extenda ConfigPermissaoSBCoreAbstrato
 
                     if (infoAplicacao.getConfigPermissoes() == null) {
-                        Class configPermissao = UtilSBCoreReflexao.getClasseQueEstendeIsto(ConfigPermissaoSBCoreAbstrato.class, "com.super_bits.configSBFW.acessos");
 
+                        Class configPermissao = UtilSBCoreReflexao.getClasseQueEstendeIsto(ConfigPermissaoSBCoreAbstrato.class, "com.super_bits.configSBFW.acessos");
                         if (configPermissao == null) {
+                            try {
+                                ServiceLoader<ItfServicoPermissao> services = ServiceLoader.load(ItfServicoPermissao.class);
+                                configuradorDePermissao = services.iterator().next();
+                                configPermissao = configuradorDePermissao.getClass();
+                            } catch (Throwable t) {
+                                SBCore.enviarAvisoAoUsuario("arquivo" + ItfServicoPermissao.class.getName() + " com a implementação padrão para a interface não encontrado em META-INF/services" + t.getClass() + " " + t.getMessage());
+                            }
+                        }
+                        if (configPermissao == null) {
+
                             throw new UnsupportedOperationException("A classe que configura permissão não foi encontrada, crie uma classe que implemente config permssaoSBcore, ou altere a configuração do core dispensando as configurações de permissão");
                         }
-                        configuradorDePermissao = (ItfCentralPermissoes) configPermissao.newInstance();
-
+                        if (configuradorDePermissao == null) {
+                            configuradorDePermissao = (ItfServicoPermissao) configPermissao.newInstance();
+                        }
                     } else {
                         try {
-                            configuradorDePermissao = (ItfCentralPermissoes) infoAplicacao.getConfigPermissoes().newInstance();
+                            configuradorDePermissao = (ItfServicoPermissao) infoAplicacao.getConfigPermissoes().newInstance();
                         } catch (Throwable t) {
                             String nomeClassePermissao = "nulo";
                             if (infoAplicacao.getConfigPermissoes() != null) {
@@ -904,7 +919,7 @@ public class SBCore {
      * @return Asistente para Controle de Acesso as ações do sistema
      */
     @Deprecated
-    public static ItfCentralPermissoes getCentralPermissao() {
+    public static ItfServicoPermissao getCentralPermissao() {
         return getServicoPermissao();
     }
 
@@ -914,7 +929,7 @@ public class SBCore {
      *
      * @return Asistente para Controle de Acesso as ações do sistema
      */
-    public static ItfCentralPermissoes getServicoPermissao() {
+    public static ItfServicoPermissao getServicoPermissao() {
         if (isIgnorarPermissoes()) {
             return null;
         }
