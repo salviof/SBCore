@@ -26,6 +26,8 @@ import jakarta.json.JsonValue;
 import jakarta.json.JsonWriter;
 import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
+import jakarta.json.stream.JsonLocation;
+import jakarta.json.stream.JsonParsingException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -58,6 +60,42 @@ public class UtilSBCoreJson {
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha processando " + pStringJson, t);
             return null;
+        }
+
+    }
+
+    public static JsonObject getJsonObjectByTextoComTratamento(String pStringJson) throws ErroProcessandoJson {
+
+        try (JsonReader reader = Json.createReader(new StringReader(pStringJson))) {
+            return reader.readObject(); // ou readArray()
+        } catch (JsonParsingException e) {
+            StringBuilder mensagemErro = new StringBuilder();
+            JsonLocation loc = e.getLocation();
+
+            long offset = loc.getStreamOffset();
+            Long linha = loc.getLineNumber();
+            long coluna = loc.getColumnNumber();
+            mensagemErro.append("Erro de parsing:\n");
+            mensagemErro.append("Linha: ").append(linha)
+                    .append(", Coluna: ").append(coluna).append("\n");
+
+            // Obter a linha do erro
+            String[] linhas = pStringJson.split("\n");
+            if (linha - 1 < linhas.length) {
+                String linhaErro = linhas[linha.intValue() - 1];
+                mensagemErro.append("Linha com erro:\n");
+                mensagemErro.append(linhaErro).append("\n");
+
+                // Marcar a posição da coluna com uma seta
+                for (int i = 1; i < coluna; i++) {
+                    mensagemErro.append(' ');
+                }
+                mensagemErro.append("^\n");
+            } else {
+                mensagemErro.append("Não foi possível localizar a linha do erro.\n");
+            }
+
+            throw new ErroProcessandoJson(mensagemErro.toString());
         }
 
     }

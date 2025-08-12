@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.RecursosExternosPorIndice;
 
 /**
  *
@@ -22,6 +23,10 @@ public interface ItfFabConfigModulo {
             return getValorPadrao();
         }
         return valor;
+    }
+
+    public default RecursosExternosPorIndice getRepositorioDeArquivosExternos() {
+        return SBCore.getConfigModulo(this.getClass()).getRepositorioDeArquivosExternos();
     }
 
     /**

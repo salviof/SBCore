@@ -230,7 +230,9 @@ public class SBCore {
             }
             if (!ignorarConfigurcoesDePermissao) {
                 if (!ignorarConfigurcoesDeAcoes) {
+
                     SBCore.getServicoMensagens().enviarMsgAlertaAoUsuario("ATENÇÃO, SERVIÇO DE PERMIÇÃO ATIVADO SEM O SERVIÇO DE AÇÕES DO SISTEMA, IMPOSSÍVEL VINCULAR USUÁRIOS AS AÇÕES, ESSE MODELO DE APLICAÇÃO SE APLICA APENAS PARA WEB-SERVICES DE SERVIÇOS ESPECÍFICOS QUE NÃO RODAM AS REGRAS DE NEGÓCIO DO SISTEMA");
+
                     if (infoAplicacao.getFabricaDeAcoes() == null) {
                         throw new UnsupportedOperationException("As configurações de permissão não foram definidas, você pode declarar desuso na classe de configuração, ou criar uma implementação");
                     }
@@ -760,6 +762,7 @@ public class SBCore {
      *
      * @return Metodos de Controle da Central de Mensagens
      */
+    @Deprecated
     public static ItfCentralMensagens getServicoMensagens() {
         try {
             return infoAplicacao.getCentralDeMensagens().newInstance();

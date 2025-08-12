@@ -13,9 +13,15 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UTILSBCoreDesktopApp;
  */
 public class CentramMensagemProgramadorMsgStop extends CentralDeMensagemAbstrata {
 
+    public CentramMensagemProgramadorMsgStop() {
+        System.out.println("");
+    }
+
     @Override
     public void enviaMensagem(ItfMensagem pMensagem) {
         if (SBCore.getEstadoAPP() == SBCore.ESTADO_APP.DESENVOLVIMENTO) {
+            UTILSBCoreDesktopApp.showMessageStopProcess(pMensagem);
+        } else {
             if (pMensagem.getTipoDestinatario() == FabTipoAgenteDoSistema.USUARIO && !pMensagem.getTipoDeMensagem().equals(FabMensagens.ERRO)) {
                 String jogoDaVelhinhaCega = "#####################";
 
@@ -30,9 +36,8 @@ public class CentramMensagemProgramadorMsgStop extends CentralDeMensagemAbstrata
                 System.out.println(jogoDaVelhinhaCega + jogoDaVelhinhaCega + jogoDaVelhinhaCega);
                 return;
             }
-        }
-        UTILSBCoreDesktopApp.showMessageStopProcess(pMensagem);
 
+        }
     }
 
 }

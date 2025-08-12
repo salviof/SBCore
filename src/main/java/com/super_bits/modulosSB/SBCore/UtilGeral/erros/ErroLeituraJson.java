@@ -4,7 +4,9 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral.erros;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import jakarta.json.JsonObject;
 
 /**
  *
@@ -16,12 +18,22 @@ public class ErroLeituraJson extends Throwable {
     private final String json;
 
     private static final String buildMensagem(String pJson, String pCaminho) {
+
         String amostrajson = UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(pJson, 15) + " ....";
         StringBuilder mensagem = new StringBuilder();
-        mensagem.append("Erro buscando informação em documento Json");
-        mensagem.append("\n<br> O caminho solicitado:  [").append(pCaminho).append("]");
-        mensagem.append("\n<br> Json, parte:");
-        mensagem.append(amostrajson);
+
+        JsonObject json = UtilSBCoreJson.getJsonObjectByTexto(pJson);
+        if (json == null) {
+
+            mensagem.append("Json inválido");
+
+        } else {
+
+            mensagem.append("Erro buscando informação em documento Json");
+            mensagem.append("\n<br> O caminho solicitado:  [").append(pCaminho).append("]");
+            mensagem.append("\n<br> Json, parte:");
+            mensagem.append(amostrajson);
+        }
         return mensagem.toString();
     }
 

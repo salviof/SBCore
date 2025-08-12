@@ -46,6 +46,7 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
             arquivoConfiguradorBase = pArquivoBase;
             carregarArquivosConfiguracaoSecundario();
         } catch (Throwable erro) {
+            System.out.println(arquivoConfiguradorBase);
             System.out.println("SBCoreInfo: Erro lendo propriedade do arquivo de configuração ");
             System.out.println("SBCoreInfo: certifique que o arquivo SBProjeto.prop esteja na pasta src/main/resource do projeto, e que o seu arquivo pom contenha as tags de resources configuradas no build");
             System.out.println("SBCoreInfo: duvidas utilize o projeto SBCore como referencia");

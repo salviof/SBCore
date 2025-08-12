@@ -30,24 +30,39 @@ public class ArquivoConfiguracaoDistribuicao {
 
     protected boolean emAmbienteDeProducao;
 
+    private String getArquivoConfiguracoesBasicas() {
+        if (temArquivoImplantacao) {
+            return getCaminhoArquivoReleaseImplantado();
+
+        } else {
+            emAmbienteDeProducao = false;
+            if (temArquivoDesenvolvimento) {
+                return getCaminhoArquivoReleaseLocal();
+            }
+        }
+        return null;
+    }
+
     public ArquivoConfiguracaoDistribuicao(ArquivoConfiguracaoBase pConfigBase) {
 
         configuracaoBase = pConfigBase;
         checaArquivoReleaseImplantado();
         checaArquivoReleaseLocal();
         Properties propriedadesImplantacao = null;
+        String arquivoConfiguracoes = getArquivoConfiguracoesBasicas();
+
         if (temArquivoImplantacao) {
-            propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(getCaminhoArquivoReleaseImplantado());
             emAmbienteDeProducao = true;
+            propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
         } else {
             emAmbienteDeProducao = false;
             if (temArquivoDesenvolvimento) {
-                propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(getCaminhoArquivoReleaseLocal());
+                propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
             }
         }
 
         if (propriedadesImplantacao == null) {
-
+            System.out.println("Falha lendo " + arquivoConfiguracoes);
 //                System.out.println("Nenhum arquivo de implantação foi encontrado,(Nem em pastas de desenvolvimento, nem em pastas de produção) isto não é importante se você não pretende implantar este projeto, caso prentenda certifique de configurar o arquivo" + getCaminhoArquivoReleaseLocal());
             return;
         }
@@ -84,6 +99,10 @@ public class ArquivoConfiguracaoDistribuicao {
 
     private void checaArquivoReleaseLocal() {
         File arquivoRelease = new File(getCaminhoArquivoReleaseLocal());
+        if (!arquivoRelease.exists()) {
+            System.out.println("Arquivo Release local não encontrado em ");
+            System.out.println(arquivoRelease.getAbsoluteFile());
+        }
         temArquivoDesenvolvimento = arquivoRelease.exists();
 
     }
@@ -94,6 +113,10 @@ public class ArquivoConfiguracaoDistribuicao {
 
         //     System.out.println("Verificando existencia de arquivo de implantação em:");
         //      System.out.println(getCaminhoArquivoReleaseImplantado());
+        if (!arquivoRelease.exists()) {
+            System.out.println("Atenção, arquivo release de implantação não encontrado em" + arquivoRelease.getAbsolutePath());
+        }
+
         temArquivoImplantacao = arquivoRelease.exists();
     }
 

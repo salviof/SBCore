@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfInfoErroSB;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringListas;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
@@ -58,7 +59,11 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
     @Override
     public List<String> getCaminhoStackTraceResumido() {
         checarConfiguracao();
-        return getCaminhoStackTraceContendoPalavrasNoPacote("super_bits", "coletivo", SBCore.getNomeProjeto());
+        String nomeProjeto = SBCore.getNomeProjeto();
+        if (SBCore.getNomeProjeto().contains("/")) {
+            nomeProjeto = UtilSBCoreStringBuscaTrecho.getStringAteEncontrarIsto(nomeProjeto, "/");
+        }
+        return getCaminhoStackTraceContendoPalavrasNoPacote("super_bits", "coletivo", "casanovadigital", SBCore.getNomeProjeto());
 
     }
 
@@ -92,7 +97,8 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
                     for (String palavra : pPalavras) {
                         if (!UtilSBCoreStringValidador.isNuloOuEmbranco(palavra)) {
                             if (etapa.getClassName().contains(palavra)) {
-                                stackTraceResumido.add(UtilSBCoreErros.getSimpleName(etapa.getClassName()) + "->" + etapa.getMethodName() + "-Linha" + etapa.getLineNumber());
+                                stackTraceResumido.add(UtilSBCoreErros.getSimpleName(etapa.getClassName()) + ":" + etapa.getLineNumber());
+                                stackTraceResumido.add("(" + UtilSBCoreErros.getSimpleName(etapa.getClassName()) + "->" + etapa.getMethodName() + "-Linha" + etapa.getLineNumber() + ")");
                             }
                         }
                     }

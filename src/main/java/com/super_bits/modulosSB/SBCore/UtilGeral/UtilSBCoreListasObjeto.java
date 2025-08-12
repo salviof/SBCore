@@ -26,6 +26,31 @@ import java.util.stream.Collectors;
  */
 public class UtilSBCoreListasObjeto {
 
+    /**
+     * Ajusta a lista conforme as seguintes regras: - Se o objeto já estiver na
+     * lista, move-o para o início. - Se a lista tiver mais elementos que o
+     * limite permitido, adiciona o objeto no início e remove o último. - Caso
+     * contrário, apenas adiciona o objeto no início.
+     *
+     * @param lista Lista que será modificada.
+     * @param objeto Objeto a inserir ou mover.
+     * @param limite Quantidade máxima de elementos permitidos na lista.
+     * @param <T> Tipo dos elementos da lista.
+     */
+    public static synchronized <T> void listaLimitadaDeObjetos(List<T> lista, T objeto, int limite) {
+        if (lista == null || objeto == null || limite <= 0) {
+            return;
+        }
+
+        if (lista.contains(objeto)) {
+            lista.remove(objeto);
+        }
+        lista.add(0, objeto);
+        if (lista.size() > limite) {
+            lista.remove(lista.size() - 1);
+        }
+    }
+
     private static void ordernarPorTipoCampo(List pLista, FabTipoAtributoObjeto pAtributo, boolean pReverso) {
         ComparadorGenerico comparador = null;
         switch (pAtributo) {

@@ -12,6 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -81,8 +82,9 @@ public class RespostaSimples implements ItfResposta, Serializable {
     public ItfResposta setRetorno(Object pObjetoResultante) {
         if (pObjetoResultante == null) {
             retorno = null;
-            if (!(getMensagens().stream().filter(msg -> msg.getTipoDeMensagem().equals(FabMensagens.ERRO))).findFirst().isPresent()) {
-                addMensagemAlertaDisparaERetorna("A ação não produziu o resultado esperado");
+            Optional<ItfMensagem> pesquisaMsgErro = getMensagens().stream().filter(msg -> msg.getTipoDeMensagem().equals(FabMensagens.ERRO)).findFirst();
+            if (pesquisaMsgErro.isPresent()) {
+                addMensagemAlertaDisparaERetorna("A ação não produziu o resultado esperado" + pesquisaMsgErro.get().getMenssagem());
             }
             dispararMensagens();
             return this;

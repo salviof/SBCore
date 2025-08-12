@@ -135,6 +135,16 @@ public class UtilSBCoreStringFiltrosTest {
 
     }
 
+    @Test
+    public void removeCaracteresEspeciaisAcentoMantendoApenasLetrasNumerosEspaco() {
+        String teste = "!@#$%*()_++++teste{} []teste 1";
+        String retorno = UtilSBCoreStringFiltros.removeCaracteresEspeciaisAcentoMantendoApenasLetrasNumerosEspaco(teste);
+        System.out.println(retorno);
+        assertEquals(retorno, "teste teste 1");
+        System.out.println(retorno);
+
+    }
+
     /**
      * Test of filtrarApenasNumeros method, of class UtilSBCoreStringFiltros.
      */

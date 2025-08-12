@@ -17,7 +17,8 @@ public class InfoErroSBCoreDeveloperSopMessagem extends InfoErroSBComAcoes {
     @Override
     public void alertarResponsavel() {
         if (SBCore.getEstadoAPP() == SBCore.ESTADO_APP.DESENVOLVIMENTO || SBCore.getEstadoAPP() == SBCore.ESTADO_APP.HOMOLOGACAO) {
-            UTILSBCoreDesktopApp.showMessageStopProcess(FabMensagens.AVISO.getMsgDesenvolvedor(getMensagemGenericaFormatada("Alertando Responsavel \n" + getMsgDesenvolvedorLancou() + "\n")));
+            String mensagemFormatada = getMensagemGenericaFormatada("Alertando Responsavel Erro TIPO: \n" + getErroGerado().getClass().getSimpleName() + "\n");
+            UTILSBCoreDesktopApp.showMessageStopProcess(FabMensagens.AVISO.getMsgDesenvolvedor(mensagemFormatada + " \n"));
         }
     }
 
