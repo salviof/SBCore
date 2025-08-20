@@ -83,7 +83,7 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
                         if (pesquisaPArametro.isPresent()) {
                             ItfParametroRequisicao parametro = pesquisaPArametro.get();
-                            Optional<ItfBeanSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(parametro.getTipoEntidade(), et.getClass())).findFirst();
+                            Optional<ItfBeanSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
                             if (pesquisaEntidade.isPresent()) {
                                 entidade = pesquisaEntidade.get();
                             }
