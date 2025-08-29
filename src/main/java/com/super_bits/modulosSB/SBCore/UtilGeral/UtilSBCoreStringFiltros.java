@@ -283,6 +283,11 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
         return getNumericosDaString(pString);
     }
 
+    public static String filtrarApenasLetraSemEspacos(String pString) {
+        return pString.replaceAll("\\d", "").replaceAll("\\s", "");
+
+    }
+
     public static String filtrarApenasLetra(String pString) {
         return pString.replaceAll("\\d", "");
 
