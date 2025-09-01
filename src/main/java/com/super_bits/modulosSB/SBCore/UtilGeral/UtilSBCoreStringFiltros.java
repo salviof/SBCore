@@ -263,8 +263,13 @@ public class UtilSBCoreStringFiltros extends UtilSBCoreStringFiltrosSimples {
      * @return string Contendo apenas as numeros
      */
     public static String getNumericosDaString(String pString) {
-        String numeros = pString.replaceAll("\\D", "");
-        return numeros.isEmpty() ? null : numeros;
+        try {
+            String numeros = pString.replaceAll("\\D", "");
+            return numeros.isEmpty() ? null : numeros;
+        } catch (Throwable t) {
+            return null;
+        }
+
     }
 
     /**
