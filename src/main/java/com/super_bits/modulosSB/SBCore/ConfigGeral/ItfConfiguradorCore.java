@@ -9,6 +9,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ArquivoC
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ArquivoConfiguracaoDistribuicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ServicoControllerExecucaoLocal;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.CentralDeArquivosJar;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.CentralMensagemSystemout;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.CentramMensagemProgramadorMsgStop;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBCoreDeveloperSopMessagem;
 
@@ -71,7 +72,7 @@ public interface ItfConfiguradorCore {
 
         public static void setclassesPadraoJar(ItfConfiguracaoCoreCustomizavel pConfig) {
             pConfig.setCentralDeEventos(CentralLogEventosArqTextoGenerica.class);
-            pConfig.setCentralMEnsagens(CentramMensagemProgramadorMsgStop.class);
+            pConfig.setCentralMEnsagens(CentralMensagemSystemout.class);
             pConfig.setClasseErro(InfoErroSBCoreDeveloperSopMessagem.class);
             pConfig.setControleDeSessao(ControleDeSessaoPadrao.class);
             pConfig.setServicoVisualizacao(ServicoVisualizacaoSemVisualizacao.class);

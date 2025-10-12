@@ -591,4 +591,9 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
         return null;
     }
 
+    @Override
+    public boolean isUmCampoVerdadeiroFalso() {
+        return false;
+    }
+
 }

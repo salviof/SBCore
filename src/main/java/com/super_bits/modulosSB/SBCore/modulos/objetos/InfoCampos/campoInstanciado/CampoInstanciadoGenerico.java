@@ -1376,4 +1376,17 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     }
 
+    @Override
+    public boolean isUmCampoVerdadeiroFalso() {
+
+        switch (atributoAssociado.getFabricaTipoAtributo()) {
+            case VERDADEIRO_FALSO:
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
+
 }

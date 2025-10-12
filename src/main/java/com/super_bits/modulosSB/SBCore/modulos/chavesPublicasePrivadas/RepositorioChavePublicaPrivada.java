@@ -52,6 +52,21 @@ public class RepositorioChavePublicaPrivada {
         return chavePublica;
     }
 
+    public static String getConteudoParDeChavesArquivoPem(String pHash) {
+        try {
+            String diretorio = getCaminhoBaseRepositorio();
+            File arquivo = new File(diretorio + "/" + pHash);
+            System.out.println("EM" + arquivo.getPath());
+            if (!arquivo.exists()) {
+                throw new UnsupportedOperationException("Arquivo do hash não encontrado");
+            }
+            String stringwrap = UTilSBCoreInputs.getStringByArquivoLocal(arquivo.getAbsolutePath());
+            return stringwrap;
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
     public static Map<String, String> getParDeChavesPubPrivadaByHash(String pHash) {
         try {
             String diretorio = getCaminhoBaseRepositorio();

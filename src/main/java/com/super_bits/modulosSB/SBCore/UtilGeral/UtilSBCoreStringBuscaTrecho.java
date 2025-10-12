@@ -152,6 +152,10 @@ public class UtilSBCoreStringBuscaTrecho {
     public static List<String> getPartesEntreColchete(String pTexto) {
 
         List<String> resposta = new ArrayList<String>();
+
+        if ((pTexto == null) || ((!pTexto.contains("[") || !pTexto.contains("]")))) {
+            return resposta;
+        }
         Pattern p = Pattern.compile("\\[([^\\}]+?)\\]"); // coloquei o trecho que quero entre parênteses
         Matcher matcher = p.matcher(pTexto);
         while (matcher.find()) {

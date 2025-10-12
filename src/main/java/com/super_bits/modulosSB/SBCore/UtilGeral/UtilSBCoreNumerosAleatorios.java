@@ -14,8 +14,12 @@ public class UtilSBCoreNumerosAleatorios {
 
     private static final Random random = new Random();
 
-    public int getParOuImparAleatorio() {
+    public static int getParOuImparAleatorio() {
         return random.nextBoolean() ? 1 : 0;
+    }
+
+    public static boolean getParOuImparAleatorioBoolean() {
+        return (random.nextBoolean() ? 1 : 0) == 1;
     }
 
 }

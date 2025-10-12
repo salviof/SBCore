@@ -49,6 +49,7 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
     }
 
     protected void desbloquearProximaAlteracao() {
+
         bloquearProximaTentativaDeAlteracao = false;
     }
 
