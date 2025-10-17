@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -27,7 +28,7 @@ import java.util.Map;
 public class MapaObjetosProjetoAtual {
 
     // Tabela contendo nome da classe, e classe
-    private static final Map<String, Class> CLASSE_ENTIDADE_BY_NOME = new HashMap<>();
+    private static final Map<String, Class> CLASSE_ENTIDADE_BY_NOME = new ConcurrentHashMap<>();
     private static boolean TODAS_CLASSES_CONFIGURADAS = false;
     private static final Map<Class, EstruturaDeEntidade> ESTRUTURA_BY_CLASSE = new HashMap<>();
     private static final Map<Class, String> VIEW_BY_CLASSE = new HashMap<>();
@@ -159,7 +160,7 @@ public class MapaObjetosProjetoAtual {
         return estrutura;
     }
 
-    public static final List<EstruturaDeEntidade> getListaTodosEstruturaObjeto() {
+    public synchronized static final List<EstruturaDeEntidade> getListaTodosEstruturaObjeto() {
         for (Class classe : CLASSE_ENTIDADE_BY_NOME.values()) {
             if (ESTRUTURA_BY_CLASSE.get(classe) == null) {
                 getEstruturaObjeto(classe);
