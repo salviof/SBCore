@@ -13,6 +13,56 @@ import java.util.regex.Pattern;
  */
 public class UtilSBCoreStringTelefone {
 
+    public static String gerarTelefoneComMascaraSimples(String telefone) {
+        telefone = gerarCeluarInternacional(telefone);
+        if (telefone == null || telefone.isEmpty()) {
+            return null;
+        }
+
+        // Remove tudo que não for número
+        String nums = telefone.replaceAll("\\D", "");
+
+        // Remove o código do país (55) se existir no início
+        if (nums.startsWith("55")) {
+            nums = nums.substring(2);
+        }
+
+        // Verifica se há pelo menos 10 dígitos (2 do DDD + 8 ou 9 do número)
+        if (nums.length() < 10) {
+            return null;
+        }
+
+        String ddd = nums.substring(0, 2);
+        String restante = nums.substring(2);
+
+        // Formata conforme o tamanho do número
+        if (restante.length() == 9) {
+            // Celular com 9 dígitos
+            return String.format("(%s) %s-%s",
+                    ddd,
+                    restante.substring(0, 5),
+                    restante.substring(5)
+            );
+        } else if (restante.length() == 8) {
+            // Fixo com 8 dígitos
+            return String.format("(%s) %s-%s",
+                    ddd,
+                    restante.substring(0, 4),
+                    restante.substring(4)
+            );
+        } else if (restante.length() > 9) {
+            // Pega os últimos 9 ou 8 dígitos (caso venha com código da operadora)
+            String ultimos9 = restante.substring(restante.length() - 9);
+            return String.format("(%s) %s-%s",
+                    ddd,
+                    ultimos9.substring(0, 5),
+                    ultimos9.substring(5)
+            );
+        }
+
+        return null;
+    }
+
     /**
      * Converte um número de telefone para o formato internacional E.164 com
      * código do Brasil (+55).
