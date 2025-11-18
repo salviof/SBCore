@@ -4,14 +4,9 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.view.menu.ItfMenusDeSessao;
 
 import org.coletivojava.fw.api.objetoNativo.view.menu.MenusDaSessao;
 import java.io.File;
@@ -22,31 +17,35 @@ import java.util.List;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTelaUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoSessao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.view.menu.ComoMenusDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
  * @author Salvio
  */
-public class SessaoOffline implements ItfSessao {
+public class SessaoOffline implements ComoSessao {
 
     protected String idSessao;
-    private ItfUsuario usuarioLogado;
+    private ComoUsuario usuarioLogado;
     private final Date dataInicial;
     private Date dataFinal;
     private final List<ItfPermissao> acoesRealizadas;
-    private final Map<String, ItfAcaoDoSistema> acoesPermitidas;
-    private final Map<String, ItfAcaoDoSistema> acoesNegadas;
+    private final Map<String, ComoAcaoDoSistema> acoesPermitidas;
+    private final Map<String, ComoAcaoDoSistema> acoesNegadas;
 
     protected String pastaTempDeSessao;
 
-    private ItfMenusDeSessao menusDaSessao;
+    private ComoMenusDeSessao menusDaSessao;
 
     @Override
-    public ItfMenusDeSessao getMenusDaSessao() {
+    public ComoMenusDeSessao getMenusDaSessao() {
         return menusDaSessao;
     }
 
-    public void setMenusDaSessao(ItfMenusDeSessao menusDaSessao) {
+    public void setMenusDaSessao(ComoMenusDeSessao menusDaSessao) {
         this.menusDaSessao = menusDaSessao;
     }
 
@@ -70,7 +69,7 @@ public class SessaoOffline implements ItfSessao {
     }
 
     @Override
-    public ItfUsuario getUsuario() {
+    public ComoUsuario getUsuario() {
 
         return usuarioLogado;
     }
@@ -91,7 +90,7 @@ public class SessaoOffline implements ItfSessao {
     }
 
     @Override
-    public void setUsuario(ItfUsuario pUsuario) {
+    public void setUsuario(ComoUsuario pUsuario) {
 
         usuarioLogado = pUsuario;
         if (SBCore.getCentralPermissao() != null) {
@@ -131,7 +130,7 @@ public class SessaoOffline implements ItfSessao {
     }
 
     @Override
-    public boolean isAcessoPermitido(ItfAcaoDoSistema pAcao) {
+    public boolean isAcessoPermitido(ComoAcaoDoSistema pAcao) {
 
         if (acoesPermitidas.containsKey(pAcao.getNomeUnico())) {
             return true;

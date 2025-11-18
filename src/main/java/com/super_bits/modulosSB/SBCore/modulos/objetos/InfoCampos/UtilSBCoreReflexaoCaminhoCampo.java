@@ -28,8 +28,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.beans.Transient;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -499,7 +499,7 @@ public class UtilSBCoreReflexaoCaminhoCampo {
      * @param caminhoAnterior
      * @return True caso não aconteçam erros
      */
-    public static boolean buildListaSubEntidadesPersistiveis(ItfBeanSimples entidade, int pNivelAtual, int pNivelMaximo, List<CaminhoCampoReflexao> listarAnterior, String caminhoAnterior) {
+    public static boolean buildListaSubEntidadesPersistiveis(ComoEntidadeSimples entidade, int pNivelAtual, int pNivelMaximo, List<CaminhoCampoReflexao> listarAnterior, String caminhoAnterior) {
         try {
             if (pNivelMaximo > 7) {
                 pNivelMaximo = 7;
@@ -517,23 +517,23 @@ public class UtilSBCoreReflexaoCaminhoCampo {
                 Object itemEncontrado = entidade.getValorCampoByCaminhoCampo(caminho);
                 if (itemEncontrado != null) {
                     if (caminho.isUmCampoListavel()) {
-                        List<ItfBeanSimples> lista = (List) itemEncontrado;
+                        List<ComoEntidadeSimples> lista = (List) itemEncontrado;
                         int ii = 0;
                         // construindo a string do caminho, como este
 
-                        for (ItfBeanSimples item : lista) {
+                        for (ComoEntidadeSimples item : lista) {
                             String caminhoNovoCampo = caminho.getCaminhoSemNomeClasse().replaceAll("\\[]", "[" + ii + "]");
                             CaminhoCampoReflexao novoCaminho = new CaminhoCampoReflexao(caminhoAnterior + "." + caminhoNovoCampo);
                             ii++;
                             listarAnterior.add(novoCaminho);
 
-                            buildListaSubEntidadesPersistiveis((ItfBeanSimples) item, pNivelAtual + 1, pNivelMaximo, listarAnterior, caminhoAnterior + "." + novoCaminho.getCaminhoSemNomeClasse());
+                            buildListaSubEntidadesPersistiveis((ComoEntidadeSimples) item, pNivelAtual + 1, pNivelMaximo, listarAnterior, caminhoAnterior + "." + novoCaminho.getCaminhoSemNomeClasse());
                         }
                     } else {
 
                         CaminhoCampoReflexao novoCaminho = new CaminhoCampoReflexao(caminhoAnterior + "." + caminho.getCaminhoSemNomeClasse());
                         listarAnterior.add(novoCaminho);
-                        buildListaSubEntidadesPersistiveis((ItfBeanSimples) itemEncontrado, pNivelAtual + 1, pNivelMaximo, listarAnterior, caminhoAnterior + "." + caminho.getCaminhoSemNomeClasse());
+                        buildListaSubEntidadesPersistiveis((ComoEntidadeSimples) itemEncontrado, pNivelAtual + 1, pNivelMaximo, listarAnterior, caminhoAnterior + "." + caminho.getCaminhoSemNomeClasse());
                     }
                 }
 
@@ -546,7 +546,7 @@ public class UtilSBCoreReflexaoCaminhoCampo {
 
     }
 
-    public static List<CaminhoCampoReflexao> getCamposDeEntidadeInstanciado(ItfBeanSimples pEntidade, int pQuantidadeSubniveis) {
+    public static List<CaminhoCampoReflexao> getCamposDeEntidadeInstanciado(ComoEntidadeSimples pEntidade, int pQuantidadeSubniveis) {
 
         pEntidade.getEntidadesVinculadas();
         List<CaminhoCampoReflexao> lista = new ArrayList<>();
@@ -685,8 +685,8 @@ public class UtilSBCoreReflexaoCaminhoCampo {
 
         }
 
-        // todo Tratar EntidadeGenerica gerar trhow se Chegar no Object
-        return (pClasse == ItemGenerico.class
+        // todo Tratar EntidadeORMGenerica gerar trhow se Chegar no Object
+        return (pClasse == ComoEntidadeGenerica.class
                 || pClasse == Object.class
                 || pClasse.getSimpleName().startsWith("Entidade"));
 

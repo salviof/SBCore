@@ -8,13 +8,13 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class ServicoControllerExecucaoLocal implements ItfServicoController {
 
     @Override
-    public ItfRespostaAcaoDoSistema getResposta(ItfFabricaAcoes pAcao, Object... pParametros) throws ErroChamadaController {
+    public ItfRespostaAcaoDoSistema getResposta(ComoFabricaAcoes pAcao, Object... pParametros) throws ErroChamadaController {
 
         if (true) {
             //      throw new ErroChamadaController("A chamada com multiplos parametros não foi implementado");
@@ -48,7 +48,7 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
     }
 
     @Override
-    public ItfRespostaAcaoDoSistema getResposta(ItfFabricaAcoes pAcao, ItfBeanSimples pEntidade) throws ErroChamadaController {
+    public ItfRespostaAcaoDoSistema getResposta(ComoFabricaAcoes pAcao, ComoEntidadeSimples pEntidade) throws ErroChamadaController {
 
         if (pAcao == null) {
             throw new ErroChamadaController("Tentativa de chamada de ação enviando ação nula");
@@ -86,11 +86,11 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
     }
 
     @Override
-    public ItfRespostaAcaoDoSistema getResposta(String pNomeUncicoAcao, ItfBeanSimples pEntidade) throws ErroChamadaController {
+    public ItfRespostaAcaoDoSistema getResposta(String pNomeUncicoAcao, ComoEntidadeSimples pEntidade) throws ErroChamadaController {
         if (true) {
             throw new ErroChamadaController("A chamada com multiplos parametros não foi implementado");
         }
-        ItfAcaoDoSistema pAcao = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(pNomeUncicoAcao);
+        ComoAcaoDoSistema pAcao = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(pNomeUncicoAcao);
         return getResposta(pAcao.getEnumAcaoDoSistema(), pEntidade);
     }
 

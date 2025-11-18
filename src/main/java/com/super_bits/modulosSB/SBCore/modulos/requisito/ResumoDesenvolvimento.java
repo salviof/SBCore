@@ -4,14 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.requisito;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
 import java.util.List;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ResumoDesenvolvimento extends ItemGenerico {
+public class ResumoDesenvolvimento extends ComoEntidadeGenerica {
 
     private List<ComentarioRequisito> comentarios;
     private List<LogDeTrabalho> log;

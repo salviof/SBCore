@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class UtilSBCoreReflexaoObjeto extends UtilSBCoreReflexaoObjetoSimples {
         return MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasse);
     }
 
-    public static String getClasseDiscriminatoriaPolimorfismoDeEntidade(ItfBeanSimples pEntidade) {
+    public static String getClasseDiscriminatoriaPolimorfismoDeEntidade(ComoEntidadeSimples pEntidade) {
         String nomeColuna;
         Optional<Class> classeBaseEncontrada = UtilSBCoreReflexao.getClasseESubclassesAteClasseBaseDeEntidade(pEntidade.getClass()).stream().filter(
                 classe -> classe.isAnnotationPresent(DiscriminatorColumn.class)).findFirst();
@@ -59,7 +59,7 @@ public class UtilSBCoreReflexaoObjeto extends UtilSBCoreReflexaoObjetoSimples {
         boolean temEntidade = pClasse.getAnnotation(Entity.class) != null;
         while (temEntidade) {
 
-            if (classeAtual == ItemGenerico.class
+            if (classeAtual == ComoEntidadeGenerica.class
                     || classeAtual == Object.class) {
                 return classes;
             }

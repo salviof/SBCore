@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaTipoTelas;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaTipoTelas;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.InfoTipoTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.TipoTela;
@@ -17,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTipoTela;
  */
 public class UtilSBCoreFabricaTipoTela {
 
-    public static ItfTipoTela getTipoTela(ItfFabricaTipoTelas pENumFabrica) {
+    public static ItfTipoTela getTipoTela(ComoFabricaTipoTelas pENumFabrica) {
         InfoTipoTela infoTipo = UtilSBCoreReflexaoFabrica.getAnotacaoDoEnum(pENumFabrica, InfoTipoTela.class);
         TipoTela novoTipo = new TipoTela();
         novoTipo.setNome(infoTipo.descricao());

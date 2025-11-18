@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -16,12 +16,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public class ItemSimilar<T> extends ItemSimilarGenerico<T> {
 
-    public ItemSimilar(ItfBeanSimples pObjetoAnalizado, String parametro) {
+    public ItemSimilar(ComoEntidadeSimples pObjetoAnalizado, String parametro) {
         super(pObjetoAnalizado, parametro, FabTipoPesquisaGenerica.NOME);
 
     }
 
-    public ItemSimilar(ItfBeanSimples pObjetoAnalizado, String parametro, FabTipoPesquisaGenerica pTipo) {
+    public ItemSimilar(ComoEntidadeSimples pObjetoAnalizado, String parametro, FabTipoPesquisaGenerica pTipo) {
         super(pObjetoAnalizado, parametro, pTipo);
 
     }
@@ -46,7 +46,7 @@ public class ItemSimilar<T> extends ItemSimilarGenerico<T> {
         if (textoDefinido) {
             return texto;
         }
-        if (!(objetoAnalizado instanceof ItfBeanSimples)) {
+        if (!(objetoAnalizado instanceof ComoEntidadeSimples)) {
 
             return defineValorTextoReferenciaNormalizando(objetoAnalizado.toString());
         }

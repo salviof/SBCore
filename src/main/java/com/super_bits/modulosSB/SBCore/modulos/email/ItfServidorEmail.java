@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.email;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
  * @author SalvioF
  */
-public interface ItfServidorEmail extends ItfBeanSimples {
+public interface ItfServidorEmail extends ComoEntidadeSimples {
 
     @Override
     public default Long getId() {

@@ -13,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoCon
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TipoRecurso;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     private boolean contemMapaCaracteres;
 
     private String getCaminhoArquivo(ItfCampoInstanciado pCampo) {
-        String caminhoArquivo = SBCore.getCentralDeArquivos().getEndrLocalArquivoItem((ItfBeanSimples) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
+        String caminhoArquivo = SBCore.getCentralDeArquivos().getEndrLocalArquivoItem((ComoEntidadeSimples) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
         return caminhoArquivo;
     }
 
@@ -42,7 +42,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     }
 
     private void configuracoesIniciais() {
-        ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
+        ComoEntidadeSimples entidadeVinculada = (ComoEntidadeSimples) campoInstanciado.getObjetoDoAtributo();
         if (entidadeVinculada.getId() == null) {
             if (isExisteArquivo()) {
                 excluirArquivo();
@@ -59,12 +59,12 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
                 throw new UnsupportedOperationException("O nome do Arquivo não foi enviado, impossível realizar o upload ");
             }
 
-            if (!(entidade instanceof ItfBeanSimples)) {
-                throw new UnsupportedOperationException("Este campo não extende " + ItfBeanSimples.class.getSimpleName());
+            if (!(entidade instanceof ComoEntidadeSimples)) {
+                throw new UnsupportedOperationException("Este campo não extende " + ComoEntidadeSimples.class.getSimpleName());
             }
 
             //campoInstanciado.setValor(pNomeArquivo);
-            ItfBeanSimples entidadeVinculada = (ItfBeanSimples) campoInstanciado.getObjetoDoAtributo();
+            ComoEntidadeSimples entidadeVinculada = (ComoEntidadeSimples) campoInstanciado.getObjetoDoAtributo();
             if (entidadeVinculada.getId() == null) {
                 intputTemporario = pInputStream;
                 campoInstanciado.setValor(nomeArquivoCompativel);

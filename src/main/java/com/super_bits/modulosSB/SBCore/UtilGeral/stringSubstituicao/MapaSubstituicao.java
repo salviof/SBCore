@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao;
 
-import org.coletivojava.fw.api.analiseDados.ItfMapaSubstituicao;
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
@@ -16,11 +15,10 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.TIPO_PARTE_URL;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.formulario.ItfFormularioAcao;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
 
@@ -29,18 +27,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.coletivojava.fw.api.analiseDados.ComoMapaSubstituicao;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
  * @author desenvolvedor
  */
-public class MapaSubstituicao implements ItfMapaSubstituicao {
+public class MapaSubstituicao implements ComoMapaSubstituicao {
 
     protected final Map<String, String> mapaSubstituicao = new HashMap<>();
     protected final Map<String, String> mapaSubstituicaoImagem = new HashMap<>();
     protected final Map<String, Map<String, String>> mapaSubstituicaoListas = new HashMap<>();
     protected final Map<String, Map<Integer, List<String>>> ordemMapaSubstituicaoListas = new HashMap<>();
-    protected final List<ItfBeanSimples> entidadesVinculada = new ArrayList<>();
+    protected final List<ComoEntidadeSimples> entidadesVinculada = new ArrayList<>();
 
     public String getValorImagem(String pValorChave) {
         return mapaSubstituicaoImagem.get(pValorChave);
@@ -61,9 +61,9 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
                     if (chave.startsWith("[link:")) {
                         String nomeAcao = chave.replace("[link:", "").replace("]", "");
 
-                        ItfBeanSimples entidade = null;
+                        ComoEntidadeSimples entidade = null;
 
-                        ItfAcaoDoSistema acaoDOLink = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
+                        ComoAcaoDoSistema acaoDOLink = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
                         ItfEstruturaDeFormuario formulario = SBCore.getServicoVisualizacao().getEstruturaFormulario(acaoDOLink);
                         Optional<ItfParametroRequisicao> pesquisaPArametro = formulario.getParametrosURL()
                                 .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
@@ -83,7 +83,7 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
 
                         if (pesquisaPArametro.isPresent()) {
                             ItfParametroRequisicao parametro = pesquisaPArametro.get();
-                            Optional<ItfBeanSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
+                            Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
                             if (pesquisaEntidade.isPresent()) {
                                 entidade = pesquisaEntidade.get();
                             }
@@ -167,13 +167,13 @@ public class MapaSubstituicao implements ItfMapaSubstituicao {
     }
 
     @Override
-    public final void adicionarPalavrasChaveDoObjeto(ItfBeanSimples pObjeto) {
+    public final void adicionarPalavrasChaveDoObjeto(ComoEntidadeSimples pObjeto) {
         adicionarPalavrasChaveDoObjeto(null, pObjeto);
         adicionarPalavrasChaveDoObjeto(pObjeto.getClass().getSimpleName(), pObjeto);
     }
 
     @Override
-    public void adicionarPalavrasChaveDoObjeto(String prefixo, ItfBeanSimples pObjeto) {
+    public void adicionarPalavrasChaveDoObjeto(String prefixo, ComoEntidadeSimples pObjeto) {
         if (!entidadesVinculada.contains(pObjeto)) {
             entidadesVinculada.add(pObjeto);
         }

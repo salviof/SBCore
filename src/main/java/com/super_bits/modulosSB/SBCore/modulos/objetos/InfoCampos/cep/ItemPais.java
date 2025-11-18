@@ -6,17 +6,17 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfPais;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfUnidadeFederativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoUnidadeFederativa;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoPais;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ItemPais extends ItemSimples implements ItfPais {
+public class ItemPais extends ItemSimples implements ComoPais {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -24,7 +24,7 @@ public class ItemPais extends ItemSimples implements ItfPais {
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
 
-    private final List<ItfUnidadeFederativa> unidadesFederativas = new ArrayList<>();
+    private final List<ComoUnidadeFederativa> unidadesFederativas = new ArrayList<>();
 
     @Override
     public void setId(Long pID) {
@@ -48,7 +48,7 @@ public class ItemPais extends ItemSimples implements ItfPais {
     }
 
     @Override
-    public List<ItfUnidadeFederativa> getUnidadesFederativas() {
+    public List<ComoUnidadeFederativa> getUnidadesFederativas() {
 
         return this.unidadesFederativas;
 

@@ -5,20 +5,20 @@
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEstatico;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemFabricaEstatica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeVinculadoAEnum;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Tipo Acesso Arquivo"}, plural = "tipos de acesso a arquivos", fabricaVinculada = FabTipoAcessoArquivo.class)
-public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAEnum {
+public class TipoAcessoArquivo extends ItemSimples implements ComoEntidadeVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -52,17 +52,17 @@ public class TipoAcessoArquivo extends ItemSimples implements ItfBeanVinculadoAE
         return UtilSBCoreStringFiltros.gerarUrlAmigavel(nome);
     }
 
-    public ItfFabrica getFabricaObjeto() {
+    public ComoFabrica getFabricaObjeto() {
         return tipoAcessoArquivo;
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         tipoAcessoArquivo = (FabTipoAcessoArquivo) pFabrica;
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return tipoAcessoArquivo;
     }
 

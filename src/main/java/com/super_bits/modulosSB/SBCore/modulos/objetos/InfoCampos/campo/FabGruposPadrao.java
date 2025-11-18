@@ -7,15 +7,15 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author SalvioF
  */
-public enum FabGruposPadrao implements ItfFabrica {
+public enum FabGruposPadrao implements ComoFabrica {
     @InfoGrupoCampo(camposPorTipoAtributo = {FabTipoAtributoObjeto.ID,
         FabTipoAtributoObjeto.NOME})
     GRUPO_PADRAO_ITEM_SIMPLES,
@@ -71,7 +71,7 @@ public enum FabGruposPadrao implements ItfFabrica {
 
     }
 
-    public GrupoCampos getGrupoCampo(ItfBeanSimples p) {
+    public GrupoCampos getGrupoCampo(ComoEntidadeSimples p) {
         try {
 
             return (GrupoCampos) getGrupoCampo(p.getClass());

@@ -4,10 +4,10 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view.formulario;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoControllerEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormularioEntidade;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -51,7 +51,7 @@ public interface ItfFormularioEntidade<T> extends ItfDominioEntidade<T>, ItfForm
      *
      * @return Ação salvar alterações da entidade
      */
-    public ItfAcaoDoSistema getAcaoSalvarAlteracoes();
+    public ComoAcaoDoSistema getAcaoSalvarAlteracoes();
 
     /**
      *
@@ -63,9 +63,9 @@ public interface ItfFormularioEntidade<T> extends ItfDominioEntidade<T>, ItfForm
      *
      * @return Ações do sistema associadas ao registro selecionado
      */
-    public List<ItfAcaoDoSistema> getAcoesRegistros();
+    public List<ComoAcaoDoSistema> getAcoesRegistros();
 
-    public void setAcaoSelecionada(ItfAcaoDoSistema acaoSelecionada);
+    public void setAcaoSelecionada(ComoAcaoDoSistema acaoSelecionada);
 
     public void setEntidadeSelecionada(T entidadeSelecionada);
 

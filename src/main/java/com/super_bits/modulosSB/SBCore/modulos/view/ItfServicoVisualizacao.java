@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoGerenciarEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.token.ItfTokenAcessoDinamico;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -138,7 +138,7 @@ public interface ItfServicoVisualizacao {
 
     public String getEndrLocalArquivoReferenciaNovoComponente();
 
-    public String getEndrRemotoFormulario(ItfFabricaAcoes pAcao, Object... paramentros);
+    public String getEndrRemotoFormulario(ComoFabricaAcoes pAcao, Object... paramentros);
 
     public String getEndrRemotoFormularioTokenAcesso(ItfTokenAcessoDinamico token);
 
@@ -149,5 +149,5 @@ public interface ItfServicoVisualizacao {
     }
     public final static String FORMULARIO_TOKEN_DE_ACESSO_GENERICO = "FabAcaoPaginasDoSistema.PAGINA_NATIVA_TOKEN_DINAMICO_MB";
 
-    public ItfEstruturaDeFormuario getEstruturaFormulario(ItfAcaoDoSistema pAcaop);
+    public ItfEstruturaDeFormuario getEstruturaFormulario(ComoAcaoDoSistema pAcaop);
 }

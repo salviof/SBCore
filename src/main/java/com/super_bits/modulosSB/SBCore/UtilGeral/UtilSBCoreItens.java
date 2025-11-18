@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,13 +24,13 @@ public abstract class UtilSBCoreItens {
      * @param pLista Lista desordenada
      * @return Lista ordenada por id
      */
-    public static List<ItfBeanSimples> ordernarPorId(List<ItfBeanSimples> pLista) {
+    public static List<ComoEntidadeSimples> ordernarPorId(List<ComoEntidadeSimples> pLista) {
 
-        Map<Long, ItfBeanSimples> mapaItens = new HashMap();
+        Map<Long, ComoEntidadeSimples> mapaItens = new HashMap();
 
-        List<ItfBeanSimples> ordenado = new ArrayList<>();
+        List<ComoEntidadeSimples> ordenado = new ArrayList<>();
         List<Long> ordem = new ArrayList<>();
-        for (ItfBeanSimples item : pLista) {
+        for (ComoEntidadeSimples item : pLista) {
             if (item.getId() != null) {
                 mapaItens.put((Long) item.getId(), item);
                 ordem.add(item.getId());
@@ -47,13 +47,13 @@ public abstract class UtilSBCoreItens {
 
     }
 
-    public static String getValoresSeparadosPorVirgula(List<ItfBeanSimples> pLista) {
+    public static String getValoresSeparadosPorVirgula(List<ComoEntidadeSimples> pLista) {
         if (UtilSBCoreListas.isNuloOuVazio(pLista)) {
             return "";
         } else {
             String resp = "";
             int i = 0;
-            for (ItfBeanSimples itfBeanSimples : pLista) {
+            for (ComoEntidadeSimples itfBeanSimples : pLista) {
                 if (i < pLista.size() - 1) {
                     resp += String.valueOf((itfBeanSimples.getId())) + ",";
                 } else {

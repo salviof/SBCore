@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.fonteDados;
 
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 
@@ -26,15 +25,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletore
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfInfoStatusObjetoAplicacaoContexto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 
 /**
  *
  * @author desenvolvedor
  */
-public class CentralAtributosDeObjetosSemPersistencia implements ItfCentralAtributosDeObjetos {
+public class CentralAtributosDeObjetosSemPersistencia implements ComoServicoAtributosDeObjetos {
 
     @Override
     public List getListaOpcoesCampoInstanciado(ItfCampoInstanciado pCampoInstanciado) {

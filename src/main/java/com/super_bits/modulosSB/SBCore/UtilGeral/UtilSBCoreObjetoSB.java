@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -13,12 +13,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public class UtilSBCoreObjetoSB {
 
     @Deprecated
-    public static boolean compararObjetos(ItfBeanSimples pReferencia, ItfBeanSimples pObjetoComparado) {
+    public static boolean compararObjetos(ComoEntidadeSimples pReferencia, ComoEntidadeSimples pObjetoComparado) {
 
         return isObjetosIguais(pReferencia, pObjetoComparado);
     }
 
-    public static boolean isObjetosIguais(ItfBeanSimples pReferencia, ItfBeanSimples pObjetoComparado) {
+    public static boolean isObjetosIguais(ComoEntidadeSimples pReferencia, ComoEntidadeSimples pObjetoComparado) {
         if (pObjetoComparado == null && pReferencia != null) {
             return false;
         }
@@ -32,7 +32,7 @@ public class UtilSBCoreObjetoSB {
         return pObjetoComparado.equals(pReferencia);
     }
 
-    public static boolean isItemSimplesExistETemNome(ItfBeanSimples pItemSimples) {
+    public static boolean isItemSimplesExistETemNome(ComoEntidadeSimples pItemSimples) {
         if (pItemSimples == null) {
             return false;
         }

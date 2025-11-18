@@ -4,15 +4,15 @@
  */
 package com.super_bits.modulosSB.SBCore.controller;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoGestaoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
  * @author salvioF
  */
-public enum FabAcaoTemporariaTestes implements ItfFabricaAcoes {
+public enum FabAcaoTemporariaTestes implements ComoFabricaAcoes {
 
     @InfoTipoAcaoGestaoEntidade()
     TESTE_TEMPORARIO_MB_GESTAO_TESTES_TEMPORARIOS,
@@ -31,7 +31,7 @@ public enum FabAcaoTemporariaTestes implements ItfFabricaAcoes {
     }
 
     @Override
-    public ItfAcaoDoSistema getRegistro() {
+    public ComoAcaoDoSistema getRegistro() {
         throw new UnsupportedOperationException("A fabrica de ações temporaria Testes não foi implementadas");
     }
 

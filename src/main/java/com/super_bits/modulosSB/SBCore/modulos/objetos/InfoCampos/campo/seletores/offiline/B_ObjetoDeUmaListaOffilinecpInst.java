@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletor
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorUnicoObjeto.*;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
@@ -19,7 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * @author Salvio Furbino
  * @param <T>
  */
-public class B_ObjetoDeUmaListaOffilinecpInst<T extends ItfBeanSimplesSomenteLeitura>
+public class B_ObjetoDeUmaListaOffilinecpInst<T extends ComoEntidadeSimplesSomenteLeitura>
         extends B_ObjetoDeUmaListaAbs implements ItfSelecaoObjetoDeUmaLista {
 
     /**
@@ -41,7 +41,7 @@ public class B_ObjetoDeUmaListaOffilinecpInst<T extends ItfBeanSimplesSomenteLei
     @Override
     public void selecionarTudo() {
         if (getOrigem().isEmpty()) {
-            setObjetoSelecionado((ItfBeanSimplesSomenteLeitura) getOrigem().get(0));
+            setObjetoSelecionado((ComoEntidadeSimplesSomenteLeitura) getOrigem().get(0));
         }
     }
 

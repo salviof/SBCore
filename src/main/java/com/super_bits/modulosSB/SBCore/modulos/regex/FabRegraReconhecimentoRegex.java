@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.regex;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author desenvolvedor
  */
-public enum FabRegraReconhecimentoRegex implements ItfFabrica {
+public enum FabRegraReconhecimentoRegex implements ComoFabrica {
 
     PESO_DOIS_PONTOS_VALOR,
     ALTURA_DOIS_PONTOS_VALOR,

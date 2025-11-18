@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -12,7 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public interface ItfItemSimilarGenerico<T> extends Comparable<T> {
 
-    public ItfBeanSimples getObjetoAnalizado();
+    public ComoEntidadeSimples getObjetoAnalizado();
 
     public String getTextoReferencia();
 

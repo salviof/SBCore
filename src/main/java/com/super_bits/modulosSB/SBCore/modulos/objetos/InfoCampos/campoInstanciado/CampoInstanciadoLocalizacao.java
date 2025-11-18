@@ -7,16 +7,16 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.LocalizacaoInputAssistente;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfUnidadeFederativa;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemEndereco;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoCidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoUnidadeFederativa;
 
 /**
  *
@@ -33,13 +33,13 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
 
     public CampoInstanciadoLocalizacao(ItfCampoInstanciado pCampo) {
         //if (pCampo.getValor() == null) {
-        //     if (pCampo.getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
-        //         ItfBeanEnderecavel benEnderecavel = (ItfBeanEnderecavel) pCampo.getObjetoDoAtributo();
+        //     if (pCampo.getObjetoDoAtributo() instanceof ComoTemEndereco) {
+        //         ComoTemEndereco benEnderecavel = (ComoTemEndereco) pCampo.getObjetoDoAtributo();
         //         benEnderecavel.instanciarNovoEndereco();
         //     }
         // }
         TipoOrganizacaoDadosEndereco tipo = TipoOrganizacaoDadosEndereco.getTipoOrganizacaoByCampoInstanciado(pCampo);
-        ItfBeanSimples beanArmazenamentoAssitente = tipo.getBeanDeArmazenamento(pCampo);
+        ComoEntidadeSimples beanArmazenamentoAssitente = tipo.getBeanDeArmazenamento(pCampo);
 
         if (beanArmazenamentoAssitente.getAssistenteLocalizacao(pCampo, tipo) == null) {
             beanArmazenamentoAssitente.adicionarAssitenteLocalizacao(new LocalizacaoInputAssistente(pCampo, tipo));
@@ -77,28 +77,28 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public List<ItfCidade> metodoAutoCompleteCidade(String pCidadeTXT) {
+    public List<ComoCidade> metodoAutoCompleteCidade(String pCidadeTXT) {
 
         return assistente.metodoAutoCompleteCidade(pCidadeTXT);
 
     }
 
     @Override
-    public List<ItfUnidadeFederativa> metodoAutoCompleteEstado(String pCidadeTXT) {
+    public List<ComoUnidadeFederativa> metodoAutoCompleteEstado(String pCidadeTXT) {
         return assistente.metodoAutoCompleteEstado(pCidadeTXT);
     }
 
     @Override
-    public List<ItfBairro> metodoAutoCompleteBairro(String pBairroTXT) {
+    public List<ComoBairro> metodoAutoCompleteBairro(String pBairroTXT) {
 
-        List<ItfBairro> resultadoPesquisa = new ArrayList<>();
+        List<ComoBairro> resultadoPesquisa = new ArrayList<>();
 
         if (getCidade() == null) {
             SBCore.enviarMensagemUsuario("Selecione o a Cidade para listar o bairro", FabMensagens.ALERTA);
             return resultadoPesquisa;
         }
 
-        for (ItfBairro pEstado : getCidade().getBairros()) {
+        for (ComoBairro pEstado : getCidade().getBairros()) {
             if (pEstado.getNome().toLowerCase().contains(pBairroTXT.toLowerCase())) {
                 resultadoPesquisa.add(pEstado);
             }
@@ -116,34 +116,34 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public ItfBairro getBairro() {
+    public ComoBairro getBairro() {
         return assistente.getBairro();
     }
 
     @Override
-    public void setBairro(ItfBairro pBairro) {
+    public void setBairro(ComoBairro pBairro) {
 
         assistente.setBairro(pBairro);
     }
 
     @Override
-    public ItfCidade getCidade() {
+    public ComoCidade getCidade() {
         return assistente.getCidade();
     }
 
     @Override
-    public void setCidade(ItfCidade pCidade) {
+    public void setCidade(ComoCidade pCidade) {
         assistente.setCidade(pCidade);
 
     }
 
     @Override
-    public void setUnidadeFederativa(ItfUnidadeFederativa pUnidadeFerativa) {
+    public void setUnidadeFederativa(ComoUnidadeFederativa pUnidadeFerativa) {
         assistente.setUnidadeFederativa(pUnidadeFerativa);
     }
 
     @Override
-    public ItfUnidadeFederativa getUnidadeFederativa() {
+    public ComoUnidadeFederativa getUnidadeFederativa() {
         return assistente.getUnidadeFederativa();
     }
 
@@ -192,7 +192,7 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public ItfLocal getLocal() {
+    public ComoLocal getLocal() {
         return assistente.getLocal();
     }
 
@@ -352,7 +352,7 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public void adicionarListaOpcoesBairro(List<ItfBairro> bairros) {
+    public void adicionarListaOpcoesBairro(List<ComoBairro> bairros) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

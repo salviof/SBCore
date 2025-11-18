@@ -9,15 +9,15 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfControlerAPP;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.lang.reflect.Method;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -53,7 +53,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      */
     protected static ItfRespostaAcaoDoSistema getRespostaErroInesperado(Class pTipoRetorno) {
         RespostaAcaoDoSistema resp = new RespostaAcaoDoSistema(pTipoRetorno, UtilSBController.getAcaoByMetodo(getMetodoChamado(), true));
-        ItfAcaoDoSistema acao = getAcaoDoMetodo();
+        ComoAcaoDoSistema acao = getAcaoDoMetodo();
         resp.addErro("Erro inesperado executando  " + acao.getNomeAcao() + " o suporte foi notificado, você pode nos escrever sobre isso caso queira, obrigado");
         return resp;
     }
@@ -168,10 +168,10 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      *
      * @return A ação que estiver anotada no metodo
      */
-    protected static ItfAcaoDoSistema getAcaoDoMetodo() {
+    protected static ComoAcaoDoSistema getAcaoDoMetodo() {
         try {
             Method metodo = getMetodoChamado();
-            ItfAcaoDoSistema acao = UtilSBController.getAcaoByMetodo(metodo, true);
+            ComoAcaoDoSistema acao = UtilSBController.getAcaoByMetodo(metodo, true);
             if (acao == null) {
                 String nomeMetodo = "NULO!!!";
                 if (metodo != null) {
@@ -202,7 +202,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
                 return;
             }
 
-            ItfUsuario usuario = SBCore.getControleDeSessao().getSessaoAtual().getUsuario();
+            ComoUsuario usuario = SBCore.getControleDeSessao().getSessaoAtual().getUsuario();
 
             if (usuario.getEmail().equals(new UsuarioSistemaRoot().getEmail())) {
                 return;
@@ -210,7 +210,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
 
             Method metodo = getMetodoChamado();
 
-            ItfAcaoDoSistema acao = UtilSBController.getAcaoByMetodo(metodo, true);
+            ComoAcaoDoSistema acao = UtilSBController.getAcaoByMetodo(metodo, true);
             if (acao == null) {
                 SBCore.RelatarErro(FabErro.PARA_TUDO, "A ANOTAÇÃO DE AÇÃO NÃO FOI ENCONTRADA NO METODO DE AÇÃO DO SISTEMA", null);
             }
@@ -227,7 +227,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
         }
     }
 
-    private static boolean isPermitido(ItfPermissao pAcesso, ItfUsuario pUsuario) {
+    private static boolean isPermitido(ItfPermissao pAcesso, ComoUsuario pUsuario) {
         if (SBCore.isIgnorarPermissoes()) {
             return true;
         }
@@ -244,7 +244,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      * @return
      */
     @Override
-    public boolean isAcessoPermitido(ItfUsuario pUsuario, ItfAcaoDoSistema pAcao) {
+    public boolean isAcessoPermitido(ComoUsuario pUsuario, ComoAcaoDoSistema pAcao) {
         if (SBCore.isIgnorarPermissoes()) {
             return true;
         }
@@ -255,7 +255,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
         }
     }
 
-    public static boolean isAcessoPermitido(ItfAcaoDoSistema pAcao) {
+    public static boolean isAcessoPermitido(ComoAcaoDoSistema pAcao) {
         if (SBCore.isIgnorarPermissoes()) {
             return true;
         }
@@ -282,7 +282,7 @@ public abstract class ControllerAppAbstratoSBCore implements ItfControlerAPP {
      */
     @Override
     @Deprecated
-    public boolean possuiEstaAcao(ItfAcaoDoSistema permissao) {
+    public boolean possuiEstaAcao(ComoAcaoDoSistema permissao) {
         return MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(permissao.getNomeUnico()) != null;
     }
 

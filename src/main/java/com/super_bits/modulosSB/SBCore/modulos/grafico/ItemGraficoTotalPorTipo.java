@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.grafico;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -12,15 +12,15 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public class ItemGraficoTotalPorTipo extends ItemDadoGraficoTotal implements ItfDadoGraficoTotalTipo {
 
-    private final ItfBeanSimples tipoEntidade;
+    private final ComoEntidadeSimples tipoEntidade;
 
-    public ItemGraficoTotalPorTipo(ItfBeanSimples pEntidade, double pValor) {
+    public ItemGraficoTotalPorTipo(ComoEntidadeSimples pEntidade, double pValor) {
         super(pEntidade.getId(), pEntidade.getNome(), pValor);
         tipoEntidade = pEntidade;
     }
 
     @Override
-    public ItfBeanSimples getTipo() {
+    public ComoEntidadeSimples getTipo() {
         return tipoEntidade;
     }
 

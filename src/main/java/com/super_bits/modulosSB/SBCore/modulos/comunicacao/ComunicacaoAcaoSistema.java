@@ -9,19 +9,20 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeNormal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.RespostaComunicacao;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -31,12 +32,12 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
  */
 public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComunicacaoAcaoVinculada {
 
-    private final ItfAcaoController acaoVinculada;
+    private final ComoAcaoController acaoVinculada;
     private final ItfTipoComunicacao tipoComunicacao;
     private final List<ItfRespostaComunicacao> repostas;
-    private final ItfBeanSimples beanVinculado;
+    private final ComoEntidadeSimples beanVinculado;
     private final ItfDestinatario destinatario;
-    private final ItfUsuario usuarioRemetente;
+    private final ComoUsuario usuarioRemetente;
 
     private long tempoAceitavelResposta;
 
@@ -60,9 +61,9 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
             case CONTROLLER_ATIVAR:
                 return "Deseja ATIVAR " + artigoNome + " " + beanVinculado.getNomeDoObjeto() + " " + beanVinculado.getNome() + " ?";
             case CONTROLLER_ATIVAR_DESATIVAR:
-                if (beanVinculado instanceof ItfBeanNormal) {
+                if (beanVinculado instanceof ComoEntidadeNormal) {
 
-                    ItfBeanNormal beanComStatus = (ItfBeanNormal) beanVinculado;
+                    ComoEntidadeNormal beanComStatus = (ComoEntidadeNormal) beanVinculado;
                     if (beanComStatus.isAtivo()) {
                         return "Deseja DESATIVAR " + artigoNome + " " + beanVinculado.getNomeDoObjeto() + " " + beanVinculado.getNome() + " ?";
                     } else {
@@ -79,7 +80,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
         return mensagem;
     }
 
-    public ComunicacaoAcaoSistema(ItfAcaoController pAcaoVinculada, ItfBeanSimples pBeanVinculado) {
+    public ComunicacaoAcaoSistema(ComoAcaoController pAcaoVinculada, ComoEntidadeSimples pBeanVinculado) {
         this.acaoVinculada = pAcaoVinculada;
         this.tipoComunicacao = pAcaoVinculada.getTipoComunicacao();
 
@@ -122,7 +123,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
      * @return
      */
     @Override
-    public ItfAcaoController getAcaoVinculada() {
+    public ComoAcaoController getAcaoVinculada() {
         return acaoVinculada;
     }
 
@@ -131,7 +132,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
         return tipoComunicacao;
     }
 
-    public ItfBeanSimples getBeanVinculado() {
+    public ComoEntidadeSimples getBeanVinculado() {
         return beanVinculado;
     }
 
@@ -141,7 +142,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
     }
 
     @Override
-    public ItfUsuario getUsuarioRemetente() {
+    public ComoUsuario getUsuarioRemetente() {
         return usuarioRemetente;
     }
 

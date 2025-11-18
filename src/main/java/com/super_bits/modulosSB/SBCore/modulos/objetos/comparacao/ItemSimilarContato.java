@@ -4,9 +4,9 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanComEmail;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanContatoPessoa;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.contato.ComoContatoHumano;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemEmail;
 
 /**
  *
@@ -14,7 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public class ItemSimilarContato extends ItemSimilarGenerico {
 
-    public ItemSimilarContato(ItfBeanSimples pObjetoAnalizado, String parametro) {
+    public ItemSimilarContato(ComoEntidadeSimples pObjetoAnalizado, String parametro) {
 
         super(pObjetoAnalizado, parametro, FabTipoPesquisaGenerica.PERSONALIZADA);
 
@@ -24,7 +24,7 @@ public class ItemSimilarContato extends ItemSimilarGenerico {
     public String getTextoReferencia() {
         try {
             if (termoPesquisa.contains("@")) {
-                return ((ItfBeanComEmail) objetoAnalizado).getEmail();
+                return ((ComoTemEmail) objetoAnalizado).getEmail();
             } else {
                 return objetoAnalizado.getNome().toLowerCase();
             }

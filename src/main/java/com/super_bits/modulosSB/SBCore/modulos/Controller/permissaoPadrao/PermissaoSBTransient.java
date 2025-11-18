@@ -5,17 +5,17 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller.permissaoPadrao;
 
 import com.google.common.collect.Lists;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.GrupoUsuariosDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfGrupoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoGrupoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -27,16 +27,16 @@ public class PermissaoSBTransient extends ItemSimples implements ItfPermissao {
     private Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomePermissao;
-    private final ItfAcaoDoSistema acao;
+    private final ComoAcaoDoSistema acao;
 
-    public PermissaoSBTransient(ItfAcaoDoSistema pAcao) {
+    public PermissaoSBTransient(ComoAcaoDoSistema pAcao) {
         acao = pAcao;
         nomePermissao = pAcao.getNomeUnico();
         id = (long) pAcao.getNomeUnico().hashCode();
     }
 
     @Override
-    public ItfAcaoDoSistema getAcao() {
+    public ComoAcaoDoSistema getAcao() {
         return acao;
     }
 
@@ -46,33 +46,33 @@ public class PermissaoSBTransient extends ItemSimples implements ItfPermissao {
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposPermitidos() {
+    public List<ComoGrupoUsuario> getGruposPermitidos() {
         return Lists.newArrayList(new GrupoUsuariosDoSistema(new UsuarioSistemaRoot()));
 
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposNegados() {
+    public List<ComoGrupoUsuario> getGruposNegados() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposDisponiveis() {
+    public List<ComoGrupoUsuario> getGruposDisponiveis() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ItfUsuario> getUsuariosPermitidos() {
+    public List<ComoUsuario> getUsuariosPermitidos() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ItfUsuario> getUsuariosNegados() {
+    public List<ComoUsuario> getUsuariosNegados() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ItfUsuario> getUsuariosDisponiveis() {
+    public List<ComoUsuario> getUsuariosDisponiveis() {
         return new ArrayList<>();
     }
 

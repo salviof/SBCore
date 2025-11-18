@@ -9,13 +9,13 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSBEmLayout;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfColunaTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfLinhaTela;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSBEmLayout;
 
 /**
  *
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
 
-    private Map<Integer, ItfComponenteVisualSBEmLayout> componentesOrdenados;
+    private Map<Integer, ComoComponenteVisualSBEmLayout> componentesOrdenados;
     private Map<String, ColunaTela> mapaColunas;
     private Map<Integer, String> mapaColunaOrdenada;
     private Map<Integer, List<String>> colunasPorPeso;
@@ -55,7 +55,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
     }
 
     @Override
-    public void adicionarComponente(ItfComponenteVisualSBEmLayout pComponente, String identificacaoColuna) {
+    public void adicionarComponente(ComoComponenteVisualSBEmLayout pComponente, String identificacaoColuna) {
         try {
             if (colunasGeradas) {
                 throw new UnsupportedOperationException("Impossível adicionar novo componente, as colunas já foram geradas");
@@ -78,7 +78,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
             mapaColunaOrdenada = new HashMap<>();
             int somaPeso = 0;
             int ordem = 0;
-            for (ItfComponenteVisualSBEmLayout cp : componentesOrdenados.values()) {
+            for (ComoComponenteVisualSBEmLayout cp : componentesOrdenados.values()) {
                 int peso = cp.getPesoLargura();
                 somaPeso = somaPeso + peso;
                 if (colunasPorPeso.get(cp.getPesoLargura()) == null) {

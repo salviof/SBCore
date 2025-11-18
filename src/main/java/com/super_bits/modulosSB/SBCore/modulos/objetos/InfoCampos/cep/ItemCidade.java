@@ -6,20 +6,20 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfUnidadeFederativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoCidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoUnidadeFederativa;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalidade;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ItemCidade extends ItemSimples implements ItfCidade {
+public class ItemCidade extends ItemSimples implements ComoCidade {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -27,14 +27,14 @@ public class ItemCidade extends ItemSimples implements ItfCidade {
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nome;
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_UNIDADE_FEDERATIVA)
-    private ItfUnidadeFederativa unidadeFederativa;
+    private ComoUnidadeFederativa unidadeFederativa;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.LC_LOCALIDADE)
-    private ItfLocalidade localidade;
+    private ComoLocalidade localidade;
 
-    private ItfLocal vinculoLocalizacao;
+    private ComoLocal vinculoLocalizacao;
 
-    private final List<ItfBairro> listaDeBairros;
+    private final List<ComoBairro> listaDeBairros;
 
     public ItemCidade() {
         super();
@@ -63,14 +63,14 @@ public class ItemCidade extends ItemSimples implements ItfCidade {
     }
 
     @Override
-    public ItfUnidadeFederativa getUnidadeFederativa() {
+    public ComoUnidadeFederativa getUnidadeFederativa() {
 
         return this.unidadeFederativa;
 
     }
 
     @Override
-    public List<ItfBairro> getBairros() {
+    public List<ComoBairro> getBairros() {
 
         return this.listaDeBairros;
 
@@ -82,17 +82,17 @@ public class ItemCidade extends ItemSimples implements ItfCidade {
     }
 
     @Override
-    public ItfLocalidade getLocalidade() {
+    public ComoLocalidade getLocalidade() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setLocalidade(ItfLocalidade pLocalidade) {
+    public void setLocalidade(ComoLocalidade pLocalidade) {
         localidade = pLocalidade;
     }
 
     @Override
-    public void setUnidadeFederativa(ItfUnidadeFederativa pUnidadeFederativa) {
+    public void setUnidadeFederativa(ComoUnidadeFederativa pUnidadeFederativa) {
         unidadeFederativa = pUnidadeFederativa;
     }
 

@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstArquivoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -13,11 +13,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public interface ItfCentralPermissaoArquivo {
 
-    public boolean isUsuarioPodeAlterar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
+    public boolean isUsuarioPodeAlterar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
 
-    public boolean isUsuarioPodeBaixar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
+    public boolean isUsuarioPodeBaixar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
 
-    public boolean isUsuarioPodeCriar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
+    public boolean isUsuarioPodeCriar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo);
 
     public boolean isUsuarioLogadoPodeAlterar(ItfCampoInstArquivoEntidade pArquivo);
 

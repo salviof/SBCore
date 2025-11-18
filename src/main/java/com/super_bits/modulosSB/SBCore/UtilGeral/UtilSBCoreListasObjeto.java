@@ -11,7 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilarCom
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorGenericoListaEspecialPrimeiro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparadorObjeto.ComparadorPorId;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -98,8 +98,8 @@ public class UtilSBCoreListasObjeto {
         }
         List resp = new ArrayList();
         Map<Long, ItemSimilarComPrioridade> itens = pLista.stream().parallel()
-                .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
-                        n -> new ItemSimilarComPrioridade((ItfBeanSimples) n, pParametro, pSelecao.contains(n))));
+                .collect(Collectors.toMap(n -> ((ComoEntidadeSimples) n).getId(),
+                        n -> new ItemSimilarComPrioridade((ComoEntidadeSimples) n, pParametro, pSelecao.contains(n))));
 
         List<ItemSimilarComPrioridade> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
         Collections.sort(itensOrdenados);
@@ -126,8 +126,8 @@ public class UtilSBCoreListasObjeto {
         FabTipoPesquisaGenerica tipoPesquisa = FabTipoPesquisaGenerica.getTipoPesquisaByTermo(pParametro);
         List resp = new ArrayList();
         Map<Long, ItemSimilar> itens = pLista.stream().parallel()
-                .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
-                        n -> new ItemSimilar((ItfBeanSimples) n, parametro, tipoPesquisa)));
+                .collect(Collectors.toMap(n -> ((ComoEntidadeSimples) n).getId(),
+                        n -> new ItemSimilar((ComoEntidadeSimples) n, parametro, tipoPesquisa)));
 
 //(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
         List<ItemSimilar> itensOrdenados = itens.values().stream().parallel().collect(Collectors.toList());

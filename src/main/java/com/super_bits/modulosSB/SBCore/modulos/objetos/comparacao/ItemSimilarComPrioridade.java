@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -14,7 +14,7 @@ public class ItemSimilarComPrioridade extends ItemSimilar<ItemSimilarComPriorida
 
     private final boolean prioritario;
 
-    public ItemSimilarComPrioridade(ItfBeanSimples pObjetoAnalizado, String pTermpoPesquisa, boolean pPrioritario) {
+    public ItemSimilarComPrioridade(ComoEntidadeSimples pObjetoAnalizado, String pTermpoPesquisa, boolean pPrioritario) {
         super(pObjetoAnalizado, pTermpoPesquisa);
         prioritario = pPrioritario;
     }

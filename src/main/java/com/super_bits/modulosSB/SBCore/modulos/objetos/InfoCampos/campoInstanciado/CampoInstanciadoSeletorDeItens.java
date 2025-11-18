@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.ItfselecaoListaComOrigem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -17,7 +17,7 @@ public class CampoInstanciadoSeletorDeItens extends CampoInstanciadoComSelecao i
     private final CampoInstanciadoGenerico campoInstanciado;
     private final ItfselecaoListaComOrigem listaComListaOrigemDeObjetos;
 
-    private ItfBeanSimples itemSelecionado;
+    private ComoEntidadeSimples itemSelecionado;
 
     public CampoInstanciadoSeletorDeItens(CampoInstanciadoGenerico pCampoInstanciado) {
         super(UtilSBCoreReflexaoCaminhoCampo.getSelecaoItens(pCampoInstanciado), pCampoInstanciado);

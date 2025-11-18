@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view.formulario;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoControllerEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoControllerEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormularioEntidade;
 import java.util.List;
 
@@ -83,7 +83,7 @@ public interface ItfDominioEntidade<T> {
 
     public ItfAcaoFormularioEntidade getAcaoVisualizar();
 
-    public ItfAcaoControllerEntidade getAcaoAlterarStatus();
+    public ComoAcaoControllerEntidade getAcaoAlterarStatus();
 
     public ItfAcaoFormularioEntidade getAcaoEditar();
 

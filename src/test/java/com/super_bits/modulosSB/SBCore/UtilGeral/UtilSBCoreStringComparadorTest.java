@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.List;
 import mtfn.MetaphonePtBr;
 import mtfn.MetaphonePtBrFrouxo;
@@ -181,7 +181,7 @@ public class UtilSBCoreStringComparadorTest {
     @Test
     public void testIsParecido_4args() {
         System.out.println("isParecido");
-        ItfBeanSimples pReferencia = null;
+        ComoEntidadeSimples pReferencia = null;
         List<? extends ItfCaminhoCampo> pCampos = null;
         String pParametro = "";
         boolean pParametroNumerico = false;

@@ -10,6 +10,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.listas.ItfL
  *
  * @author desenvolvedor
  */
-public interface ItfFabricaDeDados extends ItfListas {
+public interface ComoFabricaDeDados extends ItfListas {
 
 }

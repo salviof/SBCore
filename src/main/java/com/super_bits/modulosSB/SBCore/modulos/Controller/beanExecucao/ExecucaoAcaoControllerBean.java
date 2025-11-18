@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller.beanExecucao;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfParametroAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoParametroAcaoController;
 
 /**
  *
@@ -13,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfPa
 public class ExecucaoAcaoControllerBean {
 
     private String acao;
-    private ItfParametroAcaoController parametro;
+    private ComoParametroAcaoController parametro;
     private String chaveAcesso;
 
     public String getAcao() {
@@ -24,11 +24,11 @@ public class ExecucaoAcaoControllerBean {
         this.acao = acao;
     }
 
-    public ItfParametroAcaoController getParametro() {
+    public ComoParametroAcaoController getParametro() {
         return parametro;
     }
 
-    public void setParametro(ItfParametroAcaoController parametro) {
+    public void setParametro(ComoParametroAcaoController parametro) {
         this.parametro = parametro;
     }
 

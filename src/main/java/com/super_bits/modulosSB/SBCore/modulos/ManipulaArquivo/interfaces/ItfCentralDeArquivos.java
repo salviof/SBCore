@@ -12,13 +12,13 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TIPO_ESTRUTURA_LO
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo.FabTipoAcessoArquivo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.io.File;
 
 import java.io.InputStream;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoSessao;
 
 /**
  *
@@ -163,7 +163,7 @@ public interface ItfCentralDeArquivos {
      * @param tipo
      * @return
      */
-    public String getEndrRemotoImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo);
+    public String getEndrRemotoImagem(ComoEntidadeSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo);
 
     /**
      *
@@ -176,7 +176,7 @@ public interface ItfCentralDeArquivos {
      * @return
      */
     @Deprecated
-    public String getEndrRemotoRecursosItem(ItfBeanSimples item, String galeria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
+    public String getEndrRemotoRecursosItem(ComoEntidadeSimples item, String galeria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
 
     /**
      *
@@ -187,14 +187,14 @@ public interface ItfCentralDeArquivos {
      * @return
      */
     @Deprecated
-    public List<String> getEnterecosLocaisRecursosItem(ItfBeanSimples item, String galeria);
+    public List<String> getEnterecosLocaisRecursosItem(ComoEntidadeSimples item, String galeria);
 
     /**
      *
      * @param item
      * @return
      */
-    public List<String> getEnterecosRemotosRecursosItem(ItfBeanSimplesSomenteLeitura item);
+    public List<String> getEnterecosRemotosRecursosItem(ComoEntidadeSimplesSomenteLeitura item);
 
     /**
      *
@@ -208,7 +208,7 @@ public interface ItfCentralDeArquivos {
      * @param item
      * @return
      */
-    public List<String> getEndrsLocaisDeCategoriasItem(ItfBeanSimplesSomenteLeitura item);
+    public List<String> getEndrsLocaisDeCategoriasItem(ComoEntidadeSimplesSomenteLeitura item);
 
     /**
      * Retorna o nome das pastas de categoria do objeto
@@ -220,7 +220,7 @@ public interface ItfCentralDeArquivos {
      * @param item
      * @return
      */
-    public List<String> getNomesPastasCategoriasItem(ItfBeanSimplesSomenteLeitura item);
+    public List<String> getNomesPastasCategoriasItem(ComoEntidadeSimplesSomenteLeitura item);
 
     /**
      *
@@ -228,7 +228,7 @@ public interface ItfCentralDeArquivos {
      * @param nomeArquivo
      * @return
      */
-    public String getEndrLocalArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo);
+    public String getEndrLocalArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo);
 
     /**
      *
@@ -237,7 +237,7 @@ public interface ItfCentralDeArquivos {
      * @param Categoria
      * @return
      */
-    public String getEndrLocalArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, String Categoria);
+    public String getEndrLocalArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, String Categoria);
 
     /**
      *
@@ -247,7 +247,7 @@ public interface ItfCentralDeArquivos {
      * @param pTipoArquivo
      * @return
      */
-    public String getEndrRemotoArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
+    public String getEndrRemotoArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
 
     /**
      *
@@ -256,7 +256,7 @@ public interface ItfCentralDeArquivos {
      * @param Categoria
      * @return
      */
-    public String getEndrRemotoArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, String Categoria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
+    public String getEndrRemotoArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, String Categoria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo);
 
     /**
      *
@@ -266,7 +266,7 @@ public interface ItfCentralDeArquivos {
      * @param foto
      *
      */
-    public boolean salvarImagemTodosOsFormatos(ItfBeanSimplesSomenteLeitura entidade, InputStream foto);
+    public boolean salvarImagemTodosOsFormatos(ComoEntidadeSimplesSomenteLeitura entidade, InputStream foto);
 
     /**
      *
@@ -276,7 +276,7 @@ public interface ItfCentralDeArquivos {
      * @param foto
      *
      */
-    public boolean salvarImagemTamanhoMedio(ItfBeanSimplesSomenteLeitura entidade, InputStream foto);
+    public boolean salvarImagemTamanhoMedio(ComoEntidadeSimplesSomenteLeitura entidade, InputStream foto);
 
     /**
      *
@@ -286,7 +286,7 @@ public interface ItfCentralDeArquivos {
      * @param foto
      *
      */
-    public boolean salvarImagemTamanhoPequeno(ItfBeanSimplesSomenteLeitura entidade, InputStream foto);
+    public boolean salvarImagemTamanhoPequeno(ComoEntidadeSimplesSomenteLeitura entidade, InputStream foto);
 
     /**
      *
@@ -297,7 +297,7 @@ public interface ItfCentralDeArquivos {
      * @return
      *
      */
-    public boolean salvarImagemTamanhoGrande(ItfBeanSimplesSomenteLeitura entidade, InputStream foto);
+    public boolean salvarImagemTamanhoGrande(ComoEntidadeSimplesSomenteLeitura entidade, InputStream foto);
 
     /**
      *
@@ -307,7 +307,7 @@ public interface ItfCentralDeArquivos {
      * @param categoria
      * @return
      */
-    public boolean salvarArquivo(ItfBeanSimplesSomenteLeitura entidade, byte[] arqivo, String categoria, String nome);
+    public boolean salvarArquivo(ComoEntidadeSimplesSomenteLeitura entidade, byte[] arqivo, String categoria, String nome);
 
     /**
      *
@@ -316,7 +316,7 @@ public interface ItfCentralDeArquivos {
      * @param nomeCampo
      * @return
      */
-    public boolean salvarArquivo(ItfBeanSimplesSomenteLeitura entidade, byte[] arquivo, String nomeCampo);
+    public boolean salvarArquivo(ComoEntidadeSimplesSomenteLeitura entidade, byte[] arquivo, String nomeCampo);
 
     /**
      *
@@ -344,11 +344,11 @@ public interface ItfCentralDeArquivos {
      * @return
      */
     @Deprecated
-    public boolean baixarArquivo(ItfBeanSimplesSomenteLeitura entidade, InputStream arqivo, String pNomeCampoOuCategoria, String pNomeArquivo, MapaSubstituicao mapaSubistituicao);
+    public boolean baixarArquivo(ComoEntidadeSimplesSomenteLeitura entidade, InputStream arqivo, String pNomeCampoOuCategoria, String pNomeArquivo, MapaSubstituicao mapaSubistituicao);
 
-    public String getEndrLocalImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo, ItfSessao pSessao);
+    public String getEndrLocalImagem(ComoEntidadeSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo, ComoSessao pSessao);
 
-    public String getEndrLocalImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo);
+    public String getEndrLocalImagem(ComoEntidadeSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo);
 
     public void setCentralDePermissao(ItfCentralPermissaoArquivo pPermissao);
 
@@ -372,7 +372,7 @@ public interface ItfCentralDeArquivos {
 
     public TIPO_ESTRUTURA_LOCAL_XHTML_PADRAO getTipoEstruturaCaminhoFormPadrao();
 
-    public default boolean isTemImagem(ItfBeanSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo) {
+    public default boolean isTemImagem(ComoEntidadeSimplesSomenteLeitura item, FabTipoAtributoObjeto tipo) {
         try {
             String caminhoLocal = getEndrLocalImagem(item, tipo);
             if (caminhoLocal.startsWith("http")) {
@@ -401,6 +401,6 @@ public interface ItfCentralDeArquivos {
 
     public String getHashArquivoDeEntidadeRegistrado(ItfCampoInstanciado pCampo);
 
-    public String getEnderecoLocalAlternativo(ItfBeanSimplesSomenteLeitura entidade, String pCategoria, String pNome);
+    public String getEnderecoLocalAlternativo(ComoEntidadeSimplesSomenteLeitura entidade, String pCategoria, String pNome);
 
 }

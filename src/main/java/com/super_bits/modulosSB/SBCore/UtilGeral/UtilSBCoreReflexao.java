@@ -5,11 +5,10 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemGenerico;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -22,13 +21,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
 import javax.persistence.Transient;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoSimples;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
 
 /**
  *
@@ -421,7 +420,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                     if (pInterfaceOuClasse.getSimpleName().equals(interFace.getSimpleName())) {
                         return true;
                     }
-                    for (Class classeDaInterface : getClassesComHierarquiaAteNomeObjetoFinalConter(interFace, "ItemGenerico", "ItfBeanGenerico")) {
+                    for (Class classeDaInterface : getClassesComHierarquiaAteNomeObjetoFinalConter(interFace, "ItemGenerico", "ComoEntidadeGenerico")) {
                         if (pInterfaceOuClasse.getSimpleName().equals(classeDaInterface.getSimpleName())) {
                             return true;
                         }
@@ -429,7 +428,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
 
                 }
 
-                if (classe.getSimpleName().equals(ItemGenerico.class.getSimpleName())
+                if (classe.getSimpleName().equals(ComoEntidadeGenerica.class.getSimpleName())
                         || classe.getSimpleName().equals(Object.class.getSimpleName())) {
                     temMaisClasse = false;
                 }
@@ -445,10 +444,10 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
         }
     }
 
-    public static Method getMetodoByAcao(ItfAcaoController pAcaoDoSistema) {
+    public static Method getMetodoByAcao(ComoAcaoController pAcaoDoSistema) {
 
         try {
-            ItfAcaoController acaocontroller = (ItfAcaoController) pAcaoDoSistema;
+            ComoAcaoController acaocontroller = (ComoAcaoController) pAcaoDoSistema;
             Method metodo = SBCore.getCentralPermissao().getMetodoByAcao(pAcaoDoSistema);
             if (metodo == null) {
                 throw new Throwable("Método não foi encontrado para a ação" + pAcaoDoSistema.getNomeUnico());
@@ -486,7 +485,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
      * ser gerado em caso de erro
      * @return
      */
-    public static ItfFabrica getFabricaDaClasseByAnotacao(Class pClasse, String pNomeMetodoAnotacao, boolean pararSistemaCasoNaoEncontre) {
+    public static ComoFabrica getFabricaDaClasseByAnotacao(Class pClasse, String pNomeMetodoAnotacao, boolean pararSistemaCasoNaoEncontre) {
         try {
 
             Annotation[] anotacoes = pClasse.getAnnotations();
@@ -500,7 +499,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
                             Method metodo = a.getClass().getMethod(pNomeMetodoAnotacao);
                             try {
 
-                                ItfFabrica fabrica = (ItfFabrica) metodo.invoke(a);
+                                ComoFabrica fabrica = (ComoFabrica) metodo.invoke(a);
                                 return fabrica;
 
                             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -549,13 +548,13 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
      * ser gerado em caso de erro
      * @return
      */
-    public static ItfFabrica getFabricaDoMetodoByAnotacao(Method pMetodo, String pNomeMetodoAnotacao, boolean pararSistemaCasoNaoEncontre) {
+    public static ComoFabrica getFabricaDoMetodoByAnotacao(Method pMetodo, String pNomeMetodoAnotacao, boolean pararSistemaCasoNaoEncontre) {
 
         Annotation anotacao = getAnotacaoComEsteMetodo(pMetodo.getAnnotations(), pNomeMetodoAnotacao);
 
         try {
             Method metodo = anotacao.getClass().getMethod(pNomeMetodoAnotacao);
-            ItfFabrica fabrica = (ItfFabrica) metodo.invoke(anotacao);
+            ComoFabrica fabrica = (ComoFabrica) metodo.invoke(anotacao);
             return fabrica;
 
         } catch (Throwable t) {
@@ -588,7 +587,8 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
             }
 
         }
-        throw new UnsupportedOperationException("Anotação com o metodo (propriedade de anotação ) " + pNomeMetodoAnotacao + "não encontrada em " + anotacoes);
+        throw new UnsupportedOperationException("Anotação com o metodo (propriedade de anotação ) " + pNomeMetodoAnotacao + "não encontrada em "
+                + anotacoes);
 
     }
 
@@ -607,7 +607,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
         Class classeAtual = pClasse;
         boolean encontrou = false;
         while (!encontrou) {
-            if (classeAtual == ItemGenerico.class
+            if (classeAtual == ComoEntidadeGenerica.class
                     || classeAtual == Object.class) {
                 return classes;
             }
@@ -641,7 +641,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
         boolean encontrou = false;
         classes.add(classeAtual);
         while (!encontrou) {
-            if (classeAtual == ItemGenerico.class
+            if (classeAtual == ComoEntidadeGenerica.class
                     || classeAtual == Object.class) {
                 return classes;
             }
@@ -677,7 +677,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
         Class classeAtual = pClasse;
         boolean encontrou = false;
         while (!encontrou) {
-            if (classeAtual == ItemGenerico.class
+            if (classeAtual == ComoEntidadeGenerica.class
                     || classeAtual == Object.class) {
                 return classes;
             }
@@ -709,7 +709,7 @@ public abstract class UtilSBCoreReflexao extends UtilSBCoreReflexaoSimples {
         Class classeAtual = pClasse;
         boolean encontrou = false;
         while (!encontrou) {
-            if (classeAtual == ItemGenerico.class
+            if (classeAtual == ComoEntidadeGenerica.class
                     || classeAtual == Object.class) {
                 return classes;
             }

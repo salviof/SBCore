@@ -8,16 +8,16 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.modulo.FabM
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfModuloAcaoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfGrupoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoGrupoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -30,7 +30,7 @@ import java.util.List;
  * @since 29/07/2015
  * @version 1.0
  */
-public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuario {
+public class GrupoUsuariosDoSistema extends ItemSimples implements ComoGrupoUsuario {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -62,7 +62,7 @@ public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuar
     }
 
     @Override
-    public List<? extends ItfUsuario> getUsuarios() {
+    public List<? extends ComoUsuario> getUsuarios() {
         return new ArrayList<>();
     }
 
@@ -104,7 +104,7 @@ public class GrupoUsuariosDoSistema extends ItemSimples implements ItfGrupoUsuar
     }
 
     @Override
-    public ItfFabricaAcoes getPaginaInicial() {
+    public ComoFabricaAcoes getPaginaInicial() {
 
         if (SBCore.getCentralAdministrativa() == null) {
             return null;

@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -15,7 +15,7 @@ import java.util.List;
 public class Dialogo {
 
     private List<ItfMensagem> dialogo;
-    private ItfUsuario usuarioInicioDialogo;
+    private ComoUsuario usuarioInicioDialogo;
     private FabTipoRespostaComunicacao respostaObtida;
 
     public List<ItfMensagem> getDialogo() {
@@ -27,11 +27,11 @@ public class Dialogo {
         return this;
     }
 
-    public ItfUsuario getUsuarioInicioDialogo() {
+    public ComoUsuario getUsuarioInicioDialogo() {
         return usuarioInicioDialogo;
     }
 
-    public Dialogo setUsuarioInicioDialogo(ItfUsuario usuarioInicioDialogo) {
+    public Dialogo setUsuarioInicioDialogo(ComoUsuario usuarioInicioDialogo) {
         this.usuarioInicioDialogo = usuarioInicioDialogo;
         return this;
     }

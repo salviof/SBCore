@@ -8,22 +8,22 @@ import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroAcessandoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroRegistrandoDialogo;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroSelandoDialogo;
 import java.util.ArrayList;
 import java.util.List;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 
 /**
  *
  * @author SalvioF
  */
-public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao {
+public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao {
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String mensagem) {
+    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem) {
         return gerarComunicacaoSistema_Usuario(tipocomunicacao, pUsuario, mensagem, UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
     }
 
@@ -43,12 +43,12 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
     }
 
     @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario) {
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ComoUsuario pDestinatario) {
         return getArmazenamento().getComunicacoesAguardandoRespostaDoDestinatario(pDestinatario);
     }
 
     @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ItfUsuario pRemetente) {
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ComoUsuario pRemetente) {
         return getArmazenamento().getComunicacoesAguardandoRespostaDoRemetente(pRemetente);
     }
 
@@ -58,7 +58,7 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String pAssunto, String mensagem) {
+    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String pAssunto, String mensagem) {
         ItfDialogo comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
@@ -67,7 +67,7 @@ public abstract class CentralComunicaoAbstrato implements ItfServicoComunicacao 
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuarioRemetente, ItfUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
+    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
         ItfDialogo comunicacao = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario, tipocomunicacao.getRegistro());
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);

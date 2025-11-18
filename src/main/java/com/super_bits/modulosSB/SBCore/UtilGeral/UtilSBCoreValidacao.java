@@ -11,7 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public abstract class UtilSBCoreValidacao {
 
     }
 
-    public static String getPrimeiraInconsistenciaDeValidacao(ItfBeanSimples pObjeto) {
+    public static String getPrimeiraInconsistenciaDeValidacao(ComoEntidadeSimples pObjeto) {
 
         Optional<ItfCampoInstanciado> cpEncontrado = pObjeto.getCamposInstanciados().stream().
                 filter(cp
@@ -64,7 +64,7 @@ public abstract class UtilSBCoreValidacao {
 
     }
 
-    public static List<String> getValidacoes(ItfBeanSimples pObjeto) {
+    public static List<String> getValidacoes(ComoEntidadeSimples pObjeto) {
         List<String> lista = new ArrayList<>();
 
         pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo()))
@@ -73,7 +73,7 @@ public abstract class UtilSBCoreValidacao {
 
     }
 
-    public static boolean isTodosCamposValidadados(ItfBeanSimples pObjeto) {
+    public static boolean isTodosCamposValidadados(ComoEntidadeSimples pObjeto) {
         try {
 
             Optional<ItfCampoInstanciado> campoInvalido = pObjeto.getCamposInstanciados().stream().filter(cp -> (!cp.validarCampo())).findFirst();

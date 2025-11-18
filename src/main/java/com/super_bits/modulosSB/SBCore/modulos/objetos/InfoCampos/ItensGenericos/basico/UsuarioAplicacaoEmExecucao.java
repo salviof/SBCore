@@ -8,24 +8,24 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfGrupoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalPostagem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.icones.ItfBeanComIcone;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemNormal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoGrupoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.icones.ComoTemIcone;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalPostagem;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Usuários", tags = {"O Sistema"})
-public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario, ItfBeanComIcone, Serializable {
+public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ComoUsuario, ComoTemIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -48,17 +48,17 @@ public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario
     }
 
     @Override
-    public ItfGrupoUsuario getGrupo() {
+    public ComoGrupoUsuario getGrupo() {
         return new GrupoUsuariosDoSistema();
     }
 
     @Override
-    public void setGrupo(ItfGrupoUsuario grupo) {
+    public void setGrupo(ComoGrupoUsuario grupo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposAdicionais() {
+    public List<ComoGrupoUsuario> getGruposAdicionais() {
         return new ArrayList<>();
     }
 
@@ -73,7 +73,7 @@ public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario
     }
 
     @Override
-    public ItfLocalPostagem getLocalizacao() {
+    public ComoLocalPostagem getLocalizacao() {
         return null;
     }
 
@@ -98,7 +98,7 @@ public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ItfUsuario
     }
 
     @Override
-    public void setLocalizacao(ItfLocal pLocal) {
+    public void setLocalizacao(ComoLocal pLocal) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

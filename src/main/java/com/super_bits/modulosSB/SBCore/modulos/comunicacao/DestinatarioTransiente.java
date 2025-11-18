@@ -5,10 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListas;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfGrupoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoGrupoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -17,13 +17,13 @@ import java.util.List;
 public class DestinatarioTransiente implements ItfDestinatario {
 
     private final FabTipoDestinatario tipoDestinatario;
-    private final ItfUsuario usuario;
-    private List<ItfUsuario> usuarios;
-    private ItfGrupoUsuario grupoUsuario;
+    private final ComoUsuario usuario;
+    private List<ComoUsuario> usuarios;
+    private ComoGrupoUsuario grupoUsuario;
 
-    private List<ItfGrupoUsuario> gruposUsuario;
+    private List<ComoGrupoUsuario> gruposUsuario;
 
-    public DestinatarioTransiente(ItfUsuario pUsuario) {
+    public DestinatarioTransiente(ComoUsuario pUsuario) {
         tipoDestinatario = FabTipoDestinatario.USUARIO;
         usuario = pUsuario;
     }
@@ -34,8 +34,8 @@ public class DestinatarioTransiente implements ItfDestinatario {
     }
 
     @Override
-    public List<ItfUsuario> getUsuarios() {
-        List<ItfUsuario> usuariosEncontrados = new ArrayList<>();
+    public List<ComoUsuario> getUsuarios() {
+        List<ComoUsuario> usuariosEncontrados = new ArrayList<>();
         switch (tipoDestinatario) {
             case USUARIO:
                 usuariosEncontrados.add(usuario);
@@ -47,7 +47,7 @@ public class DestinatarioTransiente implements ItfDestinatario {
                 return (List) grupoUsuario.getUsuarios();
 
             case GRUPOS:
-                for (ItfGrupoUsuario grupo : gruposUsuario) {
+                for (ComoGrupoUsuario grupo : gruposUsuario) {
                     usuariosEncontrados.addAll((List) grupo.getUsuarios());
                 }
 
@@ -60,7 +60,7 @@ public class DestinatarioTransiente implements ItfDestinatario {
     }
 
     @Override
-    public ItfUsuario getUsuario() {
+    public ComoUsuario getUsuario() {
         switch (tipoDestinatario) {
             case USUARIO:
                 return usuario;
@@ -76,7 +76,7 @@ public class DestinatarioTransiente implements ItfDestinatario {
     }
 
     @Override
-    public ItfGrupoUsuario getGrupoUsuario() {
+    public ComoGrupoUsuario getGrupoUsuario() {
         switch (tipoDestinatario) {
             case GRUPO:
                 return grupoUsuario;
@@ -91,7 +91,7 @@ public class DestinatarioTransiente implements ItfDestinatario {
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposUsuario() {
+    public List<ComoGrupoUsuario> getGruposUsuario() {
         switch (tipoDestinatario) {
             case GRUPOS:
                 return gruposUsuario;

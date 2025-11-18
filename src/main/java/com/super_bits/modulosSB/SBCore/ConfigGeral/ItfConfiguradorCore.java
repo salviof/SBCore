@@ -14,7 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.CentramMensagemPrograma
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBCoreDeveloperSopMessagem;
 
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
-import com.super_bits.modulosSB.SBCore.modulos.localizacao.CentralDeLocalizacaoSemPersistencia;
+import com.super_bits.modulosSB.SBCore.modulos.localizacao.ServicoLocalizacaoSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.CentralLogEventosArqTextoGenerica;
 import com.super_bits.modulosSB.SBCore.modulos.view.ServicoVisualizacaoSemVisualizacao;
 
@@ -79,7 +79,7 @@ public interface ItfConfiguradorCore {
             pConfig.setCentralDeArquivos(CentralDeArquivosJar.class);
             pConfig.setServicoController(ServicoControllerExecucaoLocal.class);
             pConfig.setCentralAtributoDados(CentralAtributosDeObjetosSemPersistencia.class);
-            pConfig.setCentralDeLocalizacao(CentralDeLocalizacaoSemPersistencia.class);
+            pConfig.setCentralDeLocalizacao(ServicoLocalizacaoSemPersistencia.class);
             pConfig.setTipoProjeto(FabTipoProjeto.BIBLIOTECA);
 
         }
@@ -97,7 +97,7 @@ public interface ItfConfiguradorCore {
             pConfig.setCentralDeArquivos(CentralDeArquivosJar.class);
             pConfig.setServicoController(ServicoControllerExecucaoLocal.class);
             pConfig.setCentralAtributoDados(CentralAtributosDeObjetosSemPersistencia.class);
-            pConfig.setCentralDeLocalizacao(CentralDeLocalizacaoSemPersistencia.class);
+            pConfig.setCentralDeLocalizacao(ServicoLocalizacaoSemPersistencia.class);
         }
 
     }

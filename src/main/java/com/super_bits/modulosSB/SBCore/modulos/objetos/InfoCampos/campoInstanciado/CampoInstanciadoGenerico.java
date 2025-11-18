@@ -36,16 +36,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORI
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenericoSomenteLeitura;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanReflexoes;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalPostagem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
 import static com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs.TEXTO_COM_FORMATACAO;
 import static com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs.TEXTO_SEM_FORMATACAO;
@@ -63,6 +56,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Entity;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemEndereco;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoDominioEntidadeSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeReflexivel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalPostagem;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalidade;
 
 /**
  *
@@ -201,7 +201,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public String getNomeUnicoParaIDHtml(ItfComponenteVisualSB pComponente) {
+    public String getNomeUnicoParaIDHtml(ComoComponenteVisualSB pComponente) {
         if (pComponente != null) {
             return getPrefixoUnicoParaIDHtml() + "_" + pComponente.getClasseCSS();
         } else {
@@ -215,12 +215,12 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteVisualPadrao() {
+    public ComoComponenteVisualSB getComponenteVisualPadrao() {
         FabTipoAtributoObjeto tipoAtributo = getFabricaTipoAtributo();
         if (tipoAtributo == null) {
             throw new UnsupportedOperationException("o tipo de atributo do campo não foi configurado em " + getLabel() + getNomeDoObjeto());
         }
-        ItfComponenteVisualSB componente = tipoAtributo.getTipo_input_prime().getRegistro();
+        ComoComponenteVisualSB componente = tipoAtributo.getTipo_input_prime().getRegistro();
         if (tipoAtributo.isCampoLocalizacao()) {
             return componente;
         }
@@ -284,7 +284,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteDiferenciado(ItfComponenteVisualSB pComponente) {
+    public ComoComponenteVisualSB getComponenteDiferenciado(ComoComponenteVisualSB pComponente) {
 
         //caso não tenha sido enviado um componente diferenciado, retorna o componente do campo
         if (pComponente == null) {
@@ -428,7 +428,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
      * @return @see ItfTipoAtributoSB#getListaDeOpcoes()
      */
     @Override
-    public List<ItfBeanSimples> getListaDeOpcoes() {
+    public List<ComoEntidadeSimples> getListaDeOpcoes() {
 
         return SBCore.getCentralFonteDeDados().getListaOpcoesCampoInstanciado(this);
 
@@ -790,8 +790,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             }
 
             if (getValor() == null) {
-                if (getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
-                    ((ItfBeanEnderecavel) getObjetoDoAtributo()).instanciarNovoEndereco();
+                if (getObjetoDoAtributo() instanceof ComoTemEndereco) {
+                    ((ComoTemEndereco) getObjetoDoAtributo()).instanciarNovoEndereco();
                 }
             }
 
@@ -905,7 +905,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteVisualPadraoCompacto() {
+    public ComoComponenteVisualSB getComponenteVisualPadraoCompacto() {
         return getComponenteVisualPadrao();
     }
 
@@ -1004,8 +1004,8 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                 if (valor == null) {
                     return "End. nao cadastrado";
                 } else {
-                    if (valor instanceof ItfLocalPostagem) {
-                        ItfLocalPostagem local = (ItfLocalPostagem) valor;
+                    if (valor instanceof ComoLocalPostagem) {
+                        ComoLocalPostagem local = (ComoLocalPostagem) valor;
                         StringBuilder enderecoBuilder = new StringBuilder();
                         try {
                             enderecoBuilder.append(local.getLogradouro());
@@ -1030,10 +1030,10 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                 if (valor == null) {
                     return "Ñ Informado";
                 } else {
-                    if (valor instanceof ItfBeanSimplesSomenteLeitura) {
-                        if (valor instanceof ItfBeanReflexoes) {
-                            ItfBeanReflexoes itemTextoFormatado = (ItfBeanReflexoes) valor;
-                            if (((ItfBeanGenericoSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.DESCRITIVO)) {
+                    if (valor instanceof ComoEntidadeSimplesSomenteLeitura) {
+                        if (valor instanceof ComoEntidadeReflexivel) {
+                            ComoEntidadeReflexivel itemTextoFormatado = (ComoEntidadeReflexivel) valor;
+                            if (((ComoDominioEntidadeSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.DESCRITIVO)) {
 
                                 String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor().toString();
 
@@ -1044,7 +1044,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                             }
                         }
 
-                        return ((ItfBeanSimplesSomenteLeitura) valor).getNome();
+                        return ((ComoEntidadeSimplesSomenteLeitura) valor).getNome();
 
                     }
                     return getValor().toString();
@@ -1215,7 +1215,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             try {
                 if (isUmItemDeUmaLista()) {
                     try {
-                        ItfBeanSimplesSomenteLeitura itemSelecionado = (ItfBeanSimplesSomenteLeitura) getValor();
+                        ComoEntidadeSimplesSomenteLeitura itemSelecionado = (ComoEntidadeSimplesSomenteLeitura) getValor();
                         if (itemSelecionado.getId() == null || itemSelecionado.getId() == null && UtilSBCoreStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
                             valorNaoPrenchido = true;
                         }

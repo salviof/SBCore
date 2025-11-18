@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.view.formulario;
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicaoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoGerenciarEntidade;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -33,7 +33,7 @@ public interface ItfFormularioAcao extends ItfFormularioSimples {
      *
      * @return A ação selecionada no momento
      */
-    public ItfAcaoDoSistema getAcaoSelecionada();
+    public ComoAcaoDoSistema getAcaoSelecionada();
 
     /**
      *

@@ -8,15 +8,15 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreGeradorDeID;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfControlerAPP;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.fabricas.FabTipoAcaoSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.coletivojava.fw.utilCoreBase.UtilSBControllerSimples;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -30,33 +30,33 @@ import org.coletivojava.fw.utilCoreBase.UtilSBControllerSimples;
 public class UtilSBController extends UtilSBControllerSimples {
 
     /**
-     * public static ItfAcaoDoSistema obterAcaoByMethodo(Method pMetodo) {
-     * Annotation[] anotacoes = pMetodo.getAnnotations();
-     *
-     * for (Annotation an : anotacoes) {
-     *
-     * Method[] metodos = an.annotationType().getDeclaredMethods(); for (Method
-     * fld : metodos) { if (fld.getName().equals("acao")) {
-     *
-     * try { ItfFabricaModulos fabrica = (ItfFabricaModulos) fld.invoke(an);
-     * ItfAcaoDoSistema acao = fabrica.getAcaoDoSistema();
-     * acao.setId(UtilSBController.gerarIDMetodoAcaoDoSistema(pMetodo));
-     * acao.setIdMetodo(UtilSBController.gerarIDMetodoAcaoDoSistema(pMetodo));
-     *
-     * return acao;
-     *
-     * } catch (Throwable t) { SBCore.RelatarErro(FabErro.PARA_TUDO,"A acao do
-     * metodo" + pMetodo.getName() + " não contem uma anotação extendendo
-     * Itffabrica, contendo o campo acao, desta forma não é possível determinar
-     * o nível de permissão deste método", t);
-     *
-     * }
-     * }
-     * }
-     * }
-     * return null; }
+     * public static ComoAcaoDoSistema obterAcaoByMethodo(Method pMetodo) {
+ Annotation[] anotacoes = pMetodo.getAnnotations();
+
+ for (Annotation an : anotacoes) {
+
+ Method[] metodos = an.annotationType().getDeclaredMethods(); for (Method
+ fld : metodos) { if (fld.getName().equals("acao")) {
+
+ try { ComoFabricaModulos fabrica = (ComoFabricaModulos) fld.invoke(an);
+ ComoAcaoDoSistema acao = fabrica.getAcaoDoSistema();
+ acao.setId(UtilSBController.gerarIDMetodoAcaoDoSistema(pMetodo));
+ acao.setIdMetodo(UtilSBController.gerarIDMetodoAcaoDoSistema(pMetodo));
+
+ return acao;
+
+ } catch (Throwable t) { SBCore.RelatarErro(FabErro.PARA_TUDO,"A acao do
+ metodo" + pMetodo.getName() + " não contem uma anotação extendendo
+ Itffabrica, contendo o campo acao, desta forma não é possível determinar
+ o nível de permissão deste método", t);
+
+ }
+ }
+ }
+ }
+ return null; }
      */
-    public static ItfAcaoController getAcaoDoContexto() {
+    public static ComoAcaoController getAcaoDoContexto() {
         int inicioPesquisaMetodo = 3;
 
         final Thread t = Thread.currentThread();
@@ -116,13 +116,13 @@ public class UtilSBController extends UtilSBControllerSimples {
      * @param pararSistemaCasoNaoEncontre :P
      * @return A ação vinculada ao método estático
      */
-    public static ItfAcaoController getAcaoByMetodo(Method pMetodo, boolean pararSistemaCasoNaoEncontre) {
+    public static ComoAcaoController getAcaoByMetodo(Method pMetodo, boolean pararSistemaCasoNaoEncontre) {
         try {
 
             if (pMetodo == null) {
                 throw new UnsupportedOperationException("Envio de metodo nulo para ação GetAcaoByMetodo");
             }
-            ItfFabricaAcoes acao = getFabricaAcaoByMetodo(pMetodo);
+            ComoFabricaAcoes acao = getFabricaAcaoByMetodo(pMetodo);
 
             if (acao == null) {
                 throw new UnsupportedOperationException("En GetAcaoByMetodo");
@@ -130,7 +130,7 @@ public class UtilSBController extends UtilSBControllerSimples {
             if (!acao.getRegistro().isUmaAcaoController()) {
                 throw new UnsupportedOperationException("O Método " + pMetodo.getName() + ",na classe " + pMetodo.getDeclaringClass().getName() + " recebeu uma anotação de ação que não é to tipo " + FabTipoAcaoSistema.ACAO_CONTROLLER);
             }
-            ItfAcaoController acaoSisTema = (ItfAcaoController) acao.getRegistro().getComoController();
+            ComoAcaoController acaoSisTema = (ComoAcaoController) acao.getRegistro().getComoController();
             acaoSisTema.setIdMetodo(pMetodo);
 
             return acaoSisTema;
@@ -164,7 +164,7 @@ public class UtilSBController extends UtilSBControllerSimples {
         return false;
     }
 
-    public static ItfFabricaAcoes getEnumAcaoVinculadoEmMetodo(Method pMetodo) {
+    public static ComoFabricaAcoes getEnumAcaoVinculadoEmMetodo(Method pMetodo) {
         try {
             Annotation[] anotacoes = pMetodo.getAnnotations();
             if (anotacoes != null) {
@@ -172,7 +172,7 @@ public class UtilSBController extends UtilSBControllerSimples {
                     try {
                         Method metodo = a.getClass().getMethod("acao");
                         if (metodo != null) {
-                            ItfFabricaAcoes acao = (ItfFabricaAcoes) metodo.invoke(a);
+                            ComoFabricaAcoes acao = (ComoFabricaAcoes) metodo.invoke(a);
                             return acao;
                         }
 
@@ -190,9 +190,9 @@ public class UtilSBController extends UtilSBControllerSimples {
         return null;
     }
 
-    public static ItfFabricaAcoes getFabricaAcaoByMetodo(Method pMetodo) {
+    public static ComoFabricaAcoes getFabricaAcaoByMetodo(Method pMetodo) {
         try {
-            return (ItfFabricaAcoes) UtilSBCoreReflexao.getFabricaDoMetodoByAnotacao(pMetodo, "acao", true);
+            return (ComoFabricaAcoes) UtilSBCoreReflexao.getFabricaDoMetodoByAnotacao(pMetodo, "acao", true);
 
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.PARA_TUDO, "Erro tentando obeter a Fabrica de acao a partir do metodo certifique que os metodos da classe de controler tenha uma anotação informando a ação vinculada" + pMetodo.getName(), null);
@@ -201,7 +201,7 @@ public class UtilSBController extends UtilSBControllerSimples {
 
     }
 
-    public static ItfFabricaAcoes getFabricaAcaoByClasse(Class pClasse) {
+    public static ComoFabricaAcoes getFabricaAcaoByClasse(Class pClasse) {
         try {
             Annotation[] anotacoes = pClasse.getAnnotations();
             if (anotacoes != null) {
@@ -215,12 +215,12 @@ public class UtilSBController extends UtilSBControllerSimples {
 
                         } else {
 
-                            ItfFabricaAcoes acao;
+                            ComoFabricaAcoes acao;
                             try {
-                                acao = (ItfFabricaAcoes) metodo.invoke(a);
+                                acao = (ComoFabricaAcoes) metodo.invoke(a);
                                 return acao;
                             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                                SBCore.RelatarErro(FabErro.PARA_TUDO, "O nome [acao] em uma anotação está reservado para enuns que extendam " + ItfFabricaAcoes.class.getSimpleName(), ex);
+                                SBCore.RelatarErro(FabErro.PARA_TUDO, "O nome [acao] em uma anotação está reservado para enuns que extendam " + ComoFabricaAcoes.class.getSimpleName(), ex);
                             }
 
                         }
@@ -249,16 +249,16 @@ public class UtilSBController extends UtilSBControllerSimples {
      * @param pClasse Classe referenciada
      * @return o Objeto AcaodoSistema configurado
      */
-    public static ItfAcaoDoSistema getAcaoByClasse(Class pClasse) {
+    public static ComoAcaoDoSistema getAcaoByClasse(Class pClasse) {
 
-        ItfFabricaAcoes acao = (ItfFabricaAcoes) getFabricaAcaoByClasse(pClasse);
+        ComoFabricaAcoes acao = (ComoFabricaAcoes) getFabricaAcaoByClasse(pClasse);
 
-        return (ItfAcaoDoSistema) acao.getRegistro();
+        return (ComoAcaoDoSistema) acao.getRegistro();
 
         //   SBCore.RelatarErro(FabErro.PARA_TUDO,"Erro tentando obeter a Fabrica de acao a partir do metodo", null);
     }
 
-    public static Method getMetodoByAcaoController(ItfAcaoController pAcaoController) {
+    public static Method getMetodoByAcaoController(ComoAcaoController pAcaoController) {
         try {
             if (pAcaoController == null) {
                 throw new UnsupportedOperationException("Erro tentando obter o metodo de execução da ação enviando ação nula como parametro");

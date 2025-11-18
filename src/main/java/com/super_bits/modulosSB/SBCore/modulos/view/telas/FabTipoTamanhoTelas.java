@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaTipoTelas;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaTipoTelas;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.UtilSBCoreFabricaTipoTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabColunasTela;
 import java.util.TreeMap;
@@ -15,7 +15,7 @@ import java.util.TreeMap;
  *
  * @author desenvolvedor
  */
-public enum FabTipoTamanhoTelas implements ItfFabricaTipoTelas {
+public enum FabTipoTamanhoTelas implements ComoFabricaTipoTelas {
 //800
     @InfoTipoTela(Xmin = 0, Xmax = 500, quantidadeDeColunas = FabColunasTela.UM)
     MOBILE_GERACAO1,

@@ -11,10 +11,10 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.email.ConfigEmailServersProjeto;
 import com.super_bits.modulosSB.SBCore.modulos.email.FabConfigModuloEmailService;
 import com.super_bits.modulosSB.SBCore.modulos.email.ItfServidordisparoEmail;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import javax.mail.Transport;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados)____________
@@ -84,7 +84,7 @@ public abstract class UtilSBCoreEmail {
     }
 
     public static String enviarPorServidorPadraoV2(
-            ItfUsuario pDestinatario,
+            ComoUsuario pDestinatario,
             String pMensagem,
             String pAssunto) {
         verificarConfiguracao();
@@ -119,7 +119,9 @@ public abstract class UtilSBCoreEmail {
         boolean envioucomsucesso = false;
 
         try {
-
+            if (pUsuario == null || pUsuario.isEmpty() || pEnderecoServidor == null || pEnderecoServidor.isEmpty()) {
+                return null;
+            }
             HtmlEmail email = new HtmlEmail();
             //email.setCharset("text/html; charset=utf-8");
             email.setCharset("UTF-8");

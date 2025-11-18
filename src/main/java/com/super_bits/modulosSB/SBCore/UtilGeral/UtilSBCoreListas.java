@@ -7,13 +7,13 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeituraInstanciado;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSomenteLeituraInstanciado;
 
 /**
  *
@@ -37,7 +37,7 @@ public class UtilSBCoreListas {
         return getValoresSeparadoPorCaracter(valores, ";");
     }
 
-    public static String getAtributoSeparadosPorPontoVirgula(List<? extends ItfBeanSimples> pItens, String pAtributo) {
+    public static String getAtributoSeparadosPorPontoVirgula(List<? extends ComoEntidadeSimples> pItens, String pAtributo) {
         List<String> lista = new ArrayList();
         pItens.stream().filter(item -> UtilSBCoreStringValidador.isNAO_NuloNemBranco(item.getCampoInstanciadoByNomeOuAnotacao(pAtributo).getValor().toString()))
                 .forEach(item -> item.getCampoInstanciadoByNomeOuAnotacao(pAtributo).getValor());
@@ -53,7 +53,7 @@ public class UtilSBCoreListas {
                 return resposta;
             }
             for (Object obj : pLista) {
-                ItfCampoInstanciado campoinstanciado = (((ItfBeanSimplesSomenteLeituraInstanciado) obj).getCampoInstanciadoByNomeOuAnotacao(pAtributo));
+                ItfCampoInstanciado campoinstanciado = (((ComoEntidadeSomenteLeituraInstanciado) obj).getCampoInstanciadoByNomeOuAnotacao(pAtributo));
                 if (!campoinstanciado.isCampoNaoInstanciado()) {
                     Object valor = campoinstanciado.getValor();
                     if (valor != null) {

@@ -8,8 +8,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoMetodoEmContextoDeExecucao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
@@ -30,13 +29,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroOb
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroSetandoValorDeCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenerico;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanReflexoes;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -53,13 +47,19 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.HibernateProxyHelper;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeReflexivel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoDominioEntidadeGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
  *
  * @author sfurbino
  */
-public abstract class ItemGenerico extends Object implements ItfBeanGenerico, ItfBeanReflexoes, Serializable, Comparable<ItfBeanSimples> {
+public abstract class ComoEntidadeGenerica extends Object implements ComoDominioEntidadeGenerico, ComoEntidadeReflexivel, Serializable, Comparable<ComoEntidadeSimples> {
 
     protected CampoMapValores camposEsperados;
     private Map<String, ItfCampoInstanciado> mapaCamposInstanciados;
@@ -78,6 +78,22 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     public static enum DEFINICAO_VIEW {
 
         NAO_DEFINIDO, PADRAO, PERSONALIZADO
+    }
+
+    protected ComoEntidadeGenerica() {
+        super();
+        instancia = this;
+        this.camposEsperados = new CampoMapValores();
+
+        UtilSBCoreReflexao.instanciarListas(this);
+
+    }
+
+    protected ComoEntidadeGenerica(Object pInstancia) {
+        super();
+        instancia = pInstancia;
+        this.camposEsperados = new CampoMapValores();
+        UtilSBCoreReflexao.instanciarListas(this);
     }
 
     protected void zerarControleCalculos() {
@@ -154,7 +170,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @param pCampo
      * @return
      */
-    protected ItfCentralAtributosDeObjetos getCentraldeAtributosDoObjeto(Field pCampo) {
+    protected ComoServicoAtributosDeObjetos getCentraldeAtributosDoObjeto(Field pCampo) {
         return new CentralAtributosDeObjetosSemPersistencia();
     }
 
@@ -230,22 +246,6 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         }
     }
 
-    protected ItemGenerico() {
-        super();
-        instancia = this;
-        this.camposEsperados = new CampoMapValores();
-
-        UtilSBCoreReflexao.instanciarListas(this);
-
-    }
-
-    protected ItemGenerico(Object pInstancia) {
-        super();
-        instancia = pInstancia;
-        this.camposEsperados = new CampoMapValores();
-        UtilSBCoreReflexao.instanciarListas(this);
-    }
-
     /**
      *
      * Valida o envio dos parametros de preparo do novo Objeto de acordo com a
@@ -263,18 +263,18 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
             InfoPreparacaoObjeto infoPreparacaoObjeto = UtilSBCoreReflexaoObjeto.getInfoPreparacaoObjeto(this.getClass());
 
             if (infoPreparacaoObjeto != null) {
-                UtilSBCoreReflexaoObjeto.validarMetodoPrepararObjeto((ItfBeanSimplesSomenteLeitura) this, infoPreparacaoObjeto, parametros);
+                UtilSBCoreReflexaoObjeto.validarMetodoPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, infoPreparacaoObjeto, parametros);
             }
             UtilSBCoreReflexao.instanciarListas(this);
         } catch (Throwable t) {
-            throw new ErroPreparandoObjeto((ItfBeanSimplesSomenteLeitura) getInstancia(), t);
+            throw new ErroPreparandoObjeto((ComoEntidadeSimplesSomenteLeitura) getInstancia(), t);
 
         }
 
     }
 
     protected boolean isClasseFinalPesquisa(Class pClasse) {
-        return (pClasse == ItemGenerico.class || pClasse == Object.class);
+        return (pClasse == ComoEntidadeGenerica.class || pClasse == Object.class);
 
     }
 
@@ -319,7 +319,8 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      *
      * Quando um Objeto generico é criado, é nescessário especificar quais os
      * campos devem ser anotados ao extender a classe exemplo: Uma classe
-     * abstrata que implementa ItfBeanGenerico deve ter em seu constructor
+     * abstrata que implementa ComoDominioEntidadeGenerico deve ter em seu
+     * constructor
      *
      * adcionaCampoEsperado(new
      * CampoEsperado(FabTipoAtributoObjeto.NOME_CURTO),true);
@@ -559,7 +560,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         if (anotacaoConstructor == null) {
             throw new UnsupportedOperationException("A anotação" + InfoPreparacaoObjeto.class.getSimpleName() + " é nescessária no método PrepararNovoObjeto do " + this.getClass().getSimpleName());
         }
-        return UtilSBCoreReflexaoObjetoSimples.getParametroPrepararObjeto((ItfBeanSimplesSomenteLeitura) this, pTipoParametro,
+        return UtilSBCoreReflexaoObjetoSimples.getParametroPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, pTipoParametro,
                 anotacaoConstructor,
                 parametros);
 
@@ -755,7 +756,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                 int idReflexao = UtilSBCoreReflexaoCaminhoCampo.getIdCampoDaLista(nomeProximoObjeto);
                 String nomeCampoSemIndice = UtilSBCoreReflexaoCaminhoCampo.getListaSemColchete(nomeProximoObjeto);
                 ItfCampoInstanciado lista = getmapaCamposInstanciados(nomeCampoSemIndice).get(nomeCampoSemIndice);
-                ItfBeanSimples itemDaLista = (ItfBeanSimples) ((List) lista.getValor()).get(idReflexao);
+                ComoEntidadeSimples itemDaLista = (ComoEntidadeSimples) ((List) lista.getValor()).get(idReflexao);
                 String nomeProximoCAmpo = UtilSBCoreReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
                 return itemDaLista.getCampoByNomeOuAnotacao(nomeProximoCAmpo);
 
@@ -767,7 +768,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
                     return UtilSBCoreReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
                 }
 
-                ItemGenerico valorItem = (ItemGenerico) itemAtual.getValor();
+                ComoEntidadeGenerica valorItem = (ComoEntidadeGenerica) itemAtual.getValor();
 
                 if (valorItem == null) {
 
@@ -899,12 +900,12 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
      * @return
      */
     @Override
-    public ItfBeanSimples getItemPorCaminhoCampo(ItfCaminhoCampo pCaminho
+    public ComoEntidadeSimples getItemPorCaminhoCampo(ItfCaminhoCampo pCaminho
     ) {
         try {
 
             // to do substituir por acesso direto sem precisar instanciar o CampoInstanciado
-            return (ItfBeanSimples) getCampoByNomeOuAnotacao(pCaminho.getCaminhoSemNomeClasse()).getValor();
+            return (ComoEntidadeSimples) getCampoByNomeOuAnotacao(pCaminho.getCaminhoSemNomeClasse()).getValor();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando obter item por caminho do campo" + pCaminho, t);
         }
@@ -912,7 +913,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     @Override
-    public List<ItfBeanSimples> getListaPorCaminhoCampo(ItfCaminhoCampo pCaminho
+    public List<ComoEntidadeSimples> getListaPorCaminhoCampo(ItfCaminhoCampo pCaminho
     ) {
         try {
 
@@ -924,11 +925,11 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     @Override
-    public ItfBeanSimples getBeanSimplesPorNomeCampo(String pNomeCampo
+    public ComoEntidadeSimples getBeanSimplesPorNomeCampo(String pNomeCampo
     ) {
 
         try {
-            ItfBeanSimples ret = null;
+            ComoEntidadeSimples ret = null;
             if (pNomeCampo == null) {
                 throw new UnsupportedOperationException("String nula enviada para obter um bean simples por nome campo");
             }
@@ -936,7 +937,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
                 Field cp = getClass().getDeclaredField(pNomeCampo);
                 cp.setAccessible(true);
-                ret = (ItfBeanSimples) cp.get(getInstancia());
+                ret = (ComoEntidadeSimples) cp.get(getInstancia());
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Campo: [" + pNomeCampo + "] não encontrado na classe : [" + getClass().getSimpleName() + "]", ex);
             }
@@ -955,7 +956,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
 
     @Override
     public String getNomeDoObjetoPlural() {
-        return UtilSBCoreReflexaoObjeto.getNomeObjetoPlural((Class<? extends ItfBeanGenerico>) getInstancia().getClass());
+        return UtilSBCoreReflexaoObjeto.getNomeObjetoPlural((Class<? extends ComoDominioEntidadeGenerico>) getInstancia().getClass());
     }
 
     /**
@@ -994,14 +995,14 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
         return MapaObjetosProjetoAtual.getVisualizacaoDoObjeto(getInstancia().getClass());
     }
 
-    public ItfResposta executarAcao(ItfAcaoController pAcao) {
+    public ItfResposta executarAcao(ComoAcaoController pAcao) {
         //Method metodo UtilSBCoreReflexao.getMetodoByAcao(pAcao);
         throw new UnsupportedOperationException("Ainda não implementado");
         //metodo.invoke(metodo.get, args)
     }
 
     @Override
-    public void adicionarJustificativaExecucaoAcao(ItfAcaoDoSistema pAcao, String pJustificativa) {
+    public void adicionarJustificativaExecucaoAcao(ComoAcaoDoSistema pAcao, String pJustificativa) {
         if (mapaJustificativasExecucaoAcao == null) {
             mapaJustificativasExecucaoAcao = new HashMap<>();
         }
@@ -1009,7 +1010,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     @Override
-    public String getJustificativa(ItfAcaoDoSistema pAcao) {
+    public String getJustificativa(ComoAcaoDoSistema pAcao) {
         if (mapaJustificativasExecucaoAcao == null) {
             return null;
         }
@@ -1017,7 +1018,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     protected String gerarSlug() {
-        ItfBeanSimples bean = (ItfBeanSimples) getInstancia();
+        ComoEntidadeSimples bean = (ComoEntidadeSimples) getInstancia();
         return bean.getNome() + "-" + bean.getId();
     }
 
@@ -1072,7 +1073,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
-            ItfBeanGenerico novoObjeto = (ItfBeanGenerico) getInstancia().getClass().newInstance();
+            ComoDominioEntidadeGenerico novoObjeto = (ComoDominioEntidadeGenerico) getInstancia().getClass().newInstance();
             novoObjeto.copiaDados(getInstancia());
             return novoObjeto; //To change body of generated methods, choose Tools | Templates.
         } catch (Throwable t) {
@@ -1082,10 +1083,10 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     }
 
     @Override
-    public int compareTo(ItfBeanSimples o) {
+    public int compareTo(ComoEntidadeSimples o) {
 
         try {
-            return ((ItfBeanSimples) getInstancia()).getNome().compareTo(o.getNome());
+            return ((ComoEntidadeSimples) getInstancia()).getNome().compareTo(o.getNome());
         } catch (Throwable t) {
             return -1;
         }
@@ -1095,7 +1096,7 @@ public abstract class ItemGenerico extends Object implements ItfBeanGenerico, It
     @Override
     public String toString() {
         try {
-            ItfBeanSimplesSomenteLeitura itemSimples = (ItfBeanSimplesSomenteLeitura) getInstancia();
+            ComoEntidadeSimplesSomenteLeitura itemSimples = (ComoEntidadeSimplesSomenteLeitura) getInstancia();
             if (getInstancia().getClass().getSimpleName().contains("$")) {
                 if (itemSimples.getId() != 0) {
                     return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();

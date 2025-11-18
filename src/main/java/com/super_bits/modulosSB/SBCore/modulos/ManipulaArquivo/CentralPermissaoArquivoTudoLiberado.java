@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralPermissaoArquivo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstArquivoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -15,17 +15,17 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public class CentralPermissaoArquivoTudoLiberado implements ItfCentralPermissaoArquivo {
 
     @Override
-    public boolean isUsuarioPodeAlterar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
+    public boolean isUsuarioPodeAlterar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
         return true;
     }
 
     @Override
-    public boolean isUsuarioPodeBaixar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
+    public boolean isUsuarioPodeBaixar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
         return true;
     }
 
     @Override
-    public boolean isUsuarioPodeCriar(ItfUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
+    public boolean isUsuarioPodeCriar(ComoUsuario pUsuario, ItfCampoInstArquivoEntidade pArquivo) {
         return true;
     }
 

@@ -8,12 +8,12 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
@@ -48,7 +48,7 @@ public class UtilSBCoreReflexaoTest {
 
     @Test
     public void testClasseImplementaEstaInterface() {
-        System.out.println(UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(TipoAtributoObjetoSB.class, ItfBeanSimplesSomenteLeitura.class));
+        System.out.println(UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(TipoAtributoObjetoSB.class, ComoEntidadeSimplesSomenteLeitura.class));
     }
 
     protected void configAmbienteDesevolvimento() {

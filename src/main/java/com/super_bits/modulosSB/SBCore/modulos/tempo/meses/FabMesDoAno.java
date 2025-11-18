@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.tempo.meses;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.anos.AnoCalendario;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,12 +14,13 @@ import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author salvio
  */
-public enum FabMesDoAno implements ItfFabrica {
+public enum FabMesDoAno implements ComoFabrica {
 
     JANEIRO, FEVEREIRO, MARCO, ABRIL, MAIO, JUNHO, JULHO, AGOSTO, SETEMBRO, OUTUBRO, NOVEMBRO, DEZEMBRO;
 

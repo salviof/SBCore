@@ -3,22 +3,21 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringGerador.TIPO_LOREN;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsperado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanPermisionado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeNormal;
 import java.io.File;
 
 import java.util.Date;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeTemPermissao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
  * @author desenvolvedor
  */
-public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, ItfBeanPermisionado {
+public abstract class ItemNormal extends ItemSimples implements ComoEntidadeNormal, ComoEntidadeTemPermissao {
 
     public ItemNormal() {
         super();
@@ -81,13 +80,13 @@ public abstract class ItemNormal extends ItemSimples implements ItfBeanNormal, I
     }
 
     @Override
-    public ItfUsuario getUsuarioInsersao() {
-        return (ItfUsuario) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_INSERCAO);
+    public ComoUsuario getUsuarioInsersao() {
+        return (ComoUsuario) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_INSERCAO);
     }
 
     @Override
-    public ItfUsuario getUsuarioAlteracao() {
-        return (ItfUsuario) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO);
+    public ComoUsuario getUsuarioAlteracao() {
+        return (ComoUsuario) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO);
     }
 
     @Override

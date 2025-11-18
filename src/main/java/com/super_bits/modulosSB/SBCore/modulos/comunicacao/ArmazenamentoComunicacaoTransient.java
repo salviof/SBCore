@@ -5,20 +5,20 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
 
 /**
  *
  * @author SalvioF
  */
-public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComunicacao {
+public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComunicacao {
 
     private final Map<String, ItfDialogo> comunicacoesAtivas = new HashMap<>();
 
@@ -67,7 +67,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
 
     }
 
-    private boolean isComunicacaoEdousuario(ItfUsuario pUsuario, ItfDialogo pComunicacao) {
+    private boolean isComunicacaoEdousuario(ComoUsuario pUsuario, ItfDialogo pComunicacao) {
         switch (pComunicacao.getDestinatario().getTipoDestinatario()) {
             case USUARIO:
                 if (pUsuario.equals(pComunicacao.getDestinatario().getUsuario())) {
@@ -96,7 +96,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ItfUsuario pDestinatario) {
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ComoUsuario pDestinatario) {
         List<ItfDialogo> comunicacoes = new ArrayList<>();
 
         comunicacoesAtivas.values().stream().
@@ -107,7 +107,7 @@ public class ArmazenamentoComunicacaoTransient implements ItfArmazenamentoComuni
     }
 
     @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ItfUsuario pRemetente) {
+    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ComoUsuario pRemetente) {
         List<ItfDialogo> comunicacoesEncontradas = new ArrayList<>();
         comunicacoesAtivas.values().stream().filter((cm) -> (cm.getUsuarioRemetente().equals(pRemetente))).limit(5).forEachOrdered((cm) -> {
             comunicacoesEncontradas.add(cm);

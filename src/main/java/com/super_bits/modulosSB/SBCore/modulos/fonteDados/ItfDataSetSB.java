@@ -4,11 +4,11 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.fonteDados;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import java.util.List;
 import java.util.Map;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -18,7 +18,7 @@ public interface ItfDataSetSB<T> {
 
     public ItfCampoInstanciado getCampoInstanciadoByNome(String pNomeCampo);
 
-    public void selecionarPorFabrica(Class<? extends ItfFabrica> pFabrica);
+    public void selecionarPorFabrica(Class<? extends ComoFabrica> pFabrica);
 
     public void carregarDados();
 

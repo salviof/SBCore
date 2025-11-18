@@ -7,15 +7,12 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCriptrografia;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfServicoPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -24,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -39,11 +39,11 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
     private static final Map<Long, Method> METODOS_BY_HASH_METODO = new HashMap<>();
     private static final Map<String, Method> METODO_BY_ACAO = new HashMap<>();
 
-    public static List<ItfAcaoDoSistema> getAcoesDoSistema() {
+    public static List<ComoAcaoDoSistema> getAcoesDoSistema() {
         throw new UnsupportedOperationException("Get Açoes do Sistema ainda não foi implementado");
     }
 
-    public static List<ItfAcaoDoSistema> getAcoesDoModulo(Class<? extends ControllerAppAbstratoSBCore> modulo) {
+    public static List<ComoAcaoDoSistema> getAcoesDoModulo(Class<? extends ControllerAppAbstratoSBCore> modulo) {
         throw new UnsupportedOperationException("Get Açoes do modulo ainda não foi implementado");
 
     }
@@ -62,7 +62,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
     @Override
     public synchronized void logarEmailESenha(String pEmail, String pSenha) {
 
-        ItfUsuario usuarioEncontrado = SBCore.getServicoPermissao().getUsuarioByEmail(pEmail);
+        ComoUsuario usuarioEncontrado = SBCore.getServicoPermissao().getUsuarioByEmail(pEmail);
         if (SBCore.getServicoSessao().getSessaoAtual().isIdentificado()) {
             SBCore.getServicoSessao().efetuarLogOut();
         }
@@ -104,7 +104,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
         SBCore.enviarMensagemUsuario("Autenticação negada", FabMensagens.ALERTA);
     }
 
-    protected ItfUsuario getUsuarioNativoByEmail(String pEmail) {
+    protected ComoUsuario getUsuarioNativoByEmail(String pEmail) {
         if (pEmail.equals(new UsuarioSistemaRoot().getEmail())) {
             return new UsuarioSistemaRoot();
         }
@@ -116,16 +116,16 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
     }
 
     @Override
-    public ItfUsuario getUsuarioByEmail(String pEmail) {
+    public ComoUsuario getUsuarioByEmail(String pEmail) {
         if (pEmail == null || pEmail.isEmpty()) {
             return null;
         }
-        ItfUsuario usuarioNativo = getUsuarioNativoByEmail(pEmail);
+        ComoUsuario usuarioNativo = getUsuarioNativoByEmail(pEmail);
         if (usuarioNativo != null) {
             return usuarioNativo;
         }
-        List<ItfUsuario> usuarios = configuraUsuarios();
-        Optional<ItfUsuario> pesquisaUsuario = usuarios.stream().filter(usr -> usr.getEmail() != null && usr.getEmail().equals(pEmail)).findFirst();
+        List<ComoUsuario> usuarios = configuraUsuarios();
+        Optional<ComoUsuario> pesquisaUsuario = usuarios.stream().filter(usr -> usr.getEmail() != null && usr.getEmail().equals(pEmail)).findFirst();
         if (pesquisaUsuario.isPresent()) {
             return pesquisaUsuario.get();
         }
@@ -140,12 +140,12 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
      * @param pMetodo
      * @return
      */
-    public ItfAcaoDoSistema getAcaoByMetodo(Method pMetodo) {
+    public ComoAcaoDoSistema getAcaoByMetodo(Method pMetodo) {
         return MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(ACOES_NOME_UNICO_BY_HASH_METODO.get(UtilSBController.gerarIDMetodoAcaoDoSistema(pMetodo)));
     }
 
     @Override
-    public Method getMetodoByAcao(ItfAcaoDoSistema pAcao) {
+    public Method getMetodoByAcao(ComoAcaoDoSistema pAcao) {
 
         return METODO_BY_ACAO.get(pAcao.getNomeUnico());
 
@@ -203,7 +203,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
                     ACOES_NOME_UNICO_BY_HASH_METODO.clear();
                     for (Method metodo : metodos) {
 
-                        ItfAcaoController acaovinculoMetodo = null;
+                        ComoAcaoController acaovinculoMetodo = null;
                         try {
                             if (metodo.getDeclaredAnnotations().length > 0) {
                                 acaovinculoMetodo = UtilSBController.getAcaoByMetodo(metodo, true);
@@ -212,7 +212,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
 
                             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Não foi possível vincular uma ação do tipo controller via anotação para o método:" + metodo.getName(), t);
                         }
-                        //   if (classeAcao.isAssignableFrom(ItfAcaoController.class) == false) {
+                        //   if (classeAcao.isAssignableFrom(ComoAcaoController.class) == false) {
                         //       throw new UnsupportedOperationException("A ação " + acaovinculoMetodo.getNomeAcao() + " não é do tipo controller e foi vinculada ao método:" + metodo.getName() + " Na classe " + metodo.getDeclaringClass().getSimpleName());
                         // }
                         if (acaovinculoMetodo != null) {
@@ -255,12 +255,12 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
         return null;
     }
 
-    public static Method getMetodoByAcaoController(ItfAcaoController pAcaoController) {
+    public static Method getMetodoByAcaoController(ComoAcaoController pAcaoController) {
         return METODO_BY_ACAO.get(pAcaoController.getNomeUnico());
     }
 
     @Override
-    public boolean isObjetoPermitidoUsuario(ItfUsuario pUsuario, ItfBeanSimplesSomenteLeitura pObjeto) {
+    public boolean isObjetoPermitidoUsuario(ComoUsuario pUsuario, ComoEntidadeSimplesSomenteLeitura pObjeto) {
         return true;
     }
 

@@ -18,7 +18,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreSystemOut;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.UtilSBController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
@@ -26,14 +25,10 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
-import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import java.io.File;
 import java.util.HashMap;
@@ -44,13 +39,18 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
 import java.util.ServiceLoader;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 
 /**
  *
@@ -96,8 +96,8 @@ public class SBCore {
     private static boolean ignorarConfigurcoesDeAcoes = false;
 
     private static ItfServicoPermissao configuradorDePermissao;
-    private static final Map<String, ItfFabricaAcoes> ENUMACAO_BY_NOMEUNICO = new HashMap<>();
-    private static final Map<String, Class<? extends ItfFabrica>> FABRICAS_OBJETO_ESTATICO = new HashMap<>();
+    private static final Map<String, ComoFabricaAcoes> ENUMACAO_BY_NOMEUNICO = new HashMap<>();
+    private static final Map<String, Class<? extends ComoFabrica>> FABRICAS_OBJETO_ESTATICO = new HashMap<>();
 
     private static ItfConfiguracaoCoreSomenteLeitura infoAplicacao;
     private static ArquivoConfiguracaoBase arquivoConfigBase;
@@ -105,11 +105,11 @@ public class SBCore {
     private static ArquivoConfiguracaoDistribuicao arquivoConfigDistribuicao;
     private static ItfServicoVisualizacao servicoVisualizacao;
     private static ItfCentralDeArquivos servicoGestaoDeArquivos;
-    private static ItfServicoComunicacao servicoComunucacao;
-    private static ItfCentralLocalizacao servicoLocalizacao;
+    private static ComoServicoComunicacao servicoComunucacao;
+    private static CmoServicoLocalizacao servicoLocalizacao;
     private static ItfCentralAdministrativa servicoInterfaceGraficaDEV;
     private static ItfServicoController servicoController;
-    private static Class<? extends ItfCentralAtributosDeObjetos> centralDeAtributosPadrao;
+    private static Class<? extends ComoServicoAtributosDeObjetos> centralDeAtributosPadrao;
     private static ItfServicoRepositorioEntidades centralDados;
     private static FabTipoProjeto tipoProjeto;
 
@@ -509,7 +509,7 @@ public class SBCore {
         }
     }
 
-    public static boolean isPermitido(ItfAcaoDoSistema pAcao) {
+    public static boolean isPermitido(ComoAcaoDoSistema pAcao) {
         return ControllerAppAbstratoSBCore.isAcessoPermitido(pAcao);
     }
 
@@ -559,7 +559,7 @@ public class SBCore {
      *
      * @return
      */
-    public static ItfUsuario getUsuarioLogado() {
+    public static ComoUsuario getUsuarioLogado() {
         return getControleDeSessao().getSessaoAtual().getUsuario();
     }
 
@@ -570,7 +570,7 @@ public class SBCore {
         for (Class fabrica : infoAplicacao.getFabricaDeAcoes()) {
 
             for (Object objAcao : fabrica.getEnumConstants()) {
-                ItfFabricaAcoes acao = (ItfFabricaAcoes) objAcao;
+                ComoFabricaAcoes acao = (ComoFabricaAcoes) objAcao;
                 ENUMACAO_BY_NOMEUNICO.put(UtilSBController.gerarNomeUnicoAcaoDoSistema(acao), acao);
             }
 
@@ -578,7 +578,7 @@ public class SBCore {
 
     }
 
-    public static ItfFabricaAcoes getFabricaByNOME_UNICO(String pNomeUnico) {
+    public static ComoFabricaAcoes getFabricaByNOME_UNICO(String pNomeUnico) {
         try {
             if (pNomeUnico == null) {
                 throw new UnsupportedOperationException("Tebtativa de obter a fabrica de ação com parametro nulo");
@@ -591,7 +591,7 @@ public class SBCore {
                 gerarEnumByNomeUnico();
             }
 
-            ItfFabricaAcoes acao = ENUMACAO_BY_NOMEUNICO.get(pNomeUnico);
+            ComoFabricaAcoes acao = ENUMACAO_BY_NOMEUNICO.get(pNomeUnico);
             if (acao == null) {
                 throw new UnsupportedOperationException("A ação do sistema não foi encontrada pelo nome único " + pNomeUnico);
             }
@@ -603,7 +603,7 @@ public class SBCore {
 
     }
 
-    public static Class<? extends ItfFabricaAcoes>[] getFabricasDeAcaoDoSistema() {
+    public static Class<? extends ComoFabricaAcoes>[] getFabricasDeAcaoDoSistema() {
         return infoAplicacao.getFabricaDeAcoes();
     }
 
@@ -654,7 +654,7 @@ public class SBCore {
         try {
             FABRICAS_OBJETO_ESTATICO.put(pClasse.getSimpleName(), pClasse);
 
-            ItfBeanSimples objeto = (ItfBeanSimples) UtilSBCoreFabrica.listaRegistros(pClasse).get(0);
+            ComoEntidadeSimples objeto = (ComoEntidadeSimples) UtilSBCoreFabrica.listaRegistros(pClasse).get(0);
             MapaObjetosProjetoAtual.adcionarObjeto(objeto.getClass());
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro adicionando classe Fabrica Objeto Estatico" + pClasse, t);
@@ -731,15 +731,15 @@ public class SBCore {
      * @return @see SBCore#getServicoLocalizacao()
      */
     @Deprecated
-    public static ItfCentralLocalizacao getCentralDeLocalizacao() {
+    public static CmoServicoLocalizacao getCentralDeLocalizacao() {
         return getServicoLocalizacao();
     }
 
     /**
-     * @see ItfCentralLocalizacao
+     * @see CmoServicoLocalizacao
      * @return Helper framework CEP
      */
-    public static ItfCentralLocalizacao getServicoLocalizacao() {
+    public static CmoServicoLocalizacao getServicoLocalizacao() {
         return servicoLocalizacao;
     }
 
@@ -809,17 +809,17 @@ public class SBCore {
      *
      */
     @Deprecated
-    public static ItfControleDeSessao getCentralDeSessao() {
+    public static ComoControleDeSessao getCentralDeSessao() {
         return getServicoSessao();
     }
 
     /**
      *
-     * @see ItfControleDeSessao
+     * @see ComoControleDeSessao
      * @return Controle de Sessão do contexto Atual de execução
      *
      */
-    public static ItfControleDeSessao getServicoSessao() {
+    public static ComoControleDeSessao getServicoSessao() {
         try {
             return infoAplicacao.getControleDeSessao().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -830,7 +830,7 @@ public class SBCore {
     }
 
     @Deprecated
-    public static ItfControleDeSessao getControleDeSessao() {
+    public static ComoControleDeSessao getControleDeSessao() {
         return getCentralDeSessao();
     }
 
@@ -841,7 +841,7 @@ public class SBCore {
      * @return
      */
     @Deprecated
-    public static ItfServicoComunicacao getCentralDeComunicacao() {
+    public static ComoServicoComunicacao getCentralDeComunicacao() {
         return getServicoComunicacao();
     }
 
@@ -852,17 +852,17 @@ public class SBCore {
      * @return
      */
     @Deprecated
-    public static ItfServicoComunicacao getCentralComunicacao() {
+    public static ComoServicoComunicacao getCentralComunicacao() {
         return getServicoComunicacao();
     }
 
     /**
      *
-     * @see ItfServicoComunicacao
+     * @see ComoServicoComunicacao
      *
      * @return Controle de comunicação, entre Sistema, Usuário e Desenvolvedor
      */
-    public static ItfServicoComunicacao getServicoComunicacao() {
+    public static ComoServicoComunicacao getServicoComunicacao() {
         if (servicoComunucacao == null) {
             throw new UnsupportedOperationException("A central de comunicação não foi definida");
         }
@@ -894,19 +894,19 @@ public class SBCore {
      * @see SBCore#getServicoFonteDeDadosParaAtributos()
      */
     @Deprecated
-    public static ItfCentralAtributosDeObjetos getCentralFonteDeDados() {
+    public static ComoServicoAtributosDeObjetos getCentralFonteDeDados() {
         return getServicoFonteDeDadosParaAtributos();
 
     }
 
     /**
      *
-     * @see ItfCentralAtributosDeObjetos
+     * @see ComoServicoAtributosDeObjetos
      *
      * @return Helper para exibição de opções possiveis para determinado
      * atributo de objeto
      */
-    public static ItfCentralAtributosDeObjetos getServicoFonteDeDadosParaAtributos() {
+    public static ComoServicoAtributosDeObjetos getServicoFonteDeDadosParaAtributos() {
         try {
             return centralDeAtributosPadrao.newInstance();
         } catch (Throwable t) {

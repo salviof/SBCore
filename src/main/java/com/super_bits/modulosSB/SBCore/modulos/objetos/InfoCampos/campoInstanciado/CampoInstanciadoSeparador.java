@@ -14,11 +14,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.GrupoCam
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
 import java.lang.reflect.Method;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 
 /**
  *
@@ -121,7 +121,7 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public List<ItfBeanSimples> getListaDeOpcoes() {
+    public List<ComoEntidadeSimples> getListaDeOpcoes() {
         return null;
     }
 
@@ -241,13 +241,13 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteDiferenciado(ItfComponenteVisualSB pComponente) {
+    public ComoComponenteVisualSB getComponenteDiferenciado(ComoComponenteVisualSB pComponente) {
         return FabCompVisualInputs.TEXTO_SEM_FORMATACAO.getRegistro();
 
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteVisualPadrao() {
+    public ComoComponenteVisualSB getComponenteVisualPadrao() {
         return FabCompVisualInputs.TEXTO_SEM_FORMATACAO.getRegistro();
     }
 
@@ -277,7 +277,7 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public String getNomeUnicoParaIDHtml(ItfComponenteVisualSB pComponente) {
+    public String getNomeUnicoParaIDHtml(ComoComponenteVisualSB pComponente) {
         return "SEPARADOR";
     }
 
@@ -317,8 +317,8 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public ItfBeanSimples getObjetoDoAtributo() {
-        return (ItfBeanSimples) getParent();
+    public ComoEntidadeSimples getObjetoDoAtributo() {
+        return (ComoEntidadeSimples) getParent();
     }
 
     @Override
@@ -437,7 +437,7 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
     }
 
     @Override
-    public ItfComponenteVisualSB getComponenteVisualPadraoCompacto() {
+    public ComoComponenteVisualSB getComponenteVisualPadraoCompacto() {
         return getComponenteVisualPadrao();
     }
 

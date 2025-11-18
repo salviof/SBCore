@@ -5,13 +5,13 @@
 package com.super_bits.modulosSB.SBCore.modulos.tempo;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author salvioF
  */
-public enum FabTipoQuantidadeTempo implements ItfFabrica {
+public enum FabTipoQuantidadeTempo implements ComoFabrica {
 
     ANOS,
     MESES,

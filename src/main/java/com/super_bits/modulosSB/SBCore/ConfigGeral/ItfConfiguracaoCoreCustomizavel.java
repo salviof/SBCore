@@ -10,14 +10,14 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
-import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 
 /**
  *
@@ -29,7 +29,7 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
 
     public void setClasseErro(Class<? extends InfoErroSBComAcoes> classeErro);
 
-    public void setControleDeSessao(Class<? extends ItfControleDeSessao> controleDeSessao);
+    public void setControleDeSessao(Class<? extends ComoControleDeSessao> controleDeSessao);
 
     public void setCentralAdmin(ItfCentralAdministrativa centralAdmin);
 
@@ -66,7 +66,7 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
 
     public void setClasseConfigPermissao(Class<? extends ConfigPermissaoSBCoreAbstrato> pConfigPermissao);
 
-    public void setFabricaDeAcoes(Class<? extends ItfFabricaAcoes>[] pAcoes);
+    public void setFabricaDeAcoes(Class<? extends ComoFabricaAcoes>[] pAcoes);
 
     public void setUrlJira(String urlJira);
 
@@ -74,11 +74,11 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
 
     public void setServicoVisualizacao(Class<? extends ItfServicoVisualizacao> classeVisualizacao);
 
-    public void setCentralComunicacao(Class<? extends ItfServicoComunicacao> pCentral);
+    public void setCentralComunicacao(Class<? extends ComoServicoComunicacao> pCentral);
 
-    public void setCentralDeLocalizacao(Class<? extends ItfCentralLocalizacao> pCentralLocalizacao);
+    public void setCentralDeLocalizacao(Class<? extends CmoServicoLocalizacao> pCentralLocalizacao);
 
-    public void setCentralAtributoDados(Class<? extends ItfCentralAtributosDeObjetos> pCentralAtributos);
+    public void setCentralAtributoDados(Class<? extends ComoServicoAtributosDeObjetos> pCentralAtributos);
 
     public void setCentralDados(Class<? extends ItfServicoRepositorioEntidades> pCentral);
 

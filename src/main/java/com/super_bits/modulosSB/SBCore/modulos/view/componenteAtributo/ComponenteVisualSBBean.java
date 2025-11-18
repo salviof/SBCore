@@ -4,27 +4,27 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view.componenteAtributo;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoSecundaria;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoSecundaria;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoGerenciarEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSB;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualBase;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreDiretoriosSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeVinculadoAEnum;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Componente Visual"}, plural = "Componentes Visuais")
-public class ComponenteVisualSBBean extends ItemSimples implements ItfComponenteVisualSB, ItfBeanVinculadoAEnum {
+public class ComponenteVisualSBBean extends ItemSimples implements ComoComponenteVisualSB, ComoEntidadeVinculadoAEnum {
 
     private final ComponenteVisualBase base;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código")
@@ -109,17 +109,17 @@ public class ComponenteVisualSBBean extends ItemSimples implements ItfComponente
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         base.setEnumVinculado(pFabrica);
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return base.getEnumVinculado();
     }
 
     @Override
-    public List<ItfAcaoSecundaria> getAcoesDoContexto(ItfAcaoGerenciarEntidade pGestao) {
+    public List<ComoAcaoSecundaria> getAcoesDoContexto(ItfAcaoGerenciarEntidade pGestao) {
         return base.getAcoesDoContexto(pGestao);
     }
 

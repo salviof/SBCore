@@ -3,18 +3,18 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.io.Serializable;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 @InfoObjetoSB(tags = {"Atributo de Objeto"}, plural = "Atributos de Objeto", fabricaVinculada = FabTipoAtributoObjeto.class)
-public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, ItfTipoAtributoSB, ItfBeanSimples {
+public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, ItfTipoAtributoSB, ComoEntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private FabTipoAtributoObjeto tipoCampo;
@@ -40,7 +40,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
 
     public int[] seguranca = {1};
 
-    public List<ItfBeanSimples> listaDeOpcoes;
+    public List<ComoEntidadeSimples> listaDeOpcoes;
 
     protected boolean obrigatorio;
 
@@ -222,7 +222,7 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     }
 
     @Override
-    public final void setListaDeOpcoes(List<ItfBeanSimples> pLista) {
+    public final void setListaDeOpcoes(List<ComoEntidadeSimples> pLista) {
         listaDeOpcoes = pLista;
     }
 
@@ -454,12 +454,12 @@ public class TipoAtributoObjetoSB extends ItemSimples implements Serializable, I
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         tipoCampo = (FabTipoAtributoObjeto) pFabrica;
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return tipoCampo;
     }
 

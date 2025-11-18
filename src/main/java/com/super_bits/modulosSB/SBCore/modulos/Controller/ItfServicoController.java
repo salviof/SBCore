@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -14,12 +14,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public interface ItfServicoController {
 
-    public ItfRespostaAcaoDoSistema getResposta(ItfFabricaAcoes pAcao, Object... pParametros) throws ErroChamadaController;
+    public ItfRespostaAcaoDoSistema getResposta(ComoFabricaAcoes pAcao, Object... pParametros) throws ErroChamadaController;
 
-    public ItfRespostaAcaoDoSistema getResposta(ItfFabricaAcoes pAcao, ItfBeanSimples pEntidade) throws ErroChamadaController;
+    public ItfRespostaAcaoDoSistema getResposta(ComoFabricaAcoes pAcao, ComoEntidadeSimples pEntidade) throws ErroChamadaController;
 
     public ItfRespostaAcaoDoSistema getResposta(String pNomeUncicoAcao, Object... pParametros) throws ErroChamadaController;
 
-    public ItfRespostaAcaoDoSistema getResposta(String pNomeUncicoAcao, ItfBeanSimples pEntidade) throws ErroChamadaController;
+    public ItfRespostaAcaoDoSistema getResposta(String pNomeUncicoAcao, ComoEntidadeSimples pEntidade) throws ErroChamadaController;
 
 }

@@ -6,9 +6,9 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPad
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanEnderecavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemEndereco;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
 
 /**
  *
@@ -16,11 +16,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidaca
  */
 public class ValidadorUnitarioLocalizacao extends ValidadorUnitarioCampoInstGenerico {
 
-    private final ItfLocal localAnalizado;
+    private final ComoLocal localAnalizado;
 
     public ValidadorUnitarioLocalizacao(ItfCampoInstanciado pCampoInstanciado) {
         super(pCampoInstanciado, FabTipoValidacaoUnitaria.LOCALIZACAO);
-        localAnalizado = (ItfLocal) campoInstanciado.getValor();
+        localAnalizado = (ComoLocal) campoInstanciado.getValor();
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ValidadorUnitarioLocalizacao extends ValidadorUnitarioCampoInstGene
         } else {
             if (campoInstanciado.getValor() == null) {
                 if (campoInstanciado.isObrigatorio()) {
-                    if (campoInstanciado.getObjetoDoAtributo() instanceof ItfBeanEnderecavel) {
-                        ((ItfBeanEnderecavel) campoInstanciado.getObjetoDoAtributo()).instanciarNovoEndereco();
+                    if (campoInstanciado.getObjetoDoAtributo() instanceof ComoTemEndereco) {
+                        ((ComoTemEndereco) campoInstanciado.getObjetoDoAtributo()).instanciarNovoEndereco();
                         return "Localização inválida, informe o endereço";
                     }
                 }

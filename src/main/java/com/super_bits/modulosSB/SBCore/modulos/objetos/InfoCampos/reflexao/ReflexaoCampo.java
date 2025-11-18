@@ -7,13 +7,13 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.reflexao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanGenerico;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.logging.Logger;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoDominioEntidadeGenerico;
 
 /**
  *
@@ -126,7 +126,7 @@ public abstract class ReflexaoCampo {
                     case DECIMAL:
                         return (double) pValorEnviado;
                     case ENTIDADE:
-                        return (ItfBeanGenerico) pValorEnviado;
+                        return (ComoDominioEntidadeGenerico) pValorEnviado;
                     default:
                         throw new AssertionError(tipoDeclaracao.name());
 

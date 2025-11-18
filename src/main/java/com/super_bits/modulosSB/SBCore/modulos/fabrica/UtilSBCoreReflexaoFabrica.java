@@ -7,13 +7,13 @@ package com.super_bits.modulosSB.SBCore.modulos.fabrica;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
@@ -21,23 +21,23 @@ import java.util.List;
  */
 public abstract class UtilSBCoreReflexaoFabrica {
 
-    public static Object getObjetoByString(ItfFabrica fabrica, String pString) {
+    public static Object getObjetoByString(ComoFabrica fabrica, String pString) {
 
         return getObjetoByString(fabrica.getClass(), pString);
 
     }
 
-    public static Object getObjetoByString(Class<? extends ItfFabrica> classeFabrica, String pString) {
+    public static Object getObjetoByString(Class<? extends ComoFabrica> classeFabrica, String pString) {
 
         try {
-            for (ItfFabrica enumFab : classeFabrica.getEnumConstants()) {
+            for (ComoFabrica enumFab : classeFabrica.getEnumConstants()) {
                 if (enumFab.toString().toLowerCase().equals(pString.toLowerCase())) {
                     return enumFab.getRegistro();
                 }
             }
-            for (ItfFabrica enumFab : classeFabrica.getEnumConstants()) {
-                if (enumFab.getRegistro() instanceof ItfBeanSimplesSomenteLeitura) {
-                    if (((ItfBeanSimplesSomenteLeitura) enumFab.getRegistro()).getNome().toLowerCase().equals(pString.toLowerCase())) {
+            for (ComoFabrica enumFab : classeFabrica.getEnumConstants()) {
+                if (enumFab.getRegistro() instanceof ComoEntidadeSimplesSomenteLeitura) {
+                    if (((ComoEntidadeSimplesSomenteLeitura) enumFab.getRegistro()).getNome().toLowerCase().equals(pString.toLowerCase())) {
                         return enumFab.getRegistro();
                     }
                 }
@@ -57,15 +57,15 @@ public abstract class UtilSBCoreReflexaoFabrica {
      * @param fabrica Fabrica de referencia
      * @return Todos os registros criados pela fabrica
      */
-    public static List getListaTodosRegistrosDaFabrica(Class<? extends ItfFabrica> fabrica) {
+    public static List getListaTodosRegistrosDaFabrica(Class<? extends ComoFabrica> fabrica) {
         List todos = new ArrayList<>();
-        for (ItfFabrica fb : fabrica.getEnumConstants()) {
+        for (ComoFabrica fb : fabrica.getEnumConstants()) {
             todos.add(fb.getRegistro());
         }
         return todos;
     }
 
-    public static ItfFabrica getEnumDoObjetoFabrica(Class<? extends ItfFabrica> fabrica, ItfBeanSimplesSomenteLeitura pObjetoReferencia) {
+    public static ComoFabrica getEnumDoObjetoFabrica(Class<? extends ComoFabrica> fabrica, ComoEntidadeSimplesSomenteLeitura pObjetoReferencia) {
         try {
             List todos = new ArrayList<>();
 
@@ -77,8 +77,8 @@ public abstract class UtilSBCoreReflexaoFabrica {
                     }
                 }
             }
-            for (ItfFabrica fb : fabrica.getEnumConstants()) {
-                if (((ItfBeanSimplesSomenteLeitura) fb.getRegistro()).getId() == pObjetoReferencia.getId()) {
+            for (ComoFabrica fb : fabrica.getEnumConstants()) {
+                if (((ComoEntidadeSimplesSomenteLeitura) fb.getRegistro()).getId() == pObjetoReferencia.getId()) {
                     return fb;
                 }
             }
@@ -97,9 +97,9 @@ public abstract class UtilSBCoreReflexaoFabrica {
      * @param fabrica Fabrica de referencia
      * @return Todos os registros criados pela fabrica
      */
-    public static List<String> getListaStringsDaFabrica(Class<? extends ItfFabrica> fabrica) {
+    public static List<String> getListaStringsDaFabrica(Class<? extends ComoFabrica> fabrica) {
         List<String> todos = new ArrayList<>();
-        for (ItfFabrica fb : fabrica.getEnumConstants()) {
+        for (ComoFabrica fb : fabrica.getEnumConstants()) {
             todos.add(fb.toString());
         }
         return todos;
@@ -112,7 +112,7 @@ public abstract class UtilSBCoreReflexaoFabrica {
      * @param fabrica Fabrica de referencia
      * @return Todos os registros criados pela fabrica
      */
-    public static List<Integer> getListaIntegerDaFabrica(Class<? extends ItfFabrica> fabrica) {
+    public static List<Integer> getListaIntegerDaFabrica(Class<? extends ComoFabrica> fabrica) {
         List<Enum> lista = (List) Arrays.asList(fabrica.getEnumConstants());
         List<Integer> todos = new ArrayList<>();
         for (Enum enunciado : lista) {
@@ -123,14 +123,14 @@ public abstract class UtilSBCoreReflexaoFabrica {
         return todos;
     }
 
-    public static ItfFabrica getFabricaPorOrdinal(Class<? extends ItfFabrica> fabrica, int pId) {
+    public static ComoFabrica getFabricaPorOrdinal(Class<? extends ComoFabrica> fabrica, int pId) {
 
         try {
             List<Enum> lista = (List) Arrays.asList(fabrica.getEnumConstants());
 
             for (Enum enunciado : lista) {
                 if (enunciado.ordinal() == pId) {
-                    return (ItfFabrica) enunciado;
+                    return (ComoFabrica) enunciado;
                 }
 
             }
@@ -142,7 +142,7 @@ public abstract class UtilSBCoreReflexaoFabrica {
 
     }
 
-    public static <T> T getAnotacaoDoEnum(ItfFabrica pEnumFabrica, Class pAnotacao) {
+    public static <T> T getAnotacaoDoEnum(ComoFabrica pEnumFabrica, Class pAnotacao) {
         try {
             Field campo = pEnumFabrica.getClass().getField(pEnumFabrica.toString());
             return (T) campo.getAnnotation(pAnotacao);

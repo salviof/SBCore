@@ -13,7 +13,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ public class MapaObjetosProjetoAtual {
      *
      * @param pObjeto
      */
-    public static final void adcionarObjetoInstanciado(ItfBeanSimples pObjeto) {
+    public static final void adcionarObjetoInstanciado(ComoEntidadeSimples pObjeto) {
         CLASSE_ENTIDADE_BY_NOME.put(pObjeto.getClass().getSimpleName(), pObjeto.getClass());
         //throw new UnsupportedOperationException("TODO Erro adiionando objeto novamente para melhorar qualidade do código");
     }

@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.admin;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import java.io.Serializable;
 
 /**
@@ -13,10 +13,10 @@ import java.io.Serializable;
  */
 public class CentralAdministrativaPadrao implements ItfCentralAdministrativa, Serializable {
 
-    private final ItfFabricaAcoes paginaInicialAnonimo;
-    private final ItfFabricaAcoes paginaInicialAdmin;
+    private final ComoFabricaAcoes paginaInicialAnonimo;
+    private final ComoFabricaAcoes paginaInicialAdmin;
 
-    public CentralAdministrativaPadrao(ItfFabricaAcoes pPaginaInicialAnon, ItfFabricaAcoes pPaginaAdministrativa) {
+    public CentralAdministrativaPadrao(ComoFabricaAcoes pPaginaInicialAnon, ComoFabricaAcoes pPaginaAdministrativa) {
         paginaInicialAnonimo = pPaginaInicialAnon;
         paginaInicialAdmin = pPaginaAdministrativa;
         // ATENCAO-> Nao instanciar ações aqui, o mapa de ações pode estar vazio, nesta etapa..
@@ -26,12 +26,12 @@ public class CentralAdministrativaPadrao implements ItfCentralAdministrativa, Se
     }
 
     @Override
-    public ItfFabricaAcoes getFormularioPainelAdministrativoDev() {
+    public ComoFabricaAcoes getFormularioPainelAdministrativoDev() {
         return paginaInicialAdmin;
     }
 
     @Override
-    public ItfFabricaAcoes getFormularioHomePadrao() {
+    public ComoFabricaAcoes getFormularioHomePadrao() {
         return paginaInicialAnonimo;
     }
 

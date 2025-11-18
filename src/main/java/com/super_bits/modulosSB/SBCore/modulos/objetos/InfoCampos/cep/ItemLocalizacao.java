@@ -10,16 +10,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalPostagem;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalPostagem;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = "Localização", plural = "Localizações")
-public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
+public class ItemLocalizacao extends ItemSimples implements ComoLocalPostagem {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -133,19 +133,19 @@ public class ItemLocalizacao extends ItemSimples implements ItfLocalPostagem {
 
     @Override
     public boolean isLocaPostavel() {
-        return (this instanceof ItfLocalPostagem);
+        return (this instanceof ComoLocalPostagem);
     }
 
     @Override
-    public ItfLocalPostagem getComoLocalPostavel() {
+    public ComoLocalPostagem getComoLocalPostavel() {
         if (!isLocaPostavel()) {
             throw new UnsupportedOperationException("Entidade " + this.getClass().getSimpleName() + " não é uma localização postável, impossível utilizar framework de cep");
         }
-        return (ItfLocalPostagem) this;
+        return (ComoLocalPostagem) this;
     }
 
     @Override
-    public void setBairro(ItfBairro pBairro) {
+    public void setBairro(ComoBairro pBairro) {
         bairro = (ItemBairro) pBairro;
     }
 

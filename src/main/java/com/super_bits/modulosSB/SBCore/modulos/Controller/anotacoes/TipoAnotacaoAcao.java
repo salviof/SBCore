@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -21,7 +21,7 @@ public enum TipoAnotacaoAcao {
     ACAO_FORMULARIO_CAMPOS_ATUALIZA_GRUPO_ESPECIFICO,
     ACAO_FORMULARIO_CAMPOS_SOMENTE_LEITURA;
 
-    public void aplicarAnotacaoFormulario(InfoAnotacaoAcao pAnotacao, ItfAcaoDoSistema pAcao) {
+    public void aplicarAnotacaoFormulario(InfoAnotacaoAcao pAnotacao, ComoAcaoDoSistema pAcao) {
 
         switch (this) {
             case ACAO_CONTROLLER:

@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
-public enum FabTipoAcessoArquivo implements ItfFabrica {
+public enum FabTipoAcessoArquivo implements ComoFabrica {
 
     VISUALIZAR, BAIXAR;
     private static String slugVisualizar;

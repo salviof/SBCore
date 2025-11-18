@@ -6,17 +6,17 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoCidade;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ItemBairro extends ItemSimples implements ItfBairro {
+public class ItemBairro extends ItemSimples implements ComoBairro {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -62,12 +62,12 @@ public class ItemBairro extends ItemSimples implements ItfBairro {
     }
 
     @Override
-    public ItfCidade getCidade() {
+    public ComoCidade getCidade() {
         return cidade;
     }
 
     @Override
-    public void setCidade(ItfCidade pCidade) {
+    public void setCidade(ComoCidade pCidade) {
         cidade = (ItemCidade) pCidade;
     }
 

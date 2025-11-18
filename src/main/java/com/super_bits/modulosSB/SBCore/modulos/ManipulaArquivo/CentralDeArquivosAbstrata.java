@@ -11,10 +11,10 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
@@ -37,7 +37,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
         tipoEstruturaCaminhoFormPadrao = pTipoEstruturaCaminhoFormPadrao;
     }
 
-    public String getEnderecoLocalAlternativo(ItfBeanSimplesSomenteLeitura entidade, String pCategoria, String pNome) {
+    public String getEnderecoLocalAlternativo(ComoEntidadeSimplesSomenteLeitura entidade, String pCategoria, String pNome) {
         if (entidade.getId() == null || entidade.getId() == null) {
             return getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
         } else {
@@ -46,7 +46,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     }
 
     @Override
-    public boolean salvarArquivo(ItfBeanSimplesSomenteLeitura entidade, byte[] arqivo, String pCategoria, String pNome) {
+    public boolean salvarArquivo(ComoEntidadeSimplesSomenteLeitura entidade, byte[] arqivo, String pCategoria, String pNome) {
         String caminhoArquivo = null;
         if (entidade.getId() == null) {
             caminhoArquivo = getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
@@ -68,14 +68,14 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     @Override
     public boolean salvarArquivo(ItfCampoInstanciado pCampo, byte[] arquivo, String pNomeArquivo) {
         pCampo.setValor(pNomeArquivo);
-        return salvarArquivo((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
+        return salvarArquivo((ComoEntidadeSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), arquivo, pCampo.getNomeCamponaClasse(), pNomeArquivo);
     }
     private static final String SLUG_IMAGEM_PEQUENA = FabTipoAtributoObjeto.IMG_PEQUENA.toString();
     private static final String SLUG_IMAGEM_MEDIA = FabTipoAtributoObjeto.IMG_MEDIA.toString();
     private static final String SLUG_IMAGEM_GRANDE = FabTipoAtributoObjeto.IMG_GRANDE.toString();
 
     @Override
-    public String getEndrLocalArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, String categoria) {
+    public String getEndrLocalArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, String categoria) {
         if (categoria == null) {
             return getEndrLocalRecursosDoObjeto(pItem.getClass()) + "/" + pItem.getId() + "/" + nomeArquivo;
         }
@@ -99,7 +99,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             if (pCampo == null) {
                 throw new UnsupportedOperationException("Enviado campo instanciado nulo para obter URL");
             }
-            String urlEntidade = getEndrRemotoRecursosItem((ItfBeanSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.BAIXAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
+            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.BAIXAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
             String nomeArquivo = pCampo.getValor().toString();
             return urlEntidade + nomeArquivo;
         } catch (Throwable t) {
@@ -114,7 +114,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             if (pCampo == null) {
                 throw new UnsupportedOperationException("Enviado campo instanciado nulo para obter URL");
             }
-            String urlEntidade = getEndrRemotoRecursosItem((ItfBeanSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.VISUALIZAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
+            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.VISUALIZAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
             String nomeArquivo = pCampo.getValor().toString();
             return urlEntidade + nomeArquivo;
         } catch (Throwable t) {
@@ -130,7 +130,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     @Override
     public String getEndrLocalArquivoCampoInstanciado(ItfCampoInstanciado pCampo) {
 
-        String caminhoArquivo = getEndrLocalArquivoItem((ItfBeanSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
+        String caminhoArquivo = getEndrLocalArquivoItem((ComoEntidadeSimplesSomenteLeitura) pCampo.getObjetoDoAtributo(), (String) pCampo.getValor(), pCampo.getNomeCamponaClasse());
         return caminhoArquivo;
     }
 
@@ -141,18 +141,18 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
     }
 
     @Override
-    public String getEndrLocalArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo) {
+    public String getEndrLocalArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo) {
         return getEndrLocalArquivoItem(pItem, nomeArquivo, null);
     }
 
     @Override
-    public String getEndrRemotoArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo) {
+    public String getEndrRemotoArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo) {
         return getEndrRemotoRecursosDoObjeto(pItem.getClass(), pTipoAcesso, pTipoArquivo) + "/" + nomeArquivo;
 
     }
 
     @Override
-    public String getEndrRemotoArquivoItem(ItfBeanSimplesSomenteLeitura pItem, String nomeArquivo, String categoria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo) {
+    public String getEndrRemotoArquivoItem(ComoEntidadeSimplesSomenteLeitura pItem, String nomeArquivo, String categoria, FabTipoAcessoArquivo pTipoAcesso, FabTipoArquivoConhecido pTipoArquivo) {
         return getEndrRemotoRecursosDoObjeto(pItem.getClass(), pTipoAcesso, pTipoArquivo) + "/ " + categoria + "/" + nomeArquivo;
     }
 

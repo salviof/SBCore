@@ -5,7 +5,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
@@ -16,10 +15,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_DEC
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -274,7 +274,7 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     }
 
     @Override
-    public void setListaDeOpcoes(List<ItfBeanSimples> pLista) {
+    public void setListaDeOpcoes(List<ComoEntidadeSimples> pLista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -429,12 +429,12 @@ public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoD
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         setFabricaTipoAtributo((FabTipoAtributoObjeto) pFabrica);
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return getFabricaTipoAtributo();
     }
 

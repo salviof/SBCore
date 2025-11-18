@@ -4,14 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view.modeloFormulario;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.List;
 
 /**
  *
  * @author desenvolvedor
  */
-public interface ItfModeloFormularioSBFW extends ItfBeanSimples {
+public interface ItfModeloFormularioSBFW extends ComoEntidadeSimples {
 
     public String getAreaExtra1();
 

@@ -5,16 +5,16 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.localizacao;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.ItemUnidadeFederativa;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
-public enum FabUnidadesFederativasSemPersistencia implements ItfFabrica {
+public enum FabUnidadesFederativasSemPersistencia implements ComoFabrica {
     MG, AC, AL, AM, AP, BA, CE, DF, ES, GO, MA, MS, MT, PA, PB, PE, PI, PR, RJ, RN, RO, RR, RS, SC, SE, SP, TO;
 
     @Override
@@ -92,7 +92,7 @@ public enum FabUnidadesFederativasSemPersistencia implements ItfFabrica {
 
     public static List<ItemUnidadeFederativa> getTodos() {
         List<ItemUnidadeFederativa> listaTodos = new ArrayList<>();
-        for (ItfFabrica estFab : FabUnidadesFederativasSemPersistencia.values()) {
+        for (ComoFabrica estFab : FabUnidadesFederativasSemPersistencia.values()) {
             listaTodos.add((ItemUnidadeFederativa) estFab.getRegistro());
         }
         return listaTodos;

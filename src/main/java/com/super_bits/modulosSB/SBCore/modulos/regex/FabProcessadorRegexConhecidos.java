@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.regex;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
-public enum FabProcessadorRegexConhecidos implements ItfFabrica {
+public enum FabProcessadorRegexConhecidos implements ComoFabrica {
 
     LOCALIZAR_DIMENCOES_EM_TEXTO,
     LARGURA_DOIS_PONTOS_VALOR,

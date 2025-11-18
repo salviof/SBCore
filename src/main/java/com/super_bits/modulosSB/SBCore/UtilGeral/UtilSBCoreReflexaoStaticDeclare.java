@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -32,15 +32,15 @@ public class UtilSBCoreReflexaoStaticDeclare {
         return camposEncontrados;
     }
 
-    public static List<ItfBeanSimples> getEntidadesEstaticasDeclaradas(Class pClasse) {
-        List<Field> campos = getObjetosEstaticosDestaClasse(pClasse, ItfBeanSimples.class);
-        List<ItfBeanSimples> entidadesEncontradas = new ArrayList<>();
+    public static List<ComoEntidadeSimples> getEntidadesEstaticasDeclaradas(Class pClasse) {
+        List<Field> campos = getObjetosEstaticosDestaClasse(pClasse, ComoEntidadeSimples.class);
+        List<ComoEntidadeSimples> entidadesEncontradas = new ArrayList<>();
         for (Field cp : campos) {
             Object value;
             try {
                 value = cp.get(null); // campos estáticos: passa null
                 if (value != null) {
-                    entidadesEncontradas.add((ItfBeanSimples) value);
+                    entidadesEncontradas.add((ComoEntidadeSimples) value);
                 }
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(UtilSBCoreReflexaoStaticDeclare.class.getName()).log(Level.SEVERE, null, ex);

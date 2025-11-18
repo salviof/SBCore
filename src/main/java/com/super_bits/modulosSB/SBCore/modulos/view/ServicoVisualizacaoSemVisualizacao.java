@@ -6,14 +6,14 @@ package com.super_bits.modulosSB.SBCore.modulos.view;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaDeAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoGerenciarEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.token.ItfTokenAcessoDinamico;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfEstruturaDeFormuario;
 import java.util.ArrayList;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -112,7 +112,7 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
     }
 
     @Override
-    public String getEndrRemotoFormulario(ItfFabricaAcoes pAcao, Object... paramentros) {
+    public String getEndrRemotoFormulario(ComoFabricaAcoes pAcao, Object... paramentros) {
         return pAcao.getNomeUnico();
     }
 
@@ -132,7 +132,7 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
     }
 
     @Override
-    public ItfEstruturaDeFormuario getEstruturaFormulario(ItfAcaoDoSistema pAcaop) {
+    public ItfEstruturaDeFormuario getEstruturaFormulario(ComoAcaoDoSistema pAcaop) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -8,19 +8,19 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.FabCidadesSemPersiste
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.FabUnidadesFederativasSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfUnidadeFederativa;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Transient;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoCidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoUnidadeFederativa;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFederativa {
+public class ItemUnidadeFederativa extends ItemSimples implements ComoUnidadeFederativa {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -31,9 +31,9 @@ public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFede
     private String sigla;
 
     @Transient
-    private ItfLocal vinculoLocalizacao;
+    private ComoLocal vinculoLocalizacao;
 
-    private List<ItfCidade> cidades;
+    private List<ComoCidade> cidades;
 
     @Override
     public Long getId() {
@@ -59,7 +59,7 @@ public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFede
     }
 
     @Override
-    public List<ItfCidade> getCidades() {
+    public List<ComoCidade> getCidades() {
         if (cidades == null || cidades.isEmpty()) {
             if (sigla.toLowerCase().equals("mg")) {
                 cidades = (List) FabCidadesSemPersistencia.getCidadesPorEstado(FabUnidadesFederativasSemPersistencia.MG);
@@ -82,7 +82,7 @@ public class ItemUnidadeFederativa extends ItemSimples implements ItfUnidadeFede
     }
 
     @Override
-    public void setCidades(List<ItfCidade> pCidades) {
+    public void setCidades(List<ComoCidade> pCidades) {
         System.out.println("cidades do estado não podem ser alteradas");
     }
 

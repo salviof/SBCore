@@ -10,10 +10,10 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreEmail;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.token.ItfTokenRecuperacaoEmail;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import java.io.Serializable;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
 
 /**
  *
@@ -21,7 +21,7 @@ import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
  *
  * @author Salvio
  */
-public abstract class ControleDeSessaoAbstratoSBCore implements ItfControleDeSessao, Serializable {
+public abstract class ControleDeSessaoAbstratoSBCore implements ComoControleDeSessao, Serializable {
 
     @Override
     public void registrarAcao(ItfPermissao pAcesso) {
@@ -43,7 +43,7 @@ public abstract class ControleDeSessaoAbstratoSBCore implements ItfControleDeSes
 
     protected void enviarSenhaParaEmail(String pEmail) {
 
-        ItfUsuario usuarioEncontrado = SBCore.getCentralPermissao().getUsuarioByEmail(pEmail);
+        ComoUsuario usuarioEncontrado = SBCore.getCentralPermissao().getUsuarioByEmail(pEmail);
 
         if (usuarioEncontrado == null) {
             SBCore.enviarMensagemUsuario("O email " + pEmail + " não foi encontrado no sistema", FabMensagens.ALERTA);

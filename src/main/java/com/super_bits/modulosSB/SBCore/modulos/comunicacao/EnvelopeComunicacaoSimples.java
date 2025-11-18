@@ -8,9 +8,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoListaDinamica;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -23,14 +23,14 @@ public class EnvelopeComunicacaoSimples extends ItemSimples {
     private Long id;
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
-    private ItfUsuario destinatario;
+    private ComoUsuario destinatario;
     @InfoCampo(tipo = FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
-    private ItfUsuario remetente;
+    private ComoUsuario remetente;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String assunto;
     private String texto;
 
     @InfoCampoListaDinamica()
-    private List<ItfUsuario> opcoesDestino;
+    private List<ComoUsuario> opcoesDestino;
 
 }

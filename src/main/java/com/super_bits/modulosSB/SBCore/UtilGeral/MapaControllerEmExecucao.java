@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoController;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.UtilSBController;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public abstract class MapaControllerEmExecucao {
 
     private static final Map<Integer, ItfRespostaAcaoDoSistema> RESPOSTAS_EM_EXECUCAO = new HashMap<>();
 
-    private static int buildIDExecucao(ItfAcaoController acao) {
+    private static int buildIDExecucao(ComoAcaoController acao) {
 
         String identificador = SBCore.getCentralDeSessao().getSessaoAtual().getIdSessao() + acao.getNomeUnico();
         return identificador.hashCode();
@@ -50,7 +50,7 @@ public abstract class MapaControllerEmExecucao {
 
     public static ItfRespostaAcaoDoSistema getRespostaDoContexto() {
 
-        ItfAcaoController acao = UtilSBController.getAcaoDoContexto();
+        ComoAcaoController acao = UtilSBController.getAcaoDoContexto();
         if (acao == null) {
             return null;
         }

@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfColunaTela;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualEmLayout;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSBEmLayout;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSBEmLayout;
 
 /**
  *
@@ -41,7 +41,7 @@ public class ColunaTela implements ItfColunaTela {
     }
 
     @Override
-    public void setComponenteVinculado(ItfComponenteVisualSBEmLayout componenteVinculado) {
+    public void setComponenteVinculado(ComoComponenteVisualSBEmLayout componenteVinculado) {
         this.componenteVinculado = (ComponenteVisualEmLayout) componenteVinculado;
         switch (componenteVinculado.getFamilia()) {
             case INPUT:

@@ -7,11 +7,11 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoEnuns;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -70,8 +70,8 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
         if (proppriedadesBasicas.get(pPropriedades.toString()) != null) {
             return proppriedadesBasicas.getProperty(pPropriedades.toString());
         }
-        if (pPropriedades instanceof ItfFabrica) {
-            ItfFabrica anotacao = (ItfFabrica) pPropriedades;
+        if (pPropriedades instanceof ComoFabrica) {
+            ComoFabrica anotacao = (ComoFabrica) pPropriedades;
             try {
                 if (getPropriedadePorAnotacao(anotacao) != null) {
                     return getPropriedadePorAnotacao(anotacao);
@@ -84,7 +84,7 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
         return proppriedadesBasicas.getProperty(pPropriedades.getNomePropriedade());
     }
 
-    public String getPropriedadePorAnotacao(ItfFabrica pPropriedades) {
+    public String getPropriedadePorAnotacao(ComoFabrica pPropriedades) {
 
         ItfFabConfigModulo atributo = UtilSBCoreReflexaoEnuns.getEnumConfigComEstaFabricaNaAnotacao(fabricaConfig, pPropriedades);
         if (atributo == null) {

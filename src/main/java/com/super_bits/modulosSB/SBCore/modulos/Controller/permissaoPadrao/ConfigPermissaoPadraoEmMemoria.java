@@ -7,15 +7,15 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.permissaoPadrao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import java.util.ArrayList;
 import java.util.List;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -24,7 +24,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 public abstract class ConfigPermissaoPadraoEmMemoria extends ConfigPermissaoSBCoreAbstrato {
 
     private final List<ItfPermissao> permissoes = new ArrayList<>();
-    private final List<ItfUsuario> usuarios = new ArrayList<>();
+    private final List<ComoUsuario> usuarios = new ArrayList<>();
 
     public ConfigPermissaoPadraoEmMemoria(Class[] pClassesControllers) {
         super(pClassesControllers);
@@ -43,7 +43,7 @@ public abstract class ConfigPermissaoPadraoEmMemoria extends ConfigPermissaoSBCo
     }
 
     @Override
-    public List<ItfUsuario> configuraUsuarios() {
+    public List<ComoUsuario> configuraUsuarios() {
         try {
             if (SBCore.isEmModoProducao()) {
                 throw new UnsupportedOperationException("A classe " + ConfigPermissaoPadraoEmMemoria.class.getSimpleName() + "Não oferece segurança no nível de permissões para execução das ações");
@@ -65,7 +65,7 @@ public abstract class ConfigPermissaoPadraoEmMemoria extends ConfigPermissaoSBCo
     }
 
     @Override
-    public boolean isAcaoPermitidaUsuarioLogado(ItfAcaoDoSistema acao) {
+    public boolean isAcaoPermitidaUsuarioLogado(ComoAcaoDoSistema acao) {
         if (acao.isPrecisaPermissao()) {
             return SBCore.getUsuarioLogado().equals(new UsuarioSistemaRoot());
         }
@@ -73,7 +73,7 @@ public abstract class ConfigPermissaoPadraoEmMemoria extends ConfigPermissaoSBCo
     }
 
     @Override
-    public boolean isAcaoPermitidaUsuario(ItfUsuario pUsuario, ItfAcaoDoSistema acao) {
+    public boolean isAcaoPermitidaUsuario(ComoUsuario pUsuario, ComoAcaoDoSistema acao) {
         if (acao.isPrecisaPermissao()) {
             return pUsuario.equals(new UsuarioSistemaRoot());
         }
@@ -81,7 +81,7 @@ public abstract class ConfigPermissaoPadraoEmMemoria extends ConfigPermissaoSBCo
     }
 
     @Override
-    public boolean isPermitidoUsuario(ItfUsuario pUsuario, ItfPermissao pPermissao) {
+    public boolean isPermitidoUsuario(ComoUsuario pUsuario, ItfPermissao pPermissao) {
         if (pPermissao.getAcao().isPrecisaPermissao()) {
             return pUsuario.equals(new UsuarioSistemaRoot());
         }

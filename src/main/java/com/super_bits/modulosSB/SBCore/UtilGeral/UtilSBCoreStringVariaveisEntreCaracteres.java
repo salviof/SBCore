@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class UtilSBCoreStringVariaveisEntreCaracteres {
         return UtilSBCoreStringValidador.getListaStringEntreCaracter(pValor, UtilSBCoreStringValidador.TIPO_SINALIZADOR.TAG);
     }
 
-    public static String gerarTextoSubstituindoAtributosSimples(String pTexto, ItfBeanSimples pObjeto) {
+    public static String gerarTextoSubstituindoAtributosSimples(String pTexto, ComoEntidadeSimples pObjeto) {
         if (pTexto == null || pObjeto == null) {
             return pTexto;
         }

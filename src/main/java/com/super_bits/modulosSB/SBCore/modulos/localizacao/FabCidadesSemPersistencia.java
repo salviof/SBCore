@@ -6,18 +6,18 @@
 package com.super_bits.modulosSB.SBCore.modulos.localizacao;
 
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreFabrica;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.ItemBairro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.ItemCidade;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
  * @author desenvolvedor
  */
-public enum FabCidadesSemPersistencia implements ItfFabrica {
+public enum FabCidadesSemPersistencia implements ComoFabrica {
 
     BELO_HORIZONTE, CONTAGEM, Baldim,
     Betim, Brumadinho,

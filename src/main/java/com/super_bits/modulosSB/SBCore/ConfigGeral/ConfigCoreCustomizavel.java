@@ -11,14 +11,14 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
-import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 
 /**
  *
@@ -32,14 +32,14 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private String nomeSocial;
     private Class<? extends ItfCentralMensagens> centralMEnsagens;
     private Class<? extends InfoErroSBComAcoes> classeErro;
-    private Class<? extends ItfControleDeSessao> controleDeSessao;
+    private Class<? extends ComoControleDeSessao> controleDeSessao;
     private Class<? extends ItfCentralEventos> centralDeEventos;
     private Class<? extends ConfigPermissaoSBCoreAbstrato> classeConfigPermissao;
     private Class<? extends ItfServicoVisualizacao> classeVisualizacao;
     private Class<? extends ItfCentralDeArquivos> classeCentralDeArquivos;
-    private Class<? extends ItfServicoComunicacao> classeCentralComunicacao;
-    private Class<? extends ItfCentralLocalizacao> classeCentralLocalizacao;
-    private Class<? extends ItfCentralAtributosDeObjetos> classeCentralAtributos;
+    private Class<? extends ComoServicoComunicacao> classeCentralComunicacao;
+    private Class<? extends CmoServicoLocalizacao> classeCentralLocalizacao;
+    private Class<? extends ComoServicoAtributosDeObjetos> classeCentralAtributos;
     private Class<? extends ItfServicoRepositorioEntidades> classeCentralDados;
     private Class<? extends ItfServicoController> classeServicoController;
     private ItfCentralAdministrativa centralAdministrativa;
@@ -50,7 +50,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private String cliente;
     private String grupoProjeto;
     private String diretorioBase = "";
-    private Class<? extends ItfFabricaAcoes>[] acoesDoSistema;
+    private Class<? extends ComoFabricaAcoes>[] acoesDoSistema;
     private String urlJira;
 
     @Override
@@ -59,7 +59,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public Class<? extends ItfFabricaAcoes>[] getFabricaDeAcoes() {
+    public Class<? extends ComoFabricaAcoes>[] getFabricaDeAcoes() {
         return acoesDoSistema;
     }
 
@@ -82,7 +82,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public Class<? extends ItfControleDeSessao> getControleDeSessao() {
+    public Class<? extends ComoControleDeSessao> getControleDeSessao() {
         return controleDeSessao;
     }
 
@@ -136,7 +136,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
      * @return
      */
     @Override
-    public final void setControleDeSessao(Class<? extends ItfControleDeSessao> controleDeSessao) {
+    public final void setControleDeSessao(Class<? extends ComoControleDeSessao> controleDeSessao) {
 
         if (this.controleDeSessao == null) {
             this.controleDeSessao = controleDeSessao;
@@ -224,7 +224,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public final void setFabricaDeAcoes(Class<? extends ItfFabricaAcoes>[] pAcoes) {
+    public final void setFabricaDeAcoes(Class<? extends ComoFabricaAcoes>[] pAcoes) {
         acoesDoSistema = pAcoes;
 
     }
@@ -268,32 +268,32 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public void setCentralComunicacao(Class<? extends ItfServicoComunicacao> pCentral) {
+    public void setCentralComunicacao(Class<? extends ComoServicoComunicacao> pCentral) {
         classeCentralComunicacao = pCentral;
     }
 
     @Override
-    public Class<? extends ItfServicoComunicacao> getCentralComunicacao() {
+    public Class<? extends ComoServicoComunicacao> getCentralComunicacao() {
         return classeCentralComunicacao;
     }
 
     @Override
-    public void setCentralDeLocalizacao(Class<? extends ItfCentralLocalizacao> pCentralLocalizacao) {
+    public void setCentralDeLocalizacao(Class<? extends CmoServicoLocalizacao> pCentralLocalizacao) {
         classeCentralLocalizacao = pCentralLocalizacao;
     }
 
     @Override
-    public Class<? extends ItfCentralLocalizacao> getCentralDeLocalizacao() {
+    public Class<? extends CmoServicoLocalizacao> getCentralDeLocalizacao() {
         return classeCentralLocalizacao;
     }
 
     @Override
-    public Class<? extends ItfCentralAtributosDeObjetos> getCentralAtributoDados() {
+    public Class<? extends ComoServicoAtributosDeObjetos> getCentralAtributoDados() {
         return classeCentralAtributos;
     }
 
     @Override
-    public void setCentralAtributoDados(Class<? extends ItfCentralAtributosDeObjetos> pCentralAtributos) {
+    public void setCentralAtributoDados(Class<? extends ComoServicoAtributosDeObjetos> pCentralAtributos) {
         classeCentralAtributos = pCentralAtributos;
     }
 

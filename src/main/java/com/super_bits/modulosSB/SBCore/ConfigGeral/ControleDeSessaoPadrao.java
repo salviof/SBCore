@@ -9,9 +9,9 @@ import com.super_bits.modulosSB.SBCore.modulos.fonteDados.ItfTokenAcessoDados;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.SessaoOffline;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfSessao;
 
 import com.super_bits.modulosSB.SBCore.modulos.sessao.ControleDeSessaoAbstratoSBCore;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoSessao;
 
 /**
  *
@@ -21,11 +21,11 @@ import com.super_bits.modulosSB.SBCore.modulos.sessao.ControleDeSessaoAbstratoSB
  */
 public class ControleDeSessaoPadrao extends ControleDeSessaoAbstratoSBCore {
 
-    private static final ItfSessao sessao = new SessaoOffline();
+    private static final ComoSessao sessao = new SessaoOffline();
     public static ItfTokenAcessoDados acessoDados;
 
     @Override
-    public ItfSessao getSessaoAtual() {
+    public ComoSessao getSessaoAtual() {
         return sessao;
     }
 

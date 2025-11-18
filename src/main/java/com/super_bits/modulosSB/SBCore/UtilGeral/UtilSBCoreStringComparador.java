@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo.ObjetoNativoComoItemSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +111,7 @@ public class UtilSBCoreStringComparador {
         return texto;
     }
 
-    public static boolean isParecido(ItfBeanSimples pReferencia, List<? extends ItfCaminhoCampo> pCampos, String pParametro, boolean pParametroNumerico) {
+    public static boolean isParecido(ComoEntidadeSimples pReferencia, List<? extends ItfCaminhoCampo> pCampos, String pParametro, boolean pParametroNumerico) {
         if (pReferencia == null) {
             return false;
         }

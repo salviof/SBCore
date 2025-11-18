@@ -8,7 +8,6 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
 import org.coletivojava.fw.api.objetoNativo.controller.acao.AcaoBotaoNaoRequisitado;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
@@ -19,16 +18,17 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCamin
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfGrupoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.listagemItem.ItflistagemItemEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.icones.FabIconeFontAwesome;
 import java.lang.reflect.Field;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
  * @author Salvio Furbino
  */
-public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimples> {
+public class B_ListaItemEditavel implements ItflistagemItemEditavel<ComoEntidadeSimples> {
 
     protected final ItfCampoInstanciado campoInstanciado;
     private int indiceItemSelecionado;
@@ -42,7 +42,7 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     @Override
     public void adicionarItem() {
         try {
-            ItfBeanSimples novoObjeto = (ItfBeanSimples) campoInstanciado.getPropriedadesRefexao().getClasseDeclaracaoAtributo().newInstance();
+            ComoEntidadeSimples novoObjeto = (ComoEntidadeSimples) campoInstanciado.getPropriedadesRefexao().getClasseDeclaracaoAtributo().newInstance();
 
             Class classeObjetoPrincipal = campoInstanciado.getPropriedadesRefexao().getClasseOrigemAtributo();
             InfoPreparacaoObjeto preparadorObjeto = UtilSBCoreReflexaoObjeto.getInfoPreparacaoObjeto(novoObjeto.getClass());
@@ -117,14 +117,14 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     }
 
     @Override
-    public void removerItem(ItfBeanSimples pItem) {
+    public void removerItem(ComoEntidadeSimples pItem) {
         try {
             long idremover = pItem.getId();
             List lista = (List) campoInstanciado.getValor();
             int indiceRemocao = 0;
 
             for (int i = 0; i < lista.size(); i++) {
-                ItfBeanSimples item = (ItfBeanSimples) lista.get(i);
+                ComoEntidadeSimples item = (ComoEntidadeSimples) lista.get(i);
                 if (item.getId() == idremover) {
                     indiceRemocao = i;
                     break;
@@ -138,9 +138,9 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     }
 
     @Override
-    public List<ItfBeanSimples> getListaObjetosSelecionados() {
+    public List<ComoEntidadeSimples> getListaObjetosSelecionados() {
         try {
-            return (List<ItfBeanSimples>) campoInstanciado.getValor();
+            return (List<ComoEntidadeSimples>) campoInstanciado.getValor();
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro tentando obter uma lista de beanSimples no campo Instanciado", t);
             return null;
@@ -148,7 +148,7 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     }
 
     @Override
-    public void setListaObjetosSelecionados(List<ItfBeanSimples> pLista) {
+    public void setListaObjetosSelecionados(List<ComoEntidadeSimples> pLista) {
         campoInstanciado.setValor(pLista);
     }
 
@@ -163,8 +163,8 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     }
 
     @Override
-    public ItfAcaoDoSistema getAcaoAdicionarItem() {
-        ItfAcaoDoSistema acao = new AcaoBotaoNaoRequisitado();
+    public ComoAcaoDoSistema getAcaoAdicionarItem() {
+        ComoAcaoDoSistema acao = new AcaoBotaoNaoRequisitado();
         try {
 
             Field campo = UtilSBCoreReflexaoCaminhoCampo.getFieldByCaminho(new CaminhoCampoReflexao(campoInstanciado.getObjetoDoAtributo().getClass().getSimpleName() + "." + campoInstanciado.getNomeCompostoIdentificador()));
@@ -184,8 +184,8 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ItfBeanSimpl
     }
 
     @Override
-    public ItfAcaoDoSistema getAcaoRemoverItem() {
-        ItfAcaoDoSistema acao = new AcaoBotaoNaoRequisitado();
+    public ComoAcaoDoSistema getAcaoRemoverItem() {
+        ComoAcaoDoSistema acao = new AcaoBotaoNaoRequisitado();
         acao.setNomeAcao("Remover " + campoInstanciado.getNomeDoObjeto());
         acao.setIconeAcao(FabIconeFontAwesome.REG_REMOVER.getIcone().getTagHtml());
         return acao;

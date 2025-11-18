@@ -7,11 +7,11 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -19,15 +19,15 @@ import java.lang.reflect.Method;
  */
 public abstract class UtilSBCoreReflexaoEnuns {
 
-    public static ItfFabrica getFAbricaAnotadaEmAnotacao(ItfFabrica pFabrica) {
+    public static ComoFabrica getFAbricaAnotadaEmAnotacao(ComoFabrica pFabrica) {
         try {
 
             Field campo = pFabrica.getClass().getField(pFabrica.toString());
             for (Annotation anotacao : campo.getAnnotations()) {
                 for (Method metodo : anotacao.getClass().getMethods()) {
 
-                    if (metodo.getReturnType().isAssignableFrom(ItfFabrica.class)) {
-                        return (ItfFabrica) metodo.invoke(anotacao);
+                    if (metodo.getReturnType().isAssignableFrom(ComoFabrica.class)) {
+                        return (ComoFabrica) metodo.invoke(anotacao);
                     }
                 }
             }
@@ -39,7 +39,7 @@ public abstract class UtilSBCoreReflexaoEnuns {
 
     }
 
-    public static ItfFabrica getFAbricaAnotadaEmPropriedadeCOnfiguracao(ItfFabConfigModulo pFabrica) {
+    public static ComoFabrica getFAbricaAnotadaEmPropriedadeCOnfiguracao(ItfFabConfigModulo pFabrica) {
         try {
 
             Field campo = pFabrica.getClass().getField(pFabrica.toString());
@@ -51,7 +51,7 @@ public abstract class UtilSBCoreReflexaoEnuns {
                     Class classeRetorno = metodo.getReturnType();
                     if (!nomeMetodo.equals("annotationType")) {
                         try {
-                            ItfFabrica fab = (ItfFabrica) metodo.invoke(anotacao);
+                            ComoFabrica fab = (ComoFabrica) metodo.invoke(anotacao);
                             return fab;
                         } catch (Throwable t) {
 
@@ -68,10 +68,10 @@ public abstract class UtilSBCoreReflexaoEnuns {
 
     }
 
-    public static ItfFabrica getFabricaCOmEstaFabricaNaAnotacao(Class<? extends ItfFabrica> pFabricaEnum, ItfFabrica pFabrica) {
+    public static ComoFabrica getFabricaCOmEstaFabricaNaAnotacao(Class<? extends ComoFabrica> pFabricaEnum, ComoFabrica pFabrica) {
 
-        for (ItfFabrica fab : pFabricaEnum.getEnumConstants()) {
-            ItfFabrica fabricaAnotacao = getFAbricaAnotadaEmAnotacao(fab);
+        for (ComoFabrica fab : pFabricaEnum.getEnumConstants()) {
+            ComoFabrica fabricaAnotacao = getFAbricaAnotadaEmAnotacao(fab);
             if (fabricaAnotacao != null) {
                 if (fabricaAnotacao.equals(pFabrica)) {
                     return fab;
@@ -82,10 +82,10 @@ public abstract class UtilSBCoreReflexaoEnuns {
 
     }
 
-    public static ItfFabConfigModulo getEnumConfigComEstaFabricaNaAnotacao(Class<? extends ItfFabConfigModulo> pFabricaEnum, ItfFabrica pFabrica) {
+    public static ItfFabConfigModulo getEnumConfigComEstaFabricaNaAnotacao(Class<? extends ItfFabConfigModulo> pFabricaEnum, ComoFabrica pFabrica) {
 
         for (ItfFabConfigModulo prop : pFabricaEnum.getEnumConstants()) {
-            ItfFabrica fabricaAnotacao = getFAbricaAnotadaEmPropriedadeCOnfiguracao(prop);
+            ComoFabrica fabricaAnotacao = getFAbricaAnotadaEmPropriedadeCOnfiguracao(prop);
             if (fabricaAnotacao != null) {
                 if (fabricaAnotacao.equals(pFabrica)) {
                     return prop;

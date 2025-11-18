@@ -6,16 +6,17 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanNormal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeNormal;
 
 /**
  *
@@ -31,7 +32,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     private String descricao;
     private ItfGrupoCampos grupoSubCamposExibicao;
 
-    private List<ItfBeanSimples> listaDeOpcoes;
+    private List<ComoEntidadeSimples> listaDeOpcoes;
 
     private String iconeNegativo;
     private String iconePositivo;
@@ -58,7 +59,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
      * @return Lista com opções de seleção
      */
     @Override
-    public final List<ItfBeanSimples> getListaDeOpcoes() {
+    public final List<ComoEntidadeSimples> getListaDeOpcoes() {
         try {
             if (listaDeOpcoes == null || listaDeOpcoes.isEmpty()) {
                 //          listaDeOpcoes = SBCore.getCentralFonteDeDados().getListaOpcoesCampo(propriedadesReflexao);
@@ -87,7 +88,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     }
 
     @Override
-    public void setListaDeOpcoes(List<ItfBeanSimples> pLista) {
+    public void setListaDeOpcoes(List<ComoEntidadeSimples> pLista) {
         tipoAtributo.setListaDeOpcoes(pLista);
     }
 
@@ -363,9 +364,9 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
             if (grupoSubCamposExibicao == null) {
                 try {
                     Object objetoClasse = classeValorDoAtributo.newInstance();
-                    if (objetoClasse instanceof ItfBeanNormal) {
+                    if (objetoClasse instanceof ComoEntidadeNormal) {
                         grupoSubCamposExibicao = FabGruposPadrao.GRUPO_PADRAO_ITEM_NORMAL.getGrupoCampo(classeValorDoAtributo);
-                    } else if (objetoClasse instanceof ItfBeanSimplesSomenteLeitura) {
+                    } else if (objetoClasse instanceof ComoEntidadeSimplesSomenteLeitura) {
                         grupoSubCamposExibicao = FabGruposPadrao.GRUPO_PADRAO_ITEM_SIMPLES.getGrupoCampo(classeValorDoAtributo);
                     }
                 } catch (Throwable t) {
@@ -501,12 +502,12 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         setFabricaTipoAtributo((FabTipoAtributoObjeto) pFabrica);
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return getFabricaTipoAtributo();
     }
 

@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.admin;
 
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 
 /**
  *
@@ -12,8 +12,8 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
  */
 public interface ItfCentralAdministrativa {
 
-    public ItfFabricaAcoes getFormularioPainelAdministrativoDev();
+    public ComoFabricaAcoes getFormularioPainelAdministrativoDev();
 
-    public ItfFabricaAcoes getFormularioHomePadrao();
+    public ComoFabricaAcoes getFormularioHomePadrao();
 
 }

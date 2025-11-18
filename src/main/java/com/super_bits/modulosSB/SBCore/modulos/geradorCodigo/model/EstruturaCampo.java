@@ -8,7 +8,6 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.UtilSBGeradorDeCodigoBase;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
@@ -26,11 +25,12 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValidadorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import org.reflections.ReflectionUtils;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -290,7 +290,7 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     }
 
     @Override
-    public void setListaDeOpcoes(List<ItfBeanSimples> pLista) {
+    public void setListaDeOpcoes(List<ComoEntidadeSimples> pLista) {
         campoVinculado.setListaDeOpcoes(pLista);
     }
 
@@ -432,12 +432,12 @@ public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEnti
     }
 
     @Override
-    public void setEnumVinculado(ItfFabrica pFabrica) {
+    public void setEnumVinculado(ComoFabrica pFabrica) {
         setFabricaTipoAtributo((FabTipoAtributoObjeto) pFabrica);
     }
 
     @Override
-    public ItfFabrica getEnumVinculado() {
+    public ComoFabrica getEnumVinculado() {
         return getFabricaTipoAtributo();
     }
 

@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.grafico;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 /**
  *
@@ -12,6 +12,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public interface ItfDadoGraficoTotalTipo extends ItfDadoGraficoTotal {
 
-    public ItfBeanSimples getTipo();
+    public ComoEntidadeSimples getTipo();
 
 }

@@ -15,7 +15,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.DATA;
@@ -30,10 +29,11 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico.CampoInstanciadoDinamico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.Date;
 import javax.persistence.Entity;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
  *
@@ -109,13 +109,13 @@ public final class TipoAtributoMetodosBase {
             if (pClasse.isAssignableFrom(ItfGrupoCampos.class)) {
                 return FabTipoAtributoObjeto.GRUPO_CAMPO;
             }
-            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ItfBeanSimples.class)) {
+            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoEntidadeSimples.class)) {
                 return FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA;
             }
             if (pClasse.isEnum()) {
                 return ENUM_FABRICA;
             }
-            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ItfFabrica.class)) {
+            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoFabrica.class)) {
                 return FabTipoAtributoObjeto.ENUM_FABRICA;
             }
             return FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA;
@@ -275,13 +275,13 @@ public final class TipoAtributoMetodosBase {
 
         if (pCampo.getFabricaTipoAtributo() == ENUM_FABRICA) {
             if (pValor != null) {
-                if (pValor instanceof ItfFabrica) {
+                if (pValor instanceof ComoFabrica) {
                     pValor = pValor;
                 } else if (pValor instanceof Integer) {
                     pValor = UtilSBCoreReflexaoFabrica.getFabricaPorOrdinal(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (int) pValor);
                 } else if (pValor instanceof String) {
                     pValor = Enum.valueOf(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (String) pValor);
-                } else if (pValor instanceof ItfBeanSimples) {
+                } else if (pValor instanceof ComoEntidadeSimples) {
                     pValor = UtilSBCoreReflexaoFabrica.getEnumDoObjetoFabrica(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (ItfTipoAtributoSBSomenteLeitura) pValor);
                 }
             }
@@ -400,7 +400,7 @@ public final class TipoAtributoMetodosBase {
                     } else {
                         return null;
                     }
-                //for (ItfBeanSimples opcao : getListaDeOpcoes()) {
+                //for (ComoEntidadeSimples opcao : getListaDeOpcoes()) {
                 //     if (String.valueOf(opcao.getId()).equals(valor)) {
                 //         return opcao;
                 //     }
@@ -436,7 +436,7 @@ public final class TipoAtributoMetodosBase {
                         if (pValor == null) {
                             return null;
                         }
-                        String idEmString = String.valueOf(((ItfBeanSimples) pValor).getId());
+                        String idEmString = String.valueOf(((ComoEntidadeSimples) pValor).getId());
                         pValor = idEmString;
                         break;
 
@@ -616,12 +616,12 @@ public final class TipoAtributoMetodosBase {
             case TELEFONE_FIXO_NACIONAL:
             case TEXTO_SIMPLES:
             case OBJETO_DE_UMA_LISTA:
-                ItfBeanSimplesSomenteLeitura valor = null;
+                ComoEntidadeSimplesSomenteLeitura valor = null;
                 try {
                     if (pAtributo instanceof ItfCampoInstanciado) {
                         ItfCampoInstanciado cpi = (ItfCampoInstanciado) pAtributo;
                         if (cpi.getComoCampoSeltorItem().getSeletor().getOrigem().isEmpty()) {
-                            valor = (ItfBeanSimplesSomenteLeitura) cpi.getComoCampoSeltorItem().getSeletor().getOrigem().get(0);
+                            valor = (ComoEntidadeSimplesSomenteLeitura) cpi.getComoCampoSeltorItem().getSeletor().getOrigem().get(0);
                         }
                     }
                 } catch (Throwable t) {

@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.grafico;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
  * @author salvio
  */
-public interface ItfDadoGrafico extends ItfBeanSimplesSomenteLeitura {
+public interface ItfDadoGrafico extends ComoEntidadeSimplesSomenteLeitura {
 
     public double getValor();
     

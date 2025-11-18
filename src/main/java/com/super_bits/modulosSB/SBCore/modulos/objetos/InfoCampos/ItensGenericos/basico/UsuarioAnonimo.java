@@ -7,16 +7,16 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenerico
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfGrupoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocalPostagem;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemNormal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoGrupoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocalPostagem;
 
 /**
  *
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Salvio
  */
 @InfoObjetoSB(tags = {"Usuário Anonimo"}, plural = "Usuários Anônimos")
-public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializable {
+public class UsuarioAnonimo extends ItemNormal implements ComoUsuario, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
@@ -40,9 +40,9 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     @InfoCampo(tipo = FabTipoAtributoObjeto.REG_DATAINSERCAO)
     private Date dataHoraInsersao;
     @InfoCampo(tipo = FabTipoAtributoObjeto.REG_USUARIO_INSERCAO)
-    private ItfUsuario usuarioInsercao;
+    private ComoUsuario usuarioInsercao;
     @InfoCampo(tipo = FabTipoAtributoObjeto.REG_USUARIO_ALTERACAO)
-    private ItfUsuario usuarioAlteracao;
+    private ComoUsuario usuarioAlteracao;
 
     public UsuarioAnonimo() {
         super();
@@ -117,18 +117,18 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     }
 
     @Override
-    public ItfGrupoUsuario getGrupo() {
+    public ComoGrupoUsuario getGrupo() {
         return new GrupoUsuariosDoSistema();
 
     }
 
     @Override
-    public void setGrupo(ItfGrupoUsuario grupo) {
+    public void setGrupo(ComoGrupoUsuario grupo) {
         System.out.println("Este usuário é estático e não pode ser manipulado");
     }
 
     @Override
-    public List<ItfGrupoUsuario> getGruposAdicionais() {
+    public List<ComoGrupoUsuario> getGruposAdicionais() {
         return new ArrayList<>();
     }
 
@@ -158,7 +158,7 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     }
 
     @Override
-    public ItfLocalPostagem getLocalizacao() {
+    public ComoLocalPostagem getLocalizacao() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -168,7 +168,7 @@ public class UsuarioAnonimo extends ItemNormal implements ItfUsuario, Serializab
     }
 
     @Override
-    public void setLocalizacao(ItfLocal localizacao) {
+    public void setLocalizacao(ComoLocal localizacao) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

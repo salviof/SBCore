@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.listagemItem.ItflistagemItemEditavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -18,7 +18,7 @@ public class CampoInstanciadoSubItens implements ItfCampoIsntanciadoSubItens {
 
     private final Class classeItemListagem;
     private final ItfCampoInstanciado campoInstanciadoVinculado;
-    private final ItflistagemItemEditavel<ItfBeanSimples> subItens;
+    private final ItflistagemItemEditavel<ComoEntidadeSimples> subItens;
 
     public CampoInstanciadoSubItens(ItfCampoInstanciado pCampoVinculado) {
         try {
@@ -36,7 +36,7 @@ public class CampoInstanciadoSubItens implements ItfCampoIsntanciadoSubItens {
     }
 
     @Override
-    public ItflistagemItemEditavel<ItfBeanSimples> getSubItens() {
+    public ItflistagemItemEditavel<ComoEntidadeSimples> getSubItens() {
         return subItens;
     }
 

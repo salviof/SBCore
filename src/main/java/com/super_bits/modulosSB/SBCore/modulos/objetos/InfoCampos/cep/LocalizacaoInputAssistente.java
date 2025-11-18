@@ -16,15 +16,15 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfBairro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfCidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfUnidadeFederativa;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAssistenteDeLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoCidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoUnidadeFederativa;
 
 /**
  *
@@ -34,15 +34,15 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     private final TipoOrganizacaoDadosEndereco tipoOrganizacao;
 
-    private final ItfBeanSimples entidadePai;
+    private final ComoEntidadeSimples entidadePai;
 
-    private List<ItfUnidadeFederativa> unidadesFederativasDisponiveis;
-    private List<ItfCidade> cidadesDisponiveis;
-    private List<ItfBairro> bairrosDisponiveis;
+    private List<ComoUnidadeFederativa> unidadesFederativasDisponiveis;
+    private List<ComoCidade> cidadesDisponiveis;
+    private List<ComoBairro> bairrosDisponiveis;
 
-    private ItfUnidadeFederativa unidadeFederativaTemporaria;
-    private ItfCidade cidadeTemporaria;
-    private ItfBairro bairroTemporario;
+    private ComoUnidadeFederativa unidadeFederativaTemporaria;
+    private ComoCidade cidadeTemporaria;
+    private ComoBairro bairroTemporario;
 
     private boolean permitirNovaCidade;
     private boolean permitriNovoBairro;
@@ -130,8 +130,8 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public List<ItfCidade> metodoAutoCompleteCidade(String pCidadeTXT) {
-        List<ItfCidade> cidadesEncontradas = new ArrayList<>();
+    public List<ComoCidade> metodoAutoCompleteCidade(String pCidadeTXT) {
+        List<ComoCidade> cidadesEncontradas = new ArrayList<>();
         if (getUnidadeFederativa() == null) {
             SBCore.enviarMensagemUsuario("Selecione o Estado para listar a cidade", FabMensagens.ALERTA);
             setCidade(null);
@@ -145,13 +145,13 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public List<ItfUnidadeFederativa> metodoAutoCompleteEstado(String pNomeEstado) {
+    public List<ComoUnidadeFederativa> metodoAutoCompleteEstado(String pNomeEstado) {
         if (unidadesFederativasDisponiveis == null) {
             unidadesFederativasDisponiveis = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
         }
-        List<ItfUnidadeFederativa> resultadoPesquisa = new ArrayList();
+        List<ComoUnidadeFederativa> resultadoPesquisa = new ArrayList();
 
-        List<ItfUnidadeFederativa> todos = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
+        List<ComoUnidadeFederativa> todos = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
         if (pNomeEstado.length() == 2) {
             todos.stream().filter(uf -> (uf.getSigla().toLowerCase().equals(pNomeEstado.toLowerCase()))).forEach(resultadoPesquisa::add);
         } else {
@@ -162,17 +162,17 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public List<ItfBairro> metodoAutoCompleteBairro(String pCidadeTXT) {
+    public List<ComoBairro> metodoAutoCompleteBairro(String pCidadeTXT) {
         return SBCore.getCentralDeLocalizacao().gerarListaDeBairros(pCidadeTXT, cidadeTemporaria);
     }
 
     @Override
-    public ItfBairro getBairro() {
+    public ComoBairro getBairro() {
         try {
             if (bairroTemporario == null) {
                 if (isInstanciaBairroCriada()) {
                     if (getCampoInstBairro().getValor() != null) {
-                        ItfBairro bairro = (ItfBairro) getCampoInstBairro().getValor();
+                        ComoBairro bairro = (ComoBairro) getCampoInstBairro().getValor();
                         if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(bairro.getNome())) {
                             bairroTemporario = bairro;
                         }
@@ -184,7 +184,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 return null;
             } else {
 
-                return (ItfBairro) cpBairro.getValor();
+                return (ComoBairro) cpBairro.getValor();
             }
 
         } catch (Throwable t) {
@@ -259,12 +259,12 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public ItfCidade getCidade() {
+    public ComoCidade getCidade() {
 
         if (cidadeTemporaria == null) {
             if (isInstanciaCidadeCriada()) {
                 if (getCampoInstCidade().getValor() != null) {
-                    ItfCidade cidade = (ItfCidade) getCampoInstCidade().getValor();
+                    ComoCidade cidade = (ComoCidade) getCampoInstCidade().getValor();
 
                     if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(cidade.getNome())) {
                         cidadeTemporaria = cidade;
@@ -276,11 +276,11 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         if (campoinst == null) {
             return null;
         }
-        return (ItfCidade) campoinst.getValor();
+        return (ComoCidade) campoinst.getValor();
     }
 
     @Override
-    public void setBairro(ItfBairro pBairro) {
+    public void setBairro(ComoBairro pBairro) {
 
         try {
             if (pBairro == null) {
@@ -309,7 +309,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public void setCidade(ItfCidade pCidade) {
+    public void setCidade(ComoCidade pCidade) {
         //Verificação nescessária Contornando bug do primefaces, que envia nulo ao submeter o formulário com autocomplete em certos casos
         // utilize o metodo limpar unidade federativa
         if (pCidade != null) {
@@ -338,7 +338,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public void setUnidadeFederativa(ItfUnidadeFederativa pUnidadeFerativa) {
+    public void setUnidadeFederativa(ComoUnidadeFederativa pUnidadeFerativa) {
         //Verificação nescessária Contornando bug do primefaces, que envia nulo ao submeter o formulário em certos casos
         // utilize o metodo limpar unidade federativa
         if (pUnidadeFerativa != null) {
@@ -364,13 +364,13 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public ItfUnidadeFederativa getUnidadeFederativa() {
+    public ComoUnidadeFederativa getUnidadeFederativa() {
 
         if (isInstanciaUnidadeFederativaCriada()) {
             if (getCampoInstUnidadeFederativa().getValor() != null) {
 
-                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(((ItfUnidadeFederativa) getCampoInstUnidadeFederativa().getValor()).getSigla())) {
-                    unidadeFederativaTemporaria = (ItfUnidadeFederativa) getCampoInstUnidadeFederativa().getValor();
+                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(((ComoUnidadeFederativa) getCampoInstUnidadeFederativa().getValor()).getSigla())) {
+                    unidadeFederativaTemporaria = (ComoUnidadeFederativa) getCampoInstUnidadeFederativa().getValor();
                 }
             }
         }
@@ -644,7 +644,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     }
 
     @Override
-    public ItfLocal getLocal() {
+    public ComoLocal getLocal() {
 
         try {
             switch (tipoOrganizacao) {
@@ -652,8 +652,8 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
                 case LOCALIZACAO_SIMPLES:
                 case LOCALIZACAO_SIMPLES_COM_CEP_EM_ENTIDADE:
-                    return (ItfLocal) tipoOrganizacao.getCampoInstanciadoPorTipo(entidadePai, FabTipoAtributoObjeto.LC_LOCALIZACAO, identificacaoMapa).getValor();
-                //    return (ItfLocal) entidadeArmazenamento;
+                    return (ComoLocal) tipoOrganizacao.getCampoInstanciadoPorTipo(entidadePai, FabTipoAtributoObjeto.LC_LOCALIZACAO, identificacaoMapa).getValor();
+                //    return (ComoLocal) entidadeArmazenamento;
                 case DINAMICO:
                     throw new UnsupportedOperationException("Um campo de endereço dinamico não possui um objeto de localização vinculado");
 
@@ -751,7 +751,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         }
     }
 
-    public void adicionarListaOpcoesBairro(List<ItfBairro> bairros) {
+    public void adicionarListaOpcoesBairro(List<ComoBairro> bairros) {
         getCampoInstBairro().getComoCampoSeltorItem().getSeletor().getOrigem().addAll(bairros);
     }
 

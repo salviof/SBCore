@@ -8,9 +8,9 @@ import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import javax.swing.JOptionPane;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfArmazenamentoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
 
 /**
  *
@@ -25,7 +25,7 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuario, String mensagem, String pAssunto) {
+    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
         try {
             ItfDialogo comunicacao
                     = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario,
@@ -45,7 +45,7 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ItfUsuario pUsuarioRemetente, ItfUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
+    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
         try {
             ItfDialogo comunicacao
                     = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario,
@@ -83,12 +83,12 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfArmazenamentoComunicacao getArmazenamento() {
+    public ComoArmazenamentoComunicacao getArmazenamento() {
         return aramazenamento;
     }
 
     @Override
-    public String getTokenDispositivoNotificacao(ItfUsuario pUsuario) {
+    public String getTokenDispositivoNotificacao(ComoUsuario pUsuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

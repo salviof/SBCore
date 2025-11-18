@@ -8,10 +8,10 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -19,7 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  */
 public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespostaAcaoDoSistema {
 
-    private final ItfAcaoDoSistema acaoDosistema;
+    private final ComoAcaoDoSistema acaoDosistema;
 
     private boolean temFormulario = false;
     private ItfAcaoFormulario acaoFormularioResposta;
@@ -30,16 +30,16 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
         this.acaoDosistema = null;
     }
 
-    public RespostaAcaoDoSistema(ItfAcaoDoSistema pAcaoDoSistema) {
+    public RespostaAcaoDoSistema(ComoAcaoDoSistema pAcaoDoSistema) {
         this(Void.class, pAcaoDoSistema);
     }
 
-    public RespostaAcaoDoSistema(ItfBeanSimples pItemPrincipal, ItfAcaoDoSistema pAcaoDosistema) {
+    public RespostaAcaoDoSistema(ComoEntidadeSimples pItemPrincipal, ComoAcaoDoSistema pAcaoDosistema) {
         this((pItemPrincipal == null) ? null : pItemPrincipal.getClass(), pAcaoDosistema);
     }
 
     @SuppressWarnings("LeakingThisInConstructor")
-    public RespostaAcaoDoSistema(Class pTipoRetorno, ItfAcaoDoSistema pAcaoDoSistema) {
+    public RespostaAcaoDoSistema(Class pTipoRetorno, ComoAcaoDoSistema pAcaoDoSistema) {
         super(pTipoRetorno);
         UtilSBCoreReflexao.instanciarListas(this);
         acaoDosistema = pAcaoDoSistema;
@@ -88,7 +88,7 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
     }
 
     @Override
-    public ItfAcaoDoSistema getAcaoVinculada() {
+    public ComoAcaoDoSistema getAcaoVinculada() {
         return acaoDosistema;
     }
 

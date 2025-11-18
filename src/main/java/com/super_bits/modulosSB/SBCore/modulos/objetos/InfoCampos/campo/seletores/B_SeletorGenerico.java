@@ -12,8 +12,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -21,13 +20,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
  * @author desenvolvedor
  * @param <T>
  */
-public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
+public abstract class B_SeletorGenerico<T extends ComoEntidadeSimplesSomenteLeitura>
         implements ItfSeletorGenerico<T> {
 
     protected final ItfCampoInstanciado campoInstanciado;
@@ -65,8 +65,8 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
     private List<T> filtroSimilaridadeEmListaCompleta(final String pParamentro) {
         List resp = new ArrayList();
         Map<Long, ItemSimilar> itens = listaCompleta.stream().parallel()
-                .collect(Collectors.toMap(n -> ((ItfBeanSimples) n).getId(),
-                        n -> new ItemSimilar((ItfBeanSimples) n, pParamentro)));
+                .collect(Collectors.toMap(n -> ((ComoEntidadeSimples) n).getId(),
+                        n -> new ItemSimilar((ComoEntidadeSimples) n, pParamentro)));
 
 //(prodsml->produtosOrdenados.add(new ItemSimilar(prodsml, "coca ")));
         List<ItemSimilar> produtosOrdenados = itens.values().stream().parallel().collect(Collectors.toList());
@@ -110,7 +110,7 @@ public abstract class B_SeletorGenerico<T extends ItfBeanSimplesSomenteLeitura>
                         UtilSBCoreListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(origem, filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor());
                     } else {
                         getListaCompletaLasyMode().parallelStream().filter(item
-                                -> UtilSBCoreStringComparador.isParecido((ItfBeanSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
+                                -> UtilSBCoreStringComparador.isParecido((ComoEntidadeSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
                                 .forEach(getOrigemSincronized()::add);
                     }
 

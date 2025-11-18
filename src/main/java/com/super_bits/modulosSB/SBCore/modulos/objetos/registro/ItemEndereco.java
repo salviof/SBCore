@@ -2,10 +2,10 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsperado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanLocalizavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ItfLocal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeLocalizavel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
 
-public class ItemEndereco extends ItemNormal implements ItfBeanLocalizavel {
+public class ItemEndereco extends ItemNormal implements ComoEntidadeLocalizavel {
 
     /**
      *
@@ -67,12 +67,12 @@ public class ItemEndereco extends ItemNormal implements ItfBeanLocalizavel {
     }
 
     @Override
-    public ItfLocal getLocalizacao() {
-        return (ItfLocal) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.LC_LOCALIZACAO);
+    public ComoLocal getLocalizacao() {
+        return (ComoLocal) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.LC_LOCALIZACAO);
     }
 
     @Override
-    public void setLocalizacao(ItfLocal pLocal) {
+    public void setLocalizacao(ComoLocal pLocal) {
         setValorByTipoCampoEsperado(FabTipoAtributoObjeto.LC_LOCALIZACAO, pLocal);
     }
 

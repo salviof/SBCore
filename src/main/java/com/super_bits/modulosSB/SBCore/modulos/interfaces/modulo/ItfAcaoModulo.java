@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.interfaces.modulo;
 
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.modulo.ItfFabricaModulo;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.modulo.ComoFabricaModulo;
 
 /**
  *
@@ -12,6 +12,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.modulo.ItfF
  */
 public interface ItfAcaoModulo {
 
-    ItfFabricaModulo modulo();
+    ComoFabricaModulo modulo();
 
 }

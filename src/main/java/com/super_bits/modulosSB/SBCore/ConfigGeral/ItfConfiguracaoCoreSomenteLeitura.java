@@ -11,14 +11,14 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCen
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.ItfFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfCentralAtributosDeObjetos;
-import com.super_bits.modulosSB.SBCore.modulos.localizacao.ItfCentralLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ItfServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
+import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 
 /**
  *
@@ -47,7 +47,7 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
      *
      * @return Classe responsável pelo controle de sessões e autenticação
      */
-    public Class<? extends ItfControleDeSessao> getControleDeSessao();
+    public Class<? extends ComoControleDeSessao> getControleDeSessao();
 
     /**
      * Classe responsável por configurar as permissões de acesso do sistema
@@ -115,7 +115,7 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
      *
      * @return
      */
-    public Class<? extends ItfFabricaAcoes>[] getFabricaDeAcoes();
+    public Class<? extends ComoFabricaAcoes>[] getFabricaDeAcoes();
 
     /**
      *
@@ -135,11 +135,11 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
      */
     public Class<? extends ItfCentralDeArquivos> getCentralDeArquivo();
 
-    public Class<? extends ItfServicoComunicacao> getCentralComunicacao();
+    public Class<? extends ComoServicoComunicacao> getCentralComunicacao();
 
-    public Class<? extends ItfCentralLocalizacao> getCentralDeLocalizacao();
+    public Class<? extends CmoServicoLocalizacao> getCentralDeLocalizacao();
 
-    public Class<? extends ItfCentralAtributosDeObjetos> getCentralAtributoDados();
+    public Class<? extends ComoServicoAtributosDeObjetos> getCentralAtributoDados();
 
     public ItfCentralAdministrativa getCentralAdministrativa();
 

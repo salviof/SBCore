@@ -6,8 +6,8 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletor
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores.seletorMultiplo.*;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimplesSomenteLeitura;
 import java.util.List;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
 
 /**
  *
@@ -20,7 +20,7 @@ import java.util.List;
  * @author Salvio Furbino
  * @param <T>
  */
-public class B_listaComOrigemOffiline<T extends ItfBeanSimplesSomenteLeitura>
+public class B_listaComOrigemOffiline<T extends ComoEntidadeSimplesSomenteLeitura>
         extends B_listaComOrigemAbs<T>
         implements ItfselecaoListaComOrigem {
 

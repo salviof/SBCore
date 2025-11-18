@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
 
 /**
@@ -15,7 +15,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
  */
 public class ObjetoNativoComoItemSimples extends ItemSimples {
 
-    public ObjetoNativoComoItemSimples(ItfBeanSimples pInstancia) {
+    public ObjetoNativoComoItemSimples(ComoEntidadeSimples pInstancia) {
         super(pInstancia);
 
     }

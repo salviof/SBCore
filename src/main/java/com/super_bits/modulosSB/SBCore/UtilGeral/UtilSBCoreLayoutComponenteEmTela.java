@@ -5,14 +5,12 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCampoExibicaoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoNaoImplementado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ItfComponenteVisualSBEmLayout;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualBotaoAcao;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTipoTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.LayoutComponentesEmTelaComGrupoDeAcoes;
@@ -24,6 +22,8 @@ import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualSubL
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico;
 import static org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico.NOME_COLUNA_BOTOES;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSBEmLayout;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -48,12 +48,12 @@ public class UtilSBCoreLayoutComponenteEmTela extends UtilSBCoreLayoutComponente
     }
 
     public static ItfLayoutComponentesEmTelaComGrupoDeAcoes gerarLayoutColunasComAcao(
-            List<ItfCampoExibicaoFormulario> campos, List<ItfAcaoDoSistema> pAcoes, FabCompVisualBotaoAcao pTipoBotao,
+            List<ItfCampoExibicaoFormulario> campos, List<ComoAcaoDoSistema> pAcoes, FabCompVisualBotaoAcao pTipoBotao,
             ItfTipoTela pTipoTEla, String pIdentificadorLayout, boolean pexpremerSeNaoCouber
     ) {
         try {
 
-            ItfBeanSimples pItem = (ItfBeanSimples) getClassePorCampos(campos).newInstance();
+            ComoEntidadeSimples pItem = (ComoEntidadeSimples) getClassePorCampos(campos).newInstance();
             try {
 
                 pItem.prepararNovoObjeto();
@@ -68,7 +68,7 @@ public class UtilSBCoreLayoutComponenteEmTela extends UtilSBCoreLayoutComponente
                 if (pCampoInstanciado == null) {
                     throw new UnsupportedOperationException("Impossível obter as propriedades do campo" + campo);
                 }
-                ItfComponenteVisualSBEmLayout componenteEmLayout = null;
+                ComoComponenteVisualSBEmLayout componenteEmLayout = null;
                 if (!pCampoInstanciado.equals(CAMPO_NAO_INSTANCIADO)) {
                     if (!campo.isUmCampoListavel()) {
                         componenteEmLayout = new ComponenteVisualInputEmLayout(pCampoInstanciado, campo);

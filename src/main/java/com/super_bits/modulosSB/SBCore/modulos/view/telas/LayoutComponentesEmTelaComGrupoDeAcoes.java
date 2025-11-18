@@ -5,10 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfLayoutComponentesEmTelaComGrupoDeAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ItfAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualBotaoAcao;
 import java.util.List;
 import java.util.Map;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**
  *
@@ -17,13 +17,13 @@ import java.util.Map;
 public class LayoutComponentesEmTelaComGrupoDeAcoes extends LayoutComponentesEmTela implements ItfLayoutComponentesEmTelaComGrupoDeAcoes {
 
     public static final String NOME_IDENTIFICADO_GRUPO_CAMPO = "acoesGrupoCampo";
-    private Map<Integer, ItfAcaoDoSistema> grupoDeAcoes;
+    private Map<Integer, ComoAcaoDoSistema> grupoDeAcoes;
     private String nomeGrupoDeAcoes;
     private final FabCompVisualBotaoAcao tipoVisualizacaoBotao;
     private final int numeroMaximoDeAcoes;
 
     public LayoutComponentesEmTelaComGrupoDeAcoes(FabCompVisualBotaoAcao pFabrica,
-            ItfTipoTela pTipoTela, String pNomeIdentificador, boolean pEspremerSeNaoCouber, List<ItfAcaoDoSistema> pAcoes) {
+            ItfTipoTela pTipoTela, String pNomeIdentificador, boolean pEspremerSeNaoCouber, List<ComoAcaoDoSistema> pAcoes) {
         super(pTipoTela, pNomeIdentificador, pEspremerSeNaoCouber);
         tipoVisualizacaoBotao = pFabrica;
 
@@ -31,7 +31,7 @@ public class LayoutComponentesEmTelaComGrupoDeAcoes extends LayoutComponentesEmT
     }
 
     @Override
-    public Map<Integer, ItfAcaoDoSistema> getGrupoDeAcoes() {
+    public Map<Integer, ComoAcaoDoSistema> getGrupoDeAcoes() {
         return grupoDeAcoes;
     }
 

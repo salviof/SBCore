@@ -7,9 +7,9 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfUsuario;
 import java.util.List;
 import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
  *
@@ -21,7 +21,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     private final ItfDestinatario destinatario;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String descricao;
-    private final ItfUsuario usuarioRemetente;
+    private final ComoUsuario usuarioRemetente;
     private final List<ItfRespostaComunicacao> respostasPossiveis;
 
     private final ItfTipoComunicacao tipoComunicacao;
@@ -31,8 +31,8 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
 
     private long tempoAceitavelResposta = -1;
 
-    public ComunicacaoTransient(ItfUsuario usuarioRemetente,
-            ItfUsuario destinatario, ItfTipoComunicacao tipoComunicacao
+    public ComunicacaoTransient(ComoUsuario usuarioRemetente,
+            ComoUsuario destinatario, ItfTipoComunicacao tipoComunicacao
     ) {
         this.destinatario = new DestinatarioTransiente(destinatario);
         this.usuarioRemetente = usuarioRemetente;
@@ -49,7 +49,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
 
     }
 
-    public ComunicacaoTransient(ItfUsuario usuarioRemetente, ItfDestinatario destinatario, ItfTipoComunicacao tipoComunicacao
+    public ComunicacaoTransient(ComoUsuario usuarioRemetente, ItfDestinatario destinatario, ItfTipoComunicacao tipoComunicacao
     ) {
         this.destinatario = destinatario;
         this.usuarioRemetente = usuarioRemetente;
@@ -66,7 +66,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     }
 
     @Override
-    public ItfUsuario getUsuarioRemetente() {
+    public ComoUsuario getUsuarioRemetente() {
         return usuarioRemetente;
     }
 

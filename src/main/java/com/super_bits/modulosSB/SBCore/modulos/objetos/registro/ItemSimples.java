@@ -10,7 +10,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsp
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ItfBeanSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.io.File;
 
 import java.io.InputStream;
@@ -18,8 +19,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemSimples extends ItemGenerico implements
-        ItfBeanSimples {
+public abstract class ItemSimples extends ComoEntidadeGenerica implements
+        ComoEntidadeSimples {
 
     public ItemSimples() {
         super();
