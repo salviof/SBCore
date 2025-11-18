@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author SalvioF
  */
-public abstract class DialogoAbstrato extends ItemSimples implements ItfDialogo, Serializable {
+public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDialogo, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

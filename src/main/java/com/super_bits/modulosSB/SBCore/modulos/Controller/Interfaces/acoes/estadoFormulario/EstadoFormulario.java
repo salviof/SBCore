@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.esta
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Estados Formularios", tags = {"Estado", "Estado Formulario"})
-public class EstadoFormulario extends ItemSimples {
+public class EstadoFormulario extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código", descricao = "Numero de identificação")
     private Long id;

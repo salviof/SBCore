@@ -9,7 +9,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemNormal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeNormal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Usuários", tags = {"O Sistema"})
-public class UsuarioAplicacaoEmExecucao extends ItemNormal implements ComoUsuario, ComoTemIcone, Serializable {
+public class UsuarioAplicacaoEmExecucao extends EntidadeNormal implements ComoUsuario, ComoTemIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

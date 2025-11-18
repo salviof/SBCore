@@ -16,7 +16,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcao
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author desenvolvedor
  */
-public class GrupoCampos extends ItemSimples implements ItfGrupoCampos {
+public class GrupoCampos extends EntidadeSimples implements ItfGrupoCampos {
 
     @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.NOME, obrigatorio = true)
     private final String nomeGrupo;

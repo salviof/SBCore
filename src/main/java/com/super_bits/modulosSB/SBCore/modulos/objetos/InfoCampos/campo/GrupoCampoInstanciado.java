@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  */
 @InfoObjetoSB(tags = "Grupo  de campo instanciado", plural = "Grupos campo instanciado")
-public class GrupoCampoInstanciado extends ItemSimples {
+public class GrupoCampoInstanciado extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

@@ -128,11 +128,11 @@ public interface ItfServicoVisualizacao {
      */
     public String buildCaminhoXHTMLComponente(ServicoVisualizacaoAbstrato.TIPO_VISUALIZACAO_ITEM pTipoVisualizacao, Class pEntidade, String pTipoEspecial, Integer pQuantidadeColunas, boolean visualizacaoMobile);
 
-    public String buildCaminhoRelativoItemSimples();
+    public String buildCaminhoRelativoEntidadeSimples();
 
-    public String buildCaminhoRelativoItemSimplesNulo();
+    public String buildCaminhoRelativoEntidadeSimplesNulo();
 
-    public String buildCaminhoRelativoItemNormal();
+    public String buildCaminhoRelativoEntidadeNormal();
 
     public String buildCaminhoRelativoItemNulo();
 

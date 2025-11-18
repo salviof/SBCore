@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.model;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author salvioF
  */
 @InfoObjetoSB(tags = {"Configuração de Persistencia"}, plural = "Configurações de Persistencia")
-public class SbInfoPersistencia extends ItemSimples {
+public class SbInfoPersistencia extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

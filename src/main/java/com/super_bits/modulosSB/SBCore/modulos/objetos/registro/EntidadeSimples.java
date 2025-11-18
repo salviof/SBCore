@@ -19,10 +19,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemSimples extends ComoEntidadeGenerica implements
+public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
         ComoEntidadeSimples {
 
-    public ItemSimples() {
+    public EntidadeSimples() {
         super();
 
         //	adcionaCampoEsperado(new CampoEsperado(TC.IMG_PEQUENA, CInfo.SITE_URL
@@ -33,7 +33,7 @@ public abstract class ItemSimples extends ComoEntidadeGenerica implements
         // adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);
     }
 
-    public ItemSimples(Object pInstancia) {
+    public EntidadeSimples(Object pInstancia) {
         super(pInstancia);
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.NOME), true);
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.ID), true);

@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author salvioF
  */
 @InfoObjetoSB(tags = {"Sistema Atual"}, plural = "Sistemas")
-public class SistemaAtualInfo extends ItemSimples {
+public class SistemaAtualInfo extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id = 0l;

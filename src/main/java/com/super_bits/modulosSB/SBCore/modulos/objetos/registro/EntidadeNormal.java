@@ -17,9 +17,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  *
  * @author desenvolvedor
  */
-public abstract class ItemNormal extends ItemSimples implements ComoEntidadeNormal, ComoEntidadeTemPermissao {
+public abstract class EntidadeNormal extends EntidadeSimples implements ComoEntidadeNormal, ComoEntidadeTemPermissao {
 
-    public ItemNormal() {
+    public EntidadeNormal() {
         super();
 
         adcionaCampoEsperado(new CampoEsperado(FabTipoAtributoObjeto.NOME, getNomeCurto()));

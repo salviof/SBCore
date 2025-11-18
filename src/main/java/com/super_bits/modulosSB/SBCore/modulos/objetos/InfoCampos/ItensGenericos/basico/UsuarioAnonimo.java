@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemNormal;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeNormal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +27,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * @author Salvio
  */
 @InfoObjetoSB(tags = {"Usuário Anonimo"}, plural = "Usuários Anônimos")
-public class UsuarioAnonimo extends ItemNormal implements ComoUsuario, Serializable {
+public class UsuarioAnonimo extends EntidadeNormal implements ComoUsuario, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

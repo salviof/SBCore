@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.anos.AnoCalendario;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,7 +23,7 @@ import javax.persistence.Id;
  * @author salvio
  */
 @InfoObjetoSB(tags = "Mês", plural = "Meses")
-public class MesDoAnoCalendario extends ItemSimples {
+public class MesDoAnoCalendario extends EntidadeSimples {
 
     @Id
     private Long id;

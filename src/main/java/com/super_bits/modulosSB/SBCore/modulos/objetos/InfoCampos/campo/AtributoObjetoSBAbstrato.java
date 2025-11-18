@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author SalvioF
  */
-public abstract class AtributoObjetoSBAbstrato extends ItemSimples implements ItfAtributoObjetoEditavel {
+public abstract class AtributoObjetoSBAbstrato extends EntidadeSimples implements ItfAtributoObjetoEditavel {
 
     protected final TipoAtributoObjetoSB tipoAtributo;
     protected String nomeClasseOrigemAtributo;

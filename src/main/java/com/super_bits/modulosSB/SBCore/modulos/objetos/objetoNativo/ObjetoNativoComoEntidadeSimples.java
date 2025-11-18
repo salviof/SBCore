@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
@@ -13,9 +13,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
  * @since 23/04/2019
  * @version 1.0
  */
-public class ObjetoNativoComoItemSimples extends ItemSimples {
+public class ObjetoNativoComoEntidadeSimples extends EntidadeSimples {
 
-    public ObjetoNativoComoItemSimples(ComoEntidadeSimples pInstancia) {
+    public ObjetoNativoComoEntidadeSimples(ComoEntidadeSimples pInstancia) {
         super(pInstancia);
 
     }

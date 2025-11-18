@@ -12,7 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
  *
  * @author Salvio Furbino
  */
-public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
+public class EntidadeSimplesOffilineApartirDeSlugDeObjeto extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private final Long id;
@@ -20,7 +20,7 @@ public class ItemSimplesOffilineApartirDeSlugDeObjeto extends ItemSimples {
     private final String descricao;
     private final String slugEnviado;
 
-    public ItemSimplesOffilineApartirDeSlugDeObjeto(String pSlug) {
+    public EntidadeSimplesOffilineApartirDeSlugDeObjeto(String pSlug) {
 
         if (pSlug == null) {
             throw new UnsupportedOperationException("O valor não foi enviado");

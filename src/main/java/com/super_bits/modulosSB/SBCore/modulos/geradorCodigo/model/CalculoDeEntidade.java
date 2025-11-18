@@ -16,7 +16,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORI
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
@@ -26,7 +26,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = "Calculo de Entidade", plural = "Calculos")
-public class CalculoDeEntidade extends ItemSimples implements ItfEstruturaCampoDinamicoEntidade {
+public class CalculoDeEntidade extends EntidadeSimples implements ItfEstruturaCampoDinamicoEntidade {
 
     private final EstruturaCampo estruturaCampo;
 

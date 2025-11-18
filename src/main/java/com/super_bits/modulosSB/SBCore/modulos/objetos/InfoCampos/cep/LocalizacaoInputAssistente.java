@@ -111,11 +111,11 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         }
         if (temCep) {
             if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(getCep())) {
-                if (UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getUnidadeFederativa())) {
+                if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa())) {
                     pesquisaSucessoUnidadeFederativa = true;
-                    if (UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getCidade())) {
+                    if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getCidade())) {
                         pesquisaSucessoCidade = true;
-                        if (UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getBairro())) {
+                        if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getBairro())) {
                             pesquisaSucessoBairro = true;
                         }
                     }
@@ -233,9 +233,9 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                         getImplementacaoDoContexto().configuraEndereco(getCep(), getLocal());
 
                 if (localizouCEP) {
-                    pesquisaSucessoBairro = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getBairro());
-                    pesquisaSucessoCidade = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getCidade());
-                    pesquisaSucessoUnidadeFederativa = UtilSBCoreObjetoSB.isItemSimplesExistETemNome(getUnidadeFederativa());
+                    pesquisaSucessoBairro = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getBairro());
+                    pesquisaSucessoCidade = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getCidade());
+                    pesquisaSucessoUnidadeFederativa = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa());
                 } else {
                     pesquisaSucessoBairro = false;
                     pesquisaSucessoCidade = false;

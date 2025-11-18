@@ -32,11 +32,11 @@ public class UtilSBCoreObjetoSB {
         return pObjetoComparado.equals(pReferencia);
     }
 
-    public static boolean isItemSimplesExistETemNome(ComoEntidadeSimples pItemSimples) {
-        if (pItemSimples == null) {
+    public static boolean isEntidadeSimplesExistETemNome(ComoEntidadeSimples pEntidadeSimples) {
+        if (pEntidadeSimples == null) {
             return false;
         }
-        return UtilSBCoreStringValidador.isNAO_NuloNemBranco(pItemSimples.getNome());
+        return UtilSBCoreStringValidador.isNAO_NuloNemBranco(pEntidadeSimples.getNome());
     }
 
 }

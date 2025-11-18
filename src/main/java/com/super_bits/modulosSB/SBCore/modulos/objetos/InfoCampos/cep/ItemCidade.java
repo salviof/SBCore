@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoBairro;
@@ -19,7 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  *
  * @author desenvolvedor
  */
-public class ItemCidade extends ItemSimples implements ComoCidade {
+public class ItemCidade extends EntidadeSimples implements ComoCidade {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

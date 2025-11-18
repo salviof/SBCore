@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemFabricaEstatica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
@@ -16,7 +16,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
  * @author salvioF
  */
 @InfoObjetoSB(tags = {"Tipo Recurso"}, plural = "Tipos de Recurso", fabricaVinculada = FabTipoArquivoConhecido.class)
-public class TipoRecurso extends ItemSimples implements ComoTemFabricaEstatica {
+public class TipoRecurso extends EntidadeSimples implements ComoTemFabricaEstatica {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

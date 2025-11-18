@@ -5,7 +5,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeLocalizavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.ComoLocal;
 
-public class ItemEndereco extends ItemNormal implements ComoEntidadeLocalizavel {
+public class ItemEndereco extends EntidadeNormal implements ComoEntidadeLocalizavel {
 
     /**
      *

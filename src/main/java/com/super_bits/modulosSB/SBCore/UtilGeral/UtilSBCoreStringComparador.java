@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo.ObjetoNativoComoItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.objetoNativo.ObjetoNativoComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.HashMap;
 import java.util.List;
@@ -123,8 +123,8 @@ public class UtilSBCoreStringComparador {
 
                         if (campoinstanciado == null) {
                             if (pReferencia instanceof ObjetoNativoCoreDoSistema) {
-                                ObjetoNativoComoItemSimples nativoComoItemSimples = new ObjetoNativoComoItemSimples(pReferencia);
-                                campoinstanciado = nativoComoItemSimples.getCampoInstanciadoByNomeOuAnotacao(coluna.getCaminhoSemNomeClasse());
+                                ObjetoNativoComoEntidadeSimples nativoComoEntidadeSimples = new ObjetoNativoComoEntidadeSimples(pReferencia);
+                                campoinstanciado = nativoComoEntidadeSimples.getCampoInstanciadoByNomeOuAnotacao(coluna.getCaminhoSemNomeClasse());
                             } else {
                                 throw new UnsupportedOperationException("não foi possível encontrar o campo: [" + coluna.getCaminhoSemNomeClasse() + "] para pesquisa emm campos do objeto: [" + pReferencia + "]");
                             }

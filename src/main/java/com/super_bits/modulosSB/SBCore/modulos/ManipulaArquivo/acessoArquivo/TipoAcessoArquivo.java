@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemFabricaEstatica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
@@ -18,7 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Tipo Acesso Arquivo"}, plural = "tipos de acesso a arquivos", fabricaVinculada = FabTipoAcessoArquivo.class)
-public class TipoAcessoArquivo extends ItemSimples implements ComoEntidadeVinculadoAEnum {
+public class TipoAcessoArquivo extends EntidadeSimples implements ComoEntidadeVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

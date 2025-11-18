@@ -10,7 +10,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualBase;
@@ -24,7 +24,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Componente Visual"}, plural = "Componentes Visuais")
-public class ComponenteVisualSBBean extends ItemSimples implements ComoComponenteVisualSB, ComoEntidadeVinculadoAEnum {
+public class ComponenteVisualSBBean extends EntidadeSimples implements ComoComponenteVisualSB, ComoEntidadeVinculadoAEnum {
 
     private final ComponenteVisualBase base;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID, label = "Código")

@@ -163,7 +163,7 @@ public class ContainersVisualizacaoDoObjeto {
     public String gerarCaminhoRelativoMasProximoAColuna(String pTipoVisualizaca, int pNumeroColunas, boolean especialMobile) {
         ContainerVisualizacaoObjeto containerAdequado = getContainerAdequado(pTipoVisualizaca, pNumeroColunas, especialMobile);
         if (containerAdequado == null) {
-            return SBCore.getCentralVisualizacao().buildCaminhoRelativoItemSimples();
+            return SBCore.getCentralVisualizacao().buildCaminhoRelativoEntidadeSimples();
         }
         if (especialMobile || containerAdequado.isTemVersaoMobile()) {
             return containerAdequado.getCaminhoRelativoMobile();

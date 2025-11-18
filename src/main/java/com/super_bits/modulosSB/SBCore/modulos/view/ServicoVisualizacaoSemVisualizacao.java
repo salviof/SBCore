@@ -87,17 +87,17 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
     }
 
     @Override
-    public String buildCaminhoRelativoItemSimples() {
+    public String buildCaminhoRelativoEntidadeSimples() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildCaminhoRelativoItemSimplesNulo() {
+    public String buildCaminhoRelativoEntidadeSimplesNulo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildCaminhoRelativoItemNormal() {
+    public String buildCaminhoRelativoEntidadeNormal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

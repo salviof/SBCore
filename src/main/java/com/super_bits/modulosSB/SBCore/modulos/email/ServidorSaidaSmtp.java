@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.modulos.email;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Servidores SMTP", tags = "Servidor SMTP")
-public class ServidorSaidaSmtp extends ItemSimples implements ItfServidordisparoEmail {
+public class ServidorSaidaSmtp extends EntidadeSimples implements ItfServidordisparoEmail {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

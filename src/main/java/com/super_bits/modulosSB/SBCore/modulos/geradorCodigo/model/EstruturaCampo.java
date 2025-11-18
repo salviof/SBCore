@@ -22,7 +22,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRI
 import com.super_bits.modulosSB.SBCore.modulos.objetos.UtilSBCoreReflecaoIEstruturaEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoListaDinamica;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValidadorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
@@ -37,7 +37,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = "Estrutura do Campo", plural = "Estruturas de Campo")
-public class EstruturaCampo extends ItemSimples implements ItfEstruturaCampoEntidade {
+public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampoEntidade {
 
     private final AtributoObjetoSB campoVinculado;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)

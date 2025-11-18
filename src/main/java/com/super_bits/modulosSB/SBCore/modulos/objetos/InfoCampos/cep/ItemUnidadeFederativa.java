@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.FabCidadesSemPersiste
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.FabUnidadesFederativasSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Transient;
@@ -20,7 +20,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  *
  * @author desenvolvedor
  */
-public class ItemUnidadeFederativa extends ItemSimples implements ComoUnidadeFederativa {
+public class ItemUnidadeFederativa extends EntidadeSimples implements ComoUnidadeFederativa {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

@@ -19,7 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuito
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaUm;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoUmParaMuitos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ import java.util.Map;
  * @author salvioF
  */
 @InfoObjetoSB(plural = "Dados Estruturados", tags = {"Estrutura de Tabela"})
-public class EstruturaDeEntidade extends ItemSimples implements ItfEstruturaDeEntidade {
+public class EstruturaDeEntidade extends EntidadeSimples implements ItfEstruturaDeEntidade {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

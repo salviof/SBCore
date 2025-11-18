@@ -15,14 +15,14 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcao
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposSomenteLeitura;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.List;
 
 /**
  *
  * @author desenvolvedor
  */
-public class GrupoCamposSub extends ItemSimples implements ItfGrupoCampos {
+public class GrupoCamposSub extends EntidadeSimples implements ItfGrupoCampos {
 
     @InfoCampo(label = "Nome do Grupo", tipo = FabTipoAtributoObjeto.NOME)
     private final String nomeGrupo;

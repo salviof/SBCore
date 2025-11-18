@@ -6,14 +6,14 @@ package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabColunasTela;
 
 /**
  *
  * @author SalvioF
  */
-public class TipoTela extends ItemSimples implements ItfTipoTela {
+public class TipoTela extends EntidadeSimples implements ItfTipoTela {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

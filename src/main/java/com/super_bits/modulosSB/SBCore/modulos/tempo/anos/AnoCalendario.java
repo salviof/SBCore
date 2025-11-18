@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.modulos.tempo.anos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author salvio
  */
 @InfoObjetoSB(tags = "Ano", plural = "Anos")
-public class AnoCalendario extends ItemSimples {
+public class AnoCalendario extends EntidadeSimples {
 
     public AnoCalendario(Long pAno) {
         id = pAno;

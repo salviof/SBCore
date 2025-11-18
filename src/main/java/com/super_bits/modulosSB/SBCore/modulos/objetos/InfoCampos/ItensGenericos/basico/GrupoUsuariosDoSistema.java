@@ -12,7 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * @since 29/07/2015
  * @version 1.0
  */
-public class GrupoUsuariosDoSistema extends ItemSimples implements ComoGrupoUsuario {
+public class GrupoUsuariosDoSistema extends EntidadeSimples implements ComoGrupoUsuario {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

@@ -7,13 +7,13 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ListaDeEntidade extends ItemSimples implements ItfListaDeEntidade {
+public class ListaDeEntidade extends EntidadeSimples implements ItfListaDeEntidade {
 
     public ListaDeEntidade(String nomeEnum, String nomeDeclaracao, String nomeEntidade, String nomeObjetoListado, String javaDoc, EstruturaDeEntidade pEstrutura) {
         this.nomeEnum = nomeEnum;

@@ -259,8 +259,8 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
     }
 
     @Override
-    public ComoEntidadeSimples getValorComoItemSimples() {
-        return ItfCampoInstanciadoBase.super.getValorComoItemSimples(); //To change body of generated methods, choose Tools | Templates.
+    public ComoEntidadeSimples getValorComoEntidadeSimples() {
+        return ItfCampoInstanciadoBase.super.getValorComoEntidadeSimples(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

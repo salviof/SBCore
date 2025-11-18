@@ -7,14 +7,14 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller.logica.exibeForm;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import org.coletivojava.fw.api.testes.logica.FabLogicaSimples;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Condições", tags = {"Condição exibição formulario"})
-public class CondicaoExibeCampoForm extends ItemSimples {
+public class CondicaoExibeCampoForm extends EntidadeSimples {
 
     private final FabLogicaSimples tipoLogica;
     private final String campoReferencia;

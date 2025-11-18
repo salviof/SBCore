@@ -3,14 +3,14 @@ package com.super_bits.modulosSB.SBCore.modulos.grafico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
 /**
  *
  * @author salvio
  */
 @InfoObjetoSB(tags = "Item totalizador gráfico", plural = "Itens totalizadores de gráfico")
-public class ItemDadoGraficoTotal extends ItemSimples implements ItfDadoGraficoTotal {
+public class ItemDadoGraficoTotal extends EntidadeSimples implements ItfDadoGraficoTotal {
 
     public ItemDadoGraficoTotal(Long codigo, String label, double valor) {
         this.codigo = codigo;

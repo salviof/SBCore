@@ -17,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeE
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaMuitos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoUmParaMuitos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfListaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -26,7 +26,7 @@ import java.util.List;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Ligação Muitos para um"}, plural = "Ligações muitos para um")
-public class LigacaoMuitosParaUm extends ItemSimples implements ItfLigacaoMuitosParaUm {
+public class LigacaoMuitosParaUm extends EntidadeSimples implements ItfLigacaoMuitosParaUm {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

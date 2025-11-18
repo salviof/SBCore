@@ -14,7 +14,7 @@ import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBC
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ItemSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import javax.persistence.ManyToOne;
  *
  * @author desenvolvedor
  */
-public final class CaminhoCampoReflexao extends ItemSimples implements ItfCaminhoCampo {
+public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCaminhoCampo {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
