@@ -46,6 +46,9 @@ public abstract class UtilSBCoreShellBasico {
             }
             processo.waitFor();
             int valorSaida = processo.exitValue();
+
+            System.out.println("Ouve um erro executando,saida" + valorSaida + " para o comando" + Arrays.toString(pComando));
+
             if (valorSaida != 0) {
                 System.out.println("Ouve um erro executando,saida" + valorSaida + " para o comando" + Arrays.toString(pComando));
                 BufferedReader reader
@@ -69,7 +72,19 @@ public abstract class UtilSBCoreShellBasico {
                     output.append(line).append("\n");
                     System.out.println(line);
                 }
+                //verificando se tem erro mesmo com codigo 0, alguns programas tem esse comportamento
+                BufferedReader readerError
+                        = new BufferedReader(new InputStreamReader(processo.getErrorStream()));
+
+                String linelinhaErro;
+
+                while ((linelinhaErro = readerError.readLine()) != null) {
+                    output.append(linelinhaErro).append("\n");
+                    System.out.println(linelinhaErro);
+                }
+
             }
+
         } catch (IOException | InterruptedException e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, Arrays.toString(pComando), e);
         }

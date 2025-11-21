@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class UtilSBCoreStringTelefone {
 
     public static String gerarTelefoneComMascaraSimples(String telefone) {
-        telefone = gerarCeluarInternacional(telefone);
+        telefone = gerarNumeroTelefoneInternacional(telefone);
         if (telefone == null || telefone.isEmpty()) {
             return null;
         }
@@ -100,14 +100,19 @@ public class UtilSBCoreStringTelefone {
      * @return O número no formato internacional, ou {@code null} se a entrada
      * for inválida.
      */
-    public static String gerarCeluarInternacional(final String pTelefone) {
+    public static String gerarNumeroTelefoneInternacional(final String pTelefone) {
 
         if (pTelefone == null) {
             return null;
         }
 
         if (pTelefone.length() < 10) {
+            if (pTelefone.length() == 9 && pTelefone.startsWith("+")) {
+                //compativel com ilhas com numeros de 5 digitos, como Tokelau Ilhas Pitcairn ( anta Helena, Ascensão e Tristão da Cunha (+290)
+                return pTelefone;
+            }
             return null;
+
         }
 
         String telefoneFormatoInternacional = UtilSBCoreStringFiltros.removeCaracteresEspeciais(pTelefone);
@@ -115,7 +120,7 @@ public class UtilSBCoreStringTelefone {
         if (pTelefone.startsWith("+")) {
             //se já estiver em formato internacional, mas não for formato Brasileiro, apenas retorna o número sem os caracteres especiais
             if (!pTelefone.startsWith("+55")) {
-                return telefoneFormatoInternacional;
+                return "+" + telefoneFormatoInternacional;
             }
         }
 
@@ -128,8 +133,11 @@ public class UtilSBCoreStringTelefone {
         }
 
         if (telefoneFormatoInternacional.length() == 13) {
-            telefoneFormatoInternacional = telefoneFormatoInternacional.substring(0, 5) + "9"
-                    + telefoneFormatoInternacional.substring(5, telefoneFormatoInternacional.length());
+            int numeroInicial = Integer.valueOf(String.valueOf(telefoneFormatoInternacional.charAt(5)));
+            if (numeroInicial > 5) {
+                telefoneFormatoInternacional = telefoneFormatoInternacional.substring(0, 5) + "9"
+                        + telefoneFormatoInternacional.substring(5, telefoneFormatoInternacional.length());
+            }
         }
 
         if (telefoneFormatoInternacional.length() >= 13) {
@@ -140,7 +148,7 @@ public class UtilSBCoreStringTelefone {
     }
 
     public static String gerarCeluarWhatasapp(String pTelefone) {
-        String telefone = gerarCeluarInternacional(pTelefone);
+        String telefone = gerarNumeroTelefoneInternacional(pTelefone);
         //+5531988888888"
         if (telefone == null) {
             return null;
@@ -201,9 +209,10 @@ public class UtilSBCoreStringTelefone {
         if (pNumero == null || pNumero.isEmpty()) {
             return false;
         }
-        String numero = gerarCeluarInternacional(pNumero);
+        String numero = gerarNumeroTelefoneInternacional(pNumero);
         return MOBILE_PHONE_PATTERN.matcher(numero).matches();
 
     }
+    private static final String DEFAULT_COUNTRY_CODE = "55";
 
 }

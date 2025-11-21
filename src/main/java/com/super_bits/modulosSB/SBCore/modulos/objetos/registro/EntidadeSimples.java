@@ -66,7 +66,12 @@ public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
 
     @Override
     public Long getId() {
-        return Long.parseLong(getValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID).toString());
+
+        Long idEncontrado = (Long) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID);
+        if (idEncontrado == null) {
+            return null;
+        }
+        return idEncontrado;
     }
 
     public String getCampoSQLNomeCurto() {

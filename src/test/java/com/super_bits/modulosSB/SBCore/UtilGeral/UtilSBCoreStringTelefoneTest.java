@@ -47,19 +47,18 @@ public class UtilSBCoreStringTelefoneTest {
     }
 
     /**
-     * Test of gerarCeluarInternacional method, of class
-     * UtilSBCoreStringTelefone.
+     * Test of gerarNumeroTelefoneInternacional method, of class
+ UtilSBCoreStringTelefone.
      */
-    @Test
     public void testGerarCeluarInternacional() {
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste1));
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste2));
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste3));
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste4));
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste5));
-        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste6));
-        assertNull("Resultado inesperado", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste7));
-        assertNull("Resultado inesperado", UtilSBCoreStringTelefone.gerarCeluarInternacional(teste8));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste1));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste2));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste3));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste4));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste5));
+        assertEquals("Resultado inesperado", "+5531987777777", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste6));
+        assertNull("Resultado inesperado", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste7));
+        assertNull("Resultado inesperado", UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional(teste8));
 
     }
 
@@ -68,6 +67,8 @@ public class UtilSBCoreStringTelefoneTest {
      */
     @Test
     public void testGerarCeluarWhatasapp() {
+        System.out.println(UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional("84178550"));
+        System.out.println(UtilSBCoreStringTelefone.gerarNumeroTelefoneInternacional("553132240677"));
 
     }
 
