@@ -25,6 +25,10 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
+ *
+ *
+ *
+ *
  * @author salvio
  */
 public class CarameloCode {
@@ -50,13 +54,26 @@ public class CarameloCode {
         return SBCore.getArquivoDistribuicao();
     }
 
-    private static boolean isAmbienteExecucaoConfigurado() {
-        return SBCore.isAmbienteCoreConfigurado();
-    }
-
     public static boolean isControleDeAcessoDefinido() {
         return SBCore.isControleDeAcessoDefinido();
 
+    }
+
+    public static ItfServicoRepositorioEntidades getServicoRepositorioEntidade() {
+        return SBCore.getServicoRepositorio();
+    }
+
+    /**
+     *
+     * @see ItfCentralDeArquivos
+     *
+     *
+     *
+     *
+     * @return Manipulação de Arquivos de Entidade e do Sistema
+     */
+    public static ItfCentralDeArquivos getServicoArquivosDeEntidade() {
+        return SBCore.getServicoArquivosDeEntidade();
     }
 
     /**
@@ -119,7 +136,6 @@ public class CarameloCode {
     }
 
     public static String getCaminhoGrupoProjetoSource() {
-
         return SBCore.getCaminhoGrupoProjetoSource();
     }
 
@@ -174,17 +190,6 @@ public class CarameloCode {
     public static synchronized ConfigModulo getConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
         return SBCore.getConfigModulo(pFabricaConfig);
 
-    }
-
-    /**
-     *
-     * @see ItfCentralDeArquivos
-     *
-     * @return Manipulação de Arquivos de Entidade e do Sistema
-     */
-    public static ItfCentralDeArquivos getServicoArquivosDeEntidade() {
-
-        return SBCore.getServicoArquivosDeEntidade();
     }
 
     /**
@@ -244,10 +249,6 @@ public class CarameloCode {
      */
     public static ItfServicoPermissao getServicoPermissao() {
         return SBCore.getServicoPermissao();
-    }
-
-    public static ItfServicoRepositorioEntidades getServicoRepositorio() {
-        return SBCore.getServicoRepositorio();
     }
 
     public static FabTipoProjeto getTipoProjeto() {

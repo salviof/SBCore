@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.ItfCaminhoCampo;
@@ -64,7 +64,7 @@ public abstract class ItemSimilarGenerico<T> implements ComoEntidadeSimples, Itf
                         .forEach(parteParametro -> {
                             Arrays.stream(textoReferenciaPesquisa.toLowerCase().replace("-", " ").split("\\s"))
                                     .forEach(parteTextoAnalizadao -> {
-                                        if (UtilSBCoreStringValidador.isNuloOuEmbranco(parteTextoAnalizadao)) {
+                                        if (UtilCRCStringValidador.isNuloOuEmbranco(parteTextoAnalizadao)) {
                                             return;
                                         }
                                         if (parteTextoAnalizadao.length() > parteParametro.length()) {
@@ -72,7 +72,7 @@ public abstract class ItemSimilarGenerico<T> implements ComoEntidadeSimples, Itf
                                         }
                                         if (!((parteParametro.length() - parteTextoAnalizadao.length()) > 2)) {
 
-                                            double nt = UtilSBCoreStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
+                                            double nt = UtilCRCStringComparador.JaroWinkler(parteTextoAnalizadao, parteParametro);
                                             if (nt > 0.8) {
                                                 if (nt >= 0.9) {
                                                     notasIdentico.add(nt);
@@ -104,7 +104,7 @@ public abstract class ItemSimilarGenerico<T> implements ComoEntidadeSimples, Itf
 
                         dominioDoItemPesquisado = partesEmailPesquisa[1];
 
-                        double ntaDominio = UtilSBCoreStringComparador.JaroWinkler(dominioDoItem, dominioDoItemPesquisado);
+                        double ntaDominio = UtilCRCStringComparador.JaroWinkler(dominioDoItem, dominioDoItemPesquisado);
                         notasValidas.add(ntaDominio);
                         if (ntaDominio >= 0.9) {
                             notasIdenticoInicio.add(ntaDominio);

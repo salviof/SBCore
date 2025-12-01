@@ -4,9 +4,9 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
@@ -28,18 +28,18 @@ public class ValidarUnitarioCNPJ extends ValidadorUnitarioCampoInstGenerico impl
         switch (campoInstanciado.getFabricaTipoAtributo()) {
             case CNPJ:
 
-                if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                if (UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
                     return null;
                 }
                 if (pValor.toString().contains("_")) {
-                    String numeros = UtilSBCoreStringFiltros.getNumericosDaString(pValor.toString());
+                    String numeros = UtilCRCStringFiltros.getNumericosDaString(pValor.toString());
                     if (numeros.length() == 0) {
                         campoInstanciado.setValor(null);
                         campoInstanciado.bloquearProximaAlteracao();
                         return null;
                     }
                 }
-                if (!UtilSBCoreValidadorGoverno.validaCNPJ(pValor.toString())) {
+                if (!UtilCRCValidadorGoverno.validaCNPJ(pValor.toString())) {
                     return "Cnpj Inválido";
                 } else {
                     return null;

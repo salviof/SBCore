@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
@@ -227,7 +227,7 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
 
     @Override
     public String getLabelSlug() {
-        return UtilSBCoreStringFiltros.gerarUrlAmigavel(getLabel());
+        return UtilCRCStringFiltros.gerarUrlAmigavel(getLabel());
     }
 
     @Override

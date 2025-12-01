@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
@@ -40,11 +40,11 @@ public class ValidarUnitarioAtributoUnico extends ValidadorUnitarioCampoInstGene
                 return null;
             }
         } else {
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
                 return null;
             }
         }
-        if (!UtilSBCoreValidacao.isValorUnico(campoInst, pValor)) {
+        if (!UtilCRCValidacao.isValorUnico(campoInst, pValor)) {
             return "Já existe um " + campoInstanciado.getLabel() + " com o valor " + pValor;
         }
         return null;

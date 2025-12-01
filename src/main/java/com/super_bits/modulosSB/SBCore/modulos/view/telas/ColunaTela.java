@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfColunaTela;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico;
+import org.coletivojava.fw.utilCoreBase.UtilCRCLayoutComponenteEmTelaBasico;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualEmLayout;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSBEmLayout;
 
@@ -108,7 +108,7 @@ public class ColunaTela implements ItfColunaTela {
         if (unidadePesoLayoutAtual > 0) {
             porcentagemCalculada = pesoLarguraIdeal * unidadePesoLayoutAtual;
         } else {
-            porcentagemCalculada = pesoLarguraIdeal * UtilSBCoreLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM;
+            porcentagemCalculada = pesoLarguraIdeal * UtilCRCLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM;
         }
     }
 
@@ -116,7 +116,7 @@ public class ColunaTela implements ItfColunaTela {
     public void incrementarTamanhoColuna() {
         pesoLarguraCalculado++;
         calcularPorcentagemCalculada();
-        //porcentagemCalculada = porcentagemCalculada + (UtilSBCoreLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM);
+        //porcentagemCalculada = porcentagemCalculada + (UtilCRCLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM);
 
     }
 

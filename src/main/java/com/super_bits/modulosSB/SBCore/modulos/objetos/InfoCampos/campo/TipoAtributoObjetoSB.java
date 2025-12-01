@@ -1,8 +1,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
@@ -218,7 +218,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
 
     @Override
     public final String getIdComponente() {
-        return UtilSBCoreStringFiltros.gerarUrlAmigavel(getLabel());
+        return UtilCRCStringFiltros.gerarUrlAmigavel(getLabel());
     }
 
     @Override
@@ -239,7 +239,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
     @Override
     public boolean isTemValidacaoRegex() {
 
-        return UtilSBCoreStringValidador.isNAO_NuloNemBranco(validacaoRegex);
+        return UtilCRCStringValidador.isNAO_NuloNemBranco(validacaoRegex);
 
     }
 
@@ -304,7 +304,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
 
     @Override
     public String getMascaraJqueryMode() {
-        return UtilSBCoreStringFiltros.getMascaraJavaMaskParaJQueryMask(mascara);
+        return UtilCRCStringFiltros.getMascaraJavaMaskParaJQueryMask(mascara);
     }
 
     @Override
@@ -340,7 +340,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
     @Override
     public String getNomeDoObjeto() {
 
-        InfoObjetoSB info = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(this.getClass());
+        InfoObjetoSB info = UtilCRCReflexaoObjeto.getInfoClasseObjeto(this.getClass());
 
         if (info != null) {
             return info.tags()[0];
@@ -353,7 +353,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
 
     @Override
     public String getNomeDoObjetoPlural() {
-        InfoObjetoSB info = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(this.getClass());
+        InfoObjetoSB info = UtilCRCReflexaoObjeto.getInfoClasseObjeto(this.getClass());
 
         if (info != null) {
             return info.plural();

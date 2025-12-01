@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -43,11 +43,11 @@ public class ArquivoConfiguracaoCliente {
         String arqInfoClienteSource = baseConfig.getCaminhoPastaClienteSource() + "/" + NOME_ARQUIVO_CLIENTE;
         String arqInfoClienteRelease = baseConfig.getCaminhoPastaClienteRelease() + "/" + NOME_ARQUIVO_CLIENTE;
 
-        Properties propriedadesClienteSource = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arqInfoClienteSource);
+        Properties propriedadesClienteSource = UtilCRCArquivoTexto.getPropriedadesNoArquivo(arqInfoClienteSource);
         if (propriedadesClienteSource == null) {
             throw new UnsupportedOperationException("Arquivo " + NOME_ARQUIVO_CLIENTE + " não encontrado em" + arqInfoClienteSource);
         }
-        Properties propriedadesClienteInfoRelease = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arqInfoClienteRelease);
+        Properties propriedadesClienteInfoRelease = UtilCRCArquivoTexto.getPropriedadesNoArquivo(arqInfoClienteRelease);
         if (propriedadesClienteInfoRelease == null) {
             throw new UnsupportedOperationException("Arquivo não encontrado em " + arqInfoClienteRelease);
         }

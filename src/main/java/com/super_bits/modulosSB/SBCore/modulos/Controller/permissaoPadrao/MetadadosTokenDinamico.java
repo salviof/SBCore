@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller.permissaoPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCJson;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
@@ -28,7 +28,7 @@ public class MetadadosTokenDinamico {
     public MetadadosTokenDinamico(String pDadosCodificadosBase64) {
         byte[] decodedBytes = Base64.getDecoder().decode(pDadosCodificadosBase64);
         String decodedJson = new String(decodedBytes, StandardCharsets.UTF_8);
-        JsonObject dados = UtilSBCoreJson.getJsonObjectByTexto(decodedJson);
+        JsonObject dados = UtilCRCJson.getJsonObjectByTexto(decodedJson);
         if (!dados.isEmpty()) {
             if (dados.containsKey("leadNome")) {
                 leadNome = dados.getString("leadNome");
@@ -61,7 +61,7 @@ public class MetadadosTokenDinamico {
 
     @Override
     public String toString() {
-        String json = UtilSBCoreJson.getTextoByJsonObjeect(getJson());
+        String json = UtilCRCJson.getTextoByJsonObjeect(getJson());
         String base64Encoded = Base64.getEncoder()
                 .encodeToString(json.getBytes(StandardCharsets.UTF_8));
         return base64Encoded;

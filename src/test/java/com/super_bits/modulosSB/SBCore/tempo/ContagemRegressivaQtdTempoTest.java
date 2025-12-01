@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.tempo;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.ContagemRegressivaQtdTempo;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.FabTipoQuantidadeTempo;
 import com.super_bits.modulosSB.SBCore.modulos.tempo.QuantidadeTempo;
@@ -335,13 +335,13 @@ public class ContagemRegressivaQtdTempoTest {
         System.out.print(diffMinutes + " minutes, ");
         System.out.print(diffSeconds + " seconds.");
 
-        long resultadoSeg = UtilSBCoreDataHora.quantidadeTempoEmSegundos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
-        long resultadoDiasFalse = UtilSBCoreDataHora.quantidadeTempoEmDias(valorVariavel, FabTipoQuantidadeTempo.ANOS, true);
-        long resultadoHoras = UtilSBCoreDataHora.quantidadeTempoEmHoras(valorVariavel, FabTipoQuantidadeTempo.ANOS);
-        long resultadoMeses = UtilSBCoreDataHora.quantidadeTempoEmMeses(valorVariavel, FabTipoQuantidadeTempo.ANOS);
-        long resultadoMinutos = UtilSBCoreDataHora.quantidadeTempoEmMinutos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
-        long resultadoSegundos = UtilSBCoreDataHora.quantidadeTempoEmSegundos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
-        long resultadoAnos = UtilSBCoreDataHora.quantidadeTempoEmAnos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoSeg = UtilCRCDataHora.quantidadeTempoEmSegundos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoDiasFalse = UtilCRCDataHora.quantidadeTempoEmDias(valorVariavel, FabTipoQuantidadeTempo.ANOS, true);
+        long resultadoHoras = UtilCRCDataHora.quantidadeTempoEmHoras(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoMeses = UtilCRCDataHora.quantidadeTempoEmMeses(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoMinutos = UtilCRCDataHora.quantidadeTempoEmMinutos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoSegundos = UtilCRCDataHora.quantidadeTempoEmSegundos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
+        long resultadoAnos = UtilCRCDataHora.quantidadeTempoEmAnos(valorVariavel, FabTipoQuantidadeTempo.ANOS);
 
         // Valor variável irá ser utilizado para setar o valor da diferença em milisegundos em QuantidadeTempo e o cálculo deste valor está feito acima e testado
         // Testes Iniciais (Testando o Objeto Quantidade Tempo)...
@@ -384,7 +384,7 @@ public class ContagemRegressivaQtdTempoTest {
 
         //para cada quantidade, muda o divisor maximo e testa novamente
         for (QuantidadeTempo qtd : quantidadesATestar) {
-            List<TipoQuantidadeTempo> tiposQuantidade = UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(FabTipoQuantidadeTempo.class);
+            List<TipoQuantidadeTempo> tiposQuantidade = UtilCRCReflexaoFabrica.getListaTodosRegistrosDaFabrica(FabTipoQuantidadeTempo.class);
             for (TipoQuantidadeTempo tipoQuantidadeTempo : tiposQuantidade) {
                 qtd.setDivisorMaximo(tipoQuantidadeTempo.getTipoInformacao());
                 testeQuantidadeTesteSimples(qtd);

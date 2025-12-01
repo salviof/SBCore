@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenerico
 
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.modulo.FabModuloSistemaCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfModuloAcaoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
@@ -96,9 +96,9 @@ public class GrupoUsuariosDoSistema extends EntidadeSimples implements ComoGrupo
                     return valor;
                 }
             }
-            return UtilSBCoreStringSlugs.gerarSlugSimples(getNome()) + "@" + UtilSBCoreStringSlugs.gerarSlugSimples(getModuloPrincipal().getNome());
+            return UtilCRCStringSlugs.gerarSlugSimples(getNome()) + "@" + UtilCRCStringSlugs.gerarSlugSimples(getModuloPrincipal().getNome());
         } catch (Throwable t) {
-            return UtilSBCoreStringSlugs.gerarSlugSimples(getNome()) + "@" + UtilSBCoreStringSlugs.gerarSlugSimples(getModuloPrincipal().getNome());
+            return UtilCRCStringSlugs.gerarSlugSimples(getNome()) + "@" + UtilCRCStringSlugs.gerarSlugSimples(getModuloPrincipal().getNome());
 
         }
     }

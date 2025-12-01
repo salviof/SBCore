@@ -51,12 +51,13 @@ public class SessaoOffline implements ComoSessao {
 
     @Override
     public String getPastaTempDeSessao() {
-        String caminho = SBCore.getCaminhoGrupoProjetoSource() + "/modelRegras/target/" + String.valueOf(SBCore.getControleDeSessao().getSessaoAtual().getUsuario().getEmail().hashCode());
+
+        String caminho = SBCore.getServicoArquivosDeEntidade().getEndrLocalRecursosDoObjeto(ComoSessao.class, SBCore.getUsuarioLogado().getEmail());
 
         File pastaTemo = new File(caminho + "/");
         pastaTemo.mkdirs();
-
         return caminho;
+
     }
 
     public SessaoOffline() {

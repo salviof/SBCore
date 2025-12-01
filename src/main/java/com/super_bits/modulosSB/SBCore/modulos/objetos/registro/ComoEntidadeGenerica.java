@@ -3,17 +3,17 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreGeradorDeID;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoMetodoEmContextoDeExecucao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCGeradorDeID;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoMetodoEmContextoDeExecucao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoAtributoDeObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoPreparacaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsperado;
@@ -44,7 +44,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.coletivojava.fw.api.tratamentoErros.ErroPreparandoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
+import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoObjetoSimples;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.HibernateProxyHelper;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeReflexivel;
@@ -85,7 +85,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
         instancia = this;
         this.camposEsperados = new CampoMapValores();
 
-        UtilSBCoreReflexao.instanciarListas(this);
+        UtilCRCReflexao.instanciarListas(this);
 
     }
 
@@ -93,7 +93,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
         super();
         instancia = pInstancia;
         this.camposEsperados = new CampoMapValores();
-        UtilSBCoreReflexao.instanciarListas(this);
+        UtilCRCReflexao.instanciarListas(this);
     }
 
     protected void zerarControleCalculos() {
@@ -260,12 +260,12 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     public void prepararNovoObjeto(Object... parametros) throws ErroPreparandoObjeto {
         novoBeanPreparado = true;
         try {
-            InfoPreparacaoObjeto infoPreparacaoObjeto = UtilSBCoreReflexaoObjeto.getInfoPreparacaoObjeto(this.getClass());
+            InfoPreparacaoObjeto infoPreparacaoObjeto = UtilCRCReflexaoObjeto.getInfoPreparacaoObjeto(this.getClass());
 
             if (infoPreparacaoObjeto != null) {
-                UtilSBCoreReflexaoObjeto.validarMetodoPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, infoPreparacaoObjeto, parametros);
+                UtilCRCReflexaoObjeto.validarMetodoPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, infoPreparacaoObjeto, parametros);
             }
-            UtilSBCoreReflexao.instanciarListas(this);
+            UtilCRCReflexao.instanciarListas(this);
         } catch (Throwable t) {
             throw new ErroPreparandoObjeto((ComoEntidadeSimplesSomenteLeitura) getInstancia(), t);
 
@@ -297,7 +297,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
         } catch (Throwable t) {
             classeEntidade = getInstancia().getClass();
         }
-        Field campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classeEntidade, pNomedaAnotacao);
+        Field campo = UtilCRCReflexaoCaminhoCampo.getSBCampobyTipoCampo(classeEntidade, pNomedaAnotacao);
         return campo;
 
     }
@@ -342,8 +342,8 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
                 if (getInstancia() instanceof HibernateProxy || this.getClass().getSimpleName().indexOf("$") > 0) {
                     try {
-                        Class classe = UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
-                        campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
+                        Class classe = UtilCRCReflexaoObjeto.getClassExtraindoProxy(this.getClass().getSimpleName());
+                        campo = UtilCRCReflexaoCaminhoCampo.getSBCampobyTipoCampo(classe, pCampo.getTipoCampo());
                     } catch (Throwable t) {
 
                     }
@@ -556,11 +556,11 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
 
-        InfoPreparacaoObjeto anotacaoConstructor = UtilSBCoreReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class);
+        InfoPreparacaoObjeto anotacaoConstructor = UtilCRCReflexaoMetodoEmContextoDeExecucao.getAnotacaoNesteMetodo(InfoPreparacaoObjeto.class);
         if (anotacaoConstructor == null) {
             throw new UnsupportedOperationException("A anotação" + InfoPreparacaoObjeto.class.getSimpleName() + " é nescessária no método PrepararNovoObjeto do " + this.getClass().getSimpleName());
         }
-        return UtilSBCoreReflexaoObjetoSimples.getParametroPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, pTipoParametro,
+        return UtilCRCReflexaoObjetoSimples.getParametroPrepararObjeto((ComoEntidadeSimplesSomenteLeitura) this, pTipoParametro,
                 anotacaoConstructor,
                 parametros);
 
@@ -588,7 +588,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             mapaCampoPorAnotacao = Collections.synchronizedMap(new HashMap());
 
             Class classeAnalizada = getInstancia().getClass();
-            while (!UtilSBCoreReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
+            while (!UtilCRCReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
 
                 for (Field campoEncontrado : classeAnalizada.getDeclaredFields()) {
                     InfoCampo anotacao = campoEncontrado.getAnnotation(InfoCampo.class);
@@ -618,7 +618,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
             Class classeAnalizada = getInstancia().getClass();
 
-            while (!UtilSBCoreReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
+            while (!UtilCRCReflexaoCaminhoCampo.isClasseBasicaSB(classeAnalizada)) {
 
                 try {
                     Field campoEncontrado = classeAnalizada.getDeclaredField(pCampo);
@@ -678,7 +678,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     public Object getValorCampoByCaminhoCampo(ItfCaminhoCampo pCaminhoCampo) {
         try {
             ItfCampoInstanciado campoInstanciado = getCampoByNomeOuAnotacao(pCaminhoCampo.getCaminhoSemNomeClasse());
-            if (campoInstanciado == UtilSBCoreReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO) {
+            if (campoInstanciado == UtilCRCReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO) {
                 return null;
             }
             Object resposta = campoInstanciado.getValor();
@@ -716,13 +716,13 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     @Deprecated
     public ItfCampoInstanciado getCampoByNomeOuAnotacao(final String pNomeOuANotacao) {
 
-        if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(pNomeOuANotacao)) {
-            return UtilSBCoreReflexaoCaminhoCampo.getCampoSeparador(pNomeOuANotacao);
+        if (UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(pNomeOuANotacao)) {
+            return UtilCRCReflexaoCaminhoCampo.getCampoSeparador(pNomeOuANotacao);
         }
-        int quantidade = UtilSBCoreReflexaoCaminhoCampo.getQuantidadeSubCampos(pNomeOuANotacao);
+        int quantidade = UtilCRCReflexaoCaminhoCampo.getQuantidadeSubCampos(pNomeOuANotacao);
 
         if (quantidade == 1) {
-            TIPO_ORIGEM_VALOR_CAMPO tipoOrigem = UtilSBCoreReflexaoCaminhoCampo.getTipoCampoLista(pNomeOuANotacao);
+            TIPO_ORIGEM_VALOR_CAMPO tipoOrigem = UtilCRCReflexaoCaminhoCampo.getTipoCampoLista(pNomeOuANotacao);
 
             switch (tipoOrigem) {
                 case VALOR_COM_LISTA:
@@ -730,12 +730,12 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
                     return getmapaCamposInstanciados(pNomeOuANotacao).get(pNomeOuANotacao);
                 case VALORES_COM_LISTA:
                 case VALORES_LIVRE:
-                    String nomeCampoSemIndice = UtilSBCoreReflexaoCaminhoCampo.getListaSemColchete(pNomeOuANotacao);
+                    String nomeCampoSemIndice = UtilCRCReflexaoCaminhoCampo.getListaSemColchete(pNomeOuANotacao);
                     return getmapaCamposInstanciados(nomeCampoSemIndice).get(nomeCampoSemIndice);
 
                 case REGISTRO_ESTATICO_DA_LISTA:
-                    int idIndiceCampo = UtilSBCoreReflexaoCaminhoCampo.getIdCampoDaLista(pNomeOuANotacao);
-                    String nomeCampoSemIndice2 = UtilSBCoreReflexaoCaminhoCampo.getListaSemColchete(pNomeOuANotacao);
+                    int idIndiceCampo = UtilCRCReflexaoCaminhoCampo.getIdCampoDaLista(pNomeOuANotacao);
+                    String nomeCampoSemIndice2 = UtilCRCReflexaoCaminhoCampo.getListaSemColchete(pNomeOuANotacao);
                     ItfCampoInstanciado cp = getmapaCamposInstanciados(nomeCampoSemIndice2).get(nomeCampoSemIndice2);
 
                     cp.setIndiceValorLista(idIndiceCampo);
@@ -747,17 +747,17 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
         } else {
 
-            String nomeProximoObjeto = UtilSBCoreReflexaoCaminhoCampo.getStrPrimeiroCampoDoCaminhoCampo(pNomeOuANotacao);
+            String nomeProximoObjeto = UtilCRCReflexaoCaminhoCampo.getStrPrimeiroCampoDoCaminhoCampo(pNomeOuANotacao);
 
-            TIPO_ORIGEM_VALOR_CAMPO tipo = UtilSBCoreReflexaoCaminhoCampo.getTipoCampoLista(nomeProximoObjeto);
+            TIPO_ORIGEM_VALOR_CAMPO tipo = UtilCRCReflexaoCaminhoCampo.getTipoCampoLista(nomeProximoObjeto);
 
             if (tipo.equals(TIPO_ORIGEM_VALOR_CAMPO.REGISTRO_ESTATICO_DA_LISTA)) {
 
-                int idReflexao = UtilSBCoreReflexaoCaminhoCampo.getIdCampoDaLista(nomeProximoObjeto);
-                String nomeCampoSemIndice = UtilSBCoreReflexaoCaminhoCampo.getListaSemColchete(nomeProximoObjeto);
+                int idReflexao = UtilCRCReflexaoCaminhoCampo.getIdCampoDaLista(nomeProximoObjeto);
+                String nomeCampoSemIndice = UtilCRCReflexaoCaminhoCampo.getListaSemColchete(nomeProximoObjeto);
                 ItfCampoInstanciado lista = getmapaCamposInstanciados(nomeCampoSemIndice).get(nomeCampoSemIndice);
                 ComoEntidadeSimples itemDaLista = (ComoEntidadeSimples) ((List) lista.getValor()).get(idReflexao);
-                String nomeProximoCAmpo = UtilSBCoreReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
+                String nomeProximoCAmpo = UtilCRCReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
                 return itemDaLista.getCampoByNomeOuAnotacao(nomeProximoCAmpo);
 
             } else {
@@ -765,17 +765,17 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
                 ItfCampoInstanciado itemAtual = getmapaCamposInstanciados(nomeProximoObjeto).get(nomeProximoObjeto);
 
                 if (itemAtual == null) {
-                    return UtilSBCoreReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
+                    return UtilCRCReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
                 }
 
                 ComoEntidadeGenerica valorItem = (ComoEntidadeGenerica) itemAtual.getValor();
 
                 if (valorItem == null) {
 
-                    return UtilSBCoreReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
+                    return UtilCRCReflexaoCaminhoCampo.CAMPO_NAO_IMPLEMENTADO;
 
                 }
-                String nomeRestante = UtilSBCoreReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
+                String nomeRestante = UtilCRCReflexaoCaminhoCampo.getStrCaminhoCampoSemPrimeiroCampo(pNomeOuANotacao);
                 String campoAnterior = pNomeOuANotacao.replace("." + nomeRestante, "");
                 ItfCampoInstanciado proximoCampo = valorItem.getCampoByNomeOuAnotacao(nomeRestante);
 
@@ -797,18 +797,18 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     @Override
     public Field getCampoReflexaoByAnotacao(FabTipoAtributoObjeto pInfoCampo) {
-        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfoCampo);
+        return UtilCRCReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfoCampo);
     }
 
     @Override
     public boolean isTemCampoAnotado(FabTipoAtributoObjeto pCampo) {
-        return UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pCampo) != null;
+        return UtilCRCReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pCampo) != null;
     }
 
     @Override
     public String getNomeCampo(FabTipoAtributoObjeto pInfocampo) {
         try {
-            Field campo = UtilSBCoreReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfocampo);
+            Field campo = UtilCRCReflexaoCaminhoCampo.getSBCampobyTipoCampo(getInstancia().getClass(), pInfocampo);
             if (campo == null) {
                 throw new UnsupportedOperationException("a anotação " + pInfocampo + " não foi encontrada em " + getInstancia().getClass().getSimpleName());
             }
@@ -855,7 +855,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
                 throw new UnsupportedOperationException("Erro configurando id pelo nome, o campo que identifica" + FabTipoAtributoObjeto.NOME + " retornou nulo");
             }
 
-            Long id = UtilSBCoreGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);
+            Long id = UtilCRCGeradorDeID.gerarIdUnicoLetrasDaString(nomeparaHash);
             setValorByTipoCampoEsperado(FabTipoAtributoObjeto.ID, id);
             return id;
         } catch (Throwable t) {
@@ -878,7 +878,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             return Lists.newLinkedList(mapaCamposInstanciados.values());
         }
 
-        for (Class classse : UtilSBCoreReflexao.getClasseESubclassesAteClasseBaseDeEntidade(getInstancia().getClass())) {
+        for (Class classse : UtilCRCReflexao.getClasseESubclassesAteClasseBaseDeEntidade(getInstancia().getClass())) {
             for (Field campo : classse.getDeclaredFields()) {
                 getCampoByNomeOuAnotacao(campo.getName());
             }
@@ -890,7 +890,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     @Override
     public List<ItfCaminhoCampo> getEntidadesVinculadas() {
 
-        return Lists.newArrayList(UtilSBCoreReflexaoCaminhoCampo.getCamposComSubCamposDaClasse(getInstancia().getClass()).values());
+        return Lists.newArrayList(UtilCRCReflexaoCaminhoCampo.getCamposComSubCamposDaClasse(getInstancia().getClass()).values());
 
     }
 
@@ -951,12 +951,12 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     @Override
     public String getNomeDoObjeto() {
-        return UtilSBCoreReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(getInstancia().getClass());
+        return UtilCRCReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(getInstancia().getClass());
     }
 
     @Override
     public String getNomeDoObjetoPlural() {
-        return UtilSBCoreReflexaoObjeto.getNomeObjetoPlural((Class<? extends ComoDominioEntidadeGenerico>) getInstancia().getClass());
+        return UtilCRCReflexaoObjeto.getNomeObjetoPlural((Class<? extends ComoDominioEntidadeGenerico>) getInstancia().getClass());
     }
 
     /**
@@ -979,7 +979,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             Field campo = getInstancia().getClass().getDeclaredField(nomeDaLista);
             campo.setAccessible(true);
             List lista = (List) campo.get(getInstancia());
-            Class classeTipo = UtilSBCoreReflexaoAtributoDeObjeto.getClasseGenerica(campo);
+            Class classeTipo = UtilCRCReflexaoAtributoDeObjeto.getClasseGenerica(campo);
 
             lista.add(classeTipo.newInstance());
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException ex) {
@@ -996,7 +996,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     }
 
     public ItfResposta executarAcao(ComoAcaoController pAcao) {
-        //Method metodo UtilSBCoreReflexao.getMetodoByAcao(pAcao);
+        //Method metodo UtilCRCReflexao.getMetodoByAcao(pAcao);
         throw new UnsupportedOperationException("Ainda não implementado");
         //metodo.invoke(metodo.get, args)
     }
@@ -1041,7 +1041,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             Class classe = getInstancia().getClass();
             Field campo = classe.getDeclaredField(pNomeCampo);
             campo.setAccessible(true);
-            Class tipoItem = UtilSBCoreReflexao.getClasseGenericaDaClasseDoCampo(campo);
+            Class tipoItem = UtilCRCReflexao.getClasseGenericaDaClasseDoCampo(campo);
             ((List) campo.get(getInstancia())).add(tipoItem.newInstance());
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro adicionando item em campo" + pNomeCampo, t);
@@ -1099,9 +1099,9 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             ComoEntidadeSimplesSomenteLeitura itemSimples = (ComoEntidadeSimplesSomenteLeitura) getInstancia();
             if (getInstancia().getClass().getSimpleName().contains("$")) {
                 if (itemSimples.getId() != 0) {
-                    return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
+                    return UtilCRCReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
                 } else {
-                    return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
+                    return UtilCRCReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
                 }
 
             } else {

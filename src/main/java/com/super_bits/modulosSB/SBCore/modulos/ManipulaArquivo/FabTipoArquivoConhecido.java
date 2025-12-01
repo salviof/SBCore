@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringNomeArquivosEDiretorios;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.HashMap;
@@ -87,7 +87,7 @@ public enum FabTipoArquivoConhecido implements ComoFabrica {
         if (pNomeArquivo == null) {
             return ARQUIVO_TEXTO_SIMPLES;
         }
-        String extencao = UtilSBCoreStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(pNomeArquivo);
+        String extencao = UtilCRCStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(pNomeArquivo);
         switch (extencao.toLowerCase()) {
             case ".js":
                 return JAVASCRIPT;
@@ -139,7 +139,7 @@ public enum FabTipoArquivoConhecido implements ComoFabrica {
     public String getSlugUrl() {
         String slug = mapaSlugTipoArquivos.get(this);
         if (slug == null) {
-            slug = UtilSBCoreStringFiltros.gerarUrlAmigavel(this.getRegistro().getNome());
+            slug = UtilCRCStringFiltros.gerarUrlAmigavel(this.getRegistro().getNome());
             if (slug != null) {
                 mapaSlugTipoArquivos.put(this, slug);
             }

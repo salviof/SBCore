@@ -6,16 +6,16 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.GeradorCpfCnpj;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreNumeros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreRandomico;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCNumeros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCRandomico;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.DATA;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.DATAHORA;
@@ -109,13 +109,13 @@ public final class TipoAtributoMetodosBase {
             if (pClasse.isAssignableFrom(ItfGrupoCampos.class)) {
                 return FabTipoAtributoObjeto.GRUPO_CAMPO;
             }
-            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoEntidadeSimples.class)) {
+            if (UtilCRCReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoEntidadeSimples.class)) {
                 return FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA;
             }
             if (pClasse.isEnum()) {
                 return ENUM_FABRICA;
             }
-            if (UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoFabrica.class)) {
+            if (UtilCRCReflexao.isInterfaceImplementadaNaClasse(pClasse, ComoFabrica.class)) {
                 return FabTipoAtributoObjeto.ENUM_FABRICA;
             }
             return FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA;
@@ -220,7 +220,7 @@ public final class TipoAtributoMetodosBase {
             case NOME_COMPLETO:
                 break;
             case CNPJ:
-                if (!UtilSBCoreValidadorGoverno.validaCNPJ((String) pValor)) {
+                if (!UtilCRCValidadorGoverno.validaCNPJ((String) pValor)) {
                     pResp.addErro("Digito Verificador Não confere");
                 }
                 break;
@@ -278,11 +278,11 @@ public final class TipoAtributoMetodosBase {
                 if (pValor instanceof ComoFabrica) {
                     pValor = pValor;
                 } else if (pValor instanceof Integer) {
-                    pValor = UtilSBCoreReflexaoFabrica.getFabricaPorOrdinal(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (int) pValor);
+                    pValor = UtilCRCReflexaoFabrica.getFabricaPorOrdinal(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (int) pValor);
                 } else if (pValor instanceof String) {
                     pValor = Enum.valueOf(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (String) pValor);
                 } else if (pValor instanceof ComoEntidadeSimples) {
-                    pValor = UtilSBCoreReflexaoFabrica.getEnumDoObjetoFabrica(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (ItfTipoAtributoSBSomenteLeitura) pValor);
+                    pValor = UtilCRCReflexaoFabrica.getEnumDoObjetoFabrica(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (ItfTipoAtributoSBSomenteLeitura) pValor);
                 }
             }
 
@@ -362,12 +362,12 @@ public final class TipoAtributoMetodosBase {
         try {
             switch (pCampo.getFabricaTipoAtributo()) {
                 case DATA:
-                    return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pValor);
+                    return UtilCRCDataHora.converteStringDD_MM_YYYYEmData(pValor);
                 case DATAHORA:
-                    return UtilSBCoreDataHora.converteStringDD_MM_YYYYEmData(pValor);
+                    return UtilCRCDataHora.converteStringDD_MM_YYYYEmData(pValor);
                 case MOEDA_REAL:
                     try {
-                        double valorDouble = UtilSBCoreNumeros.getDoublePorString(pValor);
+                        double valorDouble = UtilCRCNumeros.getDoublePorString(pValor);
                         return valorDouble;
                     } catch (Throwable t) {
                         return 0;
@@ -430,7 +430,7 @@ public final class TipoAtributoMetodosBase {
                     case DATAHORA:
                         Date valorData = (Date) pValor;
 
-                        pValor = UtilSBCoreDataHora.converteDateEmSTringDD_MM_YY(valorData);
+                        pValor = UtilCRCDataHora.converteDateEmSTringDD_MM_YY(valorData);
                         break;
                     case OBJETO_DE_UMA_LISTA:
                         if (pValor == null) {
@@ -638,7 +638,7 @@ public final class TipoAtributoMetodosBase {
                 }
                 if (tipoAtributo != null) {
                     if (tipoAtributo.isTemMascara()) {
-                        String valorMaskara = (UtilSBCoreRandomico.getValorStringRandomicoViaMaskara(pAtributo.getMascara()));
+                        String valorMaskara = (UtilCRCRandomico.getValorStringRandomicoViaMaskara(pAtributo.getMascara()));
                         switch (tipo) {
                             case TELEFONE_FIXO_INTERNACIONAL:
 
@@ -650,8 +650,8 @@ public final class TipoAtributoMetodosBase {
                         return valorMaskara;
                     }
                 }
-                String valorAleatorio = UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.LETRAS, 10);
-                valorAleatorio = UtilSBCoreStringFiltros.gerarUrlAmigavel(valorAleatorio);
+                String valorAleatorio = UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.LETRAS, 10);
+                valorAleatorio = UtilCRCStringFiltros.gerarUrlAmigavel(valorAleatorio);
                 return valorAleatorio;
 
             case LCCEP:
@@ -669,27 +669,27 @@ public final class TipoAtributoMetodosBase {
             case NOME:
                 if (pAtributo != null) {
                     EstruturaDeEntidade estrutura = MapaObjetosProjetoAtual.getEstruturaObjeto(pAtributo.getNomeClasseOrigemAtributo());
-                    return estrutura.getTags().get(0) + UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.NUMERO, 4);
+                    return estrutura.getTags().get(0) + UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.NUMERO, 4);
                 } else {
-                    return UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.NUMERO, 15);
+                    return UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.NUMERO, 15);
                 }
 
             case EMAIL:
                 String tipousuario = "usuario";
                 if (pAtributo != null) {
                     EstruturaDeEntidade estrutura = MapaObjetosProjetoAtual.getEstruturaObjeto(pAtributo.getNomeClasseOrigemAtributo());
-                    tipousuario = estrutura.getTags().get(0) + UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.NUMERO, 4);
+                    tipousuario = estrutura.getTags().get(0) + UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.NUMERO, 4);
                 } else {
-                    tipousuario = UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.LETRAS, 5);
+                    tipousuario = UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.LETRAS, 5);
                 }
 
                 String usuarioEmailFake = tipousuario;
-                usuarioEmailFake = UtilSBCoreStringFiltros.gerarUrlAmigavel(usuarioEmailFake);
+                usuarioEmailFake = UtilCRCStringFiltros.gerarUrlAmigavel(usuarioEmailFake);
                 if (usuarioEmailFake.length() > 10) {
                     usuarioEmailFake = usuarioEmailFake.substring(0, 10);
                 }
 
-                return usuarioEmailFake + UtilSBCoreRandomico.getValorStringRandomico(UtilSBCoreRandomico.TIPO_VALOR_RANDON.NUMERO, 4) + "@emailFake.com";
+                return usuarioEmailFake + UtilCRCRandomico.getValorStringRandomico(UtilCRCRandomico.TIPO_VALOR_RANDON.NUMERO, 4) + "@emailFake.com";
 
         }
         return null;

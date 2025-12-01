@@ -19,7 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldCom
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_DECLARACAO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_PRIMITIVO;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.UtilSBCoreReflecaoIEstruturaEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.UtilCRCReflecaoIEstruturaEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoListaDinamica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
@@ -84,12 +84,12 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
 
     private void registrarListasECalculos(Field pCAmpo) {
         if (temValorLogico) {
-            CalculoDeEntidade calculo = UtilSBCoreReflecaoIEstruturaEntidade.
+            CalculoDeEntidade calculo = UtilCRCReflecaoIEstruturaEntidade.
                     getCalculoEstruturaByField(pCAmpo, campoVinculado, this);
             estruturaPai.getCalculos().add(calculo);
         } else {
             if (temListaDinamica) {
-                ListaDeEntidade lista = UtilSBCoreReflecaoIEstruturaEntidade.getListaEstruturaByField(pCAmpo);
+                ListaDeEntidade lista = UtilCRCReflecaoIEstruturaEntidade.getListaEstruturaByField(pCAmpo);
                 if (lista != null) {
                     estruturaPai.getListas().add(lista);
                 }

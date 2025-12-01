@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -344,12 +344,12 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     @Override
     public String getNomeDoObjeto() {
-        return UtilSBCoreReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(classeDeclaracaoObjeto);
+        return UtilCRCReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(classeDeclaracaoObjeto);
     }
 
     @Override
     public String getNomeDoObjetoPlural() {
-        return UtilSBCoreReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(classeDeclaracaoObjeto);
+        return UtilCRCReflexaoObjeto.getNomeDoObjetoPorAnotacaoInfoClasse(classeDeclaracaoObjeto);
     }
 
     @Override

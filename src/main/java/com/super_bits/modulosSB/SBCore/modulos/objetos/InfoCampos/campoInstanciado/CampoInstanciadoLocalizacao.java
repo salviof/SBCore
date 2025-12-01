@@ -62,7 +62,7 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     public void preencherEndereco(String pcep) {
         System.out.println("CEP ENVIADO:" + pcep);
         assistente.atualizarEnderecoPorCep();
-        //  UtilSBCoreCEP.configuraEndereco(pcep, pLocal);
+        //  UtilCRCCEP.configuraEndereco(pcep, pLocal);
     }
 
     @Override

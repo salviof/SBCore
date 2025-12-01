@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.tempo;
 
 /**
  *
+ *
  * @author salvioF
  */
 public class QuantidadeTempo {

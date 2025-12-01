@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 
@@ -31,7 +31,7 @@ public class ItemSimilar<T> extends ItemSimilarGenerico<T> {
 
     private String defineValorTextoReferenciaNormalizando(String pValor) {
         textoDefinido = true;
-        texto = UtilSBCoreStringComparador.normalizarTexto(pValor);
+        texto = UtilCRCStringComparador.normalizarTexto(pValor);
         return texto;
     }
 

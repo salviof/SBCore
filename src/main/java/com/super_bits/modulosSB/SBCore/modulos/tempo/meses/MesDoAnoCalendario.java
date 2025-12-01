@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.tempo.meses;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -71,7 +71,7 @@ public class MesDoAnoCalendario extends EntidadeSimples {
         LocalDateTime localTimeUltimoDiaMes = navgadorCalendario.with(TemporalAdjusters.lastDayOfMonth());
         localTimeUltimoDiaMes.with(LocalTime.MAX);
         dataHoraFinal = Date.from(localTimeUltimoDiaMes.atZone(ZoneId.systemDefault()).toInstant());
-        dataHoraFinal = UtilSBCoreDataHora.getFinalDoDIa(dataHoraFinal);
+        dataHoraFinal = UtilCRCDataHora.getFinalDoDIa(dataHoraFinal);
         ordenador = (ano.getId().intValue() * 356) + getId().intValue();
     }
 

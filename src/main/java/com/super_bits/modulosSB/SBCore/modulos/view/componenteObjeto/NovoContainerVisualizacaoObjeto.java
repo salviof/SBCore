@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.view.componenteObjeto;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.view.ServicoVisualizacaoAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.FabTipoTamanhoTelas;
@@ -79,8 +79,8 @@ public class NovoContainerVisualizacaoObjeto extends ContainerVisualizacaoObjeto
             if (new File(caminhoArquivoXHTML).exists()) {
                 SBCore.getCentralDeMensagens().enviarMsgAlertaAoUsuario("Esta visualização já existe, edite o arquivo" + caminhoArquivoXHTML + "com seu editor preferido");
             } else {
-                UtilSBCoreArquivos.criarDiretorioParaArquivo(caminhoArquivoXHTML);
-                if (!UtilSBCoreArquivos.copiarArquivos(SBCore.getCentralVisualizacao().getEndrLocalArquivoReferenciaNovoComponente(), caminhoArquivoXHTML)) {
+                UtilCRCArquivos.criarDiretorioParaArquivo(caminhoArquivoXHTML);
+                if (!UtilCRCArquivos.copiarArquivos(SBCore.getCentralVisualizacao().getEndrLocalArquivoReferenciaNovoComponente(), caminhoArquivoXHTML)) {
 
                     SBCore.getCentralDeMensagens().enviarMsgErroAoUsuario("Erro criando arquivo modo Desenvolvimento");
                 } else {
@@ -93,8 +93,8 @@ public class NovoContainerVisualizacaoObjeto extends ContainerVisualizacaoObjeto
                 if (new File(caminhoMobile).exists()) {
                     SBCore.getCentralDeMensagens().enviarMsgAlertaAoUsuario("Esta visualização Mobile já existe, edite o arquivo" + caminhoMobile + "com seu editor preferido");
                 } else {
-                    UtilSBCoreArquivos.criarDiretorioParaArquivo(caminhoMobile);
-                    if (UtilSBCoreArquivos.copiarArquivos(SBCore.getCentralVisualizacao().getEndrLocalArquivoReferenciaNovoComponente(), caminhoArquivoXHTML)) {
+                    UtilCRCArquivos.criarDiretorioParaArquivo(caminhoMobile);
+                    if (UtilCRCArquivos.copiarArquivos(SBCore.getCentralVisualizacao().getEndrLocalArquivoReferenciaNovoComponente(), caminhoArquivoXHTML)) {
                         SBCore.getCentralDeMensagens().enviarMsgAvisoAoUsuario(caminhoMobile);
                     }
                 }

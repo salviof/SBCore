@@ -8,7 +8,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import java.util.List;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
 /**
@@ -38,14 +38,14 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
         this.usuarioRemetente = usuarioRemetente;
 
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCComunicacao.getRespostaCOmunicacao(this);
         defineMensagem();
 
     }
 
     public final void defineMensagem() {
-        mensgem = UtilSBCoreComunicacao.gerarMensagem(this);
-        assunto = UtilSBCoreComunicacao.gerarAssunto(this);
+        mensgem = UtilCRCComunicacao.gerarMensagem(this);
+        assunto = UtilCRCComunicacao.gerarAssunto(this);
 
     }
 
@@ -54,7 +54,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
         this.destinatario = destinatario;
         this.usuarioRemetente = usuarioRemetente;
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCComunicacao.getRespostaCOmunicacao(this);
 
         defineMensagem();
 
@@ -83,7 +83,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     @Override
     public String getMensagem() {
         if (mensgem == null) {
-            UtilSBCoreComunicacao.gerarMensagem(this);
+            UtilCRCComunicacao.gerarMensagem(this);
         }
         return mensgem;
     }

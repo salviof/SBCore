@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller.permissaoPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCJson;
 import jakarta.json.JsonObject;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -28,7 +28,7 @@ public class MetadadosTokenDinamicoTest {
         metadados.setSistemaRequisicao("mktFatura");
         metadados.setLeadNome("Apenas teste");
         metadados.setLeadEmail("teste");
-        System.out.println(UtilSBCoreJson.getTextoByJsonObjeect(metadados.getJson()));
+        System.out.println(UtilCRCJson.getTextoByJsonObjeect(metadados.getJson()));
         System.out.println(metadados.toString());
     }
 

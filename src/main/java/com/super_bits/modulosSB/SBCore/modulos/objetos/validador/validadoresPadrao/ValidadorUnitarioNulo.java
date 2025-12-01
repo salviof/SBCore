@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 
@@ -35,7 +35,7 @@ public class ValidadorUnitarioNulo extends ValidadorUnitarioCampoInstGenerico {
                 if (campoInstanciado.isObrigatorio()) {
                     if (!campoInstanciado.isNumeral()) {
 
-                        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                        if (UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
                             return campoInstanciado.getLabel() + " não pode ser nulo";
                         }
 

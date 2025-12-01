@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.tempo;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +61,7 @@ public class ContagemRegressivaQtdTempo {
      * @param pDataFinal
      */
     public ContagemRegressivaQtdTempo(Date pDataFinal) {
-        quantidadeTotalEmSegundos = UtilSBCoreDataHora.intervaloTempoSegundos(new Date(), pDataFinal);
+        quantidadeTotalEmSegundos = UtilCRCDataHora.intervaloTempoSegundos(new Date(), pDataFinal);
     }
 
     public ContagemRegressivaQtdTempo(Long pQuantidadeTotal) {

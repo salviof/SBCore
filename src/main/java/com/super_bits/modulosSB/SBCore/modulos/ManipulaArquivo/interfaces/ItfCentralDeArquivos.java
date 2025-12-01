@@ -34,7 +34,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
  * médio e grande vinculado a um objeto
  *
  *
- *
  * @author salvioF
  */
 public interface ItfCentralDeArquivos {

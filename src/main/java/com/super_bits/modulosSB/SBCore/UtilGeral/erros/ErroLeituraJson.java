@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral.erros;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCJson;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import jakarta.json.JsonObject;
 
 /**
@@ -19,10 +19,10 @@ public class ErroLeituraJson extends Throwable {
 
     private static final String buildMensagem(String pJson, String pCaminho) {
 
-        String amostrajson = UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(pJson, 15) + " ....";
+        String amostrajson = UtilCRCStringFiltros.getPrimeirasXLetrasDaString(pJson, 15) + " ....";
         StringBuilder mensagem = new StringBuilder();
 
-        JsonObject json = UtilSBCoreJson.getJsonObjectByTexto(pJson);
+        JsonObject json = UtilCRCJson.getJsonObjectByTexto(pJson);
         if (json == null) {
 
             mensagem.append("Json inválido");

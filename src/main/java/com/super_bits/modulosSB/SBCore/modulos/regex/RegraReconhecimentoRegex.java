@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.regex;
 
 import com.google.common.primitives.Ints;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -125,7 +125,7 @@ public class RegraReconhecimentoRegex {
                     try {
                         String valor = encontrador.group(i);
 
-                        if (UtilSBCoreStringValidador.isContemApenasNumeroOuDecimalSeparador(valor)) {
+                        if (UtilCRCStringValidador.isContemApenasNumeroOuDecimalSeparador(valor)) {
                             respostas.add(valor);
                             switch (tipoProcessamento) {
                                 case PRIMEIRO_NUMERO_ENCONTRADO:

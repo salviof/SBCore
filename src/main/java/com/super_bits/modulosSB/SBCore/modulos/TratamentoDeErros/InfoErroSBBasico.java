@@ -7,10 +7,10 @@ package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfInfoErroSB;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringListas;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringBuscaTrecho;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringListas;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import org.coletivojava.fw.api.objetoNativo.mensagem.MensagemProgramador;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
         checarConfiguracao();
         String nomeProjeto = SBCore.getNomeProjeto();
         if (SBCore.getNomeProjeto().contains("/")) {
-            nomeProjeto = UtilSBCoreStringBuscaTrecho.getStringAteEncontrarIsto(nomeProjeto, "/");
+            nomeProjeto = UtilCRCStringBuscaTrecho.getStringAteEncontrarIsto(nomeProjeto, "/");
         }
         return getCaminhoStackTraceContendoPalavrasNoPacote("super_bits", "coletivo", "casanovadigital", SBCore.getNomeProjeto());
 
@@ -70,13 +70,13 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
     @Override
     public String getCaminhoStackTraceCompletoStr() {
         checarConfiguracao();
-        return UtilSBCoreStringListas.getStringDaListaComBarraN(getCaminhoStackTraceCompleto());
+        return UtilCRCStringListas.getStringDaListaComBarraN(getCaminhoStackTraceCompleto());
     }
 
     @Override
     public String getCaminhoStackTraceResumidoStr() {
         checarConfiguracao();
-        return UtilSBCoreStringListas.getStringDaListaComBarraN(getCaminhoStackTraceResumido());
+        return UtilCRCStringListas.getStringDaListaComBarraN(getCaminhoStackTraceResumido());
     }
 
     @Override
@@ -95,10 +95,10 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
                     stackTraceResumido.add(etapa.getClassName());
                 } else {
                     for (String palavra : pPalavras) {
-                        if (!UtilSBCoreStringValidador.isNuloOuEmbranco(palavra)) {
+                        if (!UtilCRCStringValidador.isNuloOuEmbranco(palavra)) {
                             if (etapa.getClassName().contains(palavra)) {
-                                stackTraceResumido.add(UtilSBCoreErros.getSimpleName(etapa.getClassName()) + ":" + etapa.getLineNumber());
-                                stackTraceResumido.add("(" + UtilSBCoreErros.getSimpleName(etapa.getClassName()) + "->" + etapa.getMethodName() + "-Linha" + etapa.getLineNumber() + ")");
+                                stackTraceResumido.add(UtilCRCErros.getSimpleName(etapa.getClassName()) + ":" + etapa.getLineNumber());
+                                stackTraceResumido.add("(" + UtilCRCErros.getSimpleName(etapa.getClassName()) + "->" + etapa.getMethodName() + "-Linha" + etapa.getLineNumber() + ")");
                             }
                         }
                     }
@@ -193,7 +193,7 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
 
         texto += "\n" + getCaminhoStackTraceResumidoStr();
 
-        texto = UtilSBCoreStringFiltros.quebrarStringEmLinhas(texto, 100);
+        texto = UtilCRCStringFiltros.quebrarStringEmLinhas(texto, 100);
         return texto;
 
     }

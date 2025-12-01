@@ -6,10 +6,8 @@ package com.super_bits.modulosSB.SBCore.modulos.chavesPublicasePrivadas;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCriptoRSA;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCCriptoRSA;
 import java.util.Map;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -29,7 +27,7 @@ public class RepositorioChavePublicaPrivadaTest {
     @Test
     public void testPersistirChavePublica() {
         SBCore.configurar(new ConfiguradorProjetoSBCore(), SBCore.ESTADO_APP.DESENVOLVIMENTO);
-        Map<String, String> parDeChaves = UtilSBCoreCriptoRSA.chavePublicaPrivada();
+        Map<String, String> parDeChaves = UtilCRCCriptoRSA.chavePublicaPrivada();
         String texto = "texto teste \nexemploini\n1 eai carinha  2\nexemplofim\n colpé";
         int indiceInicio = texto.indexOf("\nexemploini\n") + "\nexemploini\n".length();
         int indiceFInal = texto.indexOf("\nexemplofim\n");

@@ -6,11 +6,11 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.cep.TipoOrganizacaoDadosEndereco;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCListasObjeto;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreObjetoSB;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCObjetoSB;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -110,12 +110,12 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 throw new AssertionError(pTipoOrganizacao.name());
         }
         if (temCep) {
-            if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(getCep())) {
-                if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa())) {
+            if (UtilCRCStringValidador.isNAO_NuloNemBranco(getCep())) {
+                if (UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa())) {
                     pesquisaSucessoUnidadeFederativa = true;
-                    if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getCidade())) {
+                    if (UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getCidade())) {
                         pesquisaSucessoCidade = true;
-                        if (UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getBairro())) {
+                        if (UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getBairro())) {
                             pesquisaSucessoBairro = true;
                         }
                     }
@@ -155,7 +155,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         if (pNomeEstado.length() == 2) {
             todos.stream().filter(uf -> (uf.getSigla().toLowerCase().equals(pNomeEstado.toLowerCase()))).forEach(resultadoPesquisa::add);
         } else {
-            resultadoPesquisa = UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(SBCore.getCentralDeLocalizacao().getUnidadesFederativas(), pNomeEstado, 1);
+            resultadoPesquisa = UtilCRCListasObjeto.filtrarOrdenandoMaisParecidos(SBCore.getCentralDeLocalizacao().getUnidadesFederativas(), pNomeEstado, 1);
         }
 
         return resultadoPesquisa;
@@ -173,7 +173,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 if (isInstanciaBairroCriada()) {
                     if (getCampoInstBairro().getValor() != null) {
                         ComoBairro bairro = (ComoBairro) getCampoInstBairro().getValor();
-                        if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(bairro.getNome())) {
+                        if (UtilCRCStringValidador.isNAO_NuloNemBranco(bairro.getNome())) {
                             bairroTemporario = bairro;
                         }
                     }
@@ -233,9 +233,9 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                         getImplementacaoDoContexto().configuraEndereco(getCep(), getLocal());
 
                 if (localizouCEP) {
-                    pesquisaSucessoBairro = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getBairro());
-                    pesquisaSucessoCidade = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getCidade());
-                    pesquisaSucessoUnidadeFederativa = UtilSBCoreObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa());
+                    pesquisaSucessoBairro = UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getBairro());
+                    pesquisaSucessoCidade = UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getCidade());
+                    pesquisaSucessoUnidadeFederativa = UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa());
                 } else {
                     pesquisaSucessoBairro = false;
                     pesquisaSucessoCidade = false;
@@ -266,7 +266,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 if (getCampoInstCidade().getValor() != null) {
                     ComoCidade cidade = (ComoCidade) getCampoInstCidade().getValor();
 
-                    if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(cidade.getNome())) {
+                    if (UtilCRCStringValidador.isNAO_NuloNemBranco(cidade.getNome())) {
                         cidadeTemporaria = cidade;
                     }
                 }
@@ -369,7 +369,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
         if (isInstanciaUnidadeFederativaCriada()) {
             if (getCampoInstUnidadeFederativa().getValor() != null) {
 
-                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(((ComoUnidadeFederativa) getCampoInstUnidadeFederativa().getValor()).getSigla())) {
+                if (UtilCRCStringValidador.isNAO_NuloNemBranco(((ComoUnidadeFederativa) getCampoInstUnidadeFederativa().getValor()).getSigla())) {
                     unidadeFederativaTemporaria = (ComoUnidadeFederativa) getCampoInstUnidadeFederativa().getValor();
                 }
             }
@@ -417,7 +417,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     @Override
     public boolean isCepsnulo() {
-        return UtilSBCoreStringValidador.isNuloOuEmbranco(getCep());
+        return UtilCRCStringValidador.isNuloOuEmbranco(getCep());
     }
 
     @Override

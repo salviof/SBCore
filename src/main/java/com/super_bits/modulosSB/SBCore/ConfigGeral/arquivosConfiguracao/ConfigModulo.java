@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoEnuns;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoEnuns;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +35,7 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
     }
 
     public static String getNomeCompleto(ItfFabConfigModulo pPropriedades) {
-        String moduloPrincipal = UtilSBCoreStringSlugs.gerarSlugCaixaAltaByCammelCase(pPropriedades.getClass().getSimpleName().replace("FabConfig", ""));
+        String moduloPrincipal = UtilCRCStringSlugs.gerarSlugCaixaAltaByCammelCase(pPropriedades.getClass().getSimpleName().replace("FabConfig", ""));
         moduloPrincipal = moduloPrincipal.replace("CONFIG_", "");
         moduloPrincipal = moduloPrincipal.replace("CONF_", "");
         String nomeCompleto = moduloPrincipal + "_" + pPropriedades.toString();
@@ -86,7 +86,7 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
 
     public String getPropriedadePorAnotacao(ComoFabrica pPropriedades) {
 
-        ItfFabConfigModulo atributo = UtilSBCoreReflexaoEnuns.getEnumConfigComEstaFabricaNaAnotacao(fabricaConfig, pPropriedades);
+        ItfFabConfigModulo atributo = UtilCRCReflexaoEnuns.getEnumConfigComEstaFabricaNaAnotacao(fabricaConfig, pPropriedades);
         if (atributo == null) {
             throw new UnsupportedOperationException("Atributo " + pPropriedades + "não parece ser um parametro esperado ");
         }

@@ -5,16 +5,16 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsCammelCase;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaComponentePeloId;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaForm;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaGrupoDoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposLabelAlternativo;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposSomenteLeitura;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.util.ArrayList;
@@ -40,12 +40,12 @@ public class GrupoCampos extends EntidadeSimples implements ItfGrupoCampos {
 
     public GrupoCampos(String pTituloGrupo) {
 
-        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pTituloGrupo)) {
+        if (UtilCRCStringValidador.isNuloOuEmbranco(pTituloGrupo)) {
             throw new UnsupportedOperationException("Atenção, o título do grupo é obrigatório, e não deve ser repetir na mesma tela.");
         }
         nomeGrupo = pTituloGrupo;
-        nomeIdentificadorSlug = UtilSBCoreStringFiltros.removeCaracteresEspeciais(
-                UtilSBCoreStringsCammelCase.getCammelByTexto(nomeGrupo));
+        nomeIdentificadorSlug = UtilCRCStringFiltros.removeCaracteresEspeciais(
+                UtilCRCStringsCammelCase.getCammelByTexto(nomeGrupo));
 
     }
 
@@ -86,7 +86,7 @@ public class GrupoCampos extends EntidadeSimples implements ItfGrupoCampos {
             } else {
                 // Caso seja um campo filho de um subformulário exemplo: Cliente.boletos[].valor
                 try {
-                    String caminhoLista = UtilSBCoreReflexaoCaminhoCampo.getStrCaminhoCampoAteCampoLista(pCampo.getCaminhoComleto());
+                    String caminhoLista = UtilCRCReflexaoCaminhoCampo.getStrCaminhoCampoAteCampoLista(pCampo.getCaminhoComleto());
                     CaminhoCampoListagemExibicaoFormulario campoSublista
                             = new CaminhoCampoListagemExibicaoFormulario(
                                     new CaminhoCampoExibicaoFormulario(new CaminhoCampoReflexao(caminhoLista), getNomeIdentificadorSlug()));

@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  *
+ *
  * @author SalvioF
  */
 public interface ItfServidorEmailReceptor extends ItfServidorEmail {

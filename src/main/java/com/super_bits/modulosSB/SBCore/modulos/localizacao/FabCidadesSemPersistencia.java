@@ -5,7 +5,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.localizacao;
 
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreFabrica;
+import org.coletivojava.fw.utilCoreBase.UtilCRCFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.ItemBairro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.cep.ItemCidade;
 import java.util.ArrayList;
@@ -155,7 +155,7 @@ public enum FabCidadesSemPersistencia implements ComoFabrica {
 
     public static List<ItemCidade> getCidadesPorEstado(FabUnidadesFederativasSemPersistencia pUnidade) {
         List<ItemCidade> cidadesListadas = new ArrayList<>();
-        List<ItemCidade> todasCidades = (List) UtilSBCoreFabrica.listaRegistros(FabCidadesSemPersistencia.class);
+        List<ItemCidade> todasCidades = (List) UtilCRCFabrica.listaRegistros(FabCidadesSemPersistencia.class);
         for (Iterator<ItemCidade> iterator = todasCidades.iterator(); iterator.hasNext();) {
             ItemCidade next = iterator.next();
             if (next.getUnidadeFederativa().getSigla().toLowerCase().contains(pUnidade.getRegistro().getSigla().toLowerCase())) {

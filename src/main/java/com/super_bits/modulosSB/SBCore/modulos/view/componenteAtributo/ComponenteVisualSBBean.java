@@ -14,7 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.FabFamiliaCompVisual;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualBase;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreDiretoriosSimples;
+import org.coletivojava.fw.utilCoreBase.UtilCRCDiretoriosSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
@@ -144,7 +144,7 @@ public class ComponenteVisualSBBean extends EntidadeSimples implements ComoCompo
     }
 
     public String getNomeArquivoXHTMLJSF() {
-        return UtilSBCoreDiretoriosSimples.getNomeArquivo(getXhtmlJSF());
+        return UtilCRCDiretoriosSimples.getNomeArquivo(getXhtmlJSF());
     }
 
     public String getXhtmlJsfCaminhoRelativo() {

@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
@@ -135,7 +135,7 @@ public class RespostaSimples implements ItfResposta, Serializable {
 
     @Override
     public boolean isTemUrlDestino() {
-        return UtilSBCoreStringValidador.isNAO_NuloNemBranco(getUrlDestino());
+        return UtilCRCStringValidador.isNAO_NuloNemBranco(getUrlDestino());
     }
 
     @Override
@@ -267,11 +267,11 @@ public class RespostaSimples implements ItfResposta, Serializable {
     @Override
     public String getUrlDestino() {
         if (isSucesso()) {
-            if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(urlDestinoSucesso)) {
+            if (UtilCRCStringValidador.isNAO_NuloNemBranco(urlDestinoSucesso)) {
                 return urlDestinoSucesso;
             }
         } else {
-            if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(urlDestinoFalha)) {
+            if (UtilCRCStringValidador.isNAO_NuloNemBranco(urlDestinoFalha)) {
                 return urlDestinoFalha;
             }
         }

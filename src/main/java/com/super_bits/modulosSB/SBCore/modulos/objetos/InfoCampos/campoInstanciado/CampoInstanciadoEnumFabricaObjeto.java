@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
     private String stringSelecionada;
 
     protected ComoFabrica getFabricaByOrdinal(int pId) {
-        return UtilSBCoreReflexaoFabrica.getFabricaPorOrdinal(classeEnumFab, pId);
+        return UtilCRCReflexaoFabrica.getFabricaPorOrdinal(classeEnumFab, pId);
 
     }
 
@@ -52,7 +52,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
 
     protected ComoFabrica getFabricaByObjeto(ComoEntidadeSimplesSomenteLeitura pEntidade) {
         try {
-            return UtilSBCoreReflexaoFabrica.getEnumDoObjetoFabrica(classeEnumFab, beanSelecionado);
+            return UtilCRCReflexaoFabrica.getEnumDoObjetoFabrica(classeEnumFab, beanSelecionado);
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro localizando Enum do objeto", t);
             return null;
@@ -63,7 +63,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
     public CampoInstanciadoEnumFabricaObjeto(Class pClasseEnumFab, CampoInstanciadoGenerico pCampoInstanciado) {
 
         try {
-            if (!UtilSBCoreReflexao.isInterfaceImplementadaNaClasse(pClasseEnumFab, ComoFabrica.class)) {
+            if (!UtilCRCReflexao.isInterfaceImplementadaNaClasse(pClasseEnumFab, ComoFabrica.class)) {
                 throw new UnsupportedOperationException("A classe referente a fabrica enviada para construir um campo instanciado EnuimFabricaObjeto enviado, não implmenta" + ComoFabrica.class.getSimpleName());
             }
             if (pCampoInstanciado == null) {
@@ -86,7 +86,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
     @Override
     public List<Integer> getListaOpcoesOrdinal() {
         if (listaOpcoesOrdinal == null) {
-            listaOpcoesOrdinal = UtilSBCoreReflexaoFabrica.getListaIntegerDaFabrica(classeEnumFab);
+            listaOpcoesOrdinal = UtilCRCReflexaoFabrica.getListaIntegerDaFabrica(classeEnumFab);
         }
         return listaOpcoesOrdinal;
     }
@@ -103,7 +103,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
                     listaOpcoesObjeto.add(new TipoAtributoObjetoSB(tipoAtr));
                 }
             } else {
-                listaOpcoesObjeto = UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
+                listaOpcoesObjeto = UtilCRCReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
             }
         }
         return listaOpcoesObjeto;
@@ -124,7 +124,7 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
                     listaOpcoesString.add(tipoAtr.toString());
                 }
             } else {
-                listaOpcoesString = UtilSBCoreReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
+                listaOpcoesString = UtilCRCReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
             }
         }
         return listaOpcoesString;

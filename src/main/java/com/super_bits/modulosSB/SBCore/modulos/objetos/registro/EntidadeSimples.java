@@ -1,8 +1,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -10,7 +10,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CampoEsp
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.io.File;
 
@@ -48,7 +47,7 @@ public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
     @Override
     public String getNomeCurto() {
         try {
-            String nomeCurto = UtilSBCoreStringFiltros.getNomeReduzido((String) getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME).getValor());
+            String nomeCurto = UtilCRCStringFiltros.getNomeReduzido((String) getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME).getValor());
 
             return nomeCurto;
         } catch (Throwable t) {
@@ -61,7 +60,7 @@ public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
     public String getNomeCurtoURLAmigavel() {
         return "url amigavel para Item simples não foi implementado";
         //String nomeCurto = (String) getValorByTipoCampoEsperado(FabTipoAtributoObjeto.NOME_CURTO);
-        // return UtilSBCoreStrings.makeStrUrlAmigavel(nomeCurto);
+        // return UtilCRCStrings.makeStrUrlAmigavel(nomeCurto);
     }
 
     @Override
@@ -108,7 +107,7 @@ public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
 
     @Override
     public String getIconeDaClasse() {
-        return UtilSBCoreReflexaoObjeto.getIconeDoObjeto(this.getClass());
+        return UtilCRCReflexaoObjeto.getIconeDoObjeto(this.getClass());
     }
 
     @Override

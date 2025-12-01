@@ -5,12 +5,12 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroCaminhoCampoNaoExiste;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
-import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
+import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -51,11 +51,11 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
 
     @Override
     public void defineNomeCompleto(String pCaminho, Class pClasse) {
-        if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(pCaminho)) {
+        if (UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(pCaminho)) {
             caminhoComleto = pCaminho;
             return;
         }
-        if (UtilSBCoreStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(pCaminho)) {
+        if (UtilCRCStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(pCaminho)) {
             caminhoComleto = pCaminho;
         } else {
             if (pClasse == null) {
@@ -70,12 +70,12 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
     @Override
     public void defineNomeCompleto(String pCaminho) {
 
-        if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(pCaminho)) {
+        if (UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(pCaminho)) {
             caminhoComleto = pCaminho;
             return;
         }
 
-        if (UtilSBCoreStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(pCaminho)) {
+        if (UtilCRCStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(pCaminho)) {
             caminhoComleto = pCaminho;
         } else {
 
@@ -132,12 +132,12 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
     public CaminhoCampoReflexao(FabTipoAtributoObjeto pTipoAtributo, Class pClasse) throws ErroCaminhoCampoNaoExiste {
         //setCaminho(pCaminho);
 
-        this(UtilSBCoreReflexaoCaminhoCampo.getNomeCampobyTipoCampo(pClasse, pTipoAtributo), pClasse);
+        this(UtilCRCReflexaoCaminhoCampo.getNomeCampobyTipoCampo(pClasse, pTipoAtributo), pClasse);
 
     }
 
     private Field validaCampo(Class pClasse) throws ErroCaminhoCampoNaoExiste {
-        if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto)) {
+        if (UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto)) {
             return null;
         }
         Field campo = null;
@@ -145,7 +145,7 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
         if (pClasse == null) {
             campo = getFieldByNomeCompletoCaminho(caminhoComleto);
         } else {
-            campo = UtilSBCoreReflexaoCaminhoCampo.getFieldByNomeCompletoCaminhoEClasse(caminhoComleto, pClasse);
+            campo = UtilCRCReflexaoCaminhoCampo.getFieldByNomeCompletoCaminhoEClasse(caminhoComleto, pClasse);
         }
 
         if (campo == null) {
@@ -177,18 +177,18 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
 
     private void configuraInformacoesBasicasDoCampoPorReflexao(Field pField) throws ErroCaminhoCampoNaoExiste {
 
-        if (UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto)) {
+        if (UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto)) {
             return;
         }
 
-        umCampoVinculado = UtilSBCoreReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto) != null;
+        umCampoVinculado = UtilCRCReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto) != null;
 
         if (umCampoVinculado) {
 
             if (pField.getType().getSimpleName().equals("List")) {
                 umCampoListavel = true;
                 umaEntidade = true;
-                if (UtilSBCoreReflexaoCaminhoCampo.isUmaStringNomeadaComoLista(caminhoComleto)) {
+                if (UtilCRCReflexaoCaminhoCampo.isUmaStringNomeadaComoLista(caminhoComleto)) {
 
                 } else {
                     caminhoComleto += "[]";
@@ -196,7 +196,7 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
                 }
                 // verifica se a referencia é de uma lista, ou sobre um valor específico da lista
                 //ex: Entidade.sublista[] ou Entidade.subLista[0]
-                tipoRegistro = UtilSBCoreReflexaoCaminhoCampo.getTipoCampoLista(caminhoComleto);
+                tipoRegistro = UtilCRCReflexaoCaminhoCampo.getTipoCampoLista(caminhoComleto);
             }
 
             if (pField.isAnnotationPresent(ManyToOne.class)) {
@@ -315,7 +315,7 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
     @Override
     public Field getCampoFieldReflection() {
         try {
-            return UtilSBCoreReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto);
+            return UtilCRCReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto);
         } catch (ErroCaminhoCampoNaoExiste e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo Field do Campo" + caminhoComleto, e);
             return null;
@@ -339,7 +339,7 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
 
     @Override
     public boolean isUmCampoSeparador() {
-        return UtilSBCoreReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto);
+        return UtilCRCReflexaoCaminhoCampo.isUmCampoSeparador(caminhoComleto);
     }
 
     @Override
@@ -362,7 +362,7 @@ public final class CaminhoCampoReflexao extends EntidadeSimples implements ItfCa
     @Override
     public Class getTipoCampo() {
         try {
-            Field campoFieldReflection = UtilSBCoreReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto);
+            Field campoFieldReflection = UtilCRCReflexaoCaminhoCampo.getFieldByNomeCompletoCaminho(caminhoComleto);
             if (umCampoListavel) {
 
                 ParameterizedType genericoTipo = (ParameterizedType) campoFieldReflection.getGenericType();

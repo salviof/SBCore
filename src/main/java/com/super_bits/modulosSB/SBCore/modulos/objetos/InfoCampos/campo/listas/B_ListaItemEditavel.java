@@ -5,11 +5,11 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.listas;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import org.coletivojava.fw.api.objetoNativo.controller.acao.AcaoBotaoNaoRequisitado;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoPreparacaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
@@ -45,7 +45,7 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ComoEntidade
             ComoEntidadeSimples novoObjeto = (ComoEntidadeSimples) campoInstanciado.getPropriedadesRefexao().getClasseDeclaracaoAtributo().newInstance();
 
             Class classeObjetoPrincipal = campoInstanciado.getPropriedadesRefexao().getClasseOrigemAtributo();
-            InfoPreparacaoObjeto preparadorObjeto = UtilSBCoreReflexaoObjeto.getInfoPreparacaoObjeto(novoObjeto.getClass());
+            InfoPreparacaoObjeto preparadorObjeto = UtilCRCReflexaoObjeto.getInfoPreparacaoObjeto(novoObjeto.getClass());
 
             Class[] classeSConstructor = null;
             if (preparadorObjeto != null) {
@@ -167,8 +167,8 @@ public class B_ListaItemEditavel implements ItflistagemItemEditavel<ComoEntidade
         ComoAcaoDoSistema acao = new AcaoBotaoNaoRequisitado();
         try {
 
-            Field campo = UtilSBCoreReflexaoCaminhoCampo.getFieldByCaminho(new CaminhoCampoReflexao(campoInstanciado.getObjetoDoAtributo().getClass().getSimpleName() + "." + campoInstanciado.getNomeCompostoIdentificador()));
-            InfoObjetoSB infoObj = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(UtilSBCoreReflexao.getClasseGenericaDaClasseDoCampo(campo));
+            Field campo = UtilCRCReflexaoCaminhoCampo.getFieldByCaminho(new CaminhoCampoReflexao(campoInstanciado.getObjetoDoAtributo().getClass().getSimpleName() + "." + campoInstanciado.getNomeCompostoIdentificador()));
+            InfoObjetoSB infoObj = UtilCRCReflexaoObjeto.getInfoClasseObjeto(UtilCRCReflexao.getClasseGenericaDaClasseDoCampo(campo));
             if (!infoObj.generoFeminino()) {
                 acao.setNomeAcao("Incluir " + infoObj.tags()[0]);
             } else {

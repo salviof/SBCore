@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.logeventos;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreNumeros;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCNumeros;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import java.util.Date;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
 
     @Override
     public void registrarLogDeEvento(FabMensagens pTipoEvento, String mensagem) {
-        UtilSBCoreArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", "0000|" + new Date().toString() + "..|" + mensagem);
+        UtilCRCArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", "0000|" + new Date().toString() + "..|" + mensagem);
         System.out.println("log " + pTipoEvento + "gerado em " + diretorioArquivoLog());
     }
 
@@ -46,19 +46,19 @@ public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
     public void registrarLogDeEvento(FabMensagens pTipoEvento, String mensagem, int pCodErro) {
         String codigoErro = "não informado";
         try {
-            codigoErro = UtilSBCoreNumeros.getLpadZero(pCodErro, 4).toString();
+            codigoErro = UtilCRCNumeros.getLpadZero(pCodErro, 4).toString();
         } catch (Throwable t) {
 
         }
         String diretorio = diretorioArquivoLog();
-        UtilSBCoreArquivoTexto.escreverEmArquivo(diretorio
+        UtilCRCArquivoTexto.escreverEmArquivo(diretorio
                 + "/logAplicacao" + pTipoEvento + ".txt", codigoErro + "|" + new Date().toString() + "..|" + mensagem
         );
     }
 
     @Override
     public void registrarLogDeEvento(FabMensagens pTipoEvento, String mensagem, int pCodErro, Map<String, String> propriedades) {
-        UtilSBCoreArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", "0000|" + new Date().toString() + "..|" + mensagem);
+        UtilCRCArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", "0000|" + new Date().toString() + "..|" + mensagem);
     }
 
 }

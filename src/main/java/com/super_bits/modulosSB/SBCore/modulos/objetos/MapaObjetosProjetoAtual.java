@@ -6,9 +6,9 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
@@ -124,7 +124,7 @@ public class MapaObjetosProjetoAtual {
     private static EstruturaDeEntidade makeEstrutura(Class pClasse) {
         EstruturaDeEntidade novaEstrutura = new EstruturaDeEntidade();
         Class classeEtrutura = pClasse;
-        InfoObjetoSB infoClasse = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(classeEtrutura);
+        InfoObjetoSB infoClasse = UtilCRCReflexaoObjeto.getInfoClasseObjeto(classeEtrutura);
 
         novaEstrutura.setNomeEntidade(classeEtrutura.getSimpleName());
         novaEstrutura.setIcone(infoClasse.icone());
@@ -132,7 +132,7 @@ public class MapaObjetosProjetoAtual {
         novaEstrutura.setDescricao(infoClasse.descricao());
         novaEstrutura.setTags(Lists.newArrayList(infoClasse.tags()));
 
-        UtilSBCoreReflexao.getCamposRecursivodaClasseAteConterNomeObjetoFinal(pClasse, "Entidade", "ItemGenerico").forEach((campo) -> {
+        UtilCRCReflexao.getCamposRecursivodaClasseAteConterNomeObjetoFinal(pClasse, "Entidade", "ItemGenerico").forEach((campo) -> {
             try {
                 novaEstrutura.adicionarCampo(campo);
             } catch (Throwable t) {
@@ -179,7 +179,7 @@ public class MapaObjetosProjetoAtual {
 
                 switch (i) {
                     case 0:
-                        if (UtilSBCoreStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(partes[i])) {
+                        if (UtilCRCStringValidador.isPrimeiraLetraMaiusculaSegundaMinuscula(partes[i])) {
                             estruturaObj = MapaObjetosProjetoAtual.getEstruturaObjeto(partes[i]);
                         } else {
                             throw new UnsupportedOperationException("Você precisa especificar um caminho completo incluindo a classe com a primeira letra maiúscula para obter as propriedades do campo");

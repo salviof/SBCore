@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.tempo;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
@@ -90,8 +90,8 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 // A base de Calculos sempre será anual
                 switch (divisorMaximo) {
                     case ANOS:
-                        return UtilSBCoreDataHora.quantidadeTempoEmAnos(valor, divisorMaximo);
-                    //return UtilSBCoreDataHora.intervaloTempoAnos(valor);
+                        return UtilCRCDataHora.quantidadeTempoEmAnos(valor, divisorMaximo);
+                    //return UtilCRCDataHora.intervaloTempoAnos(valor);
                     case MESES:
                     case SEMANAS:
                     case DIAS:
@@ -106,11 +106,11 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 // Caso a base de calulos seja abaixo de Anos, não dividir por 12
                 switch (divisorMaximo) {
                     case ANOS:
-                        //return UtilSBCoreDataHora.quantidadeTempoEmMeses(valor, FabTipoQuantidadeTempo.ANOS);
-                        return UtilSBCoreDataHora.intervaloTempoMeses(valor) % 12L; // optei por utilizar o cálculo antigo devido ao retorno inesperado no calculo quantidadeTempoMeses acima
+                        //return UtilCRCDataHora.quantidadeTempoEmMeses(valor, FabTipoQuantidadeTempo.ANOS);
+                        return UtilCRCDataHora.intervaloTempoMeses(valor) % 12L; // optei por utilizar o cálculo antigo devido ao retorno inesperado no calculo quantidadeTempoMeses acima
                     case MESES:
-                        return UtilSBCoreDataHora.quantidadeTempoEmMeses(valor, divisorMaximo);
-                    //return UtilSBCoreDataHora.intervaloTempoMeses(valor);
+                        return UtilCRCDataHora.quantidadeTempoEmMeses(valor, divisorMaximo);
+                    //return UtilCRCDataHora.intervaloTempoMeses(valor);
                     default:
                         return 0L;
                 }
@@ -120,12 +120,12 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 //caso ignorar semanas, retornar -1
                 switch (divisorMaximo) {
                     case ANOS://2
-                        return UtilSBCoreDataHora.quantidadeTempoEmSemanas(valor, FabTipoQuantidadeTempo.ANOS);
+                        return UtilCRCDataHora.quantidadeTempoEmSemanas(valor, FabTipoQuantidadeTempo.ANOS);
                     case MESES://2
-                    //return UtilSBCoreDataHora.quantidadeTempoEmSemanas(valor, FabTipoQuantidadeTempo.MESES);
+                    //return UtilCRCDataHora.quantidadeTempoEmSemanas(valor, FabTipoQuantidadeTempo.MESES);
                     case SEMANAS:
-                        //return UtilSBCoreDataHora.intervaloTempoSemanas(valor
-                        UtilSBCoreDataHora.quantidadeTempoEmSemanas(valor, divisorMaximo);
+                        //return UtilCRCDataHora.intervaloTempoSemanas(valor
+                        UtilCRCDataHora.quantidadeTempoEmSemanas(valor, divisorMaximo);
                     default:
                         return 0L;
                 }
@@ -142,13 +142,13 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                     case ANOS:
                         //long diasAno = 365L;
                         //long semanasAno = 52L;
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 30L; // 16
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 30L; // 16
                     case MESES:
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 30L; // 16
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 30L; // 16
                     case SEMANAS:
-                    //return (UtilSBCoreDataHora.intervaloTempoSemanas(valor) - 52L) % 3; // 2
+                    //return (UtilCRCDataHora.intervaloTempoSemanas(valor) - 52L) % 3; // 2
                     case DIAS:
-                        return UtilSBCoreDataHora.intervaloTempoDias(valor);
+                        return UtilCRCDataHora.intervaloTempoDias(valor);
                     default:
                         return 0L;
                 }
@@ -163,15 +163,15 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 switch (divisorMaximo) {
                     case ANOS:
                         //Long diasAno = 365L; dias em um ano
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
                     case MESES:
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
                     case SEMANAS:
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
                     case DIAS:
-                        return (UtilSBCoreDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
+                        return (UtilCRCDataHora.intervaloTempoDias(valor) - 365L) % 24L; //4
                     case HORAS:
-                        return UtilSBCoreDataHora.intervaloTempoHoras(valor);
+                        return UtilCRCDataHora.intervaloTempoHoras(valor);
 
                     default:
                         return 0L;
@@ -188,17 +188,17 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 switch (divisorMaximo) {
                     case ANOS: // 2
                         // Long minutosAno = 525600L; valor referência para somente um ano
-                        return (UtilSBCoreDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
+                        return (UtilCRCDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
                     case MESES:
-                        return (UtilSBCoreDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
+                        return (UtilCRCDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
                     case SEMANAS:
-                        return (UtilSBCoreDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
+                        return (UtilCRCDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
                     case DIAS:
-                        return (UtilSBCoreDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
+                        return (UtilCRCDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
                     case HORAS:
-                        return (UtilSBCoreDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
+                        return (UtilCRCDataHora.intervarlTempoMinutos(valor) - 525600L) % 12; //2
                     case MINUTOS:
-                        return UtilSBCoreDataHora.intervarlTempoMinutos(valor);
+                        return UtilCRCDataHora.intervarlTempoMinutos(valor);
                     default:
                         return 0L;
                 }
@@ -214,19 +214,19 @@ public enum FabTipoQuantidadeTempo implements ComoFabrica {
                 switch (divisorMaximo) {
                     case ANOS: // 15
                         //Long segundosAno = 31536000L; // valor referência de segundos somente para um ano
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case MESES:
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case SEMANAS:
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case DIAS:
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case HORAS:
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case MINUTOS:
-                        return (UtilSBCoreDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
+                        return (UtilCRCDataHora.intervaloTempoSegundos(valor) - 31536000L) % 60; //15
                     case SEGUNDOS:
-                        return UtilSBCoreDataHora.intervaloTempoSegundos(valor);
+                        return UtilCRCDataHora.intervaloTempoSegundos(valor);
                     default:
                         return 0L;
 

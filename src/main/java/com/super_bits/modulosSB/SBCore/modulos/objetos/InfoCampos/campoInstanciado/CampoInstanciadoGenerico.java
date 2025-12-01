@@ -6,16 +6,16 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaPesquisaFonetica;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidacao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.AtributoObjetoSB;
@@ -173,7 +173,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             case ARQUIVO_DE_ENTIDADE:
                 return !getComoArquivoDeEntidade().isExisteArquivo();
             default:
-                return (UtilSBCoreStringValidador.isNuloOuEmbranco(getValor()));
+                return (UtilCRCStringValidador.isNuloOuEmbranco(getValor()));
         }
 
     }
@@ -187,7 +187,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
     @Override
     public String getLabelSlug() {
-        return UtilSBCoreStringFiltros.gerarUrlAmigavel(getLabel());
+        return UtilCRCStringFiltros.gerarUrlAmigavel(getLabel());
     }
 
     @Override
@@ -976,7 +976,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                     return "Data não Informada";
                 }
                 Date data = (Date) valor;
-                return UtilSBCoreDataHora.converteDataEmStringFormatada(data);
+                return UtilCRCDataHora.converteDataEmStringFormatada(data);
 
             case VERDADEIRO_FALSO:
                 if (valor == null) {
@@ -1037,7 +1037,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
                                 String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor().toString();
 
-                                if (!UtilSBCoreStringValidador.isNuloOuEmbranco(descricao)) {
+                                if (!UtilCRCStringValidador.isNuloOuEmbranco(descricao)) {
                                     return descricao;
                                 }
 
@@ -1123,13 +1123,13 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
             if (isUmCampoCampoLocalizacao()) //Caso a localização seja inválida, e este valor não for obrigatório, Configura valor nulo
             {
-                if (!UtilSBCoreValidacao.gerarMensagensValidacao(this, getValor(), valorModificado, false).isEmpty()) {
+                if (!UtilCRCValidacao.gerarMensagensValidacao(this, getValor(), valorModificado, false).isEmpty()) {
                     setValor(null);
                     return false;
                 }
             }
 
-            boolean validacoesBasicas = UtilSBCoreValidacao.validacoesBasicas(this, getValor());
+            boolean validacoesBasicas = UtilCRCValidacao.validacoesBasicas(this, getValor());
             if (!validacoesBasicas) {
                 return false;
             }
@@ -1173,7 +1173,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         }
         try {
 
-            return UtilSBCoreStringComparador.isParecido(valor.toString(), pParametro.toString());
+            return UtilCRCStringComparador.isParecido(valor.toString(), pParametro.toString());
 
         } catch (Throwable t) {
             return false;
@@ -1216,7 +1216,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                 if (isUmItemDeUmaLista()) {
                     try {
                         ComoEntidadeSimplesSomenteLeitura itemSelecionado = (ComoEntidadeSimplesSomenteLeitura) getValor();
-                        if (itemSelecionado.getId() == null || itemSelecionado.getId() == null && UtilSBCoreStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
+                        if (itemSelecionado.getId() == null || itemSelecionado.getId() == null && UtilCRCStringValidador.isNuloOuEmbranco(itemSelecionado.getNome())) {
                             valorNaoPrenchido = true;
                         }
                     } catch (Throwable t) {
@@ -1261,7 +1261,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     @Override
     public boolean validarCampo(Object pValor) {
 
-        return UtilSBCoreValidacao.validacoesBasicas(this, pValor);
+        return UtilCRCValidacao.validacoesBasicas(this, pValor);
     }
 
     @Override
@@ -1353,7 +1353,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         } else {
 
             if (validacaoLogica == null) {
-                validacaoLogica = UtilSBCoreReflexaoCaminhoCampo.getValidadorDoCampoInstanciado((ItfCampoInstanciado) this);
+                validacaoLogica = UtilCRCReflexaoCaminhoCampo.getValidadorDoCampoInstanciado((ItfCampoInstanciado) this);
             }
         }
         return validacaoLogica;

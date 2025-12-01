@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreValidadorGoverno;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
@@ -43,7 +43,7 @@ public class ValidarUnitarioREGEX extends ValidadorUnitarioCampoInstGenerico imp
             return null;
         } else {
             if (campoInstanciado.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.URL)) {
-                if (!UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+                if (!UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
                     try {
                         new URL((String) pValor);
                     } catch (MalformedURLException ex) {
@@ -53,7 +53,7 @@ public class ValidarUnitarioREGEX extends ValidadorUnitarioCampoInstGenerico imp
                 return null;
             }
 
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor) || !pValor.getClass().getSimpleName().equals(String.class.getSimpleName())) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(pValor) || !pValor.getClass().getSimpleName().equals(String.class.getSimpleName())) {
                 return null;
             } else {
                 try {

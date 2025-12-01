@@ -5,7 +5,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
@@ -52,11 +52,11 @@ public abstract class CampoInstanciadoDinamico extends CampoInstanciadoGenerico 
         if (logicaValorAutomatico != null) {
             return logicaValorAutomatico;
         }
-        if (UtilSBCoreStringValidador.isNuloOuEmbranco(getValorPadrao())) {
+        if (UtilCRCStringValidador.isNuloOuEmbranco(getValorPadrao())) {
             return null;
         }
 
-        logicaValorAutomatico = UtilSBCoreReflexaoCampoLogicoDinamico.getLogicaValorCampo(getValorPadrao(), this);
+        logicaValorAutomatico = UtilCRCReflexaoCampoLogicoDinamico.getLogicaValorCampo(getValorPadrao(), this);
 
         return logicaValorAutomatico;
     }

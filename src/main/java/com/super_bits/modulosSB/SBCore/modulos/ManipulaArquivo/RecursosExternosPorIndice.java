@@ -7,8 +7,8 @@ package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreJson;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCJson;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import jakarta.json.JsonObject;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -49,7 +49,7 @@ public class RecursosExternosPorIndice {
 
     public boolean putConteudoRecursoExterno(String pIndice, String pConteudo) {
         try {
-            return UtilSBCoreArquivoTexto.escreverEmArquivoSubstituindoArqAnterior(getCaminhoArquivo(pIndice), pConteudo);
+            return UtilCRCArquivoTexto.escreverEmArquivoSubstituindoArqAnterior(getCaminhoArquivo(pIndice), pConteudo);
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro escrevendo em indice", t);
             return false;
@@ -69,11 +69,11 @@ public class RecursosExternosPorIndice {
     public JsonObject getJsonObjeto(String pIndice) {
         try {
             String texto = getTexto(pIndice);
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(texto)) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(texto)) {
                 return JsonObject.EMPTY_JSON_OBJECT;
             }
 
-            return UtilSBCoreJson.getJsonObjectByTexto(texto);
+            return UtilCRCJson.getJsonObjectByTexto(texto);
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Obtendo objeto Json" + t.getMessage(), t);
             return null;

@@ -17,7 +17,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreReflexaoObjetoSimples;
+import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoObjetoSimples;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 
 /**

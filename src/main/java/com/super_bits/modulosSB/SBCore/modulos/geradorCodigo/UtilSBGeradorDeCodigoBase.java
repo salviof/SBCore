@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsMaiuculoMinusculo;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsMaiuculoMinusculo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 
@@ -31,10 +31,10 @@ public class UtilSBGeradorDeCodigoBase {
     }
 
     public static String getNomeClasseValidacao(ItfEstruturaCampoEntidade pCampo) {
-        return "Validacao" + pCampo.getEstruturaPai().getNome() + UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
+        return "Validacao" + pCampo.getEstruturaPai().getNome() + UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
     }
 
     public static String getNomeClasseValorLogico(ItfEstruturaCampoEntidade pCampo) {
-        return "ValorLogico" + pCampo.getEstruturaPai().getNome() + UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
+        return "ValorLogico" + pCampo.getEstruturaPai().getNome() + UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMaiusculo(pCampo.getNomeDeclarado());
     }
 }

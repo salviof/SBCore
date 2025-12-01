@@ -6,10 +6,10 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreDiretoriosSimples;
+import org.coletivojava.fw.utilCoreBase.UtilCRCDiretoriosSimples;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.RecursosExternosPorIndice;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,7 +57,7 @@ public abstract class ArquivoConfiguracaoModulo {
         String arquivo = UtilSBcoreModulos.getCaminhoAbsolutoDoContextoAtual(fabricaConfig);
         try {
             if (!new File(arquivo).exists()) {
-                UtilSBCoreArquivos.criarDiretorioParaArquivo(arquivo);
+                UtilCRCArquivos.criarDiretorioParaArquivo(arquivo);
             }
             if (!new File(arquivo).exists()) {
                 if (!salvarPropriedadesPadrao()) {
@@ -98,7 +98,7 @@ public abstract class ArquivoConfiguracaoModulo {
             }
             UtilSBcoreModulos.getCaminhoRelativoConfigModulo(fabricaConfig);
 
-            String diretorio = UtilSBCoreDiretoriosSimples.getDiretorioArquivo(caminhoCOmpleto);
+            String diretorio = UtilCRCDiretoriosSimples.getDiretorioArquivo(caminhoCOmpleto);
             File dirFile = new File(diretorio);
             if (!dirFile.exists()) {
                 new File(diretorio).mkdirs();

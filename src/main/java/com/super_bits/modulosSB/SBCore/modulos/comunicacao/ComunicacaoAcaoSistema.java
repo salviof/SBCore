@@ -5,10 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.RespostaComunicacao;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 
@@ -51,7 +51,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
     public String gerarMensagemPAdrao() {
         assunto = acaoVinculada.getNomeAcao();
         String artigoNome = "o";
-        if (UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(beanVinculado.getClass()).generoFeminino()) {
+        if (UtilCRCReflexaoObjeto.getInfoClasseObjeto(beanVinculado.getClass()).generoFeminino()) {
             artigoNome = "a";
         }
         switch (acaoVinculada.getTipoAcaoGenerica()) {
@@ -72,7 +72,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
                 }
 
         }
-        if (UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(beanVinculado.getClass()).generoFeminino()) {
+        if (UtilCRCReflexaoObjeto.getInfoClasseObjeto(beanVinculado.getClass()).generoFeminino()) {
             mensagem = "Deseja " + acaoVinculada.getNomeAcao() + "-" + beanVinculado.getNome() + " ";
         } else {
             mensagem = "Deseja " + acaoVinculada.getNomeAcao() + "-" + beanVinculado.getNome() + " ";
@@ -88,11 +88,11 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
         this.destinatario = new DestinatarioTransiente(SBCore.getUsuarioLogado());
         this.usuarioRemetente = new UsuarioSistemaRoot();
 
-        this.repostas = UtilSBCoreComunicacao.getRespostaCOmunicacao(this);
+        this.repostas = UtilCRCComunicacao.getRespostaCOmunicacao(this);
 
         if (this.repostas.isEmpty()) {
 
-            repostas.addAll(UtilSBCoreComunicacao.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
+            repostas.addAll(UtilCRCComunicacao.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
 
         }
         String mensagemModeloPredefinida = pAcaoVinculada.getTipoComunicacao().getMensagemModeloPredefinida();
@@ -101,10 +101,10 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
 
     @Override
     public String getMensagem() {
-        InfoTipoAcaoController anotacao = UtilSBCoreReflexao.getAnotacaoEmEnum(InfoTipoAcaoController.class, (Enum) acaoVinculada.getEnumAcaoDoSistema());
+        InfoTipoAcaoController anotacao = UtilCRCReflexao.getAnotacaoEmEnum(InfoTipoAcaoController.class, (Enum) acaoVinculada.getEnumAcaoDoSistema());
 
-        if (anotacao != null && UtilSBCoreStringValidador.isNAO_NuloNemBranco(anotacao.fraseComunicação())) {
-            return UtilSBCoreStringVariaveisEntreCaracteres.gerarTextoSubstituindoAtributosSimples(anotacao.fraseComunicação(), beanVinculado);
+        if (anotacao != null && UtilCRCStringValidador.isNAO_NuloNemBranco(anotacao.fraseComunicação())) {
+            return UtilCRCStringVariaveisEntreCaracteres.gerarTextoSubstituindoAtributosSimples(anotacao.fraseComunicação(), beanVinculado);
         }
         if (tipoComunicacao.getMensagemModeloPredefinida() == null
                 || tipoComunicacao.getMensagemModeloPredefinida().isEmpty()) {

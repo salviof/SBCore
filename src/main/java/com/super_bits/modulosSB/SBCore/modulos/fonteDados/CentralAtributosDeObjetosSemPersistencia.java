@@ -5,13 +5,13 @@
 package com.super_bits.modulosSB.SBCore.modulos.fonteDados;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.FabricaObjetosRegistrados;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoLisgagemOpcoesCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
@@ -73,7 +73,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ComoServicoAtri
             switch (tipoLista) {
                 case LISTA_POR_FABRICA_DE_REGISTROS:
 
-                    return UtilSBCoreReflexaoFabrica.getListaTodosRegistrosDaFabrica(pPropriedades.getFabricaCriacaoOpcoes());
+                    return UtilCRCReflexaoFabrica.getListaTodosRegistrosDaFabrica(pPropriedades.getFabricaCriacaoOpcoes());
 
                 case LISTAR_POR_SUBLISTA:
                     throw new UnsupportedOperationException("Para listar a partir de sublista, é nescessário utilizar um campo instanciado");
@@ -115,8 +115,8 @@ public class CentralAtributosDeObjetosSemPersistencia implements ComoServicoAtri
         if (!pCampoInstanciado.getListaDeOpcoes().isEmpty()) {
             pCampoInstanciado.getListaDeOpcoes().stream().filter((item) -> (item != null)).forEachOrdered((item) -> {
                 String nome = item.getNome();
-                if (nome != null && UtilSBCoreStringValidador.isNAO_NuloNemBranco(pFiltro)) {
-                    if (UtilSBCoreStringComparador.isParecido(item.getNome(), pFiltro)) {
+                if (nome != null && UtilCRCStringValidador.isNAO_NuloNemBranco(pFiltro)) {
+                    if (UtilCRCStringComparador.isParecido(item.getNome(), pFiltro)) {
                         resultado.add(item);
                     }
                 }
@@ -131,7 +131,7 @@ public class CentralAtributosDeObjetosSemPersistencia implements ComoServicoAtri
     ) {
 
         try {
-            InfoObjetoSB infoObj = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(pObjeto.getClasseObjeto());
+            InfoObjetoSB infoObj = UtilCRCReflexaoObjeto.getInfoClasseObjeto(pObjeto.getClasseObjeto());
             if (!infoObj.fabricaVinculada().equals(FabricaObjetosRegistrados.class)) {
                 pObjeto.setQuantidadeRegistro(infoObj.fabricaVinculada().getEnumConstants().length);
             }

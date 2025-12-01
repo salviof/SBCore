@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import java.io.File;
 import java.util.Properties;
 
@@ -53,11 +53,11 @@ public class ArquivoConfiguracaoDistribuicao {
 
         if (temArquivoImplantacao) {
             emAmbienteDeProducao = true;
-            propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
+            propriedadesImplantacao = UtilCRCArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
         } else {
             emAmbienteDeProducao = false;
             if (temArquivoDesenvolvimento) {
-                propriedadesImplantacao = UtilSBCoreArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
+                propriedadesImplantacao = UtilCRCArquivoTexto.getPropriedadesNoArquivo(arquivoConfiguracoes);
             }
         }
 

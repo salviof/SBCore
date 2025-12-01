@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfLayoutComponentesEmTela;
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreLayoutComponenteEmTelaBasico;
+import org.coletivojava.fw.utilCoreBase.UtilCRCLayoutComponenteEmTelaBasico;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfColunaTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.layout.ItfLinhaTela;
@@ -89,7 +89,7 @@ public class LayoutComponentesEmTela implements ItfLayoutComponentesEmTela {
                 novaColuna.setComponenteVinculado(cp);
                 novaColuna.setPesoLarguraIdeal(cp.getPesoLargura());
 
-                novaColuna.setPorcentagemIdeal(cp.getPesoLargura() * UtilSBCoreLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM);
+                novaColuna.setPorcentagemIdeal(cp.getPesoLargura() * UtilCRCLayoutComponenteEmTelaBasico.VALOR_UNIDADE_COLUNA_PORCENTAGEM);
                 mapaColunas.put(cp.getNomeIdentificador(), novaColuna);
                 mapaColunas.put(nomeIdentificadoLayout + "." + cp.getNomeIdentificador(), novaColuna);
 

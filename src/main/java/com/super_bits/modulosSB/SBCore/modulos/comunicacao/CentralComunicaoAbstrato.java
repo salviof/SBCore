@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroAcessandoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroRegistrandoDialogo;
@@ -24,12 +24,12 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
 
     @Override
     public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem) {
-        return gerarComunicacaoSistema_Usuario(tipocomunicacao, pUsuario, mensagem, UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
+        return gerarComunicacaoSistema_Usuario(tipocomunicacao, pUsuario, mensagem, UtilCRCStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
     }
 
     @Override
     public ItfDialogo gerarComunicacaoSistema_UsuarioLogado(FabTipoComunicacao tipocomunicacao, String mensagem) {
-        return gerarComunicacaoSistema_Usuario(tipocomunicacao, SBCore.getUsuarioLogado(), mensagem, UtilSBCoreStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
+        return gerarComunicacaoSistema_Usuario(tipocomunicacao, SBCore.getUsuarioLogado(), mensagem, UtilCRCStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
     }
 
     @Override

@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.testes;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoCaminhoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TIPO_ORIGEM_VALOR_CAMPO;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,11 +95,11 @@ public class TestesCore {
         String lista = "asdasdas0dasdasd[0]";
         String lista2 = "usuarios";
 
-        UtilSBCoreReflexaoCaminhoCampo.isUmaStringNomeadaComoLista(lista2);
+        UtilCRCReflexaoCaminhoCampo.isUmaStringNomeadaComoLista(lista2);
 
-        TIPO_ORIGEM_VALOR_CAMPO tp = UtilSBCoreReflexaoCaminhoCampo.getTipoCampoLista(lista);
+        TIPO_ORIGEM_VALOR_CAMPO tp = UtilCRCReflexaoCaminhoCampo.getTipoCampoLista(lista);
 
-        String listaSemNumero = UtilSBCoreReflexaoCaminhoCampo.getListaSemIndice(lista);
+        String listaSemNumero = UtilCRCReflexaoCaminhoCampo.getListaSemIndice(lista);
         String listaSemColchete = listaSemNumero.replaceAll("\\[]", "");
         String teste = "sdasdasdasdasd,\n";
         if (teste.endsWith(",\n")) {

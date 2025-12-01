@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ErroValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
@@ -31,7 +31,7 @@ public class ValidadorUnitarioEmail extends ValidadorUnitarioCampoInstGenerico i
         if (pValor == null) {
             return null;
         }
-        if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+        if (UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
             return null;
         }
         try {

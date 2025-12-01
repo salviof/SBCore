@@ -5,8 +5,8 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Mensagens;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import java.util.Date;
 
 /**
@@ -29,10 +29,10 @@ public class CentralMensagemArqTexto extends CentralDeMensagemAbstrata {
     private String makeCabecalho(FabTipoAgenteDoSistema destinatario) {
         String linha = " -[";
         if (destinatario == FabTipoAgenteDoSistema.SISTEMA) {
-            linha = linha + UtilSBCoreDataHora.datahoraSistemaFr.format(new Date());
+            linha = linha + UtilCRCDataHora.datahoraSistemaFr.format(new Date());
         }
         if (destinatario == FabTipoAgenteDoSistema.USUARIO) {
-            linha = linha + UtilSBCoreDataHora.getAgoraString(UtilSBCoreDataHora.FORMATO_TEMPO.DATA_HORA_USUARIO);
+            linha = linha + UtilCRCDataHora.getAgoraString(UtilCRCDataHora.FORMATO_TEMPO.DATA_HORA_USUARIO);
 
         }
 
@@ -42,7 +42,7 @@ public class CentralMensagemArqTexto extends CentralDeMensagemAbstrata {
     public void enviaMensagem(ItfMensagem pMensagem) {
 
         // TODO UM arquivo para cada destinatario
-        UtilSBCoreArquivoTexto.escreverEmArquivo(ARQLOGUSUARIO + "_" + tipoMensagem, makeCabecalho(pMensagem.getTipoDestinatario()) + pMensagem.getMenssagem());
+        UtilCRCArquivoTexto.escreverEmArquivo(ARQLOGUSUARIO + "_" + tipoMensagem, makeCabecalho(pMensagem.getTipoDestinatario()) + pMensagem.getMenssagem());
     }
 
 }

@@ -6,12 +6,12 @@ package com.super_bits.modulosSB.SBCore.modulos.sessao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreEmail;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCEmail;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.token.ItfTokenRecuperacaoEmail;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import java.io.Serializable;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreComunicacao;
+import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
 
@@ -54,9 +54,9 @@ public abstract class ControleDeSessaoAbstratoSBCore implements ComoControleDeSe
                 SBCore.enviarMensagemUsuario("Erro gerando token de acesso", FabMensagens.ERRO);
                 return;
             }
-            if (UtilSBCoreEmail.enviarPorServidorPadraoV2(
+            if (UtilCRCEmail.enviarPorServidorPadraoV2(
                     pEmail,
-                    UtilSBCoreComunicacao.getSaudacao() + ", " + usuarioEncontrado.getNome()
+                    UtilCRCComunicacao.getSaudacao() + ", " + usuarioEncontrado.getNome()
                     + ", utilize este token: " + token.getCodigo() + ", para recuperar sua senha",
                     "Recuperação de senha") != null) {
                 SBCore.enviarAvisoAoUsuario("Um e-mail com a senha foi enviado para " + pEmail);

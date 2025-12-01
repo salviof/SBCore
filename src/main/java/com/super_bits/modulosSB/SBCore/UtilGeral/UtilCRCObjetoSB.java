@@ -1,0 +1,42 @@
+/*
+ *  Desenvolvido pela equipe Super-Bits.com CNPJ 20.019.971/0001-90
+
+ */
+package com.super_bits.modulosSB.SBCore.UtilGeral;
+
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+
+/**
+ *
+ * @author SalvioF
+ */
+public class UtilCRCObjetoSB {
+
+    @Deprecated
+    public static boolean compararObjetos(ComoEntidadeSimples pReferencia, ComoEntidadeSimples pObjetoComparado) {
+
+        return isObjetosIguais(pReferencia, pObjetoComparado);
+    }
+
+    public static boolean isObjetosIguais(ComoEntidadeSimples pReferencia, ComoEntidadeSimples pObjetoComparado) {
+        if (pObjetoComparado == null && pReferencia != null) {
+            return false;
+        }
+        if (pReferencia == null && pObjetoComparado != null) {
+            return false;
+        }
+        if (pReferencia == null && pObjetoComparado == null) {
+            return true;
+        }
+
+        return pObjetoComparado.equals(pReferencia);
+    }
+
+    public static boolean isEntidadeSimplesExistETemNome(ComoEntidadeSimples pEntidadeSimples) {
+        if (pEntidadeSimples == null) {
+            return false;
+        }
+        return UtilCRCStringValidador.isNAO_NuloNemBranco(pEntidadeSimples.getNome());
+    }
+
+}

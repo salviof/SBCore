@@ -4,8 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.view;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsMaiuculoMinusculo;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsMaiuculoMinusculo;
 
 /**
  *
@@ -46,20 +46,20 @@ public abstract class ServicoVisualizacaoAbstrato implements ItfServicoVisualiza
     @Override
     public String buildArqXHTML(Class pEntidade, String ptipoVisualizacao, boolean versaoMobile) {
         if (!versaoMobile) {
-            return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".xhtml";
+            return UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".xhtml";
         } else {
-            return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + "Mobile.xhtml";
+            return UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + "Mobile.xhtml";
         }
     }
 
     @Override
     public String buildArqJavaScript(Class pEntidade, String ptipoVisualizacao) {
-        return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".js";
+        return UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".js";
     }
 
     @Override
     public String buildArqCSSFolhaDeEstilo(Class pEntidade, String ptipoVisualizacao) {
-        return UtilSBCoreStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".css";
+        return UtilCRCStringsMaiuculoMinusculo.getPrimeiraLetraMinuscula(pEntidade.getSimpleName()) + ptipoVisualizacao + ".css";
     }
 
     private String buildCaminhoPastaView(Class pEntidade) {

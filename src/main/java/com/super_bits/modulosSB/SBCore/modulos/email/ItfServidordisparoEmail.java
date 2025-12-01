@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.email;
 
 /**
  *
+ *
  * @author SalvioF
  */
 public interface ItfServidordisparoEmail extends ItfServidorEmail {

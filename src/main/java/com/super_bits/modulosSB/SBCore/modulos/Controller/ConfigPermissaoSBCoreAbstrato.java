@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreCriptrografia;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCCriptrografia;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfServicoPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
@@ -53,7 +53,7 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
             return false;
         }
         if (senhaArmazenada.length() > 40) {
-            return UtilSBCoreCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio(senhaEnviada, senhaArmazenada);
+            return UtilCRCCriptrografia.checarCriptografiaTextoSimetricoSaltAleatorio(senhaEnviada, senhaArmazenada);
         } else {
             return senhaArmazenada.equals(senhaEnviada);
         }

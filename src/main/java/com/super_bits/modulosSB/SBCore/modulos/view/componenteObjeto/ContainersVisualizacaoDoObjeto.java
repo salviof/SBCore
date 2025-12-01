@@ -6,7 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.view.componenteObjeto;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.view.ServicoVisualizacaoAbstrato;
 import java.io.File;
@@ -198,7 +198,7 @@ public class ContainersVisualizacaoDoObjeto {
         }
         for (File pastaTipoVisualizacao : pastaContainers.listFiles()) {
             if (pastaTipoVisualizacao.isDirectory()) {
-                if (!UtilSBCoreStringValidador.isContemApenasNumero(pastaTipoVisualizacao.getName())) {
+                if (!UtilCRCStringValidador.isContemApenasNumero(pastaTipoVisualizacao.getName())) {
                     listaVisualizacoesPossiveis.add(pastaTipoVisualizacao.getName());
                     MAPA_CONTAINERS_DISPONIVEIS.put(pastaTipoVisualizacao.getName(), new HashMap<>());
                     boolean temJavascript = false;
@@ -217,7 +217,7 @@ public class ContainersVisualizacaoDoObjeto {
                     for (File pataQuantidadeColunas : pastaTipoVisualizacao.listFiles()) {
                         if (pastaContainers.isDirectory()) {
                             String nomePataColunas = pataQuantidadeColunas.getName();
-                            if (UtilSBCoreStringValidador.isContemApenasNumero(nomePataColunas)) {
+                            if (UtilCRCStringValidador.isContemApenasNumero(nomePataColunas)) {
                                 int coluna = Integer.valueOf(nomePataColunas);
                                 boolean temVersaoMobile = false;
                                 boolean arquivoEncontrado = false;

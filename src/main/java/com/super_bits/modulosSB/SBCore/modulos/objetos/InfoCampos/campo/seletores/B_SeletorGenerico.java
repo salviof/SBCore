@@ -5,10 +5,10 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.seletores;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto;
-import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringComparador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCListasObjeto;
+import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCListasObjeto.filtrarOrdenandoMaisParecidos;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao.ItemSimilar;
@@ -84,33 +84,33 @@ public abstract class B_SeletorGenerico<T extends ComoEntidadeSimplesSomenteLeit
     private void filtrar() {
 
         origem.clear();
-        boolean apenasNumero = UtilSBCoreStringValidador.isContemApenasNumero(filtro);
+        boolean apenasNumero = UtilCRCStringValidador.isContemApenasNumero(filtro);
 
-        if (UtilSBCoreStringValidador.isNuloOuEmbranco(filtro)) {
+        if (UtilCRCStringValidador.isNuloOuEmbranco(filtro)) {
             getListaCompletaLasyMode().forEach(origem::add);
             if (campoInstanciado.getValor() instanceof List) {
-                UtilSBCoreListasObjeto.ordernarPorCampoComSelecionadosPrimeiro(origem, FabTipoAtributoObjeto.NOME, (List) campoInstanciado.getValor());
+                UtilCRCListasObjeto.ordernarPorCampoComSelecionadosPrimeiro(origem, FabTipoAtributoObjeto.NOME, (List) campoInstanciado.getValor());
             } else {
-                UtilSBCoreListasObjeto.ordernarPorTipoCampo(origem, FabTipoAtributoObjeto.NOME);
+                UtilCRCListasObjeto.ordernarPorTipoCampo(origem, FabTipoAtributoObjeto.NOME);
             }
         } else {
             try {
 
                 if (!apenasNumero) {
                     if (campoInstanciado.getValor() instanceof List) {
-                        UtilSBCoreListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor())
+                        UtilCRCListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor())
                                 .forEach(getOrigemSincronized()::add);
                     } else {
-                        UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa)
+                        UtilCRCListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa)
                                 .forEach(getOrigemSincronized()::add);
                         //(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa).forEach(origem::add);
                     }
                 } else {
                     if (campoInstanciado.getValor() instanceof List) {
-                        UtilSBCoreListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(origem, filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor());
+                        UtilCRCListasObjeto.filtrarPorCampoComSelecionadosPrimeiro(origem, filtro, quantidadeMinimaPesquisa, (List) campoInstanciado.getValor());
                     } else {
                         getListaCompletaLasyMode().parallelStream().filter(item
-                                -> UtilSBCoreStringComparador.isParecido((ComoEntidadeSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
+                                -> UtilCRCStringComparador.isParecido((ComoEntidadeSimples) item, campoInstanciado.getGrupoCampoExibicao().getCampos(), filtro, apenasNumero))
                                 .forEach(getOrigemSincronized()::add);
                     }
 
@@ -118,7 +118,7 @@ public abstract class B_SeletorGenerico<T extends ComoEntidadeSimplesSomenteLeit
 
             } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro executando Pesquisa completa ", t);
-                UtilSBCoreListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa).forEach(origem::add);
+                UtilCRCListasObjeto.filtrarOrdenandoMaisParecidos(getListaCompletaLasyMode(), filtro, quantidadeMinimaPesquisa).forEach(origem::add);
             }
         }
 

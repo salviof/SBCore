@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringNomeArquivosEDiretorios;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import java.io.File;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class MapaSubstituicaoArquivo extends MapaSubstituicao {
     protected final File arquivo;
 
     public MapaSubstituicaoArquivo(File pArquivo) {
-        adicionarPalavraChave("nomeArquivo", UtilSBCoreStringNomeArquivosEDiretorios.getNomeArquivo(pArquivo.getName()));
+        adicionarPalavraChave("nomeArquivo", UtilCRCStringNomeArquivosEDiretorios.getNomeArquivo(pArquivo.getName()));
         arquivo = pArquivo;
         tipoArquivo = FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo(pArquivo.getName());
     }
@@ -49,7 +49,7 @@ public class MapaSubstituicaoArquivo extends MapaSubstituicao {
                 for (String linha : conteudo) {
                     conteudo.set(i, substituirEmString(linha));
                 }
-                UtilSBCoreArquivoTexto.escreveLinhasEmNovoArquivo(arquivo.getAbsolutePath(), conteudo);
+                UtilCRCArquivoTexto.escreveLinhasEmNovoArquivo(arquivo.getAbsolutePath(), conteudo);
 
                 break;
             default:

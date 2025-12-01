@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
@@ -161,7 +161,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
      */
     @Override
     public final void setNomeProjeto(String pnomeProjeto) {
-        if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(nomeProjeto)) {
+        if (UtilCRCStringValidador.isNAO_NuloNemBranco(nomeProjeto)) {
             System.out.println("O nomr do Projeto já foi setado como " + nomeProjeto + " a mudança para [" + pnomeProjeto + "] não foi realizada");
         } else {
             this.nomeProjeto = pnomeProjeto;
@@ -177,7 +177,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     @Override
     public final void setCliente(String pCliente) {
 
-        if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(cliente)) {
+        if (UtilCRCStringValidador.isNAO_NuloNemBranco(cliente)) {
             System.out.println("O cliente já foi setado como " + cliente + " a mudança para [" + pCliente + "] não foi realizada");
         } else {
             this.cliente = pCliente;
@@ -188,7 +188,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     @Override
     public final void setGrupoProjeto(String pGrupoProjeto) {
 
-        if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(grupoProjeto)) {
+        if (UtilCRCStringValidador.isNAO_NuloNemBranco(grupoProjeto)) {
             System.out.println("O grupo projeto já foi setado como " + grupoProjeto + " a mudança para [" + pGrupoProjeto + "] não foi realizada");
         } else {
             this.grupoProjeto = pGrupoProjeto;
@@ -207,7 +207,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     @Override
     public final void setDiretorioBase(String pDiretorioBase) {
 
-        if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(this.diretorioBase)) {
+        if (UtilCRCStringValidador.isNAO_NuloNemBranco(this.diretorioBase)) {
             System.out.println("O Diretorio base já foi setado como" + diretorioBase + " o diretório NAO foi alterado para" + pDiretorioBase);
         } else {
             this.diretorioBase = pDiretorioBase;

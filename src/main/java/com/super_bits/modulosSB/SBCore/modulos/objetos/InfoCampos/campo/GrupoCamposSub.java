@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsCammelCase;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaComponentePeloId;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaForm;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoFormCamposAtualizaGrupoDoCampo;
@@ -36,8 +36,8 @@ public class GrupoCamposSub extends EntidadeSimples implements ItfGrupoCampos {
 
         campoListaPai = pCampoListaPai;
         nomeGrupo = "Dados " + campoListaPai.getLabel();
-        nomeIdentificadorSlug = UtilSBCoreStringFiltros.removeCaracteresEspeciais(
-                UtilSBCoreStringsCammelCase.getCammelByTexto(nomeGrupo));
+        nomeIdentificadorSlug = UtilCRCStringFiltros.removeCaracteresEspeciais(
+                UtilCRCStringsCammelCase.getCammelByTexto(nomeGrupo));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class GrupoCamposSub extends EntidadeSimples implements ItfGrupoCampos {
 
     @Override
     public String getIdNomeGrupoCampo() {
-        return UtilSBCoreStringsCammelCase.getCammelByTexto(nomeGrupo);
+        return UtilCRCStringsCammelCase.getCammelByTexto(nomeGrupo);
     }
 
     @Override

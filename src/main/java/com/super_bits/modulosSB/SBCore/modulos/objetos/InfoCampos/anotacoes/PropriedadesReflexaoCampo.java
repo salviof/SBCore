@@ -6,11 +6,11 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoLisgagemOpcoesCampo;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoAtributoDeObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.AtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldComSerializacao;
@@ -119,14 +119,14 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
             tipoOrigem = TIPO_ORIGEM_PROPRIEDADE.ATRIBUTO_REFERENCIA;
             fabTipoAtributo = pAtributoReferencia.getFabricaTipoAtributo();
             String nomeClasseDeclarada = pAtributoReferencia.getNomeClasseAtributoDeclarado();
-            if (!UtilSBCoreStringValidador.isNuloOuEmbranco(nomeClasseDeclarada)) {
+            if (!UtilCRCStringValidador.isNuloOuEmbranco(nomeClasseDeclarada)) {
                 classeDeclaracaoAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasseDeclarada);
             } else {
                 classeDeclaracaoAtributo = null;
             }
             String classeOrigem = pAtributoReferencia.getNomeClasseOrigemAtributo();
             //nomeClasseDeclarada = pAtributoReferencia.getNome();
-            if (!UtilSBCoreStringValidador.isNuloOuEmbranco(classeOrigem)) {
+            if (!UtilCRCStringValidador.isNuloOuEmbranco(classeOrigem)) {
                 classeOrigemAtributo = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(classeOrigem);
             } else {
                 classeOrigemAtributo = null;
@@ -154,25 +154,25 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                                 TipoAtributoMetodosBase tipoMetodosBaseConfig = new TipoAtributoMetodosBase(anotacoes.getInfoCampo().tipo());
                                 TipoAtributoObjetoSB tipoAtributoConfig = tipoMetodosBaseConfig.getRegistro();
                                 InfoCampo infocampo = anotacoes.getInfoCampo();
-                                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().Mask())) {
+                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().Mask())) {
                                     pCampo.setMascara(anotacoes.getInfoCampo().Mask());
                                 }
                                 if (anotacoes.getInfoCampo().valorMaximo() != 99999) {
                                     pCampo.setValorMaximo(anotacoes.getInfoCampo().valorMaximo());
                                 }
 
-                                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().label())) {
-                                    if (UtilSBCoreStringValidador.isNuloOuEmbranco(pCampo.getLabel())) {
+                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().label())) {
+                                    if (UtilCRCStringValidador.isNuloOuEmbranco(pCampo.getLabel())) {
                                         pCampo.setLabel(anotacoes.getInfoCampo().label());
                                     }
                                 } else {
                                     String lbPadrao = tipoAtributoConfig.getLabelPadrao();
-                                    if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(lbPadrao)) {
+                                    if (UtilCRCStringValidador.isNAO_NuloNemBranco(lbPadrao)) {
                                         pCampo.setLabel(lbPadrao);
                                     }
                                 }
-                                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().descricao())) {
-                                    if (UtilSBCoreStringValidador.isNuloOuEmbranco(pCampo.getDescricao())) {
+                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().descricao())) {
+                                    if (UtilCRCStringValidador.isNuloOuEmbranco(pCampo.getDescricao())) {
                                         pCampo.setDescricao(anotacoes.getInfoCampo().descricao());
                                     }
                                 }
@@ -248,7 +248,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             break;
                         case GRUPO_CAMPOS:
                             try {
-                            pCampo.setGrupoSubCamposExibicao(UtilSBCoreReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
+                            pCampo.setGrupoSubCamposExibicao(UtilCRCReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
                         } catch (Throwable t) {
                             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando Grupo de campos para exibição em " + getClasseDeclaracaoAtributo().getSimpleName() + "->" + getLabel(), t);
                         }
@@ -472,7 +472,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
             case ATRIBUTO_REFERENCIA:
                 FabTipoLisgagemOpcoesCampo listagemCampo = null;
                 String nomeClasseAtributoDeclarado = atributoReferencia.getNomeClasseAtributoDeclarado();
-                if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(nomeClasseAtributoDeclarado)) {
+                if (UtilCRCStringValidador.isNAO_NuloNemBranco(nomeClasseAtributoDeclarado)) {
 
                     if (MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasseAtributoDeclarado) != null) {
                         return FabTipoLisgagemOpcoesCampo.LISTA_POR_ENTIDADE;
@@ -568,7 +568,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                     if (classeObjeto == null) {
                         throw new UnsupportedOperationException("Nenhuma classe vinculada ao campo" + atributoReferencia + " foi encontrado em" + getLabel());
                     }
-                    InfoObjetoSB obj = UtilSBCoreReflexaoObjeto.getInfoClasseObjeto(classeObjeto);
+                    InfoObjetoSB obj = UtilCRCReflexaoObjeto.getInfoClasseObjeto(classeObjeto);
                     return obj.fabricaVinculada();
                 default:
                     throw new AssertionError(tipoOrigem.name());

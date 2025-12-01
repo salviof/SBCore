@@ -8,11 +8,11 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaDeAcoes;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringBuscaTrecho;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringVariaveisEntreCaracteres;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringBuscaTrecho;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.TIPO_PARTE_URL;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
@@ -56,7 +56,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
         for (String palavraChave : mapaSubstituicao.keySet()) {
             try {
 
-                List<String> valoresEncontradas = UtilSBCoreStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pString);
+                List<String> valoresEncontradas = UtilCRCStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pString);
                 for (String chave : valoresEncontradas) {
                     if (chave.startsWith("[link:")) {
                         String nomeAcao = chave.replace("[link:", "").replace("]", "");
@@ -72,18 +72,18 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                         if (!pesquisaPArametro.isPresent()) {
                             pesquisaPArametro = formulario.getParametrosURL()
                                     .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE) && pr.isUmParametoEntidadeMBPrincipal()
-                                    && UtilSBCoreReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
+                                    && UtilCRCReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
                         }
 
                         if (!pesquisaPArametro.isPresent()) {
                             pesquisaPArametro = formulario.getParametrosURL()
                                     .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
-                                    && UtilSBCoreReflexao.isClasseIgualOuExetende(pr.getTipoEntidade(), acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada())).findFirst();
+                                    && UtilCRCReflexao.isClasseIgualOuExetende(pr.getTipoEntidade(), acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada())).findFirst();
                         }
 
                         if (pesquisaPArametro.isPresent()) {
                             ItfParametroRequisicao parametro = pesquisaPArametro.get();
-                            Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilSBCoreReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
+                            Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilCRCReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
                             if (pesquisaEntidade.isPresent()) {
                                 entidade = pesquisaEntidade.get();
                             }
@@ -129,8 +129,8 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
     }
 
     public final String getChaveiLstasByTextoencontrado(String texto) {
-        String chave = UtilSBCoreStringFiltros.getStringSemNumeros(texto);
-        chave = UtilSBCoreStringBuscaTrecho.getStringAteEncontrarIsto(chave, "[]");
+        String chave = UtilCRCStringFiltros.getStringSemNumeros(texto);
+        chave = UtilCRCStringBuscaTrecho.getStringAteEncontrarIsto(chave, "[]");
         return chave;
     }
 
@@ -146,7 +146,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
     public final void adicionarPalavraChave(String palavra, String valor) {
         if (!palavra.replaceAll("\\[[0-9]", "-").equals(palavra)) {
             String chavelista = getChaveiLstasByTextoencontrado(palavra);
-            Integer palavraIndice = Integer.valueOf(UtilSBCoreStringFiltros.getNumericosDaString(palavra));
+            Integer palavraIndice = Integer.valueOf(UtilCRCStringFiltros.getNumericosDaString(palavra));
 
             if (mapaSubstituicaoListas.get(chavelista) == null) {
                 mapaSubstituicaoListas.put(chavelista, new HashMap<>());
@@ -274,7 +274,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
         List<String> listagensEncontradas = new ArrayList<>();
         for (String chave : mapaSubstituicaoListas.keySet()) {
             for (String valor : mapaSubstituicaoListas.get(chave).keySet()) {
-                String valorFormatado = UtilSBCoreStringFiltros.getStringSemNumeros(valor);
+                String valorFormatado = UtilCRCStringFiltros.getStringSemNumeros(valor);
                 if (!listagensEncontradas.contains(valorFormatado)) {
                     listagensEncontradas.add(valorFormatado);
                 }

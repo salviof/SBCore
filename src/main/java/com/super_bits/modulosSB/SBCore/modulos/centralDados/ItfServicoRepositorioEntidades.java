@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
+ *
  * @author SalvioF
  */
 public interface ItfServicoRepositorioEntidades {

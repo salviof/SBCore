@@ -50,6 +50,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
         String caminhoArquivo = null;
         if (entidade.getId() == null) {
             caminhoArquivo = getEndrLocalArquivoTemporario(pCategoria, entidade.getClass().getSimpleName(), pNome);
+            System.out.println("Pasta temporaria:" + caminhoArquivo);
         } else {
             caminhoArquivo = getEndrLocalArquivoItem(entidade, pNome, pCategoria);
         }

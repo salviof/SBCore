@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.comparacao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +24,7 @@ public enum FabTipoPesquisaGenerica {
     PERSONALIZADA;
 
     public static FabTipoPesquisaGenerica getTipoPesquisaByTermo(final String pTermoPesquisa) {
-        if (UtilSBCoreStringValidador.isContemApenasNumero(pTermoPesquisa)) {
+        if (UtilCRCStringValidador.isContemApenasNumero(pTermoPesquisa)) {
             return CODIGO;
         }
         if (pTermoPesquisa.contains("@")) {

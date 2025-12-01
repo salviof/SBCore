@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormulario;
@@ -41,7 +41,7 @@ public class RespostaAcaoDoSistema extends RespostaSimples implements ItfRespost
     @SuppressWarnings("LeakingThisInConstructor")
     public RespostaAcaoDoSistema(Class pTipoRetorno, ComoAcaoDoSistema pAcaoDoSistema) {
         super(pTipoRetorno);
-        UtilSBCoreReflexao.instanciarListas(this);
+        UtilCRCReflexao.instanciarListas(this);
         acaoDosistema = pAcaoDoSistema;
 
     }

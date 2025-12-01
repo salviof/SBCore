@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreGeradorDeID;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCGeradorDeID;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfControlerAPP;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.fabricas.FabTipoAcaoSistema;
@@ -192,7 +192,7 @@ public class UtilSBController extends UtilSBControllerSimples {
 
     public static ComoFabricaAcoes getFabricaAcaoByMetodo(Method pMetodo) {
         try {
-            return (ComoFabricaAcoes) UtilSBCoreReflexao.getFabricaDoMetodoByAnotacao(pMetodo, "acao", true);
+            return (ComoFabricaAcoes) UtilCRCReflexao.getFabricaDoMetodoByAnotacao(pMetodo, "acao", true);
 
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.PARA_TUDO, "Erro tentando obeter a Fabrica de acao a partir do metodo certifique que os metodos da classe de controler tenha uma anotação informando a ação vinculada" + pMetodo.getName(), null);

@@ -12,21 +12,21 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ConfigMo
 import com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao.ItfFabConfigModulo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
-import org.coletivojava.fw.utilCoreBase.UtilSBCoreFabrica;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreSystemOut;
+import org.coletivojava.fw.utilCoreBase.UtilCRCFabrica;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCSystemOut;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.UtilSBController;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilSBCoreReflexaoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
@@ -187,11 +187,11 @@ public class SBCore {
                 throw new UnsupportedOperationException("A aplicação  não foi configurado");
             }
 
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(infoAplicacao.getNomeProjeto())) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(infoAplicacao.getNomeProjeto())) {
                 throw new UnsupportedOperationException("O nome do projeto não foi configurado");
             }
 
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(infoAplicacao.getCliente())) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(infoAplicacao.getCliente())) {
                 throw new UnsupportedOperationException("O cliente não foi configurado");
             }
             //     SBCore.enviarAvisoAoUsuario(SBCore.getCaminhoDesenvolvimento());
@@ -244,7 +244,7 @@ public class SBCore {
 
                     if (infoAplicacao.getConfigPermissoes() == null) {
 
-                        Class configPermissao = UtilSBCoreReflexao.getClasseQueEstendeIsto(ConfigPermissaoSBCoreAbstrato.class, "com.super_bits.configSBFW.acessos");
+                        Class configPermissao = UtilCRCReflexao.getClasseQueEstendeIsto(ConfigPermissaoSBCoreAbstrato.class, "com.super_bits.configSBFW.acessos");
                         if (configPermissao == null) {
                             try {
                                 ServiceLoader<ItfServicoPermissao> services = ServiceLoader.load(ItfServicoPermissao.class);
@@ -295,7 +295,7 @@ public class SBCore {
 
             if (estadoAplicativo == ESTADO_APP.DESENVOLVIMENTO) {
                 String arquivoPomDoProjeto = SBCore.getCaminhoDesenvolvimento() + "/pom.xml";
-                if (!UtilSBCoreArquivos.isArquivoExiste(arquivoPomDoProjeto)) {
+                if (!UtilCRCArquivos.isArquivoExiste(arquivoPomDoProjeto)) {
                     throw new UnsupportedOperationException("O arquivo pom não foi encontrado em " + arquivoPomDoProjeto);
                 }
             }
@@ -372,20 +372,20 @@ public class SBCore {
             } else {
 
                 if (SBCore.getEstadoAPP().equals(ESTADO_APP.HOMOLOGACAO)) {
-                    UtilSBCoreSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO HOMOLOGAÇÃO (UTILIZE PARA TESTAR SEU WAR em localHost)");
+                    UtilCRCSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO HOMOLOGAÇÃO (UTILIZE PARA TESTAR SEU WAR em localHost)");
                 }
 
                 if (SBCore.isEmModoProducao()) {
-                    UtilSBCoreSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO PRODUÇÃO ");
+                    UtilCRCSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO PRODUÇÃO ");
                 }
 
                 if (SBCore.isEmModoDesenvolvimento()) {
 
-                    UtilSBCoreSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO DESENVOLVIMENTO (UTILIZE APENAS PARA TESTES UNITÁRIOS) \n ");
+                    UtilCRCSystemOut.exibirMensagemEmDestaque("CORE INICIADO EM MODO DESENVOLVIMENTO (UTILIZE APENAS PARA TESTES UNITÁRIOS) \n ");
 
                 }
                 if (!SBCore.isEmModoProducao()) {
-                    UtilSBCoreSystemOut.exibirMensagemEmDestaque(
+                    UtilCRCSystemOut.exibirMensagemEmDestaque(
                             "Atenção, a Classe SBCore é o coração do superbits framework, \n"
                             + "## através do core é possível executar as ações do sistema em diversos ambientes \n"
                             + "## As seguintes classes foram configuradas para este ambiente: \n"
@@ -409,7 +409,7 @@ public class SBCore {
                     System.out.println("************************************************************* \n");
                     System.out.println("-Caminho do projeto:" + arquivoConfigBase.getCaminhoPastaProjetoSource());
                     if (arquivoConfigDistribuicao != null) {
-                        if (UtilSBCoreArquivos.isArquivoExiste(arquivoConfigDistribuicao.getCaminhoArquivoReleaseLocal())) {
+                        if (UtilCRCArquivos.isArquivoExiste(arquivoConfigDistribuicao.getCaminhoArquivoReleaseLocal())) {
                             soutInfoDebug(
                                     UTilSBCoreInputs.getStringByArquivoLocal(arquivoConfigDistribuicao.getCaminhoArquivoReleaseLocal()));
                         }
@@ -516,8 +516,8 @@ public class SBCore {
     public static String getCaminhoGrupoProjetoSource() {
 
         String caminho = "";
-        boolean temCaminhoDiretorioBase = UtilSBCoreStringValidador.isNAO_NuloNemBranco(getDiretorioBase());
-        boolean temCaminhoGrupoProjeto = UtilSBCoreStringValidador.isNAO_NuloNemBranco(getGrupoProjeto());
+        boolean temCaminhoDiretorioBase = UtilCRCStringValidador.isNAO_NuloNemBranco(getDiretorioBase());
+        boolean temCaminhoGrupoProjeto = UtilCRCStringValidador.isNAO_NuloNemBranco(getGrupoProjeto());
 
         caminho = arquivoConfigBase.getCaminhoPastaClienteSource();
 
@@ -641,7 +641,7 @@ public class SBCore {
 
             Class fabrica = FABRICAS_OBJETO_ESTATICO.get(nomeFabrica);
 
-            return UtilSBCoreReflexaoFabrica.getObjetoByString(fabrica, nomeCampo);
+            return UtilCRCReflexaoFabrica.getObjetoByString(fabrica, nomeCampo);
 
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo objeto Estático a partir do nome: " + pNome, t);
@@ -654,7 +654,7 @@ public class SBCore {
         try {
             FABRICAS_OBJETO_ESTATICO.put(pClasse.getSimpleName(), pClasse);
 
-            ComoEntidadeSimples objeto = (ComoEntidadeSimples) UtilSBCoreFabrica.listaRegistros(pClasse).get(0);
+            ComoEntidadeSimples objeto = (ComoEntidadeSimples) UtilCRCFabrica.listaRegistros(pClasse).get(0);
             MapaObjetosProjetoAtual.adcionarObjeto(objeto.getClass());
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro adicionando classe Fabrica Objeto Estatico" + pClasse, t);
@@ -679,7 +679,7 @@ public class SBCore {
                 MAPA_CONFIGURACOES_MODULO.put(pFabricaConfig, new ConfigModulo(pFabricaConfig, getClasseLoaderAplicacao()));
                 if (!SBCore.isEmModoProducao()) {
                     if (config != null) {
-                        UtilSBCoreSystemOut.exibirMensagemEmDestaque("Um módulo foi configurado: " + config.toString());
+                        UtilCRCSystemOut.exibirMensagemEmDestaque("Um módulo foi configurado: " + config.toString());
                     }
                 }
             }

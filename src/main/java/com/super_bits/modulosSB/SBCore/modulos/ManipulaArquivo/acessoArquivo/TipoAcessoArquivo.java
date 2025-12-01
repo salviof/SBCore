@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.acessoArquivo;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringFiltros;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -49,7 +49,7 @@ public class TipoAcessoArquivo extends EntidadeSimples implements ComoEntidadeVi
     }
 
     public String getSlugURL() {
-        return UtilSBCoreStringFiltros.gerarUrlAmigavel(nome);
+        return UtilCRCStringFiltros.gerarUrlAmigavel(nome);
     }
 
     public ComoFabrica getFabricaObjeto() {

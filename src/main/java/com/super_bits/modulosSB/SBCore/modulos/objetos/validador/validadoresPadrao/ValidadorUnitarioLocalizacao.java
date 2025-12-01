@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoTemEndereco;
@@ -34,22 +34,22 @@ public class ValidadorUnitarioLocalizacao extends ValidadorUnitarioCampoInstGene
                 }
             }
             if (localAnalizado.getBairro() != null
-                    && UtilSBCoreStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
+                    && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
                 campoInstanciado.setValor(null);
                 return "Localização inválida, informe o BAIRRO";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro() != null
-                    && UtilSBCoreStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
+                    && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
                 campoInstanciado.setValor(null);
                 return "Localização inválida, informe o BAIRRO";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade() != null
-                    && UtilSBCoreStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getNome())) {
+                    && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getNome())) {
                 campoInstanciado.setValor(null);
                 return "Localização inválida informe a CIDADE";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getUnidadeFederativa() != null
-                    && UtilSBCoreStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getUnidadeFederativa().getNome())) {
+                    && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getUnidadeFederativa().getNome())) {
                 campoInstanciado.setValor(null);
                 return "Localização inválida informe a Unidade Federativa";
             }

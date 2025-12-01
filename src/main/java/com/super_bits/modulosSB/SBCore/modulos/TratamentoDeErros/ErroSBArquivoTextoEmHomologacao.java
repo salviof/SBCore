@@ -5,8 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreDataHora;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivoTexto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivoTexto;
 import java.util.Date;
 
 /**
@@ -18,7 +18,7 @@ public class ErroSBArquivoTextoEmHomologacao extends InfoErroSBComAcoes {
     @Override
     public void alertarResponsavel() {
         if (!SBCore.isEmModoProducao()) {
-            UtilSBCoreArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilSBCoreDataHora.getDataHoraString(new Date(), UtilSBCoreDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
+            UtilCRCArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilCRCDataHora.getDataHoraString(new Date(), UtilCRCDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
         }
     }
 
@@ -30,14 +30,14 @@ public class ErroSBArquivoTextoEmHomologacao extends InfoErroSBComAcoes {
     @Override
     public void lancarPane() {
         if (!SBCore.isEmModoProducao()) {
-            UtilSBCoreArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilSBCoreDataHora.getDataHoraString(new Date(), UtilSBCoreDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
+            UtilCRCArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilCRCDataHora.getDataHoraString(new Date(), UtilCRCDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
         }
     }
 
     @Override
     public void registrarErro() {
         if (!SBCore.isEmModoProducao()) {
-            UtilSBCoreArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilSBCoreDataHora.getDataHoraString(new Date(), UtilSBCoreDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
+            UtilCRCArquivoTexto.printLnNoArquivo(getMensagemGenericaFormatada(UtilCRCDataHora.getDataHoraString(new Date(), UtilCRCDataHora.FORMATO_TEMPO.HORA_USUARIO)), SBCore.getCaminhoGrupoProjetoSource() + "/log_" + tipoErro + ".txt");
         }
     }
 

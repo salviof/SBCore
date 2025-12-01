@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral.arquivosConfiguracao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsCammelCase;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBcoreModulos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.RecursosExternosPorIndice;
 
@@ -38,7 +38,7 @@ public interface ItfFabConfigModulo {
     @Deprecated
     public default String getNomePropriedade() {
         System.out.println("Obtendo parametro de módulo com sintaxe legada, o novo padrão deve ser um simples toString como:" + this.toString());
-        return UtilSBCoreStringsCammelCase.getCamelByTextoPrimeiraLetraMinuscula(this.toString());
+        return UtilCRCStringsCammelCase.getCamelByTextoPrimeiraLetraMinuscula(this.toString());
     }
 
     public default String getNomeModulo() {

@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.view.telas;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaTipoTelas;
-import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.UtilSBCoreFabricaTipoTela;
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.UtilCRCFabricaTipoTela;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabColunasTela;
 import java.util.TreeMap;
 
@@ -36,7 +36,7 @@ public enum FabTipoTamanhoTelas implements ComoFabricaTipoTelas {
 
     @Override
     public ItfTipoTela getRegistro() {
-        return UtilSBCoreFabricaTipoTela.getTipoTela(this);
+        return UtilCRCFabricaTipoTela.getTipoTela(this);
 
     }
 

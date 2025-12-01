@@ -19,7 +19,7 @@ public class UtilSbCoreStringsSubstituicao {
      * @return
      */
     public static String substituiParametrosNomeadosPorInterroga(String parametro) {
-        return UtilSBCoreParametrosEmString.substituiParametrosNomeadosPorInterroga(parametro);
+        return UtilCRCParametrosEmString.substituiParametrosNomeadosPorInterroga(parametro);
     }
 
 }

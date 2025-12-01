@@ -6,12 +6,12 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UTilSBCoreInputs;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreBytes;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringNomeArquivosEDiretorios;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringSlugs;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCBytes;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringNomeArquivosEDiretorios;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoConhecido;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TipoRecurso;
-import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilSBCoreArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -53,7 +53,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
     @Override
     public boolean uploadArquivo(String pNomeArquivo, byte[] pInputStream) {
         try {
-            String nomeArquivoCompativel = UtilSBCoreStringSlugs.gerarSlugSimples(pNomeArquivo);
+            String nomeArquivoCompativel = UtilCRCStringSlugs.gerarSlugSimples(pNomeArquivo);
             Object entidade = campoInstanciado.getObjetoDoAtributo();
             if (pNomeArquivo == null) {
                 throw new UnsupportedOperationException("O nome do Arquivo não foi enviado, impossível realizar o upload ");
@@ -95,7 +95,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
                 new File(SBCore.getControleDeSessao().getSessaoAtual().getPastaTempDeSessao()).mkdirs();
 
-                if (!UtilSBCoreArquivos.copiarArquivos(caminhoArquivo, arquivoTemporario)) {
+                if (!UtilCRCArquivos.copiarArquivos(caminhoArquivo, arquivoTemporario)) {
                     SBCore.enviarMensagemUsuario("Ouve um erro ao preparar o arquivo", FabMensagens.ERRO);
                 }
             } else {
@@ -155,7 +155,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
             String caminhoTemp = getCaminhoArquivoLocal();
             try {
                 boolean arquivoRemoto = caminhoTemp.startsWith("http");
-                //  intputTemporario = UtilSBCoreBytes.gerarBytesPorArquivo(new File(getCaminhoArquivoLocal()));
+                //  intputTemporario = UtilCRCBytes.gerarBytesPorArquivo(new File(getCaminhoArquivoLocal()));
             } catch (Exception ex) {
                 Logger.getLogger(CampoInstanciadoArquivoDeEntidadeGenerico.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -219,7 +219,7 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
         if (getLinkAbrirArquivo() == null) {
             return "fa fa-file-text-o";
         }
-        FabTipoArquivoConhecido tipoArquivo = FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo(UtilSBCoreStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(getLinkAbrirArquivo()));
+        FabTipoArquivoConhecido tipoArquivo = FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo(UtilCRCStringNomeArquivosEDiretorios.getExtencaoNomeArquivo(getLinkAbrirArquivo()));
         if (tipoArquivo == null) {
             return "fa fa-file-text-o";
         }
@@ -254,13 +254,13 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     @Override
     public boolean uploadArquivoRemoto(String pNomeArquivo, String pLinkRemoto) {
-        return uploadArquivo(pNomeArquivo, UtilSBCoreBytes.gerarBytePorUrltream(pLinkRemoto));
+        return uploadArquivo(pNomeArquivo, UtilCRCBytes.gerarBytePorUrltream(pLinkRemoto));
     }
 
     @Override
     public boolean uploadArquivoLocal(String pNomeArquivo, String pLinkCAminhoCompleto) {
         try {
-            return uploadArquivo(pNomeArquivo, UtilSBCoreBytes.gerarBytesPorArquivo(new File(pLinkCAminhoCompleto)));
+            return uploadArquivo(pNomeArquivo, UtilCRCBytes.gerarBytesPorArquivo(new File(pLinkCAminhoCompleto)));
         } catch (Exception ex) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha lendo arquivo local" + pLinkCAminhoCompleto, ex);
             return false;

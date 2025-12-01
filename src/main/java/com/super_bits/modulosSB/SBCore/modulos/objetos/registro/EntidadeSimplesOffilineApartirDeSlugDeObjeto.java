@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 
@@ -29,7 +29,7 @@ public class EntidadeSimplesOffilineApartirDeSlugDeObjeto extends EntidadeSimple
         int idx = 0;
         Integer indexCodigo = null;
         for (String valor : valores) {
-            if (UtilSBCoreStringValidador.isContemApenasNumero(valor)) {
+            if (UtilCRCStringValidador.isContemApenasNumero(valor)) {
                 indexCodigo = idx;
             }
             idx++;

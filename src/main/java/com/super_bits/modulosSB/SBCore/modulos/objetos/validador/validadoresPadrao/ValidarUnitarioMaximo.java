@@ -5,7 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPadrao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;
@@ -29,7 +29,7 @@ public class ValidarUnitarioMaximo extends ValidadorUnitarioCampoInstGenerico im
             if (!campoInstanciado.isTemValidacaoMaximo()) {
                 return null;
             }
-            if (UtilSBCoreStringValidador.isNuloOuEmbranco(pValor)) {
+            if (UtilCRCStringValidador.isNuloOuEmbranco(pValor)) {
                 return null;
             }
 

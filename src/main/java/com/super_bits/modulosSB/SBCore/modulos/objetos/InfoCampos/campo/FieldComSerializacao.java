@@ -6,11 +6,11 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexaoObjeto;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringValidador;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreStringsCammelCase;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsCammelCase;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoAtributoDeObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.AnotacoesCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoDinamico;
@@ -89,7 +89,7 @@ public class FieldComSerializacao implements Serializable {
     }
 
     public Class getClasseDeclaradaOuTipoEmCasoDeLista() {
-        return UtilSBCoreReflexaoAtributoDeObjeto.getClassePrincipalDoCampo(campo);
+        return UtilCRCReflexaoAtributoDeObjeto.getClassePrincipalDoCampo(campo);
     }
 
     public String getNomeDeclaracao() {
@@ -103,18 +103,18 @@ public class FieldComSerializacao implements Serializable {
             if (campoDinamico == null) {
                 //return null;
             } else {
-                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campoDinamico.classeInjecaoDeValorDireto().getSimpleName());
+                return UtilCRCReflexaoObjeto.getClassExtraindoProxy(campoDinamico.classeInjecaoDeValorDireto().getSimpleName());
             }
 
         } else {
             try {
-                return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
+                return UtilCRCReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
             } catch (Throwable t) {
                 return campo.getDeclaringClass();
             }
         }
         try {
-            return UtilSBCoreReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
+            return UtilCRCReflexaoObjeto.getClassExtraindoProxy(campo.getDeclaringClass().getSimpleName());
         } catch (Throwable t) {
             return campo.getDeclaringClass();
         }
@@ -232,12 +232,12 @@ public class FieldComSerializacao implements Serializable {
 
     public String getLabelPadrao() {
         if (getInfoCampo() != null) {
-            if (UtilSBCoreStringValidador.isNAO_NuloNemBranco(getInfoCampo().label())) {
+            if (UtilCRCStringValidador.isNAO_NuloNemBranco(getInfoCampo().label())) {
                 return getInfoCampo().label();
             }
 
         }
-        return UtilSBCoreStringsCammelCase.getTextoByCammelPrimeiraLetraMaiuscula(campo.getName());
+        return UtilCRCStringsCammelCase.getTextoByCammelPrimeiraLetraMaiuscula(campo.getName());
     }
 
     public Class getTemplateObjetoReferencia() {

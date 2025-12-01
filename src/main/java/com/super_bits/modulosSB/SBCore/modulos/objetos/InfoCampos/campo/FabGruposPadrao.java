@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilSBCoreReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilSBCoreReflexaoAtributoDeObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoAtributoDeObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
@@ -43,8 +43,8 @@ public enum FabGruposPadrao implements ComoFabrica {
 
     public ItfGrupoCampos getGrupoCampo(Class p) {
         try {
-            InfoGrupoCampo anotacaoGrupoCampo = UtilSBCoreReflexao.getAnotacaoEmEnum(InfoGrupoCampo.class, this);
-            return UtilSBCoreReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacaoGrupoCampo, p);
+            InfoGrupoCampo anotacaoGrupoCampo = UtilCRCReflexao.getAnotacaoEmEnum(InfoGrupoCampo.class, this);
+            return UtilCRCReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacaoGrupoCampo, p);
         } catch (Throwable t) {
             String nomeClasse = "Classe não enviada";
             if (p != null) {
@@ -58,8 +58,8 @@ public enum FabGruposPadrao implements ComoFabrica {
 
     public GrupoCampos getGrupoCampoIgnorandoCamposNaoEncontrados(Class p) {
         try {
-            InfoGrupoCampo anotacaoGrupoCampo = UtilSBCoreReflexao.getAnotacaoEmEnum(InfoGrupoCampo.class, this);
-            return UtilSBCoreReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacaoIgnorandoCamposNaoEcontrados(anotacaoGrupoCampo, p);
+            InfoGrupoCampo anotacaoGrupoCampo = UtilCRCReflexao.getAnotacaoEmEnum(InfoGrupoCampo.class, this);
+            return UtilCRCReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacaoIgnorandoCamposNaoEcontrados(anotacaoGrupoCampo, p);
         } catch (Throwable t) {
             String nomeClasse = "Classe não enviada";
             if (p != null) {
