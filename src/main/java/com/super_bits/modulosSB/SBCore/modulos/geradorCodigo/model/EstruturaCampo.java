@@ -41,7 +41,7 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
 
     private final AtributoObjetoSB campoVinculado;
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final int id;
+    private final Long id;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String nomeDeclarado;
     private ItfEstruturaDeEntidade estruturaPai;
@@ -63,7 +63,7 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         tipoDeclaracao = prop.getTipoDeclaracaoEstrutura();
         campoVinculado = campoSB;
         estruturaPai = est;
-        id = (estruturaPai.getNome() + nomeDeclarado).hashCode();
+        id = (long) (estruturaPai.getNome() + nomeDeclarado).hashCode();
 
         temValidadorLogico = (pCampo.getAnnotation(InfoCampoValidadorLogico.class) != null);
         InfoCampoValorLogico vl = pCampo.getAnnotation(InfoCampoValorLogico.class);
