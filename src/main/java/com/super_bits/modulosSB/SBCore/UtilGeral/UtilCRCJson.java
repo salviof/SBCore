@@ -9,6 +9,8 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.erros.ErroDeteccaoSeparadorDecimal;
 import com.super_bits.modulosSB.SBCore.UtilGeral.erros.ErroLeituraJson;
 import com.super_bits.modulosSB.SBCore.UtilGeral.json.ErroProcessandoJson;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -411,5 +413,18 @@ public class UtilCRCJson {
                 throw new AssertionError();
         }
         return null;
+    }
+
+    public static JsonObject gerarJsonByEntidadeSimplesLasyMode(ComoEntidadeSimples pEntididade) {
+        JsonObjectBuilder jb = Json.createObjectBuilder();
+        JsonObjectBuilder jbMetadados = Json.createObjectBuilder();
+        jbMetadados.add("tipoEntidade", UtilCRCReflexaoObjeto.getClassExtraindoProxy(pEntididade.getClass().getSimpleName()).getSimpleName());
+        jbMetadados.add("nomeEntidade", pEntididade.getNomeDoObjeto());
+        jbMetadados.add("pluralEntidade", pEntididade.getNomeDoObjetoPlural());
+        jbMetadados.add("nomeUnicoSlug", pEntididade.getNomeUnicoSlug());
+        jb.add(pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getNomeCamponaClasse(), (Long) pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getValor());
+        jb.add(pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME).getNomeCamponaClasse(), (String) pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getValor());
+        jb.add("metadados", jbMetadados.build());
+        return jb.build();
     }
 }

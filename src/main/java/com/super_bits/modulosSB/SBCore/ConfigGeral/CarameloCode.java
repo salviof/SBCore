@@ -21,6 +21,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -263,4 +264,7 @@ public class CarameloCode {
         return (T) pTipoERP.getImplementacaoDoContexto();
     }
 
+    public static ItfServicoVisualizacao getServicoVisualizacao() {
+        return SBCore.getServicoVisualizacao();
+    }
 }
