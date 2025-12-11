@@ -13,10 +13,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basic
 public class ItemGraficoTotalPorTipo extends ItemDadoGraficoTotal implements ItfDadoGraficoTotalTipo {
 
     private final ComoEntidadeSimples tipoEntidade;
+    private final String urlDetalhes;
 
-    public ItemGraficoTotalPorTipo(ComoEntidadeSimples pEntidade, double pValor) {
+    public ItemGraficoTotalPorTipo(ComoEntidadeSimples pEntidade, double pValor, String pUrl) {
         super(pEntidade.getId(), pEntidade.getNome(), pValor);
         tipoEntidade = pEntidade;
+        urlDetalhes = pUrl;
+    }
+
+    public ItemGraficoTotalPorTipo(ComoEntidadeSimples pEntidade, double pValor) {
+        this(pEntidade, pValor, "#");
     }
 
     @Override
@@ -26,7 +32,11 @@ public class ItemGraficoTotalPorTipo extends ItemDadoGraficoTotal implements Itf
 
     @Override
     public Object getItemRelacionado() {
-       return tipoEntidade;
+        return tipoEntidade;
+    }
+
+    public String getUrlDetalhes() {
+        return urlDetalhes;
     }
 
 }

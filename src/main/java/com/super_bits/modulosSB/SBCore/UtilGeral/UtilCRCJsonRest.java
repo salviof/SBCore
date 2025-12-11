@@ -6,11 +6,12 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.comunicacao.RespostaSimples;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabTipoAgenteDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoRespostaComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -19,7 +20,6 @@ import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
-import org.coletivojava.fw.api.objetoNativo.mensagem.Mensagem;
 
 /**
  *
@@ -62,6 +62,25 @@ public class UtilCRCJsonRest {
             }
         }
         return resp;
+    }
+
+    public static JsonObjectBuilder getRespostaJsonBuilder(ItfRespostaAcaoDoSistema pResposta) {
+        JsonObjectBuilder respostaJson = getRespostaJsonBuilderBase(pResposta.isSucesso(), pResposta.getResultado(), pResposta.getMensagens());
+        if (pResposta.getRetorno() != null) {
+
+            if (pResposta.getRetorno() instanceof JsonObject) {
+                getRespostaJsonAdiocionarRetorno(respostaJson, (JsonObject) pResposta.getRetorno());
+            }
+            if (pResposta.getRetorno() instanceof JsonArray) {
+                getRespostaJsonAdiocionarRetorno(respostaJson, (JsonArray) pResposta.getRetorno());
+            }
+            if (pResposta.getRetorno() instanceof ComoEntidadeSimples) {
+                JsonObject retorno = UtilCRCJson.gerarJsonByEntidadeSimplesLasyMode((ComoEntidadeSimples) pResposta.getRetorno());
+                getRespostaJsonAdiocionarRetorno(respostaJson, retorno);
+            }
+
+        }
+        return respostaJson;
     }
 
     public static JsonObjectBuilder getRespostaJsonBuilderBase(List<ItfMensagem> pMensagens) {

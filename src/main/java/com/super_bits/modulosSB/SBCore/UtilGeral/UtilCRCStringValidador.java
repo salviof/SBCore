@@ -84,7 +84,10 @@ public abstract class UtilCRCStringValidador {
         Matcher m = p.matcher(texto);
 
         while (m.find()) {
-            resposta.add(m.group());
+            String valor = m.group();
+            valor = valor.replace(Character.toString(cInicial), "");
+            valor = valor.replace(Character.toString(cFinal), "");
+            resposta.add(valor);
         }
         return resposta;
     }
@@ -154,9 +157,8 @@ public abstract class UtilCRCStringValidador {
 
     /**
      *
-     * @see UtilCRCStringBuscaTrecho#localizarParte(java.lang.String, int,
-     * int, java.lang.Integer, java.lang.String, java.lang.String,
-     * java.lang.String)
+     * @see UtilCRCStringBuscaTrecho#localizarParte(java.lang.String, int, int,
+     * java.lang.Integer, java.lang.String, java.lang.String, java.lang.String)
      */
     @Deprecated
     public static String localizarParte(String linha, int posicaoInicial, int posicaoFinal, Integer pQuantidaCaracteres, String descarte, String confirma, String regex) {
