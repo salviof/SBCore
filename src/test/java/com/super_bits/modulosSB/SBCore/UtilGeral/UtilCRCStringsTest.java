@@ -69,8 +69,7 @@ public class UtilCRCStringsTest {
     }
 
     /**
-     * Test of strValorEntreParenteses method, of class
-     * UtilCRCStringValidador.
+     * Test of strValorEntreParenteses method, of class UtilCRCStringValidador.
      */
     //@Test
     public void testStrValorEntreParenteses() {
@@ -180,24 +179,21 @@ public class UtilCRCStringsTest {
     }
 
     /**
-     * Test of getStringsByInputStream method, of class
-     * UtilCRCStringValidador.
+     * Test of getStringsByInputStream method, of class UtilCRCStringValidador.
      */
     //@Test
     public void testGetStringsByInputStream() {
     }
 
     /**
-     * Test of getStringByInputStream method, of class
-     * UtilCRCStringValidador.
+     * Test of getStringByInputStream method, of class UtilCRCStringValidador.
      */
     //@Test
     public void testGetStringByInputStream() {
     }
 
     /**
-     * Test of getStringByOutputStream method, of class
-     * UtilCRCStringValidador.
+     * Test of getStringByOutputStream method, of class UtilCRCStringValidador.
      */
     //@Test
     public void testGetStringByOutputStream() {
@@ -277,9 +273,9 @@ public class UtilCRCStringsTest {
 
     }
 
-    // @Test
+    @Test
     public void testaRandomico() {
-        JOptionPane.showMessageDialog(null, UtilCRCStringGerador.getStringRandomicaUUID(8));
+        JOptionPane.showMessageDialog(null, UtilCRCStringGerador.getStringRandomicaUUID());
     }
 
     @Test

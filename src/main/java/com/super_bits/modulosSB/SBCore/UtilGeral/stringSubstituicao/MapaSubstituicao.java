@@ -58,6 +58,9 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
 
                 List<String> valoresEncontradas = UtilCRCStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pString);
                 for (String chave : valoresEncontradas) {
+                    if (!chave.startsWith("[")) {
+                        chave = "[" + chave + "]";
+                    }
                     if (chave.startsWith("[link:")) {
                         String nomeAcao = chave.replace("[link:", "").replace("]", "");
 

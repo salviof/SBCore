@@ -28,10 +28,10 @@ public class UtilCRCStringGerador {
      * @param pNumeroCaracteres quantidade de caracteres retornados
      * @return Retorna uma String randomica de acordo com o n de caracteres
      */
-    public static String getStringRandomicaUUID(int pNumeroCaracteres) {
+    public static String getStringRandomicaUUID() {
         UUID uuid = UUID.randomUUID();
         String myRandom = uuid.toString();
-        return myRandom.substring(0, pNumeroCaracteres);
+        return myRandom;
     }
 
     public static String getStringRandomicaTokenAleatorio(int pNumero) {
@@ -53,7 +53,9 @@ public class UtilCRCStringGerador {
         if (pQuantidade == 0) {
             pQuantidade = 3;
         }
-
+        if (pTipoLTipo_loren == null) {
+            pTipoLTipo_loren = PALAVRAS;
+        }
         LoremIpsum lorem = new LoremIpsum();
         switch (pTipoLTipo_loren) {
             case PALAVRAS:
