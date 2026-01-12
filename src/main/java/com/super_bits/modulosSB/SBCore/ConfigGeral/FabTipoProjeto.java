@@ -45,6 +45,6 @@ public enum FabTipoProjeto {
      * Controoler client
      */
     REQUISITOS_WEB_APP,
-    BIBLIOTECA
+    BIBLIOTECA;
 
 }

@@ -7,7 +7,8 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoBeanSBGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.entidadeEscuta.ComoListenerGestaoDeEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoEntidadeGenerico;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.entidadeEscuta.ComoListenerPersistenciaEntidade;
 
 /**
  *
@@ -47,11 +49,13 @@ public class EstruturaDeEntidade extends EntidadeSimples implements ItfEstrutura
 
     private List<ItfLigacaoMuitosParaMuitos> muitosParaMuitos;
 
+    private List<ComoListenerGestaoDeEntidade> listenerPersistencia;
+
     private List<String> tags;
 
     private String plural, icone;
 
-    private FabTipoBeanSBGenerico tipoEntidade;
+    private FabTipoEntidadeGenerico tipoEntidade;
 
     private List<ItfEstruturaCampoDinamicoEntidade> calculos;
 
@@ -60,6 +64,8 @@ public class EstruturaDeEntidade extends EntidadeSimples implements ItfEstrutura
     private final Map<String, EstruturaCampo> mapaCampo;
 
     private String descricao;
+
+    private String moduloERP;
 
     private boolean configurouLigacoes = false;
 
@@ -187,12 +193,12 @@ public class EstruturaDeEntidade extends EntidadeSimples implements ItfEstrutura
     }
 
     @Override
-    public FabTipoBeanSBGenerico getTipoEntidade() {
+    public FabTipoEntidadeGenerico getTipoEntidade() {
         return tipoEntidade;
     }
 
     @Override
-    public void setTipoEntidade(FabTipoBeanSBGenerico tipoEntidade
+    public void setTipoEntidade(FabTipoEntidadeGenerico tipoEntidade
     ) {
         this.tipoEntidade = tipoEntidade;
     }
@@ -387,6 +393,37 @@ public class EstruturaDeEntidade extends EntidadeSimples implements ItfEstrutura
 
     public boolean isTemAtributoComEsteNome(String pNome) {
         return getCampos().stream().filter(cp -> cp.getNomeDeclarado().equals(pNome)).findFirst().isPresent();
+    }
+
+    public List<ComoListenerGestaoDeEntidade> getListenerPersistencia() {
+        return listenerPersistencia;
+    }
+
+    public void setListenerPersistencia(List<ComoListenerGestaoDeEntidade> listenerPersistencia) {
+        this.listenerPersistencia = listenerPersistencia;
+    }
+
+    public String getModuloERP() {
+        return moduloERP;
+    }
+
+    public void setModuloERP(String moduloERP) {
+        this.moduloERP = moduloERP;
+    }
+
+    private Boolean umaEntidadeModuloERP = null;
+
+    @Override
+    public boolean isUmaEntidadeModuloERP() {
+        if (umaEntidadeModuloERP == null) {
+            if (moduloERP == null || moduloERP.equals(FabTipoEntidadeGenerico.MARCADOR_ENTIDADE_TIPO_PROJETO)) {
+                umaEntidadeModuloERP = false;
+            } else {
+                umaEntidadeModuloERP = true;
+            }
+        }
+
+        return umaEntidadeModuloERP;
     }
 
 }

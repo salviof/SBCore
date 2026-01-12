@@ -29,10 +29,10 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstancia
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico.CampoInstanciadoDinamico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.Date;
 import javax.persistence.Entity;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 
 /**
@@ -395,7 +395,7 @@ public final class TipoAtributoMetodosBase {
                         return null;
                     }
                     if (entidade.getAnnotation(Entity.class) != null) {
-                        return SBCore.getCentralDados().getRegistroByID(null, entidade, Long.valueOf(pValor));
+                        return SBCore.getCentralDados().getEntidadeByID(null, entidade, Long.valueOf(pValor));
 
                     } else {
                         return null;

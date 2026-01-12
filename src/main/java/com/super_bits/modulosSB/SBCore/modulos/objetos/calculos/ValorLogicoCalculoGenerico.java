@@ -110,6 +110,7 @@ public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributo
     @Override
     public Object getValor(Object... pEntidade) {
         if (!SBCore.isEmModoProducao()) {
+
             SBCore.getServicoMensagens().enviarMsgAvisoAoDesenvolvedor("O valor logico para " + getCampoInst().getLabel() + "Não foi definido");
         }
         return null;

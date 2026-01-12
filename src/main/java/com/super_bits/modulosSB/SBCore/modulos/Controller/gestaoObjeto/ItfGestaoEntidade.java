@@ -14,7 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoA
  *
  * @author desenvolvedor
  */
-public interface ItfGestaoObjeto<T> extends ItfNavegacaoDataSet<T> {
+public interface ItfGestaoEntidade<T> extends ItfNavegacaoDataSet<T> {
 
     public List<T> pesquisar(String pParametro);
 

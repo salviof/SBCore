@@ -5,10 +5,12 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.FabNomeClassePadraoAtributoEntidade;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.FabPacoteCRCProjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
-import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.UtilSBGeradorDeCodigoBase;
+
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
@@ -25,7 +27,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValidadorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -49,7 +51,7 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
     private final boolean temValidadorLogico;
     private final boolean temValorLogico;
     private final boolean temListaDinamica;
-    Class<? extends ItfValidacao> classeValidacao;
+    private Class<? extends ItfValidacao> classeValidacao;
     private Class classeListaDinamica;
     private Class classeValorDinamico;
     private boolean atualizarValorLogicoAoSalvar;
@@ -394,10 +396,11 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValidacao == null) {
 
-            String nomeClasse = UtilSBGeradorDeCodigoBase.gerarcaminhoPacoteClasse(this) + "." + UtilSBGeradorDeCodigoBase.getNomeClasseValidacao(this);
+            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
+                    + getEstruturaDaEntidade().getNomeEntidade().toLowerCase() + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
 
             try {
-                classeValidacao = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeClasse);
+                classeValidacao = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);
                 return classeValidacao;
             } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro procurando validador logico para " + getSlugIdentificador(), t);
@@ -413,10 +416,11 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValorDinamico == null) {
 
-            String nomeClasse = UtilSBGeradorDeCodigoBase.gerarcaminhoPacoteClasse(this) + "." + UtilSBGeradorDeCodigoBase.getNomeClasseValorLogico(this);
+            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaDaEntidade()) + "."
+                    + getEstruturaDaEntidade().getNomeEntidade().toLowerCase() + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO.getNomeClassseAtributoEntidade(this);
 
             try {
-                classeValorDinamico = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeClasse);
+                classeValorDinamico = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);
                 return classeValorDinamico;
             } catch (Throwable t) {
                 SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro procurando implementação para valor lógico dinamico para " + getSlugIdentificador(), t);

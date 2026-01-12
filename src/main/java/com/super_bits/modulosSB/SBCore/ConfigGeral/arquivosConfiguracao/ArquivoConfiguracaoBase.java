@@ -29,8 +29,10 @@ public class ArquivoConfiguracaoBase {
     private String GRUPO_PROJETO;
     private String DIRETORIO_BASE;
     private String NOME_CLIENTE;
+    private String GROUP_ID_MAVEN;
 
     @Override
+
     public String toString() {
         String texto
                 = "\n"
@@ -73,6 +75,7 @@ public class ArquivoConfiguracaoBase {
         }
 
         DIRETORIO_BASE = pPropriedades.getProperty("DIRETORIO_BASE");
+        GROUP_ID_MAVEN = pPropriedades.getProperty("GROUP_ID_MAVEN");
 
     }
 
@@ -113,6 +116,10 @@ public class ArquivoConfiguracaoBase {
         stream.close();
         carregarPropriedadesArquivoConfiguradorBase(proppriedadesBasicas);
         // diretorio base não é obrigatório...
+    }
+
+    public String getGROUP_ID_MAVEN() {
+        return GROUP_ID_MAVEN;
     }
 
     public String getVERSAO() {

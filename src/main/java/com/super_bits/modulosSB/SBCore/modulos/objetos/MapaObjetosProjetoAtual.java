@@ -5,21 +5,26 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos;
 
 import com.google.common.collect.Lists;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.FabPacoteCRCProjeto;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.entidadeEscuta.ListenerOperacaoEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.erp.FabPacotesCRCBase;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaCampo;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoEntidadeGenerico;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoSimples;
 
 /**
  *
@@ -127,10 +132,24 @@ public class MapaObjetosProjetoAtual {
         InfoObjetoSB infoClasse = UtilCRCReflexaoObjeto.getInfoClasseObjeto(classeEtrutura);
 
         novaEstrutura.setNomeEntidade(classeEtrutura.getSimpleName());
+        if (infoClasse.modulo().equals(FabTipoEntidadeGenerico.MARCADOR_ENTIDADE_TIPO_PROJETO)) {
+            String nome = pClasse.getName();
+            if (nome.contains(FabPacotesCRCBase.NOME_PACOTE_PROJETO_ERP)) {
+                String modulo = nome.split("\\.")[5];
+                novaEstrutura.setModuloERP(modulo);
+            } else {
+                novaEstrutura.setModuloERP(infoClasse.modulo().toLowerCase());
+            }
+        } else {
+            novaEstrutura.setModuloERP(infoClasse.modulo());
+        }
         novaEstrutura.setIcone(infoClasse.icone());
         novaEstrutura.setPlural(infoClasse.plural());
         novaEstrutura.setDescricao(infoClasse.descricao());
         novaEstrutura.setTags(Lists.newArrayList(infoClasse.tags()));
+
+        novaEstrutura.setListenerPersistencia((List) UtilCRCReflexaoSimples.getClassesComEstaAnotacao(ListenerOperacaoEntidade.class,
+                FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE, novaEstrutura));
 
         UtilCRCReflexao.getCamposRecursivodaClasseAteConterNomeObjetoFinal(pClasse, "Entidade", "ItemGenerico").forEach((campo) -> {
             try {

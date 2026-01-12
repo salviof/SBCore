@@ -13,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroRegistrandoDialo
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroSelandoDialogo;
 import java.util.ArrayList;
 import java.util.List;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 
 /**

@@ -126,6 +126,7 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
             pConfigurador.setCliente(getArquivoConfiguradorBase().getNOME_CLIENTE());
             pConfigurador.setGrupoProjeto(getArquivoConfiguradorBase().getGRUPO_PROJETO());
             pConfigurador.setNomeSocial(getArquivoConfiguradorBase().getNOME_SOCIAL());
+            pConfigurador.setGrupoIdMaven(getArquivoConfiguradorBase().getGROUP_ID_MAVEN());
 
         }
         if (isTemArqConfiguracaoCliente()) {

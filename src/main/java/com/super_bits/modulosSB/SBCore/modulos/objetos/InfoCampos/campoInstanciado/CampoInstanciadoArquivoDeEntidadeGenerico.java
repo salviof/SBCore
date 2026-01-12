@@ -13,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.FabTipoArquivoCon
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.TipoRecurso;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 import java.io.File;

@@ -1,7 +1,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.contato.ComoContatoCorporativo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.contato.ComoContatoCorporativo;
 
 public class ItemContatoCorporativo extends ItemEndereco implements
         ComoContatoCorporativo {

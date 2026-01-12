@@ -22,7 +22,6 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.UtilSBController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.UtilCRCArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
-import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
@@ -43,14 +42,15 @@ import com.super_bits.modulosSB.SBCore.modulos.tratamentoErros.ItfErroSBServico;
 import org.coletivojava.fw.api.objetoNativo.log.LogPadraoSB;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
 import java.util.ServiceLoader;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
 
 /**
  *
@@ -178,6 +178,10 @@ public class SBCore {
         soutInfoDebug("na pasta resources do jar principal deve ser criado o arquivo SBProjeto.prop", true);
         System.exit(0);
 
+    }
+
+    public String getGruoupIDMaven() {
+        return infoAplicacao.getGROUP_ID_MAVEN();
     }
 
     private static boolean validaConfiguracoes() {
@@ -542,6 +546,10 @@ public class SBCore {
         return infoAplicacao.getGrupoProjeto();
     }
 
+    public static String getGroupIDMaven() {
+        return infoAplicacao.getGROUP_ID_MAVEN();
+    }
+
     // Atalhos de acesso
     public static void enviarMensagemUsuario(String pMensagem, FabMensagens pTipoMensagem) {
 
@@ -746,24 +754,24 @@ public class SBCore {
     /**
      *
      *
-     * @see ItfCentralMensagens
+     * @see ComoServicoMensagemFireAndForget
      *
      * @return Metodos de Controle da Central de Mensagens
      */
     @Deprecated
-    public static ItfCentralMensagens getCentralDeMensagens() {
+    public static ComoServicoMensagemFireAndForget getCentralDeMensagens() {
         return getServicoMensagens();
     }
 
     /**
      *
      *
-     * @see ItfCentralMensagens
+     * @see ComoServicoMensagemFireAndForget
      *
      * @return Metodos de Controle da Central de Mensagens
      */
     @Deprecated
-    public static ItfCentralMensagens getServicoMensagens() {
+    public static ComoServicoMensagemFireAndForget getServicoMensagens() {
         try {
             return infoAplicacao.getCentralDeMensagens().newInstance();
         } catch (Throwable ex) {

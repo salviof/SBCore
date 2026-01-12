@@ -11,7 +11,7 @@ import com.super_bits.modulosSB.SBCore.modulos.email.FabConfigModuloEmailService
 import com.super_bits.modulosSB.SBCore.modulos.email.ItfServidordisparoEmail;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados)____________

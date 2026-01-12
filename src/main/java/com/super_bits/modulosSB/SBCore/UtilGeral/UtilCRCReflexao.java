@@ -28,6 +28,8 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
+import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.util.ConfigurationBuilder;
 
 /**
  *
@@ -907,6 +909,29 @@ public abstract class UtilCRCReflexao extends UtilCRCReflexaoSimples {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Impossível obter anotação de campo em enum", t);
             return null;
         }
+
+    }
+
+    /**
+     *
+     * @param pMinhaAnotacao
+     * @param pPacotePesquisa
+     * @return
+     */
+    public static List<Class> getClassesComEstaAnotacao(Class pMinhaAnotacao, String pPacotePesquisa) {
+        Reflections reflections = new Reflections(
+                new ConfigurationBuilder()
+                        .setUrls(ClasspathHelper.forPackage(pPacotePesquisa))
+                        .setScanners(new TypeAnnotationsScanner(), new SubTypesScanner(false))
+        );
+
+        List<Class> classesEncotnradas = new ArrayList<>();
+
+        Set<Class<?>> classes
+                = reflections.getTypesAnnotatedWith(pMinhaAnotacao);
+
+        classes.forEach(classesEncotnradas::add);
+        return classesEncotnradas;
 
     }
 

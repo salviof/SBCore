@@ -7,7 +7,6 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
-import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
@@ -18,6 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
 
 /**
  *
@@ -25,7 +25,7 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao
  */
 public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSomenteLeitura {
 
-    public void setCentralMEnsagens(Class<? extends ItfCentralMensagens> centralMEnsagens);
+    public void setCentralMEnsagens(Class<? extends ComoServicoMensagemFireAndForget> centralMEnsagens);
 
     public void setClasseErro(Class<? extends InfoErroSBComAcoes> classeErro);
 
@@ -83,5 +83,7 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
     public void setCentralDados(Class<? extends ItfServicoRepositorioEntidades> pCentral);
 
     public void setTipoProjeto(FabTipoProjeto pTipoProjeto);
+
+    public void setGrupoIdMaven(String pGrupo);
 
 }

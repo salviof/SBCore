@@ -10,7 +10,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfLigacaoMuitosParaUm;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoBeanSBGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.FabTipoEntidadeGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
@@ -153,7 +153,7 @@ public class LigacaoMuitosParaUm extends EntidadeSimples implements ItfLigacaoMu
     }
 
     @Override
-    public FabTipoBeanSBGenerico getTipoEntidade() {
+    public FabTipoEntidadeGenerico getTipoEntidade() {
         return estruturaObjeto.getTipoEntidade();
     }
 
@@ -198,7 +198,7 @@ public class LigacaoMuitosParaUm extends EntidadeSimples implements ItfLigacaoMu
     }
 
     @Override
-    public void setTipoEntidade(FabTipoBeanSBGenerico tipoEntidade) {
+    public void setTipoEntidade(FabTipoEntidadeGenerico tipoEntidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -263,6 +263,16 @@ public class LigacaoMuitosParaUm extends EntidadeSimples implements ItfLigacaoMu
     @Override
     public String getSlugIdentificador() {
         return estruturaObjeto.getSlugIdentificador(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getModuloERP() {
+        return estruturaObjeto.getModuloERP();
+    }
+
+    @Override
+    public boolean isUmaEntidadeModuloERP() {
+        return estruturaObjeto.isUmaEntidadeModuloERP();
     }
 
 }

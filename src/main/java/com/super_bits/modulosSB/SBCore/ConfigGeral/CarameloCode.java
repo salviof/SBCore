@@ -12,12 +12,19 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoA
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfServicoPermissao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.erp.FabPacotesCRCBase;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfApiErpSuperBits;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.Interfaces.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoAcao.ComoServicoAcoesDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoAcao.ServicoAcoesDoSistemaProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoEntidade.ComoServicoEstruturaEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoEntidade.ServicoEstruturaEntidadeProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
@@ -267,4 +274,38 @@ public class CarameloCode {
     public static ItfServicoVisualizacao getServicoVisualizacao() {
         return SBCore.getServicoVisualizacao();
     }
+
+    private static ComoServicoEstruturaEntidades servicoEstruturaEntidade;
+    private static ComoServicoAcoesDoSistema servicoAcoesSistema;
+
+    public static ComoServicoEstruturaEntidades getServicoEntidades() {
+        if (servicoEstruturaEntidade == null) {
+            servicoEstruturaEntidade = new ServicoEstruturaEntidadeProjetoAtual();
+        }
+        return servicoEstruturaEntidade;
+    }
+
+    public static ComoServicoAcoesDoSistema getSErvicoAcoesDoSistema() {
+        if (servicoAcoesSistema == null) {
+            servicoAcoesSistema = new ServicoAcoesDoSistemaProjetoAtual();
+        }
+        return servicoAcoesSistema;
+    }
+
+    public static String getGroupIDMaven() {
+        return SBCore.getGroupIDMaven();
+    }
+
+    public static ComoServicoMensagemFireAndForget getServicoMensagemFireForget() {
+
+        return SBCore.getCentralDeMensagens();
+    }
+
+    public static boolean isProjetoModuloERP() {
+        if (SBCore.getGroupIDMaven() == null) {
+            return false;
+        }
+        return SBCore.getGroupIDMaven().contains(FabPacotesCRCBase.NOME_PACOTE_PROJETO_ERP);
+    }
+
 }

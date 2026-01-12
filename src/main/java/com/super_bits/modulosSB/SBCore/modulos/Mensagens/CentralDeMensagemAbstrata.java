@@ -10,7 +10,7 @@ import org.coletivojava.fw.api.objetoNativo.mensagem.Mensagem;
  *
  * @author desenvolvedor
  */
-public abstract class CentralDeMensagemAbstrata implements ItfCentralMensagens {
+public abstract class CentralDeMensagemAbstrata implements ComoServicoMensagemFireAndForget {
 
     @Override
     public void enviarMsgAvisoAoUsuario(String pMensagem) {

@@ -8,7 +8,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ConfigPermissaoSBCoreAbstrato;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
-import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfCentralMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.InfoErroSBComAcoes;
 import com.super_bits.modulosSB.SBCore.modulos.admin.ItfCentralAdministrativa;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
@@ -19,6 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoControleDeSessao
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
 
 /**
  *
@@ -30,7 +30,7 @@ import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao
 public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
 
     private String nomeSocial;
-    private Class<? extends ItfCentralMensagens> centralMEnsagens;
+    private Class<? extends ComoServicoMensagemFireAndForget> centralMEnsagens;
     private Class<? extends InfoErroSBComAcoes> classeErro;
     private Class<? extends ComoControleDeSessao> controleDeSessao;
     private Class<? extends ItfCentralEventos> centralDeEventos;
@@ -52,10 +52,16 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private String diretorioBase = "";
     private Class<? extends ComoFabricaAcoes>[] acoesDoSistema;
     private String urlJira;
+    private String grupoIdMaven;
 
     @Override
     public Class<? extends ConfigPermissaoSBCoreAbstrato> getConfigPermissoes() {
         return classeConfigPermissao;
+    }
+
+    @Override
+    public String getGROUP_ID_MAVEN() {
+        return grupoIdMaven;
     }
 
     @Override
@@ -72,7 +78,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public Class<? extends ItfCentralMensagens> getCentralDeMensagens() {
+    public Class<? extends ComoServicoMensagemFireAndForget> getCentralDeMensagens() {
         return centralMEnsagens;
     }
 
@@ -119,7 +125,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     }
 
     @Override
-    public final void setCentralMEnsagens(Class<? extends ItfCentralMensagens> centralMEnsagens) {
+    public final void setCentralMEnsagens(Class<? extends ComoServicoMensagemFireAndForget> centralMEnsagens) {
         this.centralMEnsagens = centralMEnsagens;
 
     }
@@ -161,11 +167,15 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
      */
     @Override
     public final void setNomeProjeto(String pnomeProjeto) {
-        if (UtilCRCStringValidador.isNAO_NuloNemBranco(nomeProjeto)) {
-            System.out.println("O nomr do Projeto já foi setado como " + nomeProjeto + " a mudança para [" + pnomeProjeto + "] não foi realizada");
+        if (!UtilCRCStringValidador.isNuloOuEmbranco(nomeProjeto)) {
+            System.out.println("O nomr do Projeto já foi definido como " + nomeProjeto + " a mudança para [" + pnomeProjeto + "] não foi realizada");
         } else {
             this.nomeProjeto = pnomeProjeto;
         }
+    }
+
+    public void setGrupoIdMaven(String grupoIdMaven) {
+        this.grupoIdMaven = grupoIdMaven;
     }
 
     @Override
@@ -189,7 +199,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     public final void setGrupoProjeto(String pGrupoProjeto) {
 
         if (UtilCRCStringValidador.isNAO_NuloNemBranco(grupoProjeto)) {
-            System.out.println("O grupo projeto já foi setado como " + grupoProjeto + " a mudança para [" + pGrupoProjeto + "] não foi realizada");
+            System.out.println("O grupo projeto já foi definido como " + grupoProjeto + " a mudança para [" + pGrupoProjeto + "] não foi realizada");
         } else {
             this.grupoProjeto = pGrupoProjeto;
 
