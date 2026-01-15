@@ -396,8 +396,7 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValidacao == null) {
 
-            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
-                    + getEstruturaDaEntidade().getNomeEntidade().toLowerCase() + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
+            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
 
             try {
                 classeValidacao = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);
@@ -416,8 +415,8 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValorDinamico == null) {
 
-            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaDaEntidade()) + "."
-                    + getEstruturaDaEntidade().getNomeEntidade().toLowerCase() + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO.getNomeClassseAtributoEntidade(this);
+            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
+                    + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO.getNomeClassseAtributoEntidade(this);
 
             try {
                 classeValorDinamico = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);

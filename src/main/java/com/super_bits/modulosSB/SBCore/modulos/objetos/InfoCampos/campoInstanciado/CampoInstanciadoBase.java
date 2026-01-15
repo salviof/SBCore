@@ -173,16 +173,21 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
         try {
 
             infomensagemErro = campoReflection.getNomeDeclaracao();
+            ItfCalculoValorLogicoAtributoObjeto calculo = null;
             try {
 
                 if (campoReflection.isPossuiValorDinamicoCalculado()) {
                     ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
-                    ItfCalculoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();
+                    calculo = prCampoinstanciado.getValorLogicaEstrategia();
 
                     return calculo.getValor();
                 }
             } catch (Throwable t) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo implementação de valor dinamico calculado" + campoReflection.getNomeDeclaracao(), t);
+                if (calculo == null) {
+                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo classe que obtem o valor dinamico para o campo " + campoReflection.getClasseOndeOCampoEstaDeclarado().getSimpleName() + ";" + campoReflection.getNomeDeclaracao(), t);
+                } else {
+                    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo implementação de valor dinamico calculado" + campoReflection.getNomeDeclaracao(), t);
+                }
             }
             try {
 

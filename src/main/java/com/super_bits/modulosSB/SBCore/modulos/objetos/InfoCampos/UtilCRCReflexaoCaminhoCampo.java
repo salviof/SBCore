@@ -881,7 +881,7 @@ public class UtilCRCReflexaoCaminhoCampo {
     public static ItfValidacao getValidadorDoCampoInstanciado(ItfCampoInstanciado pCampo) {
         try {
 
-            EstruturaCampo est = MapaObjetosProjetoAtual.getEstruturaCampoPorCaminhoCompleto(pCampo.getObjetoDoAtributo().getClass().getSimpleName() + "." + pCampo.getNomeCamponaClasse());
+            EstruturaCampo est = MapaObjetosProjetoAtual.getEstruturaCampoPorCaminhoCompleto(pCampo.getObjetoRaizDoAtributo().getClass().getSimpleName() + "." + pCampo.getNomeCamponaClasse());
             Class classeValidacao = est.getClasseValidacao();
             if (est.getClasseValidacao() == null) {
 
