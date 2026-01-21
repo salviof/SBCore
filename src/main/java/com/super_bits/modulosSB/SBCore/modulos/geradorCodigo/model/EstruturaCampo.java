@@ -7,6 +7,8 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.FabNomeClassePadraoAtributoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.FabPacoteCRCProjeto;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.FabTipoCodigoDeEntidade;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.FabTipoProjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
@@ -396,7 +398,22 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValidacao == null) {
 
-            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
+            String nomeCanonico = null;
+
+            FabTipoCodigoDeEntidade tipoCodigo = FabTipoCodigoDeEntidade.getTipoProjeto(estruturaPai);
+
+            switch (tipoCodigo) {
+
+                case EXTENCAO_MODULO_ERP:
+                case PROJETO_AUTONOMO:
+                    nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
+                    break;
+                case MODULO_ERP:
+                    nomeCanonico = FabPacoteCRCProjeto.MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "." + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALIDACAO.getNomeClassseAtributoEntidade(this);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
 
             try {
                 classeValidacao = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);
@@ -415,8 +432,22 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         }
         if (classeValorDinamico == null) {
 
-            String nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
-                    + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO.getNomeClassseAtributoEntidade(this);
+            FabTipoCodigoDeEntidade tipo = FabTipoCodigoDeEntidade.getTipoProjeto(getEstruturaPai());
+            String nomeCanonico = null;
+            switch (tipo) {
+
+                case EXTENCAO_MODULO_ERP:
+                case PROJETO_AUTONOMO:
+                    nomeCanonico = FabPacoteCRCProjeto.IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
+                            + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO.getNomeClassseAtributoEntidade(this);
+                    break;
+                case MODULO_ERP:
+                    nomeCanonico = FabPacoteCRCProjeto.MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE.getPacoteCanonicoDeEntidade(getEstruturaPai()) + "."
+                            + FabNomeClassePadraoAtributoEntidade.CLASSE_CAMPO_ENTIDADE_VALOR_LOGICO_IMPLMENTACAO_PADRAO_ERP.getNomeClassseAtributoEntidade(this);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
 
             try {
                 classeValorDinamico = (Class<? extends ItfValidacao>) ReflectionUtils.forName(nomeCanonico);

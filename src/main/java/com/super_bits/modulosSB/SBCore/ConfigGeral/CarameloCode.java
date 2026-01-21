@@ -14,6 +14,8 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.ItfServicoController;
 import com.super_bits.modulosSB.SBCore.modulos.ManipulaArquivo.interfaces.ItfCentralDeArquivos;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
 import com.super_bits.modulosSB.SBCore.modulos.centralDados.ItfServicoRepositorioEntidades;
+import com.super_bits.modulosSB.SBCore.modulos.configuracao.ComoSrvConfiguracaoModulos;
+import com.super_bits.modulosSB.SBCore.modulos.configuracao.ServicoConfiguracaoModuloBasico;
 import com.super_bits.modulosSB.SBCore.modulos.erp.FabPacotesCRCBase;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfApiErpSuperBits;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
@@ -47,6 +49,11 @@ public class CarameloCode {
 
     public static boolean isEmModoDesenvolvimento() {
         return SBCore.isEmModoDesenvolvimento();
+    }
+    private static ComoSrvConfiguracaoModulos srvConfigModulo = new ServicoConfiguracaoModuloBasico();
+
+    public static ComoSrvConfiguracaoModulos getServicoConfigModulo() {
+        return srvConfigModulo;
     }
 
     public static boolean isEmModoProducao() {

@@ -677,29 +677,8 @@ public class SBCore {
         return infoAplicacao.getClass().getClassLoader();
     }
 
-    private static final Map<Class<? extends ItfFabConfigModulo>, ConfigModulo> MAPA_CONFIGURACOES_MODULO = new HashMap<>();
-
     public static synchronized ConfigModulo getConfigModulo(Class<? extends ItfFabConfigModulo> pFabricaConfig) {
-        ConfigModulo config = null;
-
-        try {
-            if (!MAPA_CONFIGURACOES_MODULO.containsKey(pFabricaConfig)) {
-                MAPA_CONFIGURACOES_MODULO.put(pFabricaConfig, new ConfigModulo(pFabricaConfig, getClasseLoaderAplicacao()));
-                if (!SBCore.isEmModoProducao()) {
-                    if (config != null) {
-                        UtilCRCSystemOut.exibirMensagemEmDestaque("Um módulo foi configurado: " + config.toString());
-                    }
-                }
-            }
-            config = MAPA_CONFIGURACOES_MODULO.get(pFabricaConfig);
-            return config;
-        } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo configuração do modulo", t);
-            return null;
-        } finally {
-
-        }
-
+        return CarameloCode.getServicoConfigModulo().getConfigModulo(pFabricaConfig);
     }
 
     public static void registrarCentralDeDados(Class<? extends ItfServicoRepositorioEntidades> pCentralDeDados) {

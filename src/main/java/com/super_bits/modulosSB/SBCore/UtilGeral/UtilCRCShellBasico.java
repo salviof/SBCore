@@ -23,12 +23,13 @@ import java.util.Arrays;
 public abstract class UtilCRCShellBasico {
 
     public static String executeCommand(String... pComando) {
-        return executeCommand(true, pComando);
+        return executeCommand(true, false, pComando);
     }
 
-    public static String executeCommand(boolean detectarDiretorioExecucao, String... pComando) {
+    public static String executeCommand(boolean detectarDiretorioExecucao, boolean pConsiderarErrorStreamErro, String... pComando) {
         System.out.println("Executando comando" + Arrays.toString(pComando));
         StringBuilder output = new StringBuilder();
+        StringBuilder outputErro = new StringBuilder();
 
         Process processo;
         try {
@@ -47,38 +48,38 @@ public abstract class UtilCRCShellBasico {
             processo.waitFor();
             int valorSaida = processo.exitValue();
 
-            if (valorSaida != 0) {
-                System.out.println("Houve um erro executando,saida" + valorSaida + " para o comando" + Arrays.toString(pComando));
-                BufferedReader reader
-                        = new BufferedReader(new InputStreamReader(processo.getErrorStream()));
+            BufferedReader out
+                    = new BufferedReader(new InputStreamReader(processo.getInputStream()));
 
-                String line;
+            BufferedReader err
+                    = new BufferedReader(new InputStreamReader(processo.getErrorStream()));
 
-                while ((line = reader.readLine()) != null) {
-                    output.append(line).append("\n");
-                    System.out.println(line);
+            boolean temSaida = false;
+
+            String linha;
+            while ((linha = out.readLine()) != null) {
+                output.append(linha).append("\n");
+                temSaida = true;
+            }
+
+            boolean temErro = false;
+            while ((linha = err.readLine()) != null) {
+                output.append(linha).append("\n");
+                outputErro.append(linha).append("\n");
+                if (pConsiderarErrorStreamErro) {
+                    temErro = true;
                 }
-                throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + output.toString());
+            }
 
-            } else {
-                BufferedReader reader
-                        = new BufferedReader(new InputStreamReader(processo.getInputStream()));
+            if (valorSaida != 0 || temErro) {
 
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    output.append(line).append("\n");
-                    System.out.println(line);
-                }
-                //verificando se tem erro mesmo com codigo 0, alguns programas tem esse comportamento
-                BufferedReader readerError
-                        = new BufferedReader(new InputStreamReader(processo.getErrorStream()));
-
-                String linelinhaErro;
-
-                while ((linelinhaErro = readerError.readLine()) != null) {
-                    output.append(linelinhaErro).append("\n");
-                    System.out.println(linelinhaErro);
+                if (temErro) {
+                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
+                } else {
+                    if (temSaida) {
+                        throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + output.toString());
+                    }
+                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "]");
                 }
 
             }

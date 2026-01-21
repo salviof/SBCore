@@ -42,6 +42,41 @@ public class ConfigModulo extends ArquivoConfiguracaoModulo implements ItfConfig
         return nomeCompleto;
     }
 
+    public boolean isEncontradoEmVariavelDeAmbienteDoSistema(ItfFabConfigModulo pPropriedades) {
+        String nomeCompleto = getNomeCompleto(pPropriedades);
+        String propriedadeEnv = System.getenv(nomeCompleto);
+        if (propriedadeEnv != null) {
+            return true;
+        }
+        propriedadeEnv = System.getenv(pPropriedades.toString());
+        if (propriedadeEnv != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public FabTipoDeclaracaoVariavelAmbiente getTipoDeclaracaoVariavelAmbiente(ItfFabConfigModulo pPropriedades) {
+        String nomeCompleto = getNomeCompleto(pPropriedades);
+        if (isEncontradoEmVariavelDeAmbienteDoSistema(pPropriedades)) {
+
+            if (nomeCompleto != null) {
+                return FabTipoDeclaracaoVariavelAmbiente.VARIAVEL_AMBIENTE;
+            }
+            return FabTipoDeclaracaoVariavelAmbiente.VARIAVEL_AMBIENTE_NOME_LEGADO;
+        }
+        if (proppriedadesBasicas.contains(nomeCompleto)) {
+            return FabTipoDeclaracaoVariavelAmbiente.ARQUIVO_CONFIGURACAO;
+        } else {
+            String chaveLegada = pPropriedades.toString();
+            if (proppriedadesBasicas.containsKey(chaveLegada)) {
+                return FabTipoDeclaracaoVariavelAmbiente.ARQUIVO_CONFIGURACAO_NOME_LEGADO;
+            } else {
+                return FabTipoDeclaracaoVariavelAmbiente.NAO_DEFINIDA;
+            }
+
+        }
+    }
+
     @Override
     public String getPropriedade(ItfFabConfigModulo pPropriedades) {
         if (SBCore.isEmModoProducao()) {

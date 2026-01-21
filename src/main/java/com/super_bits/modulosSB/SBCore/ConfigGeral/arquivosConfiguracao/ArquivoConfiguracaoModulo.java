@@ -15,11 +15,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.Properties;
-import org.apache.commons.io.filefilter.FileFileFilter;
 
 /**
  *
@@ -87,7 +85,7 @@ public abstract class ArquivoConfiguracaoModulo {
                 prop = new Properties();
                 for (ItfFabConfigModulo fabrica : fabricaConfig.getEnumConstants()) {
                     try {
-                        prop.setProperty(fabrica.toString(), fabrica.getValorPadrao());
+                        prop.setProperty(ConfigModulo.getNomeCompleto(fabrica), fabrica.getValorPadrao());
                     } catch (Throwable t) {
                         prop.setProperty(fabrica.toString(), "");
                     }

@@ -5,7 +5,6 @@
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringsMaiuculoMinusculo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 
