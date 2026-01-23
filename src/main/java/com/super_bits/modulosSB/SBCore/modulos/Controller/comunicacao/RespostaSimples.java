@@ -189,8 +189,12 @@ public class RespostaSimples implements ItfResposta, Serializable {
     @Override
     public ItfResposta addErro(String pMensagem) {
         ItfMensagem msg = FabMensagens.ERRO.getMsgUsuario(pMensagem);
-        mensagens.add(msg);
 
+        if (mensagens.stream().filter(ms -> ms.getTipoDeMensagem().equals(FabMensagens.ERRO))
+                .findFirst().isPresent()) {
+            mensagens.clear();
+        }
+        mensagens.add(msg);
         List<ItfMensagem> mensagensPositivas = new ArrayList<>();
         mensagens.stream().filter((mensgem) -> (mensgem.getTipoDeMensagem().equals(FabMensagens.AVISO))).forEachOrdered((mensgem) -> {
             mensagensPositivas.add(mensgem);
