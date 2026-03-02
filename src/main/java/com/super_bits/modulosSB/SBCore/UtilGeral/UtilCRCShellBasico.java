@@ -11,7 +11,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -36,18 +41,52 @@ public abstract class UtilCRCShellBasico {
 
             if (detectarDiretorioExecucao && pComando[0].split("/").length > 1) {
                 if (pComando.length > 1) {
-                    throw new UnsupportedOperationException("A execução detectando diretorio de execução só é permitida para chamada de uma arquivo de Script específica, portando não suporta multiplas linhas de comando");
+                    throw new UnsupportedOperationException("A execução detectando diretorio de execução só é permitida para chamada de uma arquivo de Script específica, portando não suporta multiplas linhas de comando, utilize  /caminho/do/arquivo.sh parameto, ou baixe o pocote  br.org.coletivoJava.fw.modulos shellcommands");
                 }
-                String diretorio = UtilCRCDiretoriosSimples.getDiretorioArquivo(pComando[0]) + "/";
-                String comando = UtilCRCDiretoriosSimples.getNomeArquivo(pComando[0]);
-                processo = Runtime.getRuntime().exec("/bin/bash ./" + comando, new String[]{"-c"}, new File(diretorio));
+                String caminhoParaScript = pComando[0];
+                String diretorio = UtilCRCDiretoriosSimples.getDiretorioArquivo(caminhoParaScript) + "/";
+                // 1) Parse genérico do comando recebido
+                List<String> partes = new ArrayList<>();
+                Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(caminhoParaScript);
+
+                while (m.find()) {
+                    partes.add(m.group(1).replace("\"", ""));
+                }
+
+                if (partes.isEmpty()) {
+                    throw new IllegalArgumentException("Comando vazio");
+                }
+
+                // 2) Monta bash -c exec "$@"
+                List<String> cmd = new ArrayList<>();
+                cmd.add("/bin/bash");
+                cmd.add("-c");
+                cmd.add("exec \"$@\"");
+
+                cmd.add("_");
+
+                // 3) Tudo depois vira $0 $1 $2 ...
+                cmd.addAll(partes);
+
+                ProcessBuilder pb = new ProcessBuilder(cmd);
+
+                // 4) Garante environment completo
+                Map<String, String> env = pb.environment();
+                env.clear();
+                env.putAll(System.getenv());
+
+                if (diretorio != null) {
+                    pb.directory(new File(diretorio));
+                }
+
+                processo = pb.start();
 
             } else {
                 processo = Runtime.getRuntime().exec(pComando);
             }
             processo.waitFor();
             int valorSaida = processo.exitValue();
-
+            System.out.println("Valor saída=" + valorSaida);
             BufferedReader out
                     = new BufferedReader(new InputStreamReader(processo.getInputStream()));
 
@@ -66,12 +105,12 @@ public abstract class UtilCRCShellBasico {
             while ((linha = err.readLine()) != null) {
                 output.append(linha).append("\n");
                 outputErro.append(linha).append("\n");
-                if (pConsiderarErrorStreamErro) {
-                    temErro = true;
-                }
+
+                temErro = true;
+
             }
 
-            if (valorSaida != 0 || temErro) {
+            if (valorSaida != 0) {
 
                 if (temErro) {
                     throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
@@ -82,6 +121,10 @@ public abstract class UtilCRCShellBasico {
                     throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "]");
                 }
 
+            } else {
+                if (temErro && pConsiderarErrorStreamErro) {
+                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
+                }
             }
 
         } catch (IOException | InterruptedException e) {

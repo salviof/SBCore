@@ -179,7 +179,23 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
         if (erroJavaGerado.getMessage() == null) {
             mensagem = "MENSAGEM: \n" + getMsgDesenvolvedorLancou();
         } else {
-            mensagem = "MENSAGEM: \n" + getErroGerado().getMessage();
+            if (getMsgDesenvolvedorLancou() != null && getErroGerado().getMessage() == null) {
+                mensagem = "MENSAGEM: \n" + getErroGerado().getMessage();
+            } else {
+                if (getMsgDesenvolvedorLancou() == null) {
+                    mensagem = "MENSAGEM: \n" + getErroGerado().getMessage();
+                } else {
+                    if (getMsgDesenvolvedorLancou() != null && getErroGerado().getMessage() != null) {
+                        if (!getMsgDesenvolvedorLancou().equals(getErroGerado().getMessage())) {
+                            mensagem = "MENSAGEM: \n" + getMsgDesenvolvedorLancou() + ", " + getErroGerado().getMessage();
+                        } else {
+                            mensagem = "MENSAGEM: \n" + getMsgDesenvolvedorLancou();
+                        }
+
+                    }
+                }
+            }
+
         }
         if (erroJavaGerado.getCause() != null) {
             causa = "CAUSA_FINAL: \n" + getErroGerado().getCause();
@@ -236,8 +252,8 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
             System.err.println("ERRO[" + tipoErro + "]:" + getMsgDesenvolvedorLancou());
             System.err.println("[MENSAGEM JAVA]");
             System.err.println(erroJavaGerado.getMessage());
-            System.err.println("[CAUSA JAVA]");
-            System.err.print(erroJavaGerado.getCause());
+            System.err.println("[CAUSA RAIZ ]");
+            System.err.print(UtilCRCErros.getCausaRaiz(erroJavaGerado));
             System.err.println();
             System.err.println("[Mensagem Localizada]");
             System.err.println(erroJavaGerado.getLocalizedMessage());
@@ -250,7 +266,7 @@ public class InfoErroSBBasico implements ItfInfoErroSB {
             System.err.println();
 
         } catch (Throwable erro) {
-            System.out.println("Ouve um Inception,Aconteceu um erro dentro do lançamento de erros, isto precisa ser corrigido, que a força esteja com você.");
+            System.out.println("Ouve um Inception,Aconteceu um erro durante o lançamento de erros, isto precisa ser corrigido, que a força esteja com você.");
             pararSistem();
         }
 

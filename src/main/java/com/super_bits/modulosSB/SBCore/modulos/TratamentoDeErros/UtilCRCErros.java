@@ -29,7 +29,7 @@ public class UtilCRCErros {
             texto += "\n [LOCAL_PROVAVEL_PARA_CORREÇÃO:] \n";
             for (StackTraceElement etapa : pErro.getStackTrace()) {
 
-                if (etapa.getClassName().contains("super_bits")) {
+                if (etapa.getClassName().contains("super_bits") || etapa.getClassName().contains("caramelo") || etapa.getClassName().contains("coletivoJava")) {
                     texto += "\n" + getSimpleName(etapa.getClassName()) + "->" + etapa.getMethodName() + "-Linha" + etapa.getLineNumber();
                 }
             }
@@ -40,6 +40,16 @@ public class UtilCRCErros {
 
     public static Throwable getCausaRaiz(Throwable pErro) {
         return ExceptionUtils.getRootCause(pErro);
+    }
+
+    public static boolean temCausa(Throwable throwable, Class<? extends Throwable> type) {
+        while (throwable != null) {
+            if (type.isInstance(throwable)) {
+                return true;
+            }
+            throwable = throwable.getCause();
+        }
+        return false;
     }
 
 }

@@ -14,8 +14,12 @@ public class VariavelAmbienteModulo {
 
     public VariavelAmbienteModulo(ItfFabConfigModulo pVariavel) {
         nomeEmum = pVariavel.toString();
-        valorPadrao = pVariavel.getValorPadrao();
+        try {
 
+            valorPadrao = pVariavel.getValorPadrao();
+        } catch (Throwable t) {
+            valorPadrao = "VALOR PADRÃO NÃO DEFINIDO";
+        }
         demonstracaoValor = UtilCRCStringFiltros.getPrimeirasXLetrasDaString(pVariavel.getValorParametroSistema(), 10) + "...";
         nomeVariavelAmbiente = ConfigModulo.getNomeCompleto(pVariavel);
         nomeLegado = pVariavel.toString();

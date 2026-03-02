@@ -7,6 +7,7 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCGeradorDeID;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoMetodoEmContextoDeExecucao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
@@ -1019,7 +1020,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     protected String gerarSlug() {
         ComoEntidadeSimples bean = (ComoEntidadeSimples) getInstancia();
-        return bean.getNome() + "-" + bean.getId();
+        return UtilCRCStringSlugs.gerarSlugSimples(bean.getNome()) + "-" + bean.getId();
     }
 
     @Override
@@ -1098,16 +1099,27 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
         try {
             ComoEntidadeSimplesSomenteLeitura itemSimples = (ComoEntidadeSimplesSomenteLeitura) getInstancia();
             if (getInstancia().getClass().getSimpleName().contains("$")) {
+
+                if (itemSimples.getId() == null) {
+                    return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getNome();
+                }
                 if (itemSimples.getId() != 0) {
                     return UtilCRCReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId();
                 } else {
+
                     return UtilCRCReflexaoObjeto.getClassExtraindoProxy(getInstancia().getClass().getSimpleName()).getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
                 }
 
             } else {
+
+                if (itemSimples.getId() == null) {
+                    return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getNome();
+                }
+
                 if (itemSimples.getId() != 0) {
                     return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId();
                 }
+
                 return getInstancia().getClass().getSimpleName() + "_" + itemSimples.getId() + "_" + itemSimples.getNome();
             }
 

@@ -18,7 +18,9 @@ import com.super_bits.modulosSB.SBCore.modulos.configuracao.ComoSrvConfiguracaoM
 import com.super_bits.modulosSB.SBCore.modulos.configuracao.ServicoConfiguracaoModuloBasico;
 import com.super_bits.modulosSB.SBCore.modulos.erp.FabPacotesCRCBase;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfApiErpSuperBits;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -191,6 +193,11 @@ public class CarameloCode {
      */
     public static Object getObjetoEstatico(String pNome) {
         return SBCore.getObjetoEstatico(pNome);
+
+    }
+
+    public static ComoFabrica getFabricaObjetoEstatico(String pNome) {
+        return SBCore.getFabricaObjetoEstatico(pNome);
 
     }
 

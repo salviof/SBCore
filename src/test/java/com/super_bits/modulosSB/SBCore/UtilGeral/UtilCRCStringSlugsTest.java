@@ -65,6 +65,9 @@ public class UtilCRCStringSlugsTest {
         System.out.println(retorno7);
         assertEquals(retorno7, "casanovadigital.com.br/servicos/");
 
+        String slugcomtraço = UtilCRCStringSlugs.gerarSlugSimples("teste-arquivo-Comtraco.txt");
+        System.out.println(slugcomtraço);
+
     }
 
     /**

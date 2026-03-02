@@ -119,6 +119,7 @@ public class UtilCRCStringFiltros extends UtilCRCStringFiltrosSimples {
         if (pParametro == null) {
             return null;
         }
+
         return pParametro.replaceAll("\\s", "");
 
     }

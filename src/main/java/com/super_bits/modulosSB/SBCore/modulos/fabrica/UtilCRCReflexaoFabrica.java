@@ -27,6 +27,18 @@ public abstract class UtilCRCReflexaoFabrica {
 
     }
 
+    public static ComoFabrica getFabricaByString(Class<? extends ComoFabrica> classeFabrica, String pString) {
+
+        for (ComoFabrica enumFab : classeFabrica.getEnumConstants()) {
+            if (enumFab.toString().toLowerCase().equals(pString.toLowerCase())) {
+                return enumFab;
+            }
+        }
+
+        return null;
+
+    }
+
     public static Object getObjetoByString(Class<? extends ComoFabrica> classeFabrica, String pString) {
 
         try {

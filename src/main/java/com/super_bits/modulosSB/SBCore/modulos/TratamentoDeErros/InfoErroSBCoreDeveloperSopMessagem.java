@@ -20,6 +20,7 @@ public class InfoErroSBCoreDeveloperSopMessagem extends InfoErroSBComAcoes {
             String mensagemFormatada = getMensagemGenericaFormatada("Alertando Responsavel Erro TIPO: \n" + getErroGerado().getClass().getSimpleName() + "\n");
             UTILSBCoreDesktopApp.showMessageStopProcess(FabMensagens.AVISO.getMsgDesenvolvedor(mensagemFormatada + " \n"));
         }
+
     }
 
     @Override

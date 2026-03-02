@@ -4,6 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.model.RawMessage;
+import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
+import com.amazonaws.services.simpleemail.model.SendRawEmailResult;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.email.ConfigEmailServersProjeto;
@@ -12,6 +20,21 @@ import com.super_bits.modulosSB.SBCore.modulos.email.ItfServidordisparoEmail;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados)____________
@@ -111,11 +134,104 @@ public abstract class UtilCRCEmail {
         return enviarEmail(servidor, pFromEmail, null, pUsuario, pSenha, mensagem, para, pAssunto);
     }
 
+    public static Regions detectarRegiao(String url) {
+
+        if (url == null || url.trim().isEmpty()) {
+            return Regions.US_EAST_1;
+        }
+
+        // Remove protocolo se existir
+        url = url.replace("https://", "")
+                .replace("http://", "");
+
+        // Regex padrão de região AWS (ex: us-east-1, eu-west-1)
+        Pattern pattern = Pattern.compile("([a-z]{2}-[a-z]+-\\d)");
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            String regionStr = matcher.group(1);
+
+            try {
+                return Regions.fromName(regionStr);
+            } catch (IllegalArgumentException e) {
+                return Regions.US_EAST_1;
+            }
+        }
+
+        return Regions.US_EAST_1;
+    }
+
+    private static String enviarEmailViaSESApi(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
+            final String pSenha, String pMensagem, String para, String pAssunto) {
+
+        Regions regiao = detectarRegiao(pEnderecoServidor);
+
+        System.out.println("Enviando pela região:");
+        System.out.println(regiao.getName());
+
+        BasicAWSCredentials awsCreds
+                = new BasicAWSCredentials(pUsuario, pSenha);
+        //TODO IDENTIFICAR A REGIAO PELO pEnderecoServidor
+        AmazonSimpleEmailService sesClient
+                = AmazonSimpleEmailServiceClientBuilder.standard()
+                        .withRegion(detectarRegiao(pEnderecoServidor))
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .build();
+
+        Session session = Session.getInstance(new Properties());
+
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+            // Remetente com nome
+            message.setFrom(
+                    new InternetAddress(pFromEmail, pNomeFrom, "UTF-8")
+            );
+
+            // Permite múltiplos emails e formato "Nome <email>"
+            InternetAddress[] parsedRecipients
+                    = InternetAddress.parse(para, true);
+
+            message.setRecipients(Message.RecipientType.TO, parsedRecipients);
+
+            message.setSubject(pAssunto, "UTF-8");
+
+            // Corpo HTML
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setContent(pMensagem, "text/html; charset=UTF-8");
+
+            MimeMultipart multipart = new MimeMultipart();
+            multipart.addBodyPart(htmlPart);
+
+            message.setContent(multipart);
+
+            // Converter para RawMessage
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            message.writeTo(outputStream);
+
+            RawMessage rawMessage = new RawMessage(
+                    ByteBuffer.wrap(outputStream.toByteArray())
+            );
+
+            SendRawEmailRequest request = new SendRawEmailRequest(rawMessage);
+
+            SendRawEmailResult result = sesClient.sendRawEmail(request);
+            return result.getMessageId();
+
+        } catch (MessagingException | IOException ex) {
+            Logger.getLogger(UtilCRCEmail.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     private static String enviarEmail(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
             final String pSenha, String pMensagem, String para, String pAssunto) {
         boolean envioucomsucesso = false;
 
         try {
+            if (pUsuario.startsWith("AKIA")) {
+                return enviarEmailViaSESApi(pEnderecoServidor, pFromEmail, pNomeFrom, pUsuario, pSenha, pMensagem, para, pAssunto);
+            }
             if (pUsuario == null || pUsuario.isEmpty() || pEnderecoServidor == null || pEnderecoServidor.isEmpty()) {
                 return null;
             }

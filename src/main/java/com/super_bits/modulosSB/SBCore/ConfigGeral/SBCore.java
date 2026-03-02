@@ -51,6 +51,11 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaStatus;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoStatus;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -635,7 +640,7 @@ public class SBCore {
      * @param pNome Nome da fabrica ex: FabCompVisualBotaoAcao.ICONE_E_NOME
      * @return O objeto instanciado
      */
-    public static Object getObjetoEstatico(String pNome) {
+    public static ComoEntidadeSimplesSomenteLeitura getObjetoEstatico(String pNome) {
         try {
             if (pNome == null || pNome.isEmpty()) {
                 throw new UnsupportedOperationException("Enviou nulo ouvazio para obter metodo estatico");
@@ -649,13 +654,66 @@ public class SBCore {
 
             Class fabrica = FABRICAS_OBJETO_ESTATICO.get(nomeFabrica);
 
-            return UtilCRCReflexaoFabrica.getObjetoByString(fabrica, nomeCampo);
+            return (ComoEntidadeSimplesSomenteLeitura) UtilCRCReflexaoFabrica.getFabricaByString(fabrica, nomeCampo);
 
         } catch (Throwable t) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo objeto Estático a partir do nome: " + pNome, t);
             return null;
         }
 
+    }
+
+    /**
+     *
+     * Retona a fabrica do objeto estatico
+     *
+     *
+     * -> Atenção, o prefixo Fab não é obrigatório
+     *
+     *
+     * @param pNome Nome da fabrica ex: FabCompVisualBotaoAcao.ICONE_E_NOME
+     * @return Enum ICONE_E_NOME
+     */
+    public static ComoFabrica getFabricaObjetoEstatico(String pNome) {
+        try {
+            if (pNome == null || pNome.isEmpty()) {
+                throw new UnsupportedOperationException("Enviou nulo ouvazio para obter metodo estatico");
+            }
+
+            String nomeFabrica = pNome.split("\\.")[0];
+            if (!nomeFabrica.startsWith("Fab")) {
+                nomeFabrica = "Fab" + nomeFabrica;
+            }
+            String nomeCampo = pNome.split("\\.")[1];
+
+            Class fabrica = FABRICAS_OBJETO_ESTATICO.get(nomeFabrica);
+
+            return UtilCRCReflexaoFabrica.getFabricaByString(fabrica, nomeCampo);
+
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo objeto Estático a partir do nome: " + pNome, t);
+            return null;
+        }
+    }
+
+    public static List<Class<? extends ComoFabricaStatus>> getFabricasStatus() {
+        List<Class<? extends ComoFabricaStatus>> lista = new ArrayList<>();
+        for (Class fabrica : FABRICAS_OBJETO_ESTATICO.values()) {
+            if (UtilCRCReflexao.isInterfaceImplementadaNaClasse(fabrica, ComoFabricaStatus.class)) {
+                lista.add(fabrica);
+            }
+        }
+        return lista;
+    }
+
+    public static List<Class<? extends ComoFabrica>> getFabricasObjetosEstaticos() {
+        List<Class<? extends ComoFabrica>> lista = new ArrayList<>();
+        for (Class fabrica : FABRICAS_OBJETO_ESTATICO.values()) {
+
+            lista.add(fabrica);
+
+        }
+        return lista;
     }
 
     public static void adicionarFabricaObjetoEstatico(Class pClasse) {

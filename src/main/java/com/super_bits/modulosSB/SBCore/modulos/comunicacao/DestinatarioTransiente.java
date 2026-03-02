@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCListas;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoGrupoUsuario;
@@ -113,15 +114,16 @@ public class DestinatarioTransiente implements ItfDestinatario {
                 return getUsuario().getEmail();
 
             case USUARIOS:
-
-                return UtilCRCListas.getValoresSeparadosPorPontoVirgula(UtilCRCListas.getListaStringAtributoObjeto(getUsuarios(), "email"));
+                List<? extends ComoEntidadeSimples> pItens = getUsuarios();
+                return UtilCRCListas.getAtributoSeparadosPorPontoVirgula(pItens, "email");
 
             case GRUPO:
 
                 return getGrupoUsuario().getEmail();
 
             case GRUPOS:
-                return UtilCRCListas.getValoresSeparadosPorPontoVirgula(UtilCRCListas.getListaStringAtributoObjeto(getGruposUsuario(), "email"));
+                List<? extends ComoEntidadeSimples> pItensGrp = getUsuarios();
+                return UtilCRCListas.getAtributoSeparadosPorPontoVirgula(pItensGrp, "email");
 
             default:
                 throw new AssertionError(tipoDestinatario.name());

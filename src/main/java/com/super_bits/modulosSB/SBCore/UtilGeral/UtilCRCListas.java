@@ -25,16 +25,16 @@ public class UtilCRCListas {
         return getValoresSeparadoPorCaracter(valores, ",");
     }
 
+    public static String getValoresSeparadosPorPontoVirgula(List<String> valores) {
+        return getValoresSeparadoPorCaracter(valores, ";");
+    }
+
     public static <T> Iterable<T> iteratorToIterable(Iterator<T> iterator) {
         return () -> iterator;
     }
 
     public static String getValoresSeparadosPorVirgulaInt(List<Integer> valores) {
         return getValoresSeparadoPorCaracter(valores, ",");
-    }
-
-    public static String getValoresSeparadosPorPontoVirgula(List<String> valores) {
-        return getValoresSeparadoPorCaracter(valores, ";");
     }
 
     public static String getAtributoSeparadosPorPontoVirgula(List<? extends ComoEntidadeSimples> pItens, String pAtributo) {

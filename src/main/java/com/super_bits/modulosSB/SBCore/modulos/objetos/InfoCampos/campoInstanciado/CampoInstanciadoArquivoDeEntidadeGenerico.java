@@ -179,12 +179,12 @@ public class CampoInstanciadoArquivoDeEntidadeGenerico implements ItfCampoInstAr
 
     @Override
     public String getLinkAbrirArquivo() {
-        return SBCore.getCentralDeArquivos().getEndrRemotoArquivoCampoInstanciadoAbrir(campoInstanciado);
+        return SBCore.getServicoArquivosDeEntidade().getEndrRemotoArquivoCampoInstanciadoAbrir(campoInstanciado);
     }
 
     @Override
     public String getLinkBaixarArquivo() {
-        return SBCore.getCentralDeArquivos().getEndrRemotoArquivoCampoInstanciadoBaixar(campoInstanciado);
+        return SBCore.getServicoArquivosDeEntidade().getEndrRemotoArquivoCampoInstanciadoBaixar(campoInstanciado);
 
     }
 

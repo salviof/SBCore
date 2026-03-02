@@ -100,7 +100,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             if (pCampo == null) {
                 throw new UnsupportedOperationException("Enviado campo instanciado nulo para obter URL");
             }
-            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.BAIXAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
+            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoRaizDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.BAIXAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
             String nomeArquivo = pCampo.getValor().toString();
             return urlEntidade + nomeArquivo;
         } catch (Throwable t) {
@@ -115,7 +115,7 @@ public abstract class CentralDeArquivosAbstrata implements ItfCentralDeArquivos 
             if (pCampo == null) {
                 throw new UnsupportedOperationException("Enviado campo instanciado nulo para obter URL");
             }
-            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.VISUALIZAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
+            String urlEntidade = getEndrRemotoRecursosItem((ComoEntidadeSimples) pCampo.getObjetoRaizDoAtributo(), pCampo.getNomeCamponaClasse(), FabTipoAcessoArquivo.VISUALIZAR, FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo((String) pCampo.getValor()));
             String nomeArquivo = pCampo.getValor().toString();
             return urlEntidade + nomeArquivo;
         } catch (Throwable t) {

@@ -25,6 +25,14 @@ public interface ItfFabConfigModulo {
         return valor;
     }
 
+    public default String getNomeVariavelDeAmbienteNoSistema() {
+        return ConfigModulo.getNomeCompleto(this);
+    }
+
+    public default String getNomeVariavelResumidoArquivoProp() {
+        return this.toString();
+    }
+
     public default RecursosExternosPorIndice getRepositorioDeArquivosExternos() {
         return SBCore.getConfigModulo(this.getClass()).getRepositorioDeArquivosExternos();
     }

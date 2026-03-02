@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.registro;
 
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 
@@ -15,47 +14,66 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 public class EntidadeSimplesOffilineApartirDeSlugDeObjeto extends EntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private final Long id;
+    private Long id = null;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
-    private final String descricao;
+    private String descricao = null;
     private final String slugEnviado;
+    private TipoEntradaParametroUrl tipoEntrada;
 
     public EntidadeSimplesOffilineApartirDeSlugDeObjeto(String pSlug) {
 
         if (pSlug == null) {
             throw new UnsupportedOperationException("O valor não foi enviado");
         }
-        String[] valores = pSlug.split("-");
-        int idx = 0;
-        Integer indexCodigo = null;
-        for (String valor : valores) {
-            if (UtilCRCStringValidador.isContemApenasNumero(valor)) {
-                indexCodigo = idx;
-            }
-            idx++;
-        }
-        if (indexCodigo != null) {
-            id = Long.parseLong(valores[indexCodigo]);
+        tipoEntrada = TipoEntradaParametroUrl.getTipoEntrada(pSlug);
+
+        java.util.regex.Pattern p
+                = java.util.regex.Pattern.compile("^(.*?)(?:-(-?\\d+))?$");
+
+        java.util.regex.Matcher m = p.matcher(pSlug);
+
+        String texto;
+        String numero = null;
+
+        if (m.matches()) {
+            texto = m.group(1);
+            numero = m.group(2);
         } else {
-            id = null;
+            texto = pSlug;
         }
-        String texto = "";
-        int idxv = 0;
-        for (String valor : valores) {
-            if (idxv != indexCodigo) {
-                texto += valor;
-            }
-            idxv++;
-        }
+
+        System.out.println("Texto: [" + texto + "]");
+        System.out.println("Numero: " + numero);
+
         descricao = texto;
+
+        if (numero != null) {
+            id = Long.valueOf(numero);
+        }
+
+        if (descricao == null || descricao.isEmpty()) {
+            if (numero != null && !numero.isEmpty()) {
+                descricao = numero;
+            }
+
+        }
+
+// Caso "123" ou "-123"
+        if (numero == null) {
+            try {
+                long valor = Long.parseLong(pSlug);
+                id = Math.abs(valor);
+                descricao = String.valueOf(Math.abs(valor));
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
         slugEnviado = pSlug;
     }
 
     @Override
     public Long getId() {
-        if (id == null) {
-            return -1l;
-        }
+
         return id;
     }
 
@@ -65,6 +83,10 @@ public class EntidadeSimplesOffilineApartirDeSlugDeObjeto extends EntidadeSimple
 
     public String getSlugEnviado() {
         return slugEnviado;
+    }
+
+    public TipoEntradaParametroUrl getTipoEntrada() {
+        return tipoEntrada;
     }
 
 }

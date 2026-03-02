@@ -85,7 +85,7 @@ public abstract class ArquivoConfiguracaoModulo {
                 prop = new Properties();
                 for (ItfFabConfigModulo fabrica : fabricaConfig.getEnumConstants()) {
                     try {
-                        prop.setProperty(ConfigModulo.getNomeCompleto(fabrica), fabrica.getValorPadrao());
+                        prop.setProperty(fabrica.toString(), fabrica.getValorPadrao());
                     } catch (Throwable t) {
                         prop.setProperty(fabrica.toString(), "");
                     }
