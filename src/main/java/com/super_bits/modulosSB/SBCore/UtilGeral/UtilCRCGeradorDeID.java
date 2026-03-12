@@ -4,6 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import static com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringGerador.getStringRandomicaTokenAleatorio;
+import com.super_bits.modulosSB.SBCore.UtilGeral.criptografia.GeradorTokenRandomico;
 import org.coletivojava.fw.utilCoreBase.UtilCRCGeradorDeIDSimples;
 
 /**
@@ -22,4 +24,11 @@ public abstract class UtilCRCGeradorDeID extends UtilCRCGeradorDeIDSimples {
         return (long) nomeparaHash.hashCode();
     }
 
+    public static String getStringRandomicaTokenAleatorio(int pNumero) {
+        return new GeradorTokenRandomico(pNumero).proximaString();
+    }
+
+    public static String getStringRandomicaTokenAleatorio() {
+        return getStringRandomicaTokenAleatorio(8);
+    }
 }

@@ -327,4 +327,8 @@ public class AnotacoesCampo implements ItfAnotacoesCampo {
         return infoCampoValorLogico;
     }
 
+    public InfoCampoValidadorLogico getInfoCampoValidadorLogico() {
+        return infoCampoValidadorLogico;
+    }
+
 }

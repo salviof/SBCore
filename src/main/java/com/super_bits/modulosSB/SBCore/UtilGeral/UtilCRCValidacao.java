@@ -8,7 +8,6 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.FabTipoSelecaoRegistro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
@@ -28,7 +27,7 @@ public abstract class UtilCRCValidacao {
     public static boolean validacoesBasicas(ItfCampoInstanciado pCampo, Object pValor) {
 
         return !Arrays.stream(FabTipoValidacaoUnitaria.values()).filter(validacao
-                -> !validacao.getValidador(pCampo).isValorValido(pValor)).findFirst().isPresent();
+                -> pCampo.isObrigatorio() && !validacao.getValidador(pCampo).isValorValido(pValor)).findFirst().isPresent();
 
     }
 
@@ -36,7 +35,7 @@ public abstract class UtilCRCValidacao {
 
         Optional<ItfCampoInstanciado> cpEncontrado = pObjeto.getCamposInstanciados().stream().
                 filter(cp
-                        -> (!cp.validarCampo())
+                        -> (cp.isObrigatorio() && !cp.validarCampo())
                 ).findFirst();
 
         List<ItfCampoInstanciado> camposLogicosDaEntidade = new ArrayList<>();
@@ -46,10 +45,12 @@ public abstract class UtilCRCValidacao {
                         -> (cp.isTemValidadacaoLogica())).forEach(camposLogicosDaEntidade::add);
         for (ItfCampoInstanciado cp : camposLogicosDaEntidade) {
             try {
-                if (pObjeto.getId() == null || pObjeto.getId() == null) {
-                    cp.getValidacaoLogicaEstrategia().validarModoNovo(cp.getValor());
-                } else {
-                    cp.getValidacaoLogicaEstrategia().validarModoEdicao(cp.getValor());
+                if (cp.getValidacaoLogicaEstrategia().isSempreValidarAoSAlvar()) {
+                    if (pObjeto.getId() == null || pObjeto.getId() == null) {
+                        cp.getValidacaoLogicaEstrategia().validarModoNovo(cp.getValor());
+                    } else {
+                        cp.getValidacaoLogicaEstrategia().validarModoEdicao(cp.getValor());
+                    }
                 }
             } catch (ErroValidacao e) {
                 return e.getMensagemAoUsuario();

@@ -8,8 +8,9 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -22,7 +23,7 @@ import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoCompo
  */
 public abstract class CampoInstanciadoDinamico extends CampoInstanciadoGenerico {
 
-    private final ItfAtributoObjetoSB campoDinamico;
+    private final ComoAtributoObjetoSB campoDinamico;
 
     public CampoInstanciadoDinamico(Field pCampoValor,
             ItfAtributoObjetoEditavel pCampoDinamico
@@ -38,7 +39,7 @@ public abstract class CampoInstanciadoDinamico extends CampoInstanciadoGenerico 
         return campoDinamico.getListaDeOpcoes();
     }
 
-    public abstract ItfAtributoObjetoSB getAtributosCampoDinamico();
+    public abstract ComoAtributoObjetoSB getAtributosCampoDinamico();
 
     @Override
     public ComoComponenteVisualSB getComponenteVisualPadrao() {

@@ -42,6 +42,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     private String textoPositivo;
     private String textoNegativo;
     private boolean atualizarValorLogicoAoPersistir;
+    private boolean validarSempreQuePersistir;
 
     private boolean permitirCadastroManualEndereco;
 
@@ -509,6 +510,14 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
     @Override
     public ComoFabrica getEnumVinculado() {
         return getFabricaTipoAtributo();
+    }
+
+    public boolean isValidarSempreQuePersistir() {
+        return validarSempreQuePersistir;
+    }
+
+    public void setValidarSempreQuePersistir(boolean validarSempreQuePersistir) {
+        this.validarSempreQuePersistir = validarSempreQuePersistir;
     }
 
 }

@@ -62,7 +62,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocalPostagem;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocalidade;
 
 /**
  *
@@ -72,7 +71,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoL
  *
  * @author sfurbino
  */
-public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase implements ItfCampoInstanciado, ItfAtributoObjetoSB {
+public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase implements ItfCampoInstanciado, ComoAtributoObjetoSB {
 
     private ItfCampoInstArquivoEntidade campoArquivoEntidade;
     private ItfAssistenteDeLocalizacao campoLocalizacao;
@@ -93,7 +92,6 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     private FabEstadoFormulario statusFormulario = FabEstadoFormulario.INDEFINIDO;
     private int indiceValorLista = -1;
     // TODO, Justificativas para alteração de Campos
-    private List<String> justificativasAlteracaoCampos;
 
     /**
      *
@@ -1290,7 +1288,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         statusFormulario = pStatusForm;
     }
 
-    public ItfAtributoObjetoSB getAtributosDoObjeto() {
+    public ComoAtributoObjetoSB getAtributosDoObjeto() {
         return atributoAssociado;
     }
 

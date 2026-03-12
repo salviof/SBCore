@@ -25,7 +25,7 @@ import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.F
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.TEXTO_SIMPLES;
 import static com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto.VERDADEIRO_FALSO;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico.CampoInstanciadoDinamico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
@@ -34,6 +34,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
 
 /**
  *
@@ -282,7 +283,7 @@ public final class TipoAtributoMetodosBase {
                 } else if (pValor instanceof String) {
                     pValor = Enum.valueOf(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (String) pValor);
                 } else if (pValor instanceof ComoEntidadeSimples) {
-                    pValor = UtilCRCReflexaoFabrica.getEnumDoObjetoFabrica(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (ItfTipoAtributoSBSomenteLeitura) pValor);
+                    pValor = UtilCRCReflexaoFabrica.getEnumDoObjetoFabrica(pCampo.getComoEnumFabricaObjeto().getClasseEnumFab(), (ComoTipoAtributoSBSomenteLeitura) pValor);
                 }
             }
 
@@ -601,7 +602,7 @@ public final class TipoAtributoMetodosBase {
         }
     }
 
-    public Object getValorAleatorioEmConformidade(ItfAtributoObjetoSB pAtributo) {
+    public Object getValorAleatorioEmConformidade(ComoAtributoObjetoSB pAtributo) {
 
         switch (tipo) {
             case CPF:
@@ -630,7 +631,7 @@ public final class TipoAtributoMetodosBase {
                 return valor;
             case INSCRIACAO_MUNICIPAL:
             case INSCRICAO_ESTADUAL:
-                ItfTipoAtributoSBSomenteLeitura tipoAtributo;
+                ComoTipoAtributoSBSomenteLeitura tipoAtributo;
                 if (pAtributo == null) {
                     tipoAtributo = this.getRegistro();
                 } else {

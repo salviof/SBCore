@@ -596,4 +596,9 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
         return false;
     }
 
+    @Override
+    public Object getValorPOJO() {
+        return getValor();
+    }
+
 }

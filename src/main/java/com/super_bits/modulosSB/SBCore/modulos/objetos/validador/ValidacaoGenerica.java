@@ -17,6 +17,7 @@ import java.util.List;
 public class ValidacaoGenerica<T> implements ItfValidacao<T>, Serializable {
 
     private final ItfCampoInstanciado campoInst;
+    private final boolean validarAoSalvar;
 
     @Override
     public List<WidgetsFormulario> validar(Object pValor) throws ErroValidacao {
@@ -27,11 +28,18 @@ public class ValidacaoGenerica<T> implements ItfValidacao<T>, Serializable {
 
     public ValidacaoGenerica(ItfCampoInstanciado pCampo) {
         campoInst = pCampo;
+        validarAoSalvar = pCampo.getPropriedadesRefexao().getAtributoGerado().isAtualizarValorLogicoAoPersistir();
     }
 
     @Override
     public ItfCampoInstanciado getCampoInstanciado() {
         return campoInst;
+
+    }
+
+    @Override
+    public boolean isSempreValidarAoSAlvar() {
+        return validarAoSalvar;
     }
 
 }

@@ -7,7 +7,6 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.validador.validadoresPad
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidadorGoverno;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.FabTipoValidacaoUnitaria;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.validador.ItfValidacaoUnitaria;

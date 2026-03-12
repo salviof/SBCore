@@ -20,7 +20,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtri
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.FabTipoConversaoEnum;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -29,6 +29,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
 
 /**
  *
@@ -56,7 +57,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
     };
 
     private final AnotacoesCampo anotacoes;
-    private final ItfAtributoObjetoSB atributoReferencia;
+    private final ComoAtributoObjetoSB atributoReferencia;
     private final FabTipoAtributoObjeto fabTipoAtributo;
 
     private final TIPO_ORIGEM_PROPRIEDADE tipoOrigem;
@@ -109,7 +110,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
 
     }
 
-    public PropriedadesReflexaoCampo(ItfAtributoObjetoSB pAtributoReferencia) {
+    public PropriedadesReflexaoCampo(ComoAtributoObjetoSB pAtributoReferencia) {
         try {
             anotacoes = null;
             if (pAtributoReferencia == null) {
@@ -248,11 +249,11 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             break;
                         case GRUPO_CAMPOS:
                             try {
-                            pCampo.setGrupoSubCamposExibicao(UtilCRCReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
-                        } catch (Throwable t) {
-                            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando Grupo de campos para exibição em " + getClasseDeclaracaoAtributo().getSimpleName() + "->" + getLabel(), t);
-                        }
-                        break;
+                                pCampo.setGrupoSubCamposExibicao(UtilCRCReflexaoAtributoDeObjeto.getGrupoCampoPorAnotacao(anotacoes.getGrupoCampo(), getClasseDeclaracaoAtributo()));
+                            } catch (Throwable t) {
+                                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro criando Grupo de campos para exibição em " + getClasseDeclaracaoAtributo().getSimpleName() + "->" + getLabel(), t);
+                            }
+                            break;
                         case MUITOS_PARA_UM:
                             switch (pCampo.getFabricaTipoAtributo()) {
 
@@ -308,6 +309,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                             break;
                         case INFO_CAMPO_VALIDADOR_LOGICO:
                             pCampo.setTemValidacaoLogica(true);
+                            pCampo.setAtualizarValorLogicoAoPersistir(anotacoes.getInfoCampoValidadorLogico().validarSempreQuePersistir());
                             break;
                         case INFO_CAMPO_LOCALIZACAO:
 
@@ -433,7 +435,7 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
     }
 
     @Override
-    public ItfAtributoObjetoSB getAtributoGerado() {
+    public ComoAtributoObjetoSB getAtributoGerado() {
 
         return atributoReferencia;
 

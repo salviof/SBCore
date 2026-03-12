@@ -5,13 +5,14 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoSB;
+
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.io.Serializable;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
 
 @InfoObjetoSB(tags = {"Atributo de Objeto"}, plural = "Atributos de Objeto", fabricaVinculada = FabTipoAtributoObjeto.class)
 public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializable, ItfTipoAtributoSB, ComoEntidadeSimples {
@@ -440,7 +441,7 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
 
     @Override
     public boolean isUmCampoDinamico() {
-        return this instanceof ItfAtributoObjetoSB;
+        return this instanceof ComoAtributoObjetoSB;
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.amazonaws.services.simpleemail.model.RawMessage;
 import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
 import com.amazonaws.services.simpleemail.model.SendRawEmailResult;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.erros.ErroEnviandoEmail;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.email.ConfigEmailServersProjeto;
 import com.super_bits.modulosSB.SBCore.modulos.email.FabConfigModuloEmailService;
@@ -106,7 +107,7 @@ public abstract class UtilCRCEmail {
     public static String enviarPorServidorPadraoV2(
             ComoUsuario pDestinatario,
             String pMensagem,
-            String pAssunto) {
+            String pAssunto) throws ErroEnviandoEmail {
         verificarConfiguracao();
         return enviarEmail(configuracao.getServidorPrincipalTransacional().getEnderecoServidor(),
                 configuracao.getFromEmail(),
@@ -161,11 +162,26 @@ public abstract class UtilCRCEmail {
         return Regions.US_EAST_1;
     }
 
-    private static String enviarEmailViaSESApi(String pEnderecoServidor, final String pFromEmail, final String pNomeFrom, final String pUsuario,
-            final String pSenha, String pMensagem, String para, String pAssunto) {
+    private static String enviarEmailViaSESApi(String pEnderecoServidor, final String pRemetenteEmail, final String pNomeFrom, final String pUsuario,
+            final String pSenha, String pMensagem, String para, String pAssunto) throws ErroEnviandoEmail {
 
         Regions regiao = detectarRegiao(pEnderecoServidor);
+        if (pRemetenteEmail == null || pRemetenteEmail.isEmpty()) {
+            throw new ErroEnviandoEmail("Email do rementente é obrigatorio");
+        }
+        if (pMensagem == null || pMensagem.isEmpty()) {
+            throw new ErroEnviandoEmail("Mensagem  é obrigatoria");
+        }
+        if (para == null || para.isEmpty()) {
+            throw new ErroEnviandoEmail("Email do destinatário é obrigatório");
+        }
+        if (pEnderecoServidor == null || pEnderecoServidor.isEmpty()) {
+            throw new ErroEnviandoEmail("Endereço do servidor é obrigatório");
+        }
 
+        if (pUsuario == null || pUsuario.isEmpty()) {
+            throw new ErroEnviandoEmail("Usuáro do serviço de email não foi definido verifique o arquivo" + FabConfigModuloEmailService.EMAIL_SERVICE_EMAIL_REMETENTE.getCaminhoArquivoVariaveisAmbiente() + " ");
+        }
         System.out.println("Enviando pela região:");
         System.out.println(regiao.getName());
 
@@ -185,7 +201,7 @@ public abstract class UtilCRCEmail {
         try {
             // Remetente com nome
             message.setFrom(
-                    new InternetAddress(pFromEmail, pNomeFrom, "UTF-8")
+                    new InternetAddress(pRemetenteEmail, pNomeFrom, "UTF-8")
             );
 
             // Permite múltiplos emails e formato "Nome <email>"

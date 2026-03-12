@@ -7,7 +7,6 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldComSerializacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
@@ -192,21 +191,7 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
                     SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo implementação de valor dinamico calculado" + campoReflection.getNomeDeclaracao(), t);
                 }
             }
-            try {
-
-                Method metodo = getMetodoGet();
-
-                if (metodo != null) {
-                    return metodo.invoke(pInstancia);
-                } else {
-                    return campoReflection.getValorDesteCampoEmObjetoInstanciado(pInstancia, true);
-                }
-
-            } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException t) {
-
-                return campoReflection.getValorDesteCampoEmObjetoInstanciado(pInstancia, true);
-
-            }
+            return getValorPOJO();
 
         } catch (Throwable ex) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, ex.getMessage() + "Erro obtendo valor do item Generico Instanciado" + infomensagemErro + " ", ex);
@@ -274,6 +259,25 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
     @Override
     public boolean getValorComoBoolean() {
         return ItfCampoInstanciadoBase.super.getValorComoBoolean(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object getValorPOJO() {
+        try {
+
+            Method metodo = getMetodoGet();
+
+            if (metodo != null) {
+                return metodo.invoke(getObjetoDoAtributo());
+            } else {
+                return campoReflection.getValorDesteCampoEmObjetoInstanciado(getObjetoDoAtributo(), true);
+            }
+
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException t) {
+
+            return campoReflection.getValorDesteCampoEmObjetoInstanciado(getParent(), true);
+
+        }
     }
 
 }

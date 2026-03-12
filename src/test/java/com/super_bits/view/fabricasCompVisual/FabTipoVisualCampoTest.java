@@ -4,6 +4,7 @@
  */
 package com.super_bits.view.fabricasCompVisual;
 
+import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 import org.coletivojava.fw.api.objetoNativo.view.componente.ComponenteVisualBase;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.componentes.FabCompVisualInputs;
 import org.junit.Test;
@@ -21,9 +22,11 @@ public class FabTipoVisualCampoTest {
     @Test
     public void teste() {
         for (FabCompVisualInputs fabComponente : FabCompVisualInputs.class.getEnumConstants()) {
-            ComponenteVisualBase cp = (ComponenteVisualBase) fabComponente.getRegistro();
-            System.out.println(cp.getId());
-            System.out.println(cp.getNome());
+            ComoComponenteVisualSB cp = (ComoComponenteVisualSB) fabComponente.getRegistro();
+            if (cp instanceof ComponenteVisualBase) {
+                System.out.println(((ComponenteVisualBase) cp).getId());
+                System.out.println(((ComponenteVisualBase) cp).getNome());
+            }
             System.out.println(cp.getNomeComponente());
             System.out.println(cp.getXhtmlJSF());
             System.out.println(cp.getFamilia());
