@@ -64,9 +64,9 @@ public class LinhaTela implements ItfLinhaTela {
             if (gridLayout.getLinhas().get(0) == this) {
                 return "OrganizadorContainer";
             }
-            String margemContainer = getLinhaSuperior().getColunas().size() <= 2 ? "MargemEsquerdaCamposGrande" : "MargemEsquerdaCamposPequena";
+            String margemContainer = getLinhaSuperior().getColunas().size() <= 3 ? "MargemEsquerdaCamposGrande" : "MargemEsquerdaCamposPequena";
             if (colunasRestante > 3) {
-                return "OrganizadorContainerEsquerda " + margemContainer;
+                return "OrganizadorContainerEsquerda " + margemContainer + " MargemTopo30";
             } else {
                 return "OrganizadorContainerExpandido" + margemContainer;
             }
