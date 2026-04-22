@@ -95,10 +95,12 @@ public abstract class ConfigPermissaoSBCoreAbstrato implements ItfServicoPermiss
         }
         // Verificando se o usuário é um usuário adminstrador
         UsuarioSistemaRoot userSystem = new UsuarioSistemaRoot();
-        if (pEmail.equals(userSystem.getEmail()) & pSenha.equals(userSystem.getSenha())) {
-            SBCore.getControleDeSessao().getSessaoAtual().setUsuario(userSystem);
-            SBCore.enviarAvisoAoUsuario("Você está logado como root");
-            return;
+        if (pSenha != null) {
+            if (pEmail.equals(userSystem.getEmail()) & pSenha.equals(userSystem.getSenha())) {
+                SBCore.getControleDeSessao().getSessaoAtual().setUsuario(userSystem);
+                SBCore.enviarAvisoAoUsuario("Você está logado como root");
+                return;
+            }
         }
 
         SBCore.enviarMensagemUsuario("Autenticação negada", FabMensagens.ALERTA);

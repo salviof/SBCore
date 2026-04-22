@@ -51,6 +51,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
+import com.super_bits.modulosSB.SBCore.modulos.admin.CentralAdministrativaPadrao;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaStatus;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoStatus;
@@ -233,7 +234,7 @@ public class SBCore {
                 File pastaTemp = new File("/home/developer/temp/servlet");
                 pastaTemp.mkdirs();
             }
-
+            servicoInterfaceGraficaDEV = infoAplicacao.getCentralAdministrativa();
             if (SBCore.getFabricasDeAcaoDoSistema() != null) {
                 MapaAcoesSistema.makeMapaAcoesSistema();
             }

@@ -18,6 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.icones.ComoTemIcone;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocalPostagem;
+import com.super_bits.modulosSB.SBCore.modulos.seguranca.FabConfigSeguranca;
 
 /**
  *
@@ -48,27 +49,27 @@ public class UsuarioSistemaRoot extends EntidadeNormal implements ComoUsuario, C
 
     @Override
     public String getEmail() {
-        return "root@superBits.com";
+        return FabConfigSeguranca.USUARIO_ADMIN.getValorParametroSistema();
     }
 
     @Override
     public String getSenha() {
-        return "senh@Screta";
+        return FabConfigSeguranca.SENHA.getValorParametroSistema();
     }
 
     @Override
     public String getComplemento() {
-        return "um lugar no espaço tempo";
+        return "Um lugar no espaço tempo";
     }
 
     @Override
     public String getTelefone() {
-        return "66666666";
+        return "31 6666-6666";
     }
 
     @Override
     public String getNomeLongo() {
-        return "root";
+        return "Sr. Root";
     }
 
     @Override
@@ -93,7 +94,7 @@ public class UsuarioSistemaRoot extends EntidadeNormal implements ComoUsuario, C
 
     @Override
     public String getNome() {
-        return "root";
+        return "Root";
     }
 
     @Override

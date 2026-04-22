@@ -76,9 +76,13 @@ public class UtilCRCStringNomeArquivosEDiretorios {
      * @return exetenção do arquivo
      */
     public static String getExtencaoNomeArquivo(String pNomeArquivo) {
-        return pNomeArquivo.lastIndexOf('.') > pNomeArquivo.lastIndexOf(File.separatorChar)
-                ? pNomeArquivo.substring(pNomeArquivo.lastIndexOf('.'), pNomeArquivo.length())
-                : "";
+        try {
+            return pNomeArquivo.lastIndexOf('.') > pNomeArquivo.lastIndexOf(File.separatorChar)
+                    ? pNomeArquivo.substring(pNomeArquivo.lastIndexOf('.'), pNomeArquivo.length())
+                    : "";
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     /**
