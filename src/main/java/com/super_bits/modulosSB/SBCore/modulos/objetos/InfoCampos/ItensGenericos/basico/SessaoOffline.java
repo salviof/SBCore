@@ -95,7 +95,7 @@ public class SessaoOffline implements ComoSessao {
 
         usuarioLogado = pUsuario;
         if (SBCore.getCentralPermissao() != null) {
-            menusDaSessao = (MenusDaSessao) SBCore.getCentralPermissao().definirMenu(pUsuario.getGrupo());
+            menusDaSessao = (MenusDaSessao) SBCore.getServicoPermissao().definirMenu(pUsuario.getGrupo());
         }
 
     }

@@ -110,11 +110,16 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         try {
             Object implementacao = pTipoCanalComunicacao.getImplementacaoDoContexto();
             ItfDisparoComunicacao execucaoTransporteCM = (ItfDisparoComunicacao) implementacao;
+            if (!execucaoTransporteCM.validarDadosDisparo(pComunicacao)) {
+                throw new ErroAcessandoCanalComunicacao("Mensagem não tem os dados nescessários para enviar via " + pTipoCanalComunicacao);
+            }
             String codigoReciboDisparo = execucaoTransporteCM.dispararInicioComunicacao(pComunicacao);
+
             if (codigoReciboDisparo == null) {
                 throw new ErroAcessandoCanalComunicacao("Codigo do recibo de disparo recebido é nulo " + pTipoCanalComunicacao);
             }
             return codigoReciboDisparo;
+
             //getArmazenamento().getDialogoByCodigoSelo(codigoReciboDisparo)
         } catch (Throwable t) {
             if (t instanceof ErroAcessandoCanalComunicacao) {
