@@ -32,12 +32,13 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     }
 
     public CampoInstanciadoLocalizacao(ItfCampoInstanciado pCampo) {
-        //if (pCampo.getValor() == null) {
-        //     if (pCampo.getObjetoDoAtributo() instanceof ComoTemEndereco) {
-        //         ComoTemEndereco benEnderecavel = (ComoTemEndereco) pCampo.getObjetoDoAtributo();
-        //         benEnderecavel.instanciarNovoEndereco();
-        //     }
-        // }
+        if (pCampo.getValor() == null) {
+            if (pCampo.getObjetoRaizDoAtributo() instanceof ComoTemEndereco) {
+                ComoTemEndereco benEnderecavel = (ComoTemEndereco) pCampo.getObjetoRaizDoAtributo();
+                benEnderecavel.instanciarNovoEndereco();
+            }
+        }
+
         TipoOrganizacaoDadosEndereco tipo = TipoOrganizacaoDadosEndereco.getTipoOrganizacaoByCampoInstanciado(pCampo);
         ComoEntidadeSimples beanArmazenamentoAssitente = tipo.getBeanDeArmazenamento(pCampo);
 

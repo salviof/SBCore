@@ -68,6 +68,27 @@ public class UtilCRCListas {
         }
     }
 
+    /**
+     *
+     * @param valores [1,2,3,4,5]
+     * @param pSeparador ,
+     * @return (str1,str2,str3)
+     */
+    public static String getValoresSeparadoPorCaracterEntreParenteses(List valores, String pSeparador) {
+        String resposta = "";
+        if (valores == null || valores.isEmpty()) {
+            return "";
+        }
+        for (Object v : valores) {
+            if (resposta.isEmpty()) {
+                resposta += v.toString();
+            } else {
+                resposta += "," + v.toString();
+            }
+        }
+        return "(" + resposta + ")";
+    }
+
     public static String getValoresSeparadoPorCaracter(List valores, String pValor) {
         String resposta = "";
         if (valores == null || valores.isEmpty()) {

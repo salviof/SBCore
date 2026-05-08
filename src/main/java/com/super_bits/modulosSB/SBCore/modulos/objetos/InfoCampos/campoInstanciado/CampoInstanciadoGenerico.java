@@ -1319,7 +1319,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
 
                 if (implementacaoCalculo == null) {
                     System.out.println("");
-                    MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
+                    implementacaoCalculo = MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
                             getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
                 }
 

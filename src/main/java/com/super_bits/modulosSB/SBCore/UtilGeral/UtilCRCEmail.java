@@ -9,6 +9,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.model.AmazonSimpleEmailServiceException;
 import com.amazonaws.services.simpleemail.model.RawMessage;
 import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
 import com.amazonaws.services.simpleemail.model.SendRawEmailResult;
@@ -162,15 +163,18 @@ public abstract class UtilCRCEmail {
         return Regions.US_EAST_1;
     }
 
-    private static String enviarEmailViaSESApi(String pEnderecoServidor, final String pRemetenteEmail, final String pNomeFrom, final String pUsuario,
-            final String pSenha, String pMensagem, String para, String pAssunto) throws ErroEnviandoEmail {
+    private static String enviarEmailViaSESApi(String pEnderecoServidor,
+            final String pRemetenteEmail, final String pNomeFrom,
+            final String pUsuario, final String pSenha,
+            String pMensagem, String para, String pAssunto) throws ErroEnviandoEmail {
 
         Regions regiao = detectarRegiao(pEnderecoServidor);
+
         if (pRemetenteEmail == null || pRemetenteEmail.isEmpty()) {
-            throw new ErroEnviandoEmail("Email do rementente é obrigatorio");
+            throw new ErroEnviandoEmail("Email do remetente é obrigatório");
         }
         if (pMensagem == null || pMensagem.isEmpty()) {
-            throw new ErroEnviandoEmail("Mensagem  é obrigatoria");
+            throw new ErroEnviandoEmail("Mensagem é obrigatória");
         }
         if (para == null || para.isEmpty()) {
             throw new ErroEnviandoEmail("Email do destinatário é obrigatório");
@@ -178,36 +182,29 @@ public abstract class UtilCRCEmail {
         if (pEnderecoServidor == null || pEnderecoServidor.isEmpty()) {
             throw new ErroEnviandoEmail("Endereço do servidor é obrigatório");
         }
-
         if (pUsuario == null || pUsuario.isEmpty()) {
-            throw new ErroEnviandoEmail("Usuáro do serviço de email não foi definido verifique o arquivo" + FabConfigModuloEmailService.EMAIL_SERVICE_EMAIL_REMETENTE.getCaminhoArquivoVariaveisAmbiente() + " ");
+            throw new ErroEnviandoEmail("Usuário do serviço de email não foi definido verifique o arquivo "
+                    + FabConfigModuloEmailService.EMAIL_SERVICE_EMAIL_REMETENTE.getCaminhoArquivoVariaveisAmbiente());
         }
-        System.out.println("Enviando pela região:");
-        System.out.println(regiao.getName());
 
-        BasicAWSCredentials awsCreds
-                = new BasicAWSCredentials(pUsuario, pSenha);
-        //TODO IDENTIFICAR A REGIAO PELO pEnderecoServidor
-        AmazonSimpleEmailService sesClient
-                = AmazonSimpleEmailServiceClientBuilder.standard()
-                        .withRegion(detectarRegiao(pEnderecoServidor))
-                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                        .build();
+        System.out.println("Enviando pela região: " + regiao.getName());
+
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(pUsuario, pSenha);
+
+        AmazonSimpleEmailService sesClient = AmazonSimpleEmailServiceClientBuilder.standard()
+                .withRegion(regiao)
+                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                .build();
 
         Session session = Session.getInstance(new Properties());
-
         MimeMessage message = new MimeMessage(session);
 
         try {
-            // Remetente com nome
-            message.setFrom(
-                    new InternetAddress(pRemetenteEmail, pNomeFrom, "UTF-8")
-            );
+            // Remetente
+            message.setFrom(new InternetAddress(pRemetenteEmail, pNomeFrom, "UTF-8"));
 
-            // Permite múltiplos emails e formato "Nome <email>"
-            InternetAddress[] parsedRecipients
-                    = InternetAddress.parse(para, true);
-
+            // Destinatários
+            InternetAddress[] parsedRecipients = InternetAddress.parse(para, true);
             message.setRecipients(Message.RecipientType.TO, parsedRecipients);
 
             message.setSubject(pAssunto, "UTF-8");
@@ -225,18 +222,19 @@ public abstract class UtilCRCEmail {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             message.writeTo(outputStream);
 
-            RawMessage rawMessage = new RawMessage(
-                    ByteBuffer.wrap(outputStream.toByteArray())
-            );
-
+            RawMessage rawMessage = new RawMessage(ByteBuffer.wrap(outputStream.toByteArray()));
             SendRawEmailRequest request = new SendRawEmailRequest(rawMessage);
 
             SendRawEmailResult result = sesClient.sendRawEmail(request);
+
+            System.out.println("✅ Email enviado com sucesso! MessageId: " + result.getMessageId());
             return result.getMessageId();
 
         } catch (MessagingException | IOException ex) {
             Logger.getLogger(UtilCRCEmail.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new ErroEnviandoEmail("Erro ao montar/enviar email: " + ex.getMessage());
+        } catch (AmazonSimpleEmailServiceException ase) {
+            throw new ErroEnviandoEmail("Erro AWS SES: " + ase.getErrorCode() + " - " + ase.getMessage());
         }
     }
 

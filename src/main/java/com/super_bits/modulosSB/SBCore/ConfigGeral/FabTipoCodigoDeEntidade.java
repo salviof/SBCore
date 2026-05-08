@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
-import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaDeEntidade;
 
 /**
@@ -20,12 +19,34 @@ public enum FabTipoCodigoDeEntidade {
     public static FabTipoCodigoDeEntidade getTipoProjeto(ItfEstruturaDeEntidade pEstrutura) {
         if (pEstrutura.isUmaEntidadeModuloERP()) {
             if (CarameloCode.isProjetoModuloERP()) {
+                if (!CarameloCode.getGroupIDMaven().toLowerCase().contains(pEstrutura.getModuloERP().toLowerCase())) {
+                    // Extenção usando outra extenção.
+                    return EXTENCAO_MODULO_ERP;
+                }
+
                 return MODULO_ERP;
             } else {
                 return EXTENCAO_MODULO_ERP;
             }
         }
         return PROJETO_AUTONOMO;
+    }
+
+    public boolean isTipoCodigoERP(ItfEstruturaDeEntidade pEstrutura) {
+        FabTipoCodigoDeEntidade tipo = getTipoProjeto(pEstrutura);
+        switch (tipo) {
+            case EXTENCAO_MODULO_ERP:
+                return false;
+
+            case PROJETO_AUTONOMO:
+                return false;
+
+            case MODULO_ERP:
+                return true;
+
+            default:
+                throw new AssertionError();
+        }
     }
 
 }

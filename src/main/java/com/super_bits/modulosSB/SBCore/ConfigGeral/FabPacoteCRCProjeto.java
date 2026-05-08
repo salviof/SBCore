@@ -18,16 +18,17 @@ public enum FabPacoteCRCProjeto implements ComoFabricaPacoteDeEntidade {
     MODULO_ERP_API_ESTRUTURA_ENTIDADE,
     MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE;
 
+    private static String caminhoBaseERP = "br.org.carameloCode.erp.modulo.";
+    private static String caminhoBaseProjetos = "br.org.coletivoJava.fw.projetos.";
+
     private boolean usarModuloERP() {
 
         switch (this) {
 
             case API_ESTRUTURA_ENTIDADE:
-
             case IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
                 return false;
             case MODULO_ERP_API_ESTRUTURA_ENTIDADE:
-
             case MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
                 return true;
             default:
@@ -41,33 +42,46 @@ public enum FabPacoteCRCProjeto implements ComoFabricaPacoteDeEntidade {
     ) {
 
         if (usarModuloERP()) {
-            switch (this) {
-                case MODULO_ERP_API_ESTRUTURA_ENTIDADE:
+
+            switch (getTipoPacote()) {
+                case API:
                     //"org.coletivoJava.erp." + p + ".api.model." + pSubPacote.toLowerCase()
-                    return "br.org.carameloCode.erp.modulo." + pEstrutura.getModuloERP().toLowerCase() + ".api.model." + pEstrutura.getNomeEntidade().toLowerCase();
-                case MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
-                    return "br.org.carameloCode.erp.modulo." + pEstrutura.getModuloERP().toLowerCase() + ".implemetation.model." + pEstrutura.getNomeEntidade().toLowerCase();
+                    return caminhoBaseERP + pEstrutura.getModuloERP().toLowerCase() + ".api.model." + pEstrutura.getNomeEntidade().toLowerCase();
 
-                case IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
-
-                case API_ESTRUTURA_ENTIDADE:
+                case IMPLEMENTACAO:
+                    return caminhoBaseERP + pEstrutura.getModuloERP().toLowerCase() + ".implemetation.model." + pEstrutura.getNomeEntidade().toLowerCase();
                 default:
                     throw new AssertionError();
             }
 
         } else {
-            switch (this) {
-                case API_ESTRUTURA_ENTIDADE:
-                    return "br.org.coletivoJava.fw.projetos." + SBCore.getGrupoProjeto() + ".api.model." + pEstrutura.getNomeEntidade().toLowerCase();
-                case IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
-                    return "br.org.coletivoJava.fw.projetos." + SBCore.getGrupoProjeto() + ".implemetation.model." + pEstrutura.getNomeEntidade().toLowerCase();
-                case MODULO_ERP_API_ESTRUTURA_ENTIDADE:
-                case MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
+
+            switch (getTipoPacote()) {
+                case API:
+                    return caminhoBaseProjetos + SBCore.getGrupoProjeto() + ".api.model." + pEstrutura.getNomeEntidade().toLowerCase();
+                case IMPLEMENTACAO:
+                    return caminhoBaseProjetos + SBCore.getGrupoProjeto() + ".implemetation.model." + pEstrutura.getNomeEntidade().toLowerCase();
                 default:
-                    throw new AssertionError();
+                    throw new AssertionError(getTipoPacote().name());
+
             }
+
         }
 
+    }
+
+    public FabTipoPacote getTipoPacote() {
+        switch (this) {
+
+            case API_ESTRUTURA_ENTIDADE:
+            case MODULO_ERP_API_ESTRUTURA_ENTIDADE:
+                return FabTipoPacote.API;
+            case IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
+            case MODULO_ERP_IMPLEMENTACAO_ESTRUTURA_ENTIDADE:
+                return FabTipoPacote.IMPLEMENTACAO;
+            default:
+                throw new AssertionError();
+        }
     }
 
 }

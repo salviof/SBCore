@@ -45,7 +45,7 @@ public abstract class UtilCRCValidacao {
                         -> (cp.isTemValidadacaoLogica())).forEach(camposLogicosDaEntidade::add);
         for (ItfCampoInstanciado cp : camposLogicosDaEntidade) {
             try {
-                if (cp.getValidacaoLogicaEstrategia().isSempreValidarAoSAlvar()) {
+                if (cp.getValidacaoLogicaEstrategia() != null && cp.getValidacaoLogicaEstrategia().isSempreValidarAoSAlvar()) {
                     if (pObjeto.getId() == null || pObjeto.getId() == null) {
                         cp.getValidacaoLogicaEstrategia().validarModoNovo(cp.getValor());
                     } else {
