@@ -205,8 +205,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                         if (campo.getValor() != null) {
                             switch (FabTipoArquivoConhecido.getTipoArquivoByNomeArquivo(campo.getValor().toString())) {
                                 case IMAGEM_WEB:
-                                    adicionarImagem("[" + prefixo + campo.getNomeCamponaClasse() + "]", SBCore.getCentralDeArquivos().getEndrLocalArquivoCampoInstanciado(campo));
-
+                                    adicionarImagem("[" + prefixo + campo.getNomeCamponaClasse() + "]", SBCore.getServicoArquivosDeEntidade().getEndrLocalArquivoCampoInstanciado(campo));
                                     break;
                             }
                         }

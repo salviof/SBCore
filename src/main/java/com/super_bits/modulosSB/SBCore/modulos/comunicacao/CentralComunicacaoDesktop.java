@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
@@ -18,10 +17,10 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoCom
  */
 public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
-    private final ArmazenamentoComunicacaoTransient aramazenamento;
+    protected ArmazenamentoComunicacaoTransient aramazenamento;
 
     public CentralComunicacaoDesktop() {
-        aramazenamento = new ArmazenamentoComunicacaoTransient();
+
     }
 
     @Override
@@ -84,6 +83,9 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
     @Override
     public ComoArmazenamentoComunicacao getArmazenamento() {
+        if (aramazenamento == null) {
+            aramazenamento = new ArmazenamentoComunicacaoTransient();
+        }
         return aramazenamento;
     }
 

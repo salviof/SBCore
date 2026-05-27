@@ -21,6 +21,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import java.util.ArrayList;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAssistenteDeLocalizacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeLocalizavel;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoTemEndereco;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoBairro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoCidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocal;
@@ -84,12 +86,12 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
                 ItfCampoInstanciado campoCEp = null;
                 if (pCampoGerador.isTemCampoAnotado(FabTipoAtributoObjeto.LCCEP)) {
-                    campoCEp = pCampoGerador.getObjetoDoAtributo().
+                    campoCEp = pCampoGerador.getObjetoRaizDoAtributo().
                             getCampoInstanciadoByNomeOuAnotacao(
                                     FabTipoAtributoObjeto.LCCEP.name());
                 }
-                if (pCampoGerador.getObjetoDoAtributo().isTemCampoAnotado(FabTipoAtributoObjeto.LCCEP)) {
-                    campoCEp = pCampoGerador.getObjetoDoAtributo().getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LCCEP);
+                if (pCampoGerador.getObjetoRaizDoAtributo().isTemCampoAnotado(FabTipoAtributoObjeto.LCCEP)) {
+                    campoCEp = pCampoGerador.getObjetoRaizDoAtributo().getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.LCCEP);
                     temCep = true;
                 } else {
 
@@ -110,7 +112,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 throw new AssertionError(pTipoOrganizacao.name());
         }
         if (temCep) {
-            if (UtilCRCStringValidador.isNAO_NuloNemBranco(getCep())) {
+            if (!UtilCRCStringValidador.isNuloOuEmbranco(getCep())) {
                 if (UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getUnidadeFederativa())) {
                     pesquisaSucessoUnidadeFederativa = true;
                     if (UtilCRCObjetoSB.isEntidadeSimplesExistETemNome(getCidade())) {
@@ -147,11 +149,11 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
     @Override
     public List<ComoUnidadeFederativa> metodoAutoCompleteEstado(String pNomeEstado) {
         if (unidadesFederativasDisponiveis == null) {
-            unidadesFederativasDisponiveis = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
+            unidadesFederativasDisponiveis = SBCore.getServicoLocalizacao().getUnidadesFederativas();
         }
         List<ComoUnidadeFederativa> resultadoPesquisa = new ArrayList();
 
-        List<ComoUnidadeFederativa> todos = SBCore.getCentralDeLocalizacao().getUnidadesFederativas();
+        List<ComoUnidadeFederativa> todos = SBCore.getServicoLocalizacao().getUnidadesFederativas();
         if (pNomeEstado.length() == 2) {
             todos.stream().filter(uf -> (uf.getSigla().toLowerCase().equals(pNomeEstado.toLowerCase()))).forEach(resultadoPesquisa::add);
         } else {
@@ -163,7 +165,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     @Override
     public List<ComoBairro> metodoAutoCompleteBairro(String pCidadeTXT) {
-        return SBCore.getCentralDeLocalizacao().gerarListaDeBairros(pCidadeTXT, cidadeTemporaria);
+        return SBCore.getServicoLocalizacao().gerarListaDeBairros(pCidadeTXT, cidadeTemporaria);
     }
 
     @Override
@@ -173,7 +175,7 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
                 if (isInstanciaBairroCriada()) {
                     if (getCampoInstBairro().getValor() != null) {
                         ComoBairro bairro = (ComoBairro) getCampoInstBairro().getValor();
-                        if (UtilCRCStringValidador.isNAO_NuloNemBranco(bairro.getNome())) {
+                        if (!UtilCRCStringValidador.isNuloOuEmbranco(bairro.getNome())) {
                             bairroTemporario = bairro;
                         }
                     }
@@ -753,6 +755,13 @@ public class LocalizacaoInputAssistente implements ItfAssistenteDeLocalizacao {
 
     public void adicionarListaOpcoesBairro(List<ComoBairro> bairros) {
         getCampoInstBairro().getComoCampoSeltorItem().getSeletor().getOrigem().addAll(bairros);
+    }
+
+    @Override
+    public void instanciarNovoEndereco() {
+        if (entidadePai instanceof ComoTemEndereco) {
+            ((ComoTemEndereco) entidadePai).instanciarNovoEndereco();
+        }
     }
 
 }

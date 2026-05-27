@@ -84,6 +84,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         if (dialogoJaResgistrado != null) {
             return dialogoJaResgistrado;
         }
+
         pDialogo.setCodigoSelo(pCodigoRegistroDialogo);
         getArmazenamento().registrarDialogo(pDialogo);
         return getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo);

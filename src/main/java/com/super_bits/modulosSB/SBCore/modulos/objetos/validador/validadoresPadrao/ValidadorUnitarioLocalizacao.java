@@ -35,22 +35,22 @@ public class ValidadorUnitarioLocalizacao extends ValidadorUnitarioCampoInstGene
             }
             if (localAnalizado.getBairro() != null
                     && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
-                campoInstanciado.setValor(null);
+
                 return "Localização inválida, informe o BAIRRO";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro() != null
                     && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getNome())) {
-                campoInstanciado.setValor(null);
+
                 return "Localização inválida, informe o BAIRRO";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade() != null
                     && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getNome())) {
-                campoInstanciado.setValor(null);
+
                 return "Localização inválida informe a CIDADE";
             }
             if (campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getUnidadeFederativa() != null
                     && UtilCRCStringValidador.isNuloOuEmbranco(campoInstanciado.getComoCampoLocalizacao().getBairro().getCidade().getUnidadeFederativa().getNome())) {
-                campoInstanciado.setValor(null);
+
                 return "Localização inválida informe a Unidade Federativa";
             }
 

@@ -68,6 +68,7 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
 
     @Override
     public String getCep() {
+
         return assistente.getCep();
     }
 
@@ -360,6 +361,11 @@ public class CampoInstanciadoLocalizacao implements ItfAssistenteDeLocalizacao {
     @Override
     public String getIdentificacaoMapa() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void instanciarNovoEndereco() {
+        assistente.instanciarNovoEndereco();
     }
 
 }

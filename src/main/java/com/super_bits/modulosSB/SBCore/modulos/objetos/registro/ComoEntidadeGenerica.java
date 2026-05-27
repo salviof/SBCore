@@ -30,7 +30,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroOb
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.excecao.ErroSetandoValorDeCampoPorReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.TipoOrganizacaoDadosEndereco;
 import java.io.Serializable;
 import java.lang.reflect.Field;

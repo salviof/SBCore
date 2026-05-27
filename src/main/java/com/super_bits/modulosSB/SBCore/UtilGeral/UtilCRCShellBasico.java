@@ -113,6 +113,7 @@ public abstract class UtilCRCShellBasico {
             if (valorSaida != 0) {
 
                 if (temErro) {
+
                     throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
                 } else {
                     if (temSaida) {

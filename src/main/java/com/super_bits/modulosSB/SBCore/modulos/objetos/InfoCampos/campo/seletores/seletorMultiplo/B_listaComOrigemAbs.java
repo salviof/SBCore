@@ -89,7 +89,9 @@ public abstract class B_listaComOrigemAbs<T extends ComoEntidadeSimplesSomenteLe
 
     @Override
     public void limparSelecao() {
-        lista.clear();
+        if (lista != null) {
+            lista.clear();
+        }
     }
 
     @Override

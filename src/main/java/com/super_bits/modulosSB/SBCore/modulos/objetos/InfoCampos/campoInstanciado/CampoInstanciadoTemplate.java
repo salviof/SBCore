@@ -4,6 +4,11 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
+import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.modeloDocumento.ComoModeloDocumento;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +26,30 @@ public class CampoInstanciadoTemplate implements ItfCampoInstTemplate {
         campoInstanciado = pCampoInstanciado;
     }
 
+    boolean palavrasChavesDefinidas = false;
+
     private void builPalavraChave() {
-        opcoesPalavraChave = campoInstanciado.getPropriedadesRefexao().getTemplateCampos();
+        if (!palavrasChavesDefinidas) {
+            opcoesPalavraChave = campoInstanciado.getPropriedadesRefexao().getTemplateCampos();
+
+            if (campoInstanciado.getObjetoRaizDoAtributo() instanceof ComoModeloDocumento) {
+                if (opcoesPalavraChave == null && ((ComoModeloDocumento) campoInstanciado.getObjetoRaizDoAtributo()).getEntidadePrincipalPalavraChave() != null) {
+                    opcoesPalavraChave = new ArrayList<>();
+                }
+
+                if (((ComoModeloDocumento) campoInstanciado.getObjetoRaizDoAtributo()).getEntidadePrincipalPalavraChave() != null) {
+                    String entidade = ((ComoModeloDocumento) campoInstanciado.getObjetoRaizDoAtributo()).getEntidadePrincipalPalavraChave();
+                    EstruturaDeEntidade estrutura = MapaObjetosProjetoAtual.getEstruturaObjeto(entidade);
+                    if (estrutura != null) {
+                        for (ItfEstruturaCampoEntidade campo : estrutura.getCampos()) {
+                            opcoesPalavraChave.add(campo.getNomeDeclarado());
+                        }
+                    }
+
+                }
+
+            }
+        }
 
     }
 

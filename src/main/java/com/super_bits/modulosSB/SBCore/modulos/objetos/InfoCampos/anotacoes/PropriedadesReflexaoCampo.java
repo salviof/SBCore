@@ -155,29 +155,29 @@ public class PropriedadesReflexaoCampo implements ItfPropriedadesReflexaoCampos,
                                 TipoAtributoMetodosBase tipoMetodosBaseConfig = new TipoAtributoMetodosBase(anotacoes.getInfoCampo().tipo());
                                 TipoAtributoObjetoSB tipoAtributoConfig = tipoMetodosBaseConfig.getRegistro();
                                 InfoCampo infocampo = anotacoes.getInfoCampo();
-                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().Mask())) {
+                                if (!UtilCRCStringValidador.isNuloOuEmbranco(anotacoes.getInfoCampo().Mask())) {
                                     pCampo.setMascara(anotacoes.getInfoCampo().Mask());
                                 }
                                 if (anotacoes.getInfoCampo().valorMaximo() != 99999) {
                                     pCampo.setValorMaximo(anotacoes.getInfoCampo().valorMaximo());
                                 }
 
-                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().label())) {
+                                if (!UtilCRCStringValidador.isNuloOuEmbranco(anotacoes.getInfoCampo().label())) {
                                     if (UtilCRCStringValidador.isNuloOuEmbranco(pCampo.getLabel())) {
                                         pCampo.setLabel(anotacoes.getInfoCampo().label());
                                     }
                                 } else {
                                     String lbPadrao = tipoAtributoConfig.getLabelPadrao();
-                                    if (UtilCRCStringValidador.isNAO_NuloNemBranco(lbPadrao)) {
+                                    if (!UtilCRCStringValidador.isNuloOuEmbranco(lbPadrao)) {
                                         pCampo.setLabel(lbPadrao);
                                     }
                                 }
-                                if (UtilCRCStringValidador.isNAO_NuloNemBranco(anotacoes.getInfoCampo().descricao())) {
+                                if (!UtilCRCStringValidador.isNuloOuEmbranco(anotacoes.getInfoCampo().descricao())) {
                                     if (UtilCRCStringValidador.isNuloOuEmbranco(pCampo.getDescricao())) {
                                         pCampo.setDescricao(anotacoes.getInfoCampo().descricao());
                                     }
                                 }
-
+                                pCampo.setObrigatorio(infocampo.obrigatorio());
                                 if (pCampo.getFabricaTipoAtributo() == FabTipoAtributoObjeto.TIPO_PADRAO_POR_DECLARACAO || pCampo.getFabricaTipoAtributo() == null) {
                                     if (infocampo.tipo() == FabTipoAtributoObjeto.TIPO_PADRAO_POR_DECLARACAO) {
                                         FabTipoAtributoObjeto tipo = TipoAtributoMetodosBase.getTipoPadraoByClasse(classeDeclaracaoAtributo);

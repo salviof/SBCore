@@ -32,6 +32,7 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDial
     public void setCodigoSelo(String codigoSelo) {
         if (codigoSelo != null) {
             this.codigoSelo = codigoSelo;
+
         }
 
     }
@@ -60,7 +61,7 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDial
      */
     @Override
     public boolean isFoiSelado() {
-        foiSelado = codigoSelo != null && codigoSelo.isEmpty();
+        foiSelado = (codigoSelo != null) && (!codigoSelo.isEmpty());
         return foiSelado;
     }
 
