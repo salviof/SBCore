@@ -46,7 +46,9 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     @Override
     public boolean regsitrarRespostaDialogo(String codigoComunicacao, ItfRespostaComunicacao pResposta) {
         try {
+
             ItfDialogo comunicacao = getComunicacoesAtivas().get(codigoComunicacao);
+
             if (codigoComunicacao == null) {
                 throw new UnsupportedOperationException("Comunicação não encontrada no sistema");
             }

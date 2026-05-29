@@ -17,7 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoCom
  */
 public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
-    protected ArmazenamentoComunicacaoTransient aramazenamento;
+    protected ComoArmazenamentoComunicacao aramazenamento;
 
     public CentralComunicacaoDesktop() {
 

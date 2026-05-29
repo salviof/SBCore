@@ -82,6 +82,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         }
         ItfDialogo dialogoJaResgistrado = getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo);
         if (dialogoJaResgistrado != null) {
+            getArmazenamento().registrarDialogo(pDialogo);
             return dialogoJaResgistrado;
         }
 
