@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ERPTipoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoComunicacao;
 import com.super_bits.modulosSB.SBCore.testes.TestesCore;

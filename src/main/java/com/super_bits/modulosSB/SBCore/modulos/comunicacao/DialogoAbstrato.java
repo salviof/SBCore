@@ -4,11 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,6 +26,7 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDial
     private FabStatusComunicacao status;
     private final Date dataHoraDisparo;
     private Date dataHoraResposta;
+    private List<ERPTipoCanalComunicacao> canais = Lists.newArrayList(ERPTipoCanalComunicacao.AUTOMATICO);
 
     public DialogoAbstrato() {
         dataHoraDisparo = new Date();
@@ -82,6 +85,16 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDial
     @Override
     public Date getDataHoraResposta() {
         return dataHoraResposta;
+    }
+
+    @Override
+    public List<ERPTipoCanalComunicacao> getCanais() {
+        return canais;
+    }
+
+    @Override
+    public void setCanais(List<ERPTipoCanalComunicacao> pCanais) {
+        canais = pCanais;
     }
 
 }

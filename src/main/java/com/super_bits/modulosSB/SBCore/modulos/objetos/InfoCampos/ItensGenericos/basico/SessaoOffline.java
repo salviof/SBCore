@@ -153,14 +153,14 @@ public class SessaoOffline implements ComoSessao {
     }
 
     public List<ItfDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
-        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario());
+        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasMenu();
         return comunicacoesEncontradas;
     }
 
     public List<ItfDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
 
         List<ItfDialogo> lista = new ArrayList();
-        SBCore.getServicoComunicacao().getComunicacoesAguardandoRespostaDoDestinatario(getUsuario())
+        SBCore.getServicoComunicacao().getNotificacoesAtivasMenu()
                 .stream().limit(6).forEach(lista::add);
         return lista;
     }

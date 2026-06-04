@@ -32,9 +32,9 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
-    public boolean registrarDialogo(ItfDialogo pComunicacao) {
+    public boolean registrarDialogoAtivo(ItfDialogo pComunicacao) {
         try {
-            System.out.println(pComunicacao.getMensagem());
+
             getComunicacoesAtivas().put(pComunicacao.getCodigoSelo(), pComunicacao);
             return true;
         } catch (Throwable t) {
@@ -44,27 +44,16 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
-    public boolean regsitrarRespostaDialogo(String codigoComunicacao, ItfRespostaComunicacao pResposta) {
-        try {
-
-            ItfDialogo comunicacao = getComunicacoesAtivas().get(codigoComunicacao);
-
-            if (codigoComunicacao == null) {
-                throw new UnsupportedOperationException("Comunicação não encontrada no sistema");
-            }
-            comunicacao.setRespostaEscolhida(pResposta);
-            getComunicacoesAtivas().remove(codigoComunicacao);
-            return true;
-        } catch (Throwable t) {
-            return false;
-        }
-
+    public List<ItfDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ItfDialogo> dialogos = new ArrayList<>();
+        comunicacoesAtivas.values().stream().forEach(dialogos::add);
+        return dialogos;
     }
 
     @Override
-    public boolean limparComunicacaoExpirada() {
-
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean atualizarNotificacoesAtivas() {
+        //Comunicação transiente não possui repositorio persistido
+        return true;
     }
 
     private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ItfDialogo> {
@@ -107,28 +96,7 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ComoUsuario pDestinatario) {
-        List<ItfDialogo> comunicacoes = new ArrayList<>();
-
-        getComunicacoesAtivas().values().stream().
-                filter(cm -> isComunicacaoEdousuario(pDestinatario, cm)).
-                sorted(new OrdemComunicacaoMaisNovoPrimeiro()).forEach(comunicacoes::add);
-
-        return comunicacoes;
-    }
-
-    @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ComoUsuario pRemetente) {
-        List<ItfDialogo> comunicacoesEncontradas = new ArrayList<>();
-        getComunicacoesAtivas().values().stream().filter((cm) -> (cm.getUsuarioRemetente().equals(pRemetente))).limit(5).forEachOrdered((cm) -> {
-            comunicacoesEncontradas.add(cm);
-        });
-        return comunicacoesEncontradas;
-
-    }
-
-    @Override
-    public ItfDialogo getDialogoByCodigoSelo(String pCodigoSelo) {
+    public ItfDialogo getDialogoAtivoByCodigoSelo(String pCodigoSelo) {
         if (getComunicacoesAtivas().containsKey(pCodigoSelo)) {
             return getComunicacoesAtivas().get(pCodigoSelo);
         }
@@ -137,7 +105,7 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
-    public boolean removerDialogoByCodigoSelo(String pCodigoSelo) {
+    public boolean removerDialogoAtivo(String pCodigoSelo) {
         if (!getComunicacoesAtivas().containsKey(pCodigoSelo)) {
             return false;
         }

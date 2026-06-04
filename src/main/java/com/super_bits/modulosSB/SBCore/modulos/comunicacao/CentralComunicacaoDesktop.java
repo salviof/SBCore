@@ -10,6 +10,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos
 import javax.swing.JOptionPane;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
+import java.util.List;
 
 /**
  *
@@ -32,7 +33,7 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
             comunicacao.setMensagem(mensagem);
             comunicacao.setNome(mensagem);
-            if (getArmazenamento().registrarDialogo(comunicacao)) {
+            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
                 return comunicacao;
             } else {
                 return null;
@@ -52,7 +53,7 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
             comunicacao.setMensagem(mensagem);
             comunicacao.setNome(mensagem);
-            if (getArmazenamento().registrarDialogo(comunicacao)) {
+            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
                 return comunicacao;
             } else {
                 return null;
@@ -91,7 +92,39 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
     @Override
     public String getTokenDispositivoNotificacao(ComoUsuario pUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
+    }
+
+    @Override
+    public ItffabricaCanalComunicacao getCanalPadrao() {
+        return ERPTipoCanalComunicacao.INTRANET_MENU;
+    }
+
+    @Override
+    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta, ERPTipoCanalComunicacao pErpCanal) {
+        return getArmazenamento().removerDialogoAtivo(codigoSeloComunicacao);
+    }
+
+    @Override
+    public boolean notificarViaMenu(ItfDialogo pDialogo) {
+        System.out.println("Notificado via menu, para :" + pDialogo.getDestinatario().getUsuario().getNome());
+        System.out.println(pDialogo.getAssunto());
+        System.out.println(pDialogo.getMensagem());
+        return true;
+    }
+
+    @Override
+    public boolean notificarViaBloqueioTEla(ItfDialogo pDialogo) {
+        int dialogResult
+                = JOptionPane.showConfirmDialog(null, pDialogo.getMensagem(),
+                        "Olá, " + pDialogo.getDestinatario().getUsuario().getNome() + ". Deseja continuar?", JOptionPane.YES_OPTION);
+        if (dialogResult
+                == JOptionPane.YES_OPTION) {
+            return true;
+        } else {
+            System.out.println("não");
+            return false;
+        }
     }
 
 }

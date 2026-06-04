@@ -4,7 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
@@ -38,31 +38,10 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public ItffabricaCanalComunicacao getFabricaCanalPadrao() {
-        return ERPTipoCanalComunicacao.INTRANET_MENU;
-    }
-
-    @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoDestinatario(ComoUsuario pDestinatario) {
-        return getArmazenamento().getComunicacoesAguardandoRespostaDoDestinatario(pDestinatario);
-    }
-
-    @Override
-    public List<ItfDialogo> getComunicacoesAguardandoRespostaDoRemetente(ComoUsuario pRemetente) {
-        return getArmazenamento().getComunicacoesAguardandoRespostaDoRemetente(pRemetente);
-    }
-
-    @Override
-    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta) {
-        return getArmazenamento().regsitrarRespostaDialogo(codigoSeloComunicacao, pResposta);
-    }
-
-    @Override
     public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String pAssunto, String mensagem) {
         ItfDialogo comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
-
         return comunicacao;
     }
 
@@ -76,22 +55,6 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public ItfDialogo registrarDialogo(String pCodigoRegistroDialogo, ItfDialogo pDialogo) throws ErroRegistrandoDialogo {
-        if (pCodigoRegistroDialogo == null || pCodigoRegistroDialogo.isEmpty()) {
-            throw new ErroRegistrandoDialogo("O Código enviado não pode ser nulo");
-        }
-        ItfDialogo dialogoJaResgistrado = getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo);
-        if (dialogoJaResgistrado != null) {
-            getArmazenamento().registrarDialogo(pDialogo);
-            return dialogoJaResgistrado;
-        }
-
-        pDialogo.setCodigoSelo(pCodigoRegistroDialogo);
-        getArmazenamento().registrarDialogo(pDialogo);
-        return getArmazenamento().getDialogoByCodigoSelo(pCodigoRegistroDialogo);
-    }
-
-    @Override
     public String dispararComunicacao(ItfDialogo pComunicacao, ItffabricaCanalComunicacao pTipoCanalComunicacao) throws ErroAcessandoCanalComunicacao {
         if (!pComunicacao.isFoiSelado()) {
             try {
@@ -101,9 +64,9 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
             }
         }
 
-        if (getArmazenamento().getDialogoByCodigoSelo(pComunicacao.getCodigoSelo()) == null) {
+        if (getArmazenamento().getDialogoAtivoByCodigoSelo(pComunicacao.getCodigoSelo()) == null) {
             try {
-                getArmazenamento().registrarDialogo(pComunicacao);
+                getArmazenamento().registrarDialogoAtivo(pComunicacao);
             } catch (ErroRegistrandoDialogo ex) {
                 throw new ErroAcessandoCanalComunicacao("Falha registrando dialogo para encaminhamento no canal " + pTipoCanalComunicacao);
             }
@@ -118,11 +81,11 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
             String codigoReciboDisparo = execucaoTransporteCM.dispararInicioComunicacao(pComunicacao);
 
             if (codigoReciboDisparo == null) {
-                throw new ErroAcessandoCanalComunicacao("Codigo do recibo de disparo recebido é nulo " + pTipoCanalComunicacao);
+                throw new ErroAcessandoCanalComunicacao(" Falha disparando via " + pTipoCanalComunicacao.toString() + "o codigo do recibo de disparo recebido é nulo ");
             }
             return codigoReciboDisparo;
 
-            //getArmazenamento().getDialogoByCodigoSelo(codigoReciboDisparo)
+            //getArmazenamento().getDialogoAtivoByCodigoSelo(codigoReciboDisparo)
         } catch (Throwable t) {
             if (t instanceof ErroAcessandoCanalComunicacao) {
                 throw t;
@@ -130,11 +93,6 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
             throw new ErroAcessandoCanalComunicacao("Falha enviando dialogo, usando canal " + pTipoCanalComunicacao);
         }
 
-    }
-
-    @Override
-    public ItfDialogo getComnunicacaoRegistrada(String codigoComunicacao) {
-        return getArmazenamento().getDialogoByCodigoSelo(codigoComunicacao);
     }
 
     public List<ItfTipoCanalComunicacao> gerarListaTransportes(ItffabricaCanalComunicacao... fabricas) {
@@ -168,4 +126,20 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         return pcomunicacao.isFoiSelado();
     }
 
+    @Override
+    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta, ERPTipoCanalComunicacao pErpCanal) {
+
+        return getArmazenamento().removerDialogoAtivo(codigoSeloComunicacao);
+
+    }
+
+    @Override
+    public List<ItfDialogo> getNotificacoesAtivasMenu() {
+        return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
+    }
+
+    @Override
+    public List<ItfDialogo> getNotificacoesAtivasBloqueioTela() {
+        return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA);
+    }
 }

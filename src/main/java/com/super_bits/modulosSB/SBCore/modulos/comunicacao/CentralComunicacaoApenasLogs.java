@@ -4,14 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import br.org.coletivojava.erp.comunicacao.transporte.ERPTipoCanalComunicacao;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringUrl;
+import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
+import java.util.List;
 
 /**
  *
@@ -34,7 +34,7 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
             comunicacao.setMensagem(mensagem);
             comunicacao.setAssunto(pAssunto);
             comunicacao.setNome(mensagem);
-            if (getArmazenamento().registrarDialogo(comunicacao)) {
+            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
                 return comunicacao;
             } else {
                 return null;
@@ -54,7 +54,7 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
             comunicacao.setMensagem(mensagem);
             comunicacao.setNome(mensagem);
             comunicacao.setAssunto(pAssunto);
-            if (getArmazenamento().registrarDialogo(comunicacao)) {
+            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
                 return comunicacao;
             } else {
                 return null;
@@ -82,12 +82,24 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
 
     @Override
     public String getTokenDispositivoNotificacao(ComoUsuario pUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
-    public ItffabricaCanalComunicacao getFabricaCanalPadrao() {
+    public ItffabricaCanalComunicacao getCanalPadrao() {
         return ERPTipoCanalComunicacao.INTRANET_MENU;
+    }
+
+    @Override
+    public boolean notificarViaMenu(ItfDialogo pDialogo) {
+        CarameloCode.getServicoLogEventos().registrarLogDeEvento(FabMensagens.AVISO, pDialogo.getMensagem());
+        return true;
+    }
+
+    @Override
+    public boolean notificarViaBloqueioTEla(ItfDialogo pDialogo) {
+        CarameloCode.getServicoLogEventos().registrarLogDeEvento(FabMensagens.ALERTA, pDialogo.getMensagem());
+        return true;
     }
 
 }

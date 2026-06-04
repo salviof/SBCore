@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
@@ -16,9 +17,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.Info
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
-import java.util.ArrayList;
 import java.util.List;
-import org.coletivojava.fw.api.objetoNativo.comunicacao.RespostaComunicacao;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
 import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 
@@ -203,6 +202,16 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
     @Override
     public void setAssunto(String pAssunto) {
         assunto = pAssunto;
+    }
+
+    @Override
+    public List<ERPTipoCanalComunicacao> getCanais() {
+        return Lists.newArrayList(ERPTipoCanalComunicacao.AUTOMATICO);
+    }
+
+    @Override
+    public void setCanais(List<ERPTipoCanalComunicacao> pCanais) {
+
     }
 
 }
