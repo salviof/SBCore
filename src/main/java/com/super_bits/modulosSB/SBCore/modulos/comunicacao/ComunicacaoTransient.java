@@ -4,7 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -31,6 +30,14 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     private ItfRespostaComunicacao respostaEscolhida;
 
     private long tempoAceitavelResposta = -1;
+
+    public ComunicacaoTransient() {
+        this.destinatario = null;
+        this.usuarioRemetente = null;
+        this.respostasPossiveis = null;
+        this.tipoComunicacao = null;
+        // para fins de reflexão
+    }
 
     public ComunicacaoTransient(ComoUsuario usuarioRemetente,
             ComoUsuario destinatario, ItfTipoComunicacao tipoComunicacao

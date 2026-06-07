@@ -34,7 +34,7 @@ public class UsuarioAplicacaoEmExecucao extends EntidadeNormal implements ComoUs
 
     @Override
     public String getEmail() {
-        return "sistema@coletivojava.com.br";
+        return "sistema@caramelocode.com.br";
     }
 
     @Override

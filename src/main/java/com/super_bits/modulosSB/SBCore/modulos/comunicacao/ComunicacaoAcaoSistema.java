@@ -14,6 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoA
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
@@ -29,6 +30,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
  *
  * @author desenvolvedor
  */
+@InfoObjetoSB(plural = "Comunicações de ações", tags = "Comunicação de ação do sistema")
 public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComunicacaoAcaoVinculada {
 
     private final ComoAcaoController acaoVinculada;
@@ -77,6 +79,16 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
             mensagem = "Deseja " + acaoVinculada.getNomeAcao() + "-" + beanVinculado.getNome() + " ";
         }
         return mensagem;
+    }
+
+    public ComunicacaoAcaoSistema() {
+        this.acaoVinculada = null;
+        this.tipoComunicacao = null;
+        this.repostas = null;
+        this.beanVinculado = null;
+        this.destinatario = null;
+        this.usuarioRemetente = null;
+        //para fins de REflexão
     }
 
     public ComunicacaoAcaoSistema(ComoAcaoController pAcaoVinculada, ComoEntidadeSimples pBeanVinculado) {
