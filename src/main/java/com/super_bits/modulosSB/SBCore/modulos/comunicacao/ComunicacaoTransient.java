@@ -25,7 +25,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     private final List<ItfRespostaComunicacao> respostasPossiveis;
 
     private final ItfTipoComunicacao tipoComunicacao;
-    private String mensgem;
+    private String mensagem;
     private String assunto;
     private ItfRespostaComunicacao respostaEscolhida;
 
@@ -52,7 +52,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     }
 
     public final void defineMensagem() {
-        mensgem = UtilCRCComunicacao.gerarMensagem(this);
+        mensagem = UtilCRCComunicacao.gerarMensagem(this);
         assunto = UtilCRCComunicacao.gerarAssunto(this);
 
     }
@@ -90,10 +90,10 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
 
     @Override
     public String getMensagem() {
-        if (mensgem == null) {
+        if (mensagem == null) {
             UtilCRCComunicacao.gerarMensagem(this);
         }
-        return mensgem;
+        return mensagem;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     }
 
     public String getMensgem() {
-        return mensgem;
+        return mensagem;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
 
     @Override
     public void setMensagem(String pMensagem) {
-        mensgem = pMensagem;
+        mensagem = pMensagem;
     }
 
     @Override
