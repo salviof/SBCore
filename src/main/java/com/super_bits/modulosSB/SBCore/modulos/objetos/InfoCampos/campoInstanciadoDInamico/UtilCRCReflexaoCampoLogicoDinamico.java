@@ -5,9 +5,9 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import java.lang.reflect.InvocationTargetException;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class UtilCRCReflexaoCampoLogicoDinamico {
 
-    public static ItfCalculoValorLogicoAtributoObjeto getLogicaValorCampo(final String pNomeLogica, ItfCampoInstanciado pCampo) {
+    public static ComoValorLogicoAtributoObjeto getLogicaValorCampo(final String pNomeLogica, ItfCampoInstanciado pCampo) {
 
         if (pNomeLogica.endsWith(".class") || pNomeLogica.startsWith("ValorLogicoDD")) {
             try {
@@ -33,10 +33,10 @@ public class UtilCRCReflexaoCampoLogicoDinamico {
                     classecanonica = "org.coletivoJava.fw.projetos.crm.plugin.valorLogicoCampoDinamico." + nomeClasse;
                 }
 
-                Class<? extends ItfCalculoValorLogicoAtributoObjeto> implementacaoCalculo
-                        = (Class<? extends ItfCalculoValorLogicoAtributoObjeto>) SBCore.getClasseLoaderAplicacao().loadClass(classecanonica);
+                Class<? extends ComoValorLogicoAtributoObjeto> implementacaoCalculo
+                        = (Class<? extends ComoValorLogicoAtributoObjeto>) SBCore.getClasseLoaderAplicacao().loadClass(classecanonica);
 
-                ItfCalculoValorLogicoAtributoObjeto logicaValorAutomatico;
+                ComoValorLogicoAtributoObjeto logicaValorAutomatico;
                 logicaValorAutomatico = implementacaoCalculo.getConstructor(ItfCampoInstanciado.class).newInstance(pCampo);
                 return logicaValorAutomatico;
             } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {

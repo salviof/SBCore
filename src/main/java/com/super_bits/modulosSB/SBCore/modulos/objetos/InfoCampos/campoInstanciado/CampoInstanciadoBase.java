@@ -5,7 +5,6 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FieldComSerializacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.TipoAtributoMetodosBase;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
@@ -172,7 +172,7 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
         try {
 
             infomensagemErro = campoReflection.getNomeDeclaracao();
-            ItfCalculoValorLogicoAtributoObjeto calculo = null;
+            ComoValorLogicoAtributoObjeto calculo = null;
             try {
 
                 if (campoReflection.isPossuiValorDinamicoCalculado()) {

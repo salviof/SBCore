@@ -10,7 +10,7 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
  *
  * @author desenvolvedor
  */
-public class ErroSBCoreCriticoParaTudo extends ErroSBCoreFW {
+public class ErroSBCoreCriticoParaTudo extends ErroCRCCoreFW {
 
     public ErroSBCoreCriticoParaTudo(String pMensagem) {
         super(FabErro.PARA_TUDO, pMensagem);

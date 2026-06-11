@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral.erros;
 
-import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroSBCoreFW;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroCRCCoreFW;
 
 /**
  *
  * @author salvio
  */
-public class ErroDeteccaoSeparadorDecimal extends ErroSBCoreFW {
+public class ErroDeteccaoSeparadorDecimal extends ErroCRCCoreFW {
 
     public enum TIPO_ERRO_DETECTOR_SEPARADOR_DECIMAL {
         NENHUM_SEPARADOR_DETECTADO,

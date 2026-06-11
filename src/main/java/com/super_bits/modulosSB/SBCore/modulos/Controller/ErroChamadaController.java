@@ -4,13 +4,13 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
-import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroSBCoreFW;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroCRCCoreFW;
 
 /**
  *
  * @author sfurbino
  */
-public class ErroChamadaController extends ErroSBCoreFW {
+public class ErroChamadaController extends ErroCRCCoreFW {
 
     public ErroChamadaController(String pMensagem) {
         super(pMensagem);

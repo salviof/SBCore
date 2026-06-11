@@ -13,7 +13,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidadorGoverno;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
@@ -35,6 +34,7 @@ import javax.persistence.Entity;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
@@ -349,7 +349,7 @@ public final class TipoAtributoMetodosBase {
 
     public static Object converterStringDinamicoEmValorReal(CampoInstanciadoDinamico pCampo, String pValor) {
         try {
-            ItfCalculoValorLogicoAtributoObjeto logicaValorPadrao = pCampo.getValorLogicaEstrategia();
+            ComoValorLogicoAtributoObjeto logicaValorPadrao = pCampo.getValorLogicaEstrategia();
             if (logicaValorPadrao != null) {
                 if (pCampo.getObjetoDoAtributo() instanceof ItfDadoDinamico) {
                     ((ItfDadoDinamico) pCampo.getObjetoDoAtributo()).setValorEmpacotado((String) logicaValorPadrao.getValor());

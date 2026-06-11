@@ -10,7 +10,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringSlugs;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfResposta;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.fonteDados.CentralAtributosDeObjetosSemPersistencia;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.EstruturaDeEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoAtributoDeObjeto;
@@ -53,6 +52,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogico;
 
 /**
  *
@@ -71,7 +71,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
     private Map<String, Field> mapaCampoPorAnotacao;
     private boolean mapeouTodosOsCampos = false;
 
-    private Map<ItfCalculos, Boolean> controleCalculo;
+    private Map<ComoValorLogico, Boolean> controleCalculo;
     @JsonIgnore()
     private final Object instancia;
 
@@ -104,7 +104,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     }
 
-    protected Map<ItfCalculos, Boolean> getControleCalculo() {
+    protected Map<ComoValorLogico, Boolean> getControleCalculo() {
 
         if (controleCalculo == null) {
             controleCalculo = new HashMap();
@@ -158,6 +158,11 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
         @Override
         public Object getParent() {
             return getInstancia();
+        }
+
+        @Override
+        public boolean isSomenteLeitura() {
+            return super.isSomenteLeitura(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         }
 
     }
@@ -708,6 +713,8 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
 
     /**
      * Depreciado, (nomeclatura incorreta) Utilize:
+     *
+     * @see #getCampoInstanciadoByNomeOuAnotacao(java.lang.String)
      *
      * @param pNomeOuANotacao
      * @see #getCampoInstanciadoByNomeOuAnotacao(java.lang.String)

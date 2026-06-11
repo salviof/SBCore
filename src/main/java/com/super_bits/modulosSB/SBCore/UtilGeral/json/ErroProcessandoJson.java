@@ -4,14 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral.json;
 
-import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroSBCoreFW;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroCRCCoreFW;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
  * @author sfurbino
  */
-public class ErroProcessandoJson extends ErroSBCoreFW {
+public class ErroProcessandoJson extends ErroCRCCoreFW {
 
     public ErroProcessandoJson(String pMensagem) {
         super(pMensagem);

@@ -30,11 +30,11 @@ public class CampoNaoImplementadoTest {
 
         UsuarioAnonimo user = new UsuarioAnonimo();
 
-        String valor = (String) user.getCampoByNomeOuAnotacao("nome").getValor();
+        String valor = (String) user.getCampoInstanciadoByNomeOuAnotacao("nome").getValor();
 
-        user.getCampoByNomeOuAnotacao("nome").setValor("teste");
+        user.getCampoInstanciadoByNomeOuAnotacao("nome").setValor("teste");
 
-        valor = (String) user.getCampoByNomeOuAnotacao("nome").getValor();
+        valor = (String) user.getCampoInstanciadoByNomeOuAnotacao("nome").getValor();
 
         valor = valor;
 

@@ -13,7 +13,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.estadoFormulario.FabEstadoFormulario;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.UtilCRCReflexaoCaminhoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.ItfPropriedadesReflexaoCampos;
@@ -62,6 +61,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocalPostagem;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
@@ -87,7 +87,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     protected final ItfAtributoObjetoEditavel atributoAssociado;
     private final PropriedadesReflexaoCampo propriedadesReflexao;
     private ItfValidacao validacaoLogica;
-    private ItfCalculoValorLogicoAtributoObjeto valorLogicoEstrategia;
+    private ComoValorLogicoAtributoObjeto valorLogicoEstrategia;
 
     private FabEstadoFormulario statusFormulario = FabEstadoFormulario.INDEFINIDO;
     private int indiceValorLista = -1;
@@ -358,6 +358,16 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
      */
     @Override
     public boolean isSomenteLeitura() {
+        if (campoReflection.isPossuiValorDinamicoCalculado()) {
+            if (campoReflection.isPossuiValorDinamicoCalculado()) {
+                ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
+                ComoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();
+                if (calculo.isSomenteLeitura() != null) {
+                    return calculo.isSomenteLeitura();
+                }
+            }
+        }
+
         if (statusFormulario.equals(FabEstadoFormulario.VISUALIZAR)) {
             return true;
         }
@@ -1303,7 +1313,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
     }
 
     @Override
-    public ItfCalculoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
+    public ComoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
         if (isCampoNaoInstanciado()) {
             return null;
         }
@@ -1313,25 +1323,28 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
         } else {
 
             try {
-                Class<? extends ItfCalculoValorLogicoAtributoObjeto> implementacaoCalculo
+                Class<? extends ComoValorLogicoAtributoObjeto> implementacaoValorLogico
                         = MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
                                 getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
 
-                if (implementacaoCalculo == null) {
+                if (implementacaoValorLogico == null) {
                     System.out.println("");
-                    implementacaoCalculo = MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
+                    implementacaoValorLogico = MapaObjetosProjetoAtual.getEstruturaObjeto(getObjetoDoAtributo().getClass()).
                             getClasseImplementacaoValorLogico(campoReflection.getNomeDeclaracao());
                 }
 
                 try {
-                    valorLogicoEstrategia = implementacaoCalculo.getConstructor(ItfCampoInstanciado.class).newInstance(this);
+                    if (implementacaoValorLogico == null) {
+                        throw new UnsupportedOperationException("Classe responsável pela implantação de valor lógioco para " + getNomeCompostoIdentificador() + " " + getLabel());
+                    }
+                    valorLogicoEstrategia = implementacaoValorLogico.getConstructor(ItfCampoInstanciado.class).newInstance(this);
 
                 } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(CampoInstanciadoGenerico.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } catch (NoSuchMethodException | SecurityException ex) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo instancia do valor lógico", ex);
+                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro obtendo instancia do valor lógico, " + ex.getMessage(), ex);
                 return null;
             }
 

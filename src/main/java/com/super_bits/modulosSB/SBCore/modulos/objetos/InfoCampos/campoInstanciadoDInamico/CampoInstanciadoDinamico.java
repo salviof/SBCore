@@ -6,7 +6,6 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciadoDInamico;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ComoAtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
@@ -15,6 +14,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import java.lang.reflect.Field;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
@@ -46,10 +46,10 @@ public abstract class CampoInstanciadoDinamico extends CampoInstanciadoGenerico 
         return super.getComponenteVisualPadrao(); //chamada super do metodo (implementação classe pai)
     }
 
-    private ItfCalculoValorLogicoAtributoObjeto logicaValorAutomatico;
+    private ComoValorLogicoAtributoObjeto logicaValorAutomatico;
 
     @Override
-    public ItfCalculoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
+    public ComoValorLogicoAtributoObjeto getValorLogicaEstrategia() {
         if (logicaValorAutomatico != null) {
             return logicaValorAutomatico;
         }

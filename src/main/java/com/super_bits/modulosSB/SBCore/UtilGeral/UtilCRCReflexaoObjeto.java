@@ -4,6 +4,8 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
@@ -13,6 +15,9 @@ import java.util.Optional;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoObjetoSimples;
+import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.proxy.HibernateProxyHelper;
+import org.hibernate.proxy.LazyInitializer;
 
 /**
  *
@@ -20,11 +25,29 @@ import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoObjetoSimples;
  */
 public class UtilCRCReflexaoObjeto extends UtilCRCReflexaoObjetoSimples {
 
+    public static boolean isDetached(Object pEntidade) {
+        // proxy não inicializado + sem sessão = detached
+
+        if (pEntidade instanceof HibernateProxy) {
+            LazyInitializer li = ((HibernateProxy) pEntidade).getHibernateLazyInitializer();
+            return li.isUninitialized() && li.getSession() == null;
+        }
+        return false;
+    }
+
+    public static boolean getClasseTemProxy(String pNomeClasse) {
+        //compativel com chamadas em sistemas sem Dependencia com hibernate
+
+        return pNomeClasse.indexOf("$") > 0;
+    }
+
     public static Class getClassExtraindoProxy(String pNomeClasse) {
         if (pNomeClasse.indexOf("$") <= 0) {
             return MapaObjetosProjetoAtual.getClasseDoObjetoByNome(pNomeClasse);
         }
         String nomeClasse = UtilCRCStringBuscaTrecho.getStringAteEncontrarIsto(pNomeClasse, "$");
+        //TODO avaliar substituição por:  Hibernate.getClass(pNomeClasse) ou HibernateProxyHelper., porém precisa validar se o objeto é um objeto registrado do projeto
+        // como esse método precisa funcionar em projetos sem hibernate, talvez Hibernate.getClass não faça sentido
         return MapaObjetosProjetoAtual.getClasseDoObjetoByNome(nomeClasse);
     }
 

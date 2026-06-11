@@ -194,6 +194,7 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     @Override
     public boolean isSomenteLeitura() {
+
         return tipoAtributo.isSomenteLeitura();
     }
 

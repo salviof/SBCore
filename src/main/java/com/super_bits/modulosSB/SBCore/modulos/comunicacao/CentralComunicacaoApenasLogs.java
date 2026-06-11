@@ -6,11 +6,14 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.FabMensagens;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,6 +103,17 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     public boolean notificarViaBloqueioTEla(ItfDialogo pDialogo) {
         CarameloCode.getServicoLogEventos().registrarLogDeEvento(FabMensagens.ALERTA, pDialogo.getMensagem());
         return true;
+    }
+
+    @Override
+    public List<ItfDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void atualizarGatilhosDeNotificacaoPorAcao() {
+
+        System.out.println("Gatilhos de notificação por Ação não Implmentados em  " + this.getClass().getSimpleName());
     }
 
 }

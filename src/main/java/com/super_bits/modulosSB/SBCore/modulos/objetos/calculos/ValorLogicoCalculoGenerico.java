@@ -5,7 +5,6 @@
 package com.super_bits.modulosSB.SBCore.modulos.objetos.calculos;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculoValorLogicoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
@@ -13,12 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 
 /**
  *
  * @author desenvolvedor
  */
-public class ValorLogicoCalculoGenerico implements ItfCalculoValorLogicoAtributoObjeto {
+public class ValorLogicoCalculoGenerico implements ComoValorLogicoAtributoObjeto {
 
     private final ItfCampoInstanciado campoInst;
     private boolean cacheAtivado;

@@ -7,7 +7,9 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroAcessandoCanalComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroRegistrandoDialogo;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroSelandoDialogo;
@@ -141,5 +143,15 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     @Override
     public List<ItfDialogo> getNotificacoesAtivasBloqueioTela() {
         return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA);
+    }
+
+    @Override
+    public List<ItfDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void atualizarGatilhosDeNotificacaoPorAcao() {
+        System.out.println("Sem gatilhos de notificação por ação");
     }
 }

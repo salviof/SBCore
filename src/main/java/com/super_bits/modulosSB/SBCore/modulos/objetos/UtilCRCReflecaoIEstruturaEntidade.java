@@ -9,7 +9,6 @@ import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfValidacao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.InfoCalculo;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.listas.InfoLista;
-import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ItfCalculos;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.listas.ItfListas;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model.CalculoDeEntidade;
@@ -24,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogico;
 
 /**
  *
@@ -73,7 +73,7 @@ public class UtilCRCReflecaoIEstruturaEntidade {
     @Deprecated
     public static InfoCalculo getAnotacaoCalulo(Field pCampo) {
         try {
-            ItfCalculos calculo = getCalculoByField(pCampo);
+            ComoValorLogico calculo = getCalculoByField(pCampo);
             Field campo = calculo.getClass().getField(calculo.toString());
             return campo.getAnnotation(InfoCalculo.class);
         } catch (NoSuchFieldException | SecurityException ex) {
@@ -89,13 +89,13 @@ public class UtilCRCReflecaoIEstruturaEntidade {
      * @throws UnsupportedOperationException Caso não encontre, dispara um erro
      */
     @Deprecated
-    public static ItfCalculos getCalculoByField(Field pCampo) throws UnsupportedOperationException {
+    public static ComoValorLogico getCalculoByField(Field pCampo) throws UnsupportedOperationException {
         try {
-            ItfCalculos calculo = null;
+            ComoValorLogico calculo = null;
             pCampo.setAccessible(true);
             Annotation anotacao = UtilCRCReflexao.getAnotacaoComEsteMetodo(pCampo.getAnnotations(), "calculo");
             Method metodoCalculo = anotacao.annotationType().getMethod("calculo");
-            calculo = (ItfCalculos) metodoCalculo.invoke(anotacao);
+            calculo = (ComoValorLogico) metodoCalculo.invoke(anotacao);
             return calculo;
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             throw new UnsupportedOperationException("impossivel determinar o Calculo para o campo" + pCampo.getName(), ex);

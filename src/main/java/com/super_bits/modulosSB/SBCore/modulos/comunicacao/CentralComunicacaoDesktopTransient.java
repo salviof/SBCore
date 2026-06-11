@@ -10,17 +10,16 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos
 import javax.swing.JOptionPane;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
-import java.util.List;
 
 /**
  *
  * @author salvioF
  */
-public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
+public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato {
 
-    protected ComoArmazenamentoComunicacao aramazenamento;
+    protected ComoArmazenamentoComunicacao armazenamento;
 
-    public CentralComunicacaoDesktop() {
+    public CentralComunicacaoDesktopTransient() {
 
     }
 
@@ -84,10 +83,10 @@ public class CentralComunicacaoDesktop extends CentralComunicaoAbstrato {
 
     @Override
     public ComoArmazenamentoComunicacao getArmazenamento() {
-        if (aramazenamento == null) {
-            aramazenamento = new ArmazenamentoComunicacaoTransient();
+        if (armazenamento == null) {
+            armazenamento = new ArmazenamentoComunicacaoTransient();
         }
-        return aramazenamento;
+        return armazenamento;
     }
 
     @Override
