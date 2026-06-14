@@ -4,8 +4,6 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
@@ -16,7 +14,6 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoObjetoSimples;
 import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.proxy.HibernateProxyHelper;
 import org.hibernate.proxy.LazyInitializer;
 
 /**
@@ -35,7 +32,7 @@ public class UtilCRCReflexaoObjeto extends UtilCRCReflexaoObjetoSimples {
         return false;
     }
 
-    public static boolean getClasseTemProxy(String pNomeClasse) {
+    public static boolean isClasseTemProxy(String pNomeClasse) {
         //compativel com chamadas em sistemas sem Dependencia com hibernate
 
         return pNomeClasse.indexOf("$") > 0;

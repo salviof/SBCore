@@ -20,6 +20,29 @@ public class UtilCRCStringBuscaTrecho {
 
     /**
      *
+     *
+     * [ casa o [ inicial .*? casa qualquer prefixo (ex: solucao), de forma
+     * não-greedy \[\]\. casa o []. (.*) captura tudo que vem depois (o caminho
+     * que você quer) \] casa o ] final
+     *
+     */
+    private static final Pattern extracaoSubCampoDeLista = Pattern.compile("\\[.*?\\[\\]\\.(.*)\\]");
+
+    public static String extrairSubCampoDeLista(String entrada) {
+        if (entrada == null) {
+            return null;
+        }
+
+        Matcher matcher = extracaoSubCampoDeLista.matcher(entrada);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+
+        return entrada;
+    }
+
+    /**
+     *
      * Procura e retorna o conteúdo que estiver entre parenteses
      *
      * @param parametro "texto com (conteudo) entre parentes";

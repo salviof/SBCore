@@ -9,8 +9,12 @@ import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,8 +22,22 @@ import java.util.Map;
  */
 public class UtilCRCStringVariaveisEntreCaracteres {
 
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
+            "\\[([\\w.\\[\\]]+)\\]"
+            + // grupo 1: dentro de [ ... ]
+            "|([A-Za-z_]\\w*(?:\\[\\d*\\])?(?:\\.[A-Za-z_]\\w*(?:\\[\\d*\\])?)*)" // grupo 2: sem colchetes externos
+    );
+
     public static List<String> extrairVariaveisEntreColchete(String pValor) {
-        return UtilCRCStringValidador.getListaStringEntreCaracter(pValor, UtilCRCStringValidador.TIPO_SINALIZADOR.COLCHETE);
+        Matcher matcher = PLACEHOLDER_PATTERN.matcher(pValor);
+        LinkedHashSet<String> resultado = new LinkedHashSet<>();
+
+        while (matcher.find()) {
+            String valor = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+            resultado.add(valor.trim());
+        }
+
+        return resultado.stream().collect(Collectors.toList());
     }
 
     public static List<String> extrairVariaveisEntreAspas(String pValor) {

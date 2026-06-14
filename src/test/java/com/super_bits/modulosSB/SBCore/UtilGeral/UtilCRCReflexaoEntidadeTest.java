@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.ConfiguradorProjetoSBCore;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.InfoCampos.campo.ItemExemploTestes;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import org.junit.Assert;
@@ -37,6 +38,7 @@ public class UtilCRCReflexaoEntidadeTest {
     private static final String _8_caminhoSublista = "subitensPublicos[1].nome";
     private static final String _9_caminhoCompletoMaisNiveis = "nome";
     private static final String _10_caminhoCompletoMaisNiveis2 = "nome";
+    private static final String _11_caminhoTesteFinal = "subItensExclusivos[2].itemPaisubItemPai.subitensPublicos[1].nome";
 
     @Test
     public void testGetCampoInstanciadoByCaminho() throws Exception {
@@ -49,31 +51,49 @@ public class UtilCRCReflexaoEntidadeTest {
 
         ItfCampoInstanciado caminhoCampoSimplesCompleto = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _2_caminhoCampoSimplesCompleto);
         Assert.assertFalse("Falha buscando " + _2_caminhoCampoSimplesCompleto, caminhoCampoSimplesCompleto.isCampoNaoInstanciado());
-
-        ItfCampoInstanciado caminhoCampoSimplesCompletoNomeErrado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _3_caminhoCampoSimplesCompletoNomeErrado);
-        Assert.assertTrue(_3_caminhoCampoSimplesCompletoNomeErrado + " deveria falhar", caminhoCampoSimplesCompletoNomeErrado.isCampoNaoInstanciado());
+        try {
+            ItfCampoInstanciado caminhoCampoSimplesCompletoNomeErrado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _3_caminhoCampoSimplesCompletoNomeErrado);
+            Assert.fail("Esparado erro com nome de entidade errada");
+        } catch (ErroEntidade e) {
+            System.out.println("Erro " + _3_caminhoCampoSimplesCompletoNomeErrado + " lançado com sucesso ");
+        }
 
         ItfCampoInstanciado caminhoCampoLista = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _4_caminhoCampoLista);
-        Assert.assertTrue("Falha buscando " + _4_caminhoCampoLista, caminhoCampoLista.isCampoNaoInstanciado());
+        Assert.assertFalse("Falha buscando " + _4_caminhoCampoLista, caminhoCampoLista.isCampoNaoInstanciado());
 
         ItfCampoInstanciado caminhoCampoListaComIndiceDaLista = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _5_caminhoCampoListaComIndiceDaLista);
-        Assert.assertFalse("Falha buscando " + _5_caminhoCampoListaComIndiceDaLista, caminhoCampoListaComIndiceDaLista.isCampoNaoInstanciado());
+        Assert.assertEquals("Esperado indice 2 no campo instanciado", 2, caminhoCampoListaComIndiceDaLista.getIndiceValorLista());
 
-    }
+        ItfCampoInstanciado caminhoCampoListaSemTags = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _6_caminhoCampoListaSemTags);
+        Assert.assertFalse("Falha buscando " + _6_caminhoCampoListaSemTags, caminhoCampoListaSemTags.isCampoNaoInstanciado());
 
-    /**
-     * Test of getValorByCaminho method, of class UtilCRCReflexaoEntidade.
-     */
-    //@Test
-    public void testGetValorByCaminho() throws Exception {
+        ItfCampoInstanciado caminhoCompletoSublista = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _7_caminhoCompletoSublista);
+        Assert.assertFalse("Falha buscando " + _7_caminhoCompletoSublista, caminhoCompletoSublista.isCampoNaoInstanciado());
 
-    }
+        ItfCampoInstanciado caminhoSublista = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _8_caminhoSublista);
+        Assert.assertFalse("Falha buscando " + _8_caminhoSublista, caminhoSublista.isCampoNaoInstanciado());
 
-    /**
-     * Test of getListaByCaminho method, of class UtilCRCReflexaoEntidade.
-     */
-    //@Test
-    public void testGetListaByCaminho() throws Exception {
+        ItfCampoInstanciado caminhoCompletoMaisNiveis = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _9_caminhoCompletoMaisNiveis);
+        Assert.assertFalse("Falha buscando " + _9_caminhoCompletoMaisNiveis, caminhoCompletoMaisNiveis.isCampoNaoInstanciado());
+
+        ItfCampoInstanciado caminhoCompletoMaisNiveis2 = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _10_caminhoCompletoMaisNiveis2);
+        Assert.assertFalse("Falha buscando " + _10_caminhoCompletoMaisNiveis2, caminhoCompletoMaisNiveis2.isCampoNaoInstanciado());
+
+        ItfCampoInstanciado caminhoTesteFinal = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, _11_caminhoTesteFinal);
+        Assert.assertFalse("Falha buscando " + _11_caminhoTesteFinal, caminhoTesteFinal.isCampoNaoInstanciado());
+
+        try {
+            ItfCampoInstanciado caminhoCampoSimplesCompletoNomeErrado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, "ItemExemploTestes.subitensPublicos[6].nome");
+            Assert.fail("Esparado erro com indice inválido");
+        } catch (ErroEntidade e) {
+            System.out.println("Erro " + _3_caminhoCampoSimplesCompletoNomeErrado + " lançado com sucesso ");
+        }
+        try {
+            ItfCampoInstanciado caminhoCampoSimplesCompletoNomeErrado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(item, "subitensPublicos[1].nomesss");
+            Assert.fail("Esperado erro com nome atributo errado");
+        } catch (ErroEntidade e) {
+            System.out.println("Erro " + _3_caminhoCampoSimplesCompletoNomeErrado + " lançado com sucesso ");
+        }
 
     }
 

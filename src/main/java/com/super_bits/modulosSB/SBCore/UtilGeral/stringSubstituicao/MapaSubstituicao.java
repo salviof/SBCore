@@ -8,8 +8,8 @@ import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoEntidade;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringBuscaTrecho;
-import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.TIPO_PARTE_URL;
@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 import org.coletivojava.fw.api.analiseDados.ComoMapaSubstituicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeReflexivel;
 
 /**
  *
@@ -35,12 +37,50 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
 
     protected final Map<String, String> mapaSubstituicao = new HashMap<>();
     protected final Map<String, String> mapaSubstituicaoImagem = new HashMap<>();
-    protected final Map<String, Map<String, String>> mapaSubstituicaoListas = new HashMap<>();
-    protected final Map<String, Map<Integer, List<String>>> ordemMapaSubstituicaoListas = new HashMap<>();
+    protected final Map<String, String> mapaSubstituicaoLink = new HashMap<>();
+    protected final Map<String, ListaComSubCampo> mapaListaSubCampos = new HashMap<>();
+
     protected final List<ComoEntidadeSimples> entidadesVinculada = new ArrayList<>();
 
     public String getValorImagem(String pValorChave) {
         return mapaSubstituicaoImagem.get(pValorChave);
+    }
+
+    public void adicionarPalavrasChaveDeLista(String pCaminhoLista, ComoEntidadeReflexivel pEntidade, String... pCampos) throws ErroEntidade {
+        String caminhoLista = UtilCRCStringBuscaTrecho.getStringAteEncontrarIsto("[]", pCaminhoLista);
+
+        List<ComoEntidadeReflexivel> lista = UtilCRCReflexaoEntidade.getListaByCaminho(pEntidade, caminhoLista);
+
+        int indice = 0;
+        for (ComoEntidadeReflexivel item : lista) {
+            for (String campo : pCampos) {
+                adicionarPalavraChave(caminhoLista.replace("[]", "[" + indice + "]") + "." + campo, item.getCampoInstanciadoByNomeOuAnotacao(campo).getValorTextoFormatado());
+            }
+            indice++;
+        }
+
+    }
+
+    public void adicionarPalavrasChavePorTextoModelo(ComoEntidadeReflexivel pEntidade, String pTextoModelo) {
+
+        List<String> valoresEncontradas = UtilCRCStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(pTextoModelo);
+        List<String> subitens = new ArrayList<>();
+
+        for (String palavraChaveSubstituicao : valoresEncontradas) {
+            if (!palavraChaveSubstituicao.contains("[link")) {
+                try {
+                    ItfCampoInstanciado campoInstanciado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(pEntidade, palavraChaveSubstituicao);
+                    adicionarPalavraChave("[" + palavraChaveSubstituicao + "]", campoInstanciado.getValorTextoFormatado());
+                    campoInstanciado.setIndiceValorLista(-1);
+                } catch (ErroEntidade ex) {
+
+                    System.out.println("Erro obtendo valor por palavrachave " + palavraChaveSubstituicao);
+                    // Logger.getLogger(MapaSubstituicao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        //valoresEncontradas.stream().filter(v -> v != null && v.contains(".") && !v.contains("link:")).map(v -> v.replace("[", "").replace("]", "")).forEach(subitens::add);
     }
 
     @Override
@@ -102,7 +142,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                         String valorConformidade = chave.replaceAll("<[^>]*>", "");
                         if (mapaSubstituicao.containsKey(valorConformidade)) {
 
-                            novaString = novaString.replace(valorConformidade.replace("]", "").replace("[", ""), mapaSubstituicao.get(valorConformidade));
+                            novaString = novaString.replace(valorConformidade, mapaSubstituicao.get(valorConformidade));
                         }
                     }
                 }
@@ -128,41 +168,27 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
         return mapaSubstituicao;
     }
 
-    public final String getChaveiLstasByTextoencontrado(String texto) {
-        String chave = UtilCRCStringFiltros.getStringSemNumeros(texto);
-        chave = UtilCRCStringBuscaTrecho.getStringAteEncontrarIsto(chave, "[]");
-        return chave;
-    }
-
-    public final Map<String, String> getValoresListas(String pChaveLista) {
-        return mapaSubstituicaoListas.get(pChaveLista);
-    }
-
-    public Map<Integer, List<String>> getOrdemItensLista(String pNomeLista) {
-        return ordemMapaSubstituicaoListas.get(pNomeLista);
+    @Override
+    public void adicionarListaComSubCampo(String palavra, String valor) {
+        if (!UtilVariavelDeTemplate.terminaComIndiceECampo(palavra)) {
+            return;
+        }
+        ListaComSubCampo novaLista = new ListaComSubCampo(palavra, valor);
+        String chaveLista = UtilVariavelDeTemplate.adicionarColchetes(novaLista.getNomeLista());
+        ListaComSubCampo listaExistente = mapaListaSubCampos.get(chaveLista);
+        if (listaExistente != null) {
+            listaExistente.adicionarNovoSubCampo(palavra, valor);
+        } else {
+            mapaListaSubCampos.put(chaveLista, novaLista);
+        }
     }
 
     @Override
     public final void adicionarPalavraChave(String palavra, String valor) {
-        if (!palavra.replaceAll("\\[[0-9]", "-").equals(palavra)) {
-            String chavelista = getChaveiLstasByTextoencontrado(palavra);
-            Integer palavraIndice = Integer.valueOf(UtilCRCStringFiltros.getNumericosDaString(palavra));
-
-            if (mapaSubstituicaoListas.get(chavelista) == null) {
-                mapaSubstituicaoListas.put(chavelista, new HashMap<>());
-                ordemMapaSubstituicaoListas.put(chavelista, new HashMap<>());
-            }
-            if (ordemMapaSubstituicaoListas.get(chavelista).get(palavraIndice) == null) {
-                ordemMapaSubstituicaoListas.get(chavelista).put(palavraIndice, new ArrayList<>());
-            }
-
-            if (mapaSubstituicaoListas.get(chavelista) != null) {
-                mapaSubstituicaoListas.get(chavelista).put(palavra, valor);
-                ordemMapaSubstituicaoListas.get(chavelista).get(palavraIndice).add(palavra);
-            }
-        } else {
-            mapaSubstituicao.put(palavra, valor);
+        if (UtilVariavelDeTemplate.terminaComIndiceECampo(palavra)) {
+            adicionarListaComSubCampo(palavra, valor);
         }
+        mapaSubstituicao.put(UtilVariavelDeTemplate.adicionarColchetes(palavra), valor);
 
     }
 
@@ -270,17 +296,17 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
         palavras.addAll(Lists.newArrayList(mapaSubstituicao.keySet().iterator()));
         palavras.addAll(Lists.newArrayList(mapaSubstituicaoImagem.keySet().iterator()));
 
-        List<String> listagensEncontradas = new ArrayList<>();
-        for (String chave : mapaSubstituicaoListas.keySet()) {
-            for (String valor : mapaSubstituicaoListas.get(chave).keySet()) {
-                String valorFormatado = UtilCRCStringFiltros.getStringSemNumeros(valor);
-                if (!listagensEncontradas.contains(valorFormatado)) {
-                    listagensEncontradas.add(valorFormatado);
-                }
-            }
-        }
-        palavras.addAll(listagensEncontradas);
         return palavras;
+    }
+
+    public List<ItemListaComSubcampos> getListaOrdenada(String pNomeLista) {
+        String nomeLista = UtilVariavelDeTemplate.adicionarColchetes(pNomeLista);
+        Optional<String> lista = mapaListaSubCampos.keySet().stream().filter(chave -> chave.equals(nomeLista)).findFirst();
+        if (lista.isPresent()) {
+            return mapaListaSubCampos.get(lista.get()).getItensOrdenadas();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 }

@@ -7,6 +7,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanci
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaPesquisaFonetica;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringComparador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringFiltros;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
@@ -62,6 +63,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import com.super_bits.modulosSB.SBCore.modulos.view.fabricasCompVisual.ComoComponenteVisualSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoLocalPostagem;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -1008,7 +1011,7 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                         return "Não";
                     }
                 }
-            case LC_LOCALIZACAO:
+            case LC_LOCALIZACAO: {
                 if (valor == null) {
                     return "End. nao cadastrado";
                 } else {
@@ -1034,6 +1037,58 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                     }
 
                 }
+            }
+            case LISTA_OBJETOS_PARTICULARES:
+            case LISTA_OBJETOS_PUBLICOS: {
+                List<ComoEntidadeSimples> lista = (List) valor;
+                StringBuilder textoLista = new StringBuilder();
+                try {
+
+                    if (lista.isEmpty()) {
+
+                        Class entidade = MapaObjetosProjetoAtual.getClasseDoObjetoByNome(getAtributosDoObjeto().getNomeClasseAtributoDeclarado());
+                        InfoObjetoSB dadosENtidade = UtilCRCReflexaoObjeto.getInfoClasseObjeto(entidade);
+                        if (dadosENtidade.generoFeminino()) {
+                            textoLista.append(" Nenhuma " + dadosENtidade.tags()[0] + " ");
+
+                        } else {
+                            textoLista.append(" Nenhum " + dadosENtidade.tags()[0] + " ");
+                        }
+                    }
+                    if (indiceValorLista >= 0) {
+
+                        textoLista.append(" ");
+                        textoLista.append(lista.get(indiceValorLista).getNome());
+                        textoLista.append(" ");
+                        return textoLista.toString();
+
+                    } else {
+                        List<String> nomes = lista.stream()
+                                .filter(item -> item instanceof ComoEntidadeSimples)
+                                .map(item -> ((ComoEntidadeSimples) item).getNome())
+                                .collect(Collectors.toList());
+
+                        if (nomes.isEmpty()) {
+                            return "";
+                        }
+                        if (nomes.size() == 1) {
+                            return nomes.get(0);
+                        }
+                        String todosMenosUltimo = nomes.subList(0, nomes.size() - 1)
+                                .stream()
+                                .collect(Collectors.joining(", "));
+
+                        String ultimo = nomes.get(nomes.size() - 1);
+
+                        return todosMenosUltimo + " e " + ultimo;
+                    }
+
+                } catch (Throwable t) {
+                    textoLista.append(lista.toString());
+                }
+                return textoLista.toString();
+            }
+
             default: {
                 if (valor == null) {
                     return "Ñ Informado";

@@ -87,7 +87,9 @@ public abstract class UtilCRCStringValidador {
             String valor = m.group();
             valor = valor.replace(Character.toString(cInicial), "");
             valor = valor.replace(Character.toString(cFinal), "");
-            resposta.add(valor);
+            if (!valor.isEmpty()) {
+                resposta.add(valor);
+            }
         }
         return resposta;
     }

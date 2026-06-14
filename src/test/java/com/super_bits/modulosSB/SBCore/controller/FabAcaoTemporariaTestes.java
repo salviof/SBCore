@@ -32,11 +32,7 @@ public enum FabAcaoTemporariaTestes implements ComoFabricaAcoes {
 
     @Override
     public ComoAcaoDoSistema getRegistro() {
-        throw new UnsupportedOperationException("A fabrica de ações temporaria Testes não foi implementadas");
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public String getNomeUnico() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

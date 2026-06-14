@@ -23,13 +23,18 @@ public class ErroEntidade extends ErroCRCCoreFW {
             nomeEntidade = "Entidade nula enviada";
             enviadaComoProxy = false;
         } else {
-            Class classe = UtilCRCReflexaoObjeto.getClassExtraindoProxy(pEntidade.getClass().getSimpleName());
+            Class classe = null;
+            try {
+                classe = UtilCRCReflexaoObjeto.getClassExtraindoProxy(pEntidade.getClass().getSimpleName());
+            } catch (Throwable t) {
+
+            }
             if (classe == null) {
                 nomeEntidade = "Entidade não reconhecida no sistema: " + pEntidade.getClass().getSimpleName();
             } else {
                 nomeEntidade = classe.getSimpleName();
             }
-            enviadaComoProxy = UtilCRCReflexaoObjeto.getClasseTemProxy(pEntidade.getClass().getSimpleName());
+            enviadaComoProxy = UtilCRCReflexaoObjeto.isClasseTemProxy(pEntidade.getClass().getSimpleName());
         }
     }
 

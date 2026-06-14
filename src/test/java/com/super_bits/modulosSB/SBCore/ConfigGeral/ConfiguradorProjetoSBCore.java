@@ -4,6 +4,10 @@
  */
 package com.super_bits.modulosSB.SBCore.ConfigGeral;
 
+import com.super_bits.modulosSB.SBCore.InfoCampos.campo.ItemExemploTestes;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
+
 /**
  *
  * @author desenvolvedor
@@ -17,8 +21,15 @@ public class ConfiguradorProjetoSBCore extends ConfiguradorCoreDeProjetoJarAbstr
     }
 
     @Override
-    public void defineFabricasDeACao(ItfConfiguracaoCoreCustomizavel pConfig) {
+    public void defineClassesBasicas(ItfConfiguracaoCoreCustomizavel pConfiguracao) {
+        super.defineClassesBasicas(pConfiguracao);
+        MapaObjetosProjetoAtual.adcionarObjeto(UsuarioAnonimo.class);
+        MapaObjetosProjetoAtual.adcionarObjeto(ItemExemploTestes.class);
+    }
 
+    @Override
+    public void defineFabricasDeACao(ItfConfiguracaoCoreCustomizavel pConfig) {
+        //pConfig.setFabricaDeAcoes(new Class[]{FabAcaoTemporariaTestes.class});
     }
 
 }

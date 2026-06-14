@@ -672,7 +672,7 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
             }
         } catch (Throwable t) {
             if (!SBCore.isEmModoProducao()) {
-                SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha acessando atributo de Objeto em " + getInstancia().getClass().getSimpleName(), t);
+                //    SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha acessando atributo de Objeto em " + getInstancia().getClass().getSimpleName(), t);
             }
             return new CampoNaoImplementado();
         }
