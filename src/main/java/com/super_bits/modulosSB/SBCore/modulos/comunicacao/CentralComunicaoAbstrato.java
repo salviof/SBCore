@@ -110,10 +110,10 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         try {
             Thread.sleep(2);
             if (!pcomunicacao.isFoiSelado()) {
-                String usuario = pcomunicacao.getUsuarioRemetente().getEmail();
+                //String usuario = pcomunicacao.getUsuarioRemetente().getEmail();
                 String destinatario = pcomunicacao.getDestinatario().getEmailsConcatenados();
                 Long idDataHora = pcomunicacao.getDataHoraDisparo().getTime();
-                int id = (usuario + destinatario + String.valueOf(idDataHora)).hashCode();
+                int id = (destinatario + String.valueOf(idDataHora)).hashCode();
                 String codigoSelo = String.valueOf(id);
 
                 pcomunicacao.setCodigoSelo(codigoSelo);
@@ -143,6 +143,16 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     @Override
     public List<ItfDialogo> getNotificacoesAtivasBloqueioTela() {
         return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA);
+    }
+
+    @Override
+    public List<ItfDialogoEntrePessoas> getMsgColaboradorAguarandoMinhaResposta() {
+        return getArmazenamento().getMensagemAguardandoMinhaResposta(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
+    }
+
+    @Override
+    public List<ItfDialogoEntrePessoas> getMsgQueEnvieiSemResposta() {
+        return getArmazenamento().getMensagemAguardandoRespostaDeOutra(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
     }
 
     @Override

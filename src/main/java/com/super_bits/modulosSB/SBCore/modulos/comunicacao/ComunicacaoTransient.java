@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -74,11 +75,6 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
     }
 
     @Override
-    public ComoUsuario getUsuarioRemetente() {
-        return usuarioRemetente;
-    }
-
-    @Override
     public ItfTipoComunicacao getTipoComunicacao() {
         return tipoComunicacao;
     }
@@ -113,7 +109,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
 
     public String getDescricao() {
         if (descricao == null) {
-            descricao = "cm" + getUsuarioRemetente().getEmail() + "às ";
+            descricao = "cm" + getAssunto().trim() + "às " + UtilCRCDataHora.getAgoraString(UtilCRCDataHora.FORMATO_TEMPO.DATA_HORA_SISTEMA).trim();
         }
         return descricao;
     }

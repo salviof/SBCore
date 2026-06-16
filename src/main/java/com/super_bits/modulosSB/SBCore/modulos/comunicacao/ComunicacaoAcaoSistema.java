@@ -38,7 +38,6 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
     private final List<ItfRespostaComunicacao> repostas;
     private final ComoEntidadeSimples beanVinculado;
     private final ItfDestinatario destinatario;
-    private final ComoUsuario usuarioRemetente;
 
     private long tempoAceitavelResposta;
 
@@ -87,7 +86,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
         this.repostas = null;
         this.beanVinculado = null;
         this.destinatario = null;
-        this.usuarioRemetente = null;
+
         //para fins de REflexão
     }
 
@@ -97,7 +96,6 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
 
         this.beanVinculado = pBeanVinculado;
         this.destinatario = new DestinatarioTransiente(SBCore.getUsuarioLogado());
-        this.usuarioRemetente = new UsuarioSistemaRoot();
 
         this.repostas = UtilCRCComunicacao.getRespostaCOmunicacao(this);
 
@@ -150,11 +148,6 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
     @Override
     public ItfDestinatario getDestinatario() {
         return destinatario;
-    }
-
-    @Override
-    public ComoUsuario getUsuarioRemetente() {
-        return usuarioRemetente;
     }
 
     @Override

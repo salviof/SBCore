@@ -21,6 +21,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoCom
 public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComunicacao {
 
     private final Map<String, ItfDialogo> comunicacoesAtivas = new HashMap<>();
+    private final Map<String, ItfDialogoEntrePessoas> comunicacoesAguardantoRespostaUrToUsr = new HashMap<>();
 
     public ArmazenamentoComunicacaoTransient() {
         System.out.println("Armazenamento Comunicacao Transient");
@@ -31,23 +32,44 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
         return comunicacoesAtivas;
     }
 
-    @Override
-    public boolean registrarDialogoAtivo(ItfDialogo pComunicacao) {
-        try {
-
-            getComunicacoesAtivas().put(pComunicacao.getCodigoSelo(), pComunicacao);
-            return true;
-        } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Armazenando comunicação " + t.getMessage(), t);
-            return false;
-        }
+    protected Map<String, ItfDialogoEntrePessoas> getComunicacoesEntreUsrAguardandoResposta() {
+        return comunicacoesAguardantoRespostaUrToUsr;
     }
 
     @Override
     public List<ItfDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
         List<ItfDialogo> dialogos = new ArrayList<>();
-        comunicacoesAtivas.values().stream().forEach(dialogos::add);
+        comunicacoesAtivas.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
         return dialogos;
+    }
+
+    @Override
+    public List<ItfDialogoEntrePessoas> getMensagemAguardandoMinhaResposta(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ItfDialogoEntrePessoas> dialogos = new ArrayList<>();
+        comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
+        return dialogos;
+    }
+
+    @Override
+    public List<ItfDialogoEntrePessoas> getMensagemAguardandoRespostaDeOutra(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ItfDialogoEntrePessoas> dialogos = new ArrayList<>();
+        comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getComoDialogoEntrePesoas().getUsuarioRemetente().getEmail())).forEach(dialogos::add);
+        return dialogos;
+    }
+
+    @Override
+    public boolean registrarDialogoAtivo(ItfDialogo pComunicacao) {
+        try {
+            if (pComunicacao.isUmDialogoEntrePessoas()) {
+                getComunicacoesEntreUsrAguardandoResposta().put(pComunicacao.getCodigoSelo(), pComunicacao.getComoDialogoEntrePesoas());
+            } else {
+                getComunicacoesAtivas().put(pComunicacao.getCodigoSelo(), pComunicacao);
+            }
+            return true;
+        } catch (Throwable t) {
+            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro Armazenando comunicação " + t.getMessage(), t);
+            return false;
+        }
     }
 
     @Override
@@ -67,34 +89,6 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
 
     }
 
-    private boolean isComunicacaoEdousuario(ComoUsuario pUsuario, ItfDialogo pComunicacao) {
-        switch (pComunicacao.getDestinatario().getTipoDestinatario()) {
-            case USUARIO:
-                if (pUsuario.equals(pComunicacao.getDestinatario().getUsuario())) {
-                    return true;
-                }
-                break;
-            case USUARIOS:
-                if (pComunicacao.getDestinatario().getUsuarios().contains(pUsuario)) {
-                    return true;
-                }
-                break;
-            case GRUPO:
-                if (pComunicacao.getDestinatario().getGrupoUsuario().equals(pUsuario.getGrupo())) {
-                    return true;
-                }
-                break;
-            case GRUPOS:
-                if (pComunicacao.getDestinatario().getGruposUsuario().contains(pUsuario.getGrupo())) {
-                    return true;
-                }
-            default:
-                throw new AssertionError(pComunicacao.getDestinatario().getTipoDestinatario().name());
-
-        }
-        return false;
-    }
-
     @Override
     public ItfDialogo getDialogoAtivoByCodigoSelo(String pCodigoSelo) {
         if (getComunicacoesAtivas().containsKey(pCodigoSelo)) {
@@ -106,10 +100,17 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
 
     @Override
     public boolean removerDialogoAtivo(String pCodigoSelo) {
-        if (!getComunicacoesAtivas().containsKey(pCodigoSelo)) {
+
+        if (!getComunicacoesAtivas().containsKey(pCodigoSelo) && !getComunicacoesEntreUsrAguardandoResposta().containsKey(pCodigoSelo)) {
             return false;
         }
-        getComunicacoesAtivas().remove(pCodigoSelo);
+        if (getComunicacoesEntreUsrAguardandoResposta().containsKey(pCodigoSelo)) {
+            getComunicacoesEntreUsrAguardandoResposta().remove(pCodigoSelo);
+        }
+        if (getComunicacoesAtivas().containsKey(pCodigoSelo)) {
+            getComunicacoesAtivas().remove(pCodigoSelo);
+        }
+
         return true;
     }
 
