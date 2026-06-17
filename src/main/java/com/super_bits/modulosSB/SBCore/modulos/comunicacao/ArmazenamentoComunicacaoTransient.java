@@ -94,6 +94,9 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
         if (getComunicacoesAtivas().containsKey(pCodigoSelo)) {
             return getComunicacoesAtivas().get(pCodigoSelo);
         }
+        if (getComunicacoesEntreUsrAguardandoResposta().containsKey(pCodigoSelo)) {
+            return getComunicacoesEntreUsrAguardandoResposta().get(pCodigoSelo);
+        }
         //TODO BUSCAR EM NOTIFICAÇÔES
         return null;
     }

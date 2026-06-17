@@ -21,6 +21,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoSessa
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.ComoMenusDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogoEntrePessoas;
 
 /**
  *
@@ -152,9 +153,28 @@ public class SessaoOffline implements ComoSessao {
 
     }
 
-    public List<ItfDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
+    public List<ItfDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoMinhaResposta() {
+        List<ItfDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgColaboradorAguarandoMinhaResposta();
+        return comunicacoesEncontradas;
+    }
+
+    public List<ItfDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoRespostaTerceiros() {
+        List<ItfDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgQueEnvieiSemResposta();
+        return comunicacoesEncontradas;
+    }
+
+    public List<ItfDialogo> getNotificacoesRespostaUsuarioSesso() {
         List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasMenu();
         return comunicacoesEncontradas;
+    }
+
+    public List<ItfDialogo> getNotificacoesBloqueioTela() {
+        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasBloqueioTela();
+        return comunicacoesEncontradas;
+    }
+
+    public List<ItfDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
+        return getNotificacoesRespostaUsuarioSesso();
     }
 
     public List<ItfDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
