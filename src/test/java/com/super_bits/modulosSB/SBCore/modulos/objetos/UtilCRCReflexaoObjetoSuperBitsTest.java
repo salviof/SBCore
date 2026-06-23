@@ -32,13 +32,9 @@ public class UtilCRCReflexaoObjetoSuperBitsTest {
             // teste obtendo view por tipo de lista
             List<UsuarioAnonimo> teste = new ArrayList<>();
             Class classe = teste.getClass();
-
             Type[] tipos = classe.getGenericInterfaces();
-
             Type tipo = classe.getGenericSuperclass();
-
             Class componente = classe.getComponentType();
-
             String genercString = classe.toGenericString();
 
             ParameterizedType parameterizedType = (ParameterizedType) teste.getClass().getGenericSuperclass();

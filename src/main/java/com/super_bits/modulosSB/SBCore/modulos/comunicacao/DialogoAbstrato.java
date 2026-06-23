@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author SalvioF
  */
-public abstract class DialogoAbstrato extends EntidadeSimples implements ItfDialogo, Serializable {
+public abstract class DialogoAbstrato extends EntidadeSimples implements ComoDialogo, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;

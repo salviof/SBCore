@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDataHora;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDialogo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -17,7 +18,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Comunicações", tags = "Comunicação")
-public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo {
+public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo {
 
     private final ItfDestinatario destinatario;
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
@@ -47,7 +48,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
         this.usuarioRemetente = usuarioRemetente;
 
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilCRCComunicacao.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCDialogo.getRespostaCOmunicacao(this);
         defineMensagem();
 
     }
@@ -63,7 +64,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ItfDialogo 
         this.destinatario = destinatario;
         this.usuarioRemetente = usuarioRemetente;
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilCRCComunicacao.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCDialogo.getRespostaCOmunicacao(this);
 
         defineMensagem();
 

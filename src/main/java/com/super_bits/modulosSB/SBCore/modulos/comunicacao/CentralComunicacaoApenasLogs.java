@@ -29,9 +29,9 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String mensagem, String pAssunto) {
+    public ComoDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String mensagem, String pAssunto) {
         try {
-            ItfDialogo comunicacao
+            ComoDialogo comunicacao
                     = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario, tipocomunicacao.getRegistro());
 
             comunicacao.setMensagem(mensagem);
@@ -49,9 +49,9 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
+    public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
         try {
-            ItfDialogo comunicacao
+            ComoDialogo comunicacao
                     = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
 
             comunicacao.setMensagem(mensagem);
@@ -71,7 +71,7 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
 
     @Override
     public FabTipoRespostaComunicacao aguardarRespostaComunicacao(ItfTipoCanalComunicacao pTransporte,
-            ItfDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
+            ComoDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
         FabTipoComunicacao tipocomunicacao = pComunicacao.getTipoComunicacao().getFabTipoComunicacao();
 
         return FabTipoRespostaComunicacao.NAO;
@@ -94,19 +94,19 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     }
 
     @Override
-    public boolean notificarViaMenu(ItfDialogo pDialogo) {
+    public boolean notificarViaMenu(ComoDialogo pDialogo) {
         CarameloCode.getServicoLogEventos().registrarLogDeEvento(FabMensagens.AVISO, pDialogo.getMensagem());
         return true;
     }
 
     @Override
-    public boolean notificarViaBloqueioTEla(ItfDialogo pDialogo) {
+    public boolean notificarViaBloqueioTEla(ComoDialogo pDialogo) {
         CarameloCode.getServicoLogEventos().registrarLogDeEvento(FabMensagens.ALERTA, pDialogo.getMensagem());
         return true;
     }
 
     @Override
-    public List<ItfDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
+    public List<ComoDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
         return new ArrayList<>();
     }
 

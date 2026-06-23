@@ -28,9 +28,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.cep.ComoL
 public class UsuarioAplicacaoEmExecucao extends EntidadeNormal implements ComoUsuario, ComoTemIcone, Serializable {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
-    private Long id;
+    private Long id = Long.valueOf("sistema@caramelocode.com.br".hashCode());
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
-    private String nome;
+    private String nome = "SistemaCaramelo";
 
     @Override
     public String getEmail() {

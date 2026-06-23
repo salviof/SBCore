@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.super_bits.modulosSB.SBCore.modulos.view.telas.ItfTelaUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogo;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoSessao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.ComoMenusDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogoEntrePessoas;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogoEntrePessoas;
 
 /**
  *
@@ -153,33 +153,33 @@ public class SessaoOffline implements ComoSessao {
 
     }
 
-    public List<ItfDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoMinhaResposta() {
-        List<ItfDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgColaboradorAguarandoMinhaResposta();
+    public List<ComoDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoMinhaResposta() {
+        List<ComoDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgColaboradorAguarandoMinhaResposta();
         return comunicacoesEncontradas;
     }
 
-    public List<ItfDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoRespostaTerceiros() {
-        List<ItfDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgQueEnvieiSemResposta();
+    public List<ComoDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoRespostaTerceiros() {
+        List<ComoDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgQueEnvieiSemResposta();
         return comunicacoesEncontradas;
     }
 
-    public List<ItfDialogo> getNotificacoesRespostaUsuarioSesso() {
-        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasMenu();
+    public List<ComoDialogo> getNotificacoesRespostaUsuarioSesso() {
+        List<ComoDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasMenu();
         return comunicacoesEncontradas;
     }
 
-    public List<ItfDialogo> getNotificacoesBloqueioTela() {
-        List<ItfDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasBloqueioTela();
+    public List<ComoDialogo> getNotificacoesBloqueioTela() {
+        List<ComoDialogo> comunicacoesEncontradas = SBCore.getServicoComunicacao().getNotificacoesAtivasBloqueioTela();
         return comunicacoesEncontradas;
     }
 
-    public List<ItfDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
+    public List<ComoDialogo> getComunicacaoAguardandoRespostaUsuarioSesso() {
         return getNotificacoesRespostaUsuarioSesso();
     }
 
-    public List<ItfDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
+    public List<ComoDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
 
-        List<ItfDialogo> lista = new ArrayList();
+        List<ComoDialogo> lista = new ArrayList();
         SBCore.getServicoComunicacao().getNotificacoesAtivasMenu()
                 .stream().limit(6).forEach(lista::add);
         return lista;

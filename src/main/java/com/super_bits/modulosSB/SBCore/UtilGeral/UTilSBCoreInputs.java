@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import static com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore.RelatarErro;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -19,13 +20,16 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import javax.imageio.ImageIO;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Classe de UTILITÀRIOS (Métodos EStáticos commmente Utilizados)____________
@@ -52,7 +56,7 @@ public abstract class UTilSBCoreInputs {
 
         File arquivo = new File(pCaminhoArquivoLocal);
         List<String> conteudo = new ArrayList();
-        try ( Scanner scanner = new Scanner(arquivo)) {
+        try (Scanner scanner = new Scanner(arquivo)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 conteudo.add(line);
@@ -72,7 +76,7 @@ public abstract class UTilSBCoreInputs {
         File arquivo = new File(pCaminhoArquivoLocal);
         String conteudo = "";
         File file = new File(pCaminhoArquivoLocal);
-        try ( FileInputStream fis = new FileInputStream(file)) {
+        try (FileInputStream fis = new FileInputStream(file)) {
             int content;
             while ((content = fis.read()) != -1) {
                 conteudo += ((char) content);
@@ -82,6 +86,76 @@ public abstract class UTilSBCoreInputs {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro lendo arquivo" + pCaminhoArquivoLocal, e);
         }
         return conteudo;
+    }
+
+    private static Class<?> getClasseDoChamador() {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+
+        for (int i = 2; i < stack.length; i++) {           // começa do 2
+            String className = stack[i].getClassName();
+
+            // Pula o próprio utilitário e classes do JDK
+            if (!className.startsWith("com.super_bits.modulosSB.SBCore.UtilGeral")
+                    && !className.startsWith("java.")
+                    && !className.startsWith("jdk.")
+                    && !className.contains("$$")) {               // evita proxies e lambdas
+
+                try {
+                    return Class.forName(className);
+                } catch (ClassNotFoundException e) {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String getStringByArquivoPasteResources(String pCaminhoArquivoLocal) {
+
+        Class<?> classeChamadora = getClasseDoChamador();
+        if (classeChamadora == null) {
+            classeChamadora = UTilSBCoreInputs.class;
+        }
+
+        try {
+            Enumeration<URL> resourcesEnum = classeChamadora.getClassLoader()
+                    .getResources(pCaminhoArquivoLocal);
+
+            List<URL> resources = Collections.list(resourcesEnum);
+
+            if (resources.isEmpty()) {
+                System.out.println("⚠️ Arquivo não encontrado no resources: " + pCaminhoArquivoLocal);
+                return null;
+            }
+
+            // Pega o primeiro (prioridade)
+            URL primeiroRecurso = resources.get(0);
+
+            // Se existir mais de uma versão, avisa
+            if (resources.size() > 1) {
+                System.out.println("════════════════════════════════════════════════════════════");
+                System.out.println("⚠️  AVISO: Foram encontradas " + resources.size()
+                        + " versões do arquivo: " + pCaminhoArquivoLocal);
+                System.out.println("   → Usando a primeira: " + primeiroRecurso);
+                System.out.println("   → Outras versões ignoradas:");
+
+                for (int i = 1; i < resources.size(); i++) {
+                    System.out.println("      " + (i + 1) + ") " + resources.get(i));
+                }
+                System.out.println("════════════════════════════════════════════════════════════");
+            } else {
+                // Opcional: log quando encontra normalmente
+                // System.out.println("✓ Arquivo carregado: " + primeiroRecurso);
+            }
+
+            // Retorna o conteúdo da primeira versão
+            return IOUtils.toString(primeiroRecurso.openStream(), StandardCharsets.UTF_8);
+
+        } catch (IOException ex) {
+            CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO,
+                    "Falha ao ler arquivo do resources: " + pCaminhoArquivoLocal, ex);
+            return null;
+        }
     }
 
     /**

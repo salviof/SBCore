@@ -12,7 +12,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
  * @author salvio
  */
 @InfoObjetoSB(plural = "Mensagem entre usuários", tags = "Comunicação")
-public class ComunicacaoTransientUsrToUsr extends ComunicacaoTransient implements ItfDialogoEntrePessoas {
+public class ComunicacaoTransientUsrToUsr extends ComunicacaoTransient implements ComoDialogoEntrePessoas {
 
     private ComoUsuario usuarioRementente;
     private String observacaoResposta;

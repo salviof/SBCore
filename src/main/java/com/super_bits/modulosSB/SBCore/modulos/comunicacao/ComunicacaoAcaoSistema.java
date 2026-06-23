@@ -6,13 +6,14 @@ package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.google.common.collect.Lists;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCDialogo;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
+
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringValidador;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoController;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.anotacoes.InfoTipoAcaoController;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioSistemaRoot;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -22,8 +23,6 @@ import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
 import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 
-import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
-
 /**
  *
  *
@@ -31,7 +30,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
  * @author desenvolvedor
  */
 @InfoObjetoSB(plural = "Comunicações de ações", tags = "Comunicação de ação do sistema")
-public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComunicacaoAcaoVinculada {
+public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ComoDialogoAcaoVinculada {
 
     private final ComoAcaoController acaoVinculada;
     private final ItfTipoComunicacao tipoComunicacao;
@@ -97,11 +96,11 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ItfComuni
         this.beanVinculado = pBeanVinculado;
         this.destinatario = new DestinatarioTransiente(SBCore.getUsuarioLogado());
 
-        this.repostas = UtilCRCComunicacao.getRespostaCOmunicacao(this);
+        this.repostas = UtilCRCDialogo.getRespostaCOmunicacao(this);
 
         if (this.repostas.isEmpty()) {
 
-            repostas.addAll(UtilCRCComunicacao.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
+            repostas.addAll(UtilCRCDialogo.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
 
         }
         String mensagemModeloPredefinida = pAcaoVinculada.getTipoComunicacao().getMensagemModeloPredefinida();

@@ -25,31 +25,31 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicac
 public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao {
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem) {
+    public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem) {
         return gerarComunicacaoSistema_Usuario(tipocomunicacao, pUsuario, mensagem, UtilCRCStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_UsuarioLogado(FabTipoComunicacao tipocomunicacao, String mensagem) {
+    public ComoDialogo gerarComunicacaoSistema_UsuarioLogado(FabTipoComunicacao tipocomunicacao, String mensagem) {
         return gerarComunicacaoSistema_Usuario(tipocomunicacao, SBCore.getUsuarioLogado(), mensagem, UtilCRCStringFiltros.getPrimeirasXLetrasDaString(mensagem, 140));
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_UsuarioLogado(FabTipoComunicacao tipocomunicacao, String mensagem, String pAssunto) {
+    public ComoDialogo gerarComunicacaoSistema_UsuarioLogado(FabTipoComunicacao tipocomunicacao, String mensagem, String pAssunto) {
         return gerarComunicacaoSistema_Usuario(tipocomunicacao, SBCore.getUsuarioLogado(), mensagem, pAssunto);
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String pAssunto, String mensagem) {
-        ItfDialogo comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
+    public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String pAssunto, String mensagem) {
+        ComoDialogo comunicacao = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario, tipocomunicacao.getRegistro());
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
         return comunicacao;
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
-        ItfDialogo comunicacao = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario, tipocomunicacao.getRegistro());
+    public ComoDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
+        ComoDialogo comunicacao = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario, tipocomunicacao.getRegistro());
         comunicacao.setMensagem(mensagem);
         comunicacao.setAssunto(pAssunto);
 
@@ -57,7 +57,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public String dispararComunicacao(ItfDialogo pComunicacao, ItffabricaCanalComunicacao pTipoCanalComunicacao) throws ErroAcessandoCanalComunicacao {
+    public String dispararComunicacao(ComoDialogo pComunicacao, ItffabricaCanalComunicacao pTipoCanalComunicacao) throws ErroAcessandoCanalComunicacao {
         if (!pComunicacao.isFoiSelado()) {
             try {
                 selarComunicacao(pComunicacao);
@@ -106,7 +106,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public synchronized boolean selarComunicacao(ItfDialogo pcomunicacao) throws ErroSelandoDialogo {
+    public synchronized boolean selarComunicacao(ComoDialogo pcomunicacao) throws ErroSelandoDialogo {
         try {
             Thread.sleep(2);
             if (!pcomunicacao.isFoiSelado()) {
@@ -136,27 +136,27 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public List<ItfDialogo> getNotificacoesAtivasMenu() {
+    public List<ComoDialogo> getNotificacoesAtivasMenu() {
         return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
     }
 
     @Override
-    public List<ItfDialogo> getNotificacoesAtivasBloqueioTela() {
+    public List<ComoDialogo> getNotificacoesAtivasBloqueioTela() {
         return getArmazenamento().getDialogos(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA);
     }
 
     @Override
-    public List<ItfDialogoEntrePessoas> getMsgColaboradorAguarandoMinhaResposta() {
+    public List<ComoDialogoEntrePessoas> getMsgColaboradorAguarandoMinhaResposta() {
         return getArmazenamento().getMensagemAguardandoMinhaResposta(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
     }
 
     @Override
-    public List<ItfDialogoEntrePessoas> getMsgQueEnvieiSemResposta() {
+    public List<ComoDialogoEntrePessoas> getMsgQueEnvieiSemResposta() {
         return getArmazenamento().getMensagemAguardandoRespostaDeOutra(CarameloCode.getUsuarioLogado(), ERPTipoCanalComunicacao.INTRANET_MENU);
     }
 
     @Override
-    public List<ItfDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
+    public List<ComoDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
         return new ArrayList<>();
     }
 

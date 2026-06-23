@@ -20,45 +20,45 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoCom
  */
 public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComunicacao {
 
-    private final Map<String, ItfDialogo> comunicacoesAtivas = new HashMap<>();
-    private final Map<String, ItfDialogoEntrePessoas> comunicacoesAguardantoRespostaUrToUsr = new HashMap<>();
+    private final Map<String, ComoDialogo> comunicacoesAtivas = new HashMap<>();
+    private final Map<String, ComoDialogoEntrePessoas> comunicacoesAguardantoRespostaUrToUsr = new HashMap<>();
 
     public ArmazenamentoComunicacaoTransient() {
         System.out.println("Armazenamento Comunicacao Transient");
     }
 
-    protected Map<String, ItfDialogo> getComunicacoesAtivas() {
+    protected Map<String, ComoDialogo> getComunicacoesAtivas() {
 
         return comunicacoesAtivas;
     }
 
-    protected Map<String, ItfDialogoEntrePessoas> getComunicacoesEntreUsrAguardandoResposta() {
+    protected Map<String, ComoDialogoEntrePessoas> getComunicacoesEntreUsrAguardandoResposta() {
         return comunicacoesAguardantoRespostaUrToUsr;
     }
 
     @Override
-    public List<ItfDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
-        List<ItfDialogo> dialogos = new ArrayList<>();
+    public List<ComoDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ComoDialogo> dialogos = new ArrayList<>();
         comunicacoesAtivas.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
         return dialogos;
     }
 
     @Override
-    public List<ItfDialogoEntrePessoas> getMensagemAguardandoMinhaResposta(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
-        List<ItfDialogoEntrePessoas> dialogos = new ArrayList<>();
+    public List<ComoDialogoEntrePessoas> getMensagemAguardandoMinhaResposta(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ComoDialogoEntrePessoas> dialogos = new ArrayList<>();
         comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
         return dialogos;
     }
 
     @Override
-    public List<ItfDialogoEntrePessoas> getMensagemAguardandoRespostaDeOutra(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
-        List<ItfDialogoEntrePessoas> dialogos = new ArrayList<>();
+    public List<ComoDialogoEntrePessoas> getMensagemAguardandoRespostaDeOutra(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
+        List<ComoDialogoEntrePessoas> dialogos = new ArrayList<>();
         comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getComoDialogoEntrePesoas().getUsuarioRemetente().getEmail())).forEach(dialogos::add);
         return dialogos;
     }
 
     @Override
-    public boolean registrarDialogoAtivo(ItfDialogo pComunicacao) {
+    public boolean registrarDialogoAtivo(ComoDialogo pComunicacao) {
         try {
             if (pComunicacao.isUmDialogoEntrePessoas()) {
                 getComunicacoesEntreUsrAguardandoResposta().put(pComunicacao.getCodigoSelo(), pComunicacao.getComoDialogoEntrePesoas());
@@ -78,10 +78,10 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
         return true;
     }
 
-    private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ItfDialogo> {
+    private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ComoDialogo> {
 
         @Override
-        public int compare(ItfDialogo o1, ItfDialogo o2) {
+        public int compare(ComoDialogo o1, ComoDialogo o2) {
 
             return (o1.getDataHoraDisparo().getTime() < o2.getDataHoraDisparo().getTime() ? 1 : -1);
 
@@ -90,7 +90,7 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
-    public ItfDialogo getDialogoAtivoByCodigoSelo(String pCodigoSelo) {
+    public ComoDialogo getDialogoAtivoByCodigoSelo(String pCodigoSelo) {
         if (getComunicacoesAtivas().containsKey(pCodigoSelo)) {
             return getComunicacoesAtivas().get(pCodigoSelo);
         }

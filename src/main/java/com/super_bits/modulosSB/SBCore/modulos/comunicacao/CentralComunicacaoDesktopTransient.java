@@ -24,9 +24,9 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
+    public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
         try {
-            ItfDialogo comunicacao
+            ComoDialogo comunicacao
                     = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario,
                             tipocomunicacao.getRegistro());
 
@@ -44,9 +44,9 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
     }
 
     @Override
-    public ItfDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
+    public ComoDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
         try {
-            ItfDialogo comunicacao
+            ComoDialogo comunicacao
                     = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario,
                             tipocomunicacao.getRegistro());
 
@@ -65,7 +65,7 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
 
     @Override
     public FabTipoRespostaComunicacao aguardarRespostaComunicacao(ItfTipoCanalComunicacao pTransporte,
-            ItfDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
+            ComoDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
         FabTipoComunicacao tipocomunicacao = pComunicacao.getTipoComunicacao().getFabTipoComunicacao();
 
         int dialogResult
@@ -105,7 +105,7 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
     }
 
     @Override
-    public boolean notificarViaMenu(ItfDialogo pDialogo) {
+    public boolean notificarViaMenu(ComoDialogo pDialogo) {
         System.out.println("Notificado via menu, para :" + pDialogo.getDestinatario().getUsuario().getNome());
         System.out.println(pDialogo.getAssunto());
         System.out.println(pDialogo.getMensagem());
@@ -113,7 +113,7 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
     }
 
     @Override
-    public boolean notificarViaBloqueioTEla(ItfDialogo pDialogo) {
+    public boolean notificarViaBloqueioTEla(ComoDialogo pDialogo) {
         int dialogResult
                 = JOptionPane.showConfirmDialog(null, pDialogo.getMensagem(),
                         "Olá, " + pDialogo.getDestinatario().getUsuario().getNome() + ". Deseja continuar?", JOptionPane.YES_OPTION);

@@ -11,7 +11,7 @@ import com.super_bits.modulosSB.SBCore.testes.TestesCore;
 import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 import org.junit.Before;
 import org.junit.Test;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfDialogo;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAnonimo;
 
 /**
@@ -29,7 +29,7 @@ public class UtilCRCComunicacaoTest extends TestesCore {
     @Test
     public void testGetSaudacao() {
         System.out.println(UtilCRCComunicacao.getSaudacao());
-        ItfDialogo cm = SBCore.getServicoComunicacao().
+        ComoDialogo cm = SBCore.getServicoComunicacao().
                 gerarComunicacaoSistema_Usuario(FabTipoComunicacao.CONFIRMAR_CANCELAR, new UsuarioAnonimo(), "Teste", "asfasdf");
         cm.getRepostasPossiveis().forEach(rp -> System.out.println(rp.getTipoResposta().getNome()));
     }

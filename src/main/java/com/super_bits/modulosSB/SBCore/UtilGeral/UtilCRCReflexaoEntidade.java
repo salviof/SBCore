@@ -7,7 +7,7 @@ package com.super_bits.modulosSB.SBCore.UtilGeral;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeReflexivel;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.ComoEntidadeGenerica;
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -15,6 +15,21 @@ import java.util.List;
  * @author salvio
  */
 public abstract class UtilCRCReflexaoEntidade {
+
+    public static boolean isEntidadeJPA(Class<?> classe) {
+
+        for (Annotation annotation : classe.getAnnotations()) {
+
+            String nome = annotation.annotationType().getName();
+
+            if ("javax.persistence.Entity".equals(nome)
+                    || "jakarta.persistence.Entity".equals(nome)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static ItfCampoInstanciado getCampoInstanciadoByCaminho(ComoEntidadeReflexivel pEntidade, String pCaminho) throws ErroEntidade {
 
