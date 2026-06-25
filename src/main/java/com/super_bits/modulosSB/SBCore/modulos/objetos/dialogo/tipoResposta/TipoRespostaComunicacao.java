@@ -13,25 +13,48 @@ import org.coletivojava.fw.api.objetoNativo.controller.acao.AcaoBotaoNaoRequisit
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoRespostaComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeVinculadoAEnum;
 
 /**
  *
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"Resposta"}, plural = "respostas")
-public class TipoRespostaComunicacao extends EntidadeSimples implements ComoTipoRespostaComunicacao {
+public class TipoRespostaComunicacao extends EntidadeSimples implements ComoTipoRespostaComunicacao, ComoEntidadeVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
     private String descricao;
+
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
-    private final FabTipoRespostaComunicacao fabricaTipoResposta;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ENUM_FABRICA)
+    private FabTipoRespostaComunicacao fabricaTipoResposta;
+
     private ComoAcaoDoSistema botaoResposta;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ICONE)
     private String icone;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.COR)
     private String cor;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.VERDADEIRO_FALSO)
+    private boolean respostaPositiva;
+
+    @InfoCampo(tipo = FabTipoAtributoObjeto.VERDADEIRO_FALSO)
+    private boolean respostaNegativa;
 
     public TipoRespostaComunicacao() {
         fabricaTipoResposta = null;
+    }
+
+    public void setFabricaTipoResposta(FabTipoRespostaComunicacao fabricaTipoResposta) {
+        this.fabricaTipoResposta = fabricaTipoResposta;
+
+        respostaPositiva = fabricaTipoResposta.isRespostaPositiva();
+        respostaNegativa = !fabricaTipoResposta.isRespostaPositiva();
     }
 
     public TipoRespostaComunicacao(FabTipoRespostaComunicacao pTipo) {
@@ -106,6 +129,24 @@ public class TipoRespostaComunicacao extends EntidadeSimples implements ComoTipo
     @Override
     public String getNome() {
         return descricao;
+    }
+
+    @Override
+    public void setEnumVinculado(ComoFabrica pFabrica) {
+        setFabricaTipoResposta((FabTipoRespostaComunicacao) pFabrica);
+    }
+
+    @Override
+    public ComoFabrica getEnumVinculado() {
+        return fabricaTipoResposta;
+    }
+
+    public boolean isRespostaPositiva() {
+        return respostaPositiva;
+    }
+
+    public boolean isRespostaNegativa() {
+        return respostaNegativa;
     }
 
 }

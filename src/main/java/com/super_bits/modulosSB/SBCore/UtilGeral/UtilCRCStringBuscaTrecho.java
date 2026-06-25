@@ -210,7 +210,8 @@ public class UtilCRCStringBuscaTrecho {
      */
     public static String getStringAteEncontrarIsto(String pValor, String pIsto) {
         if (pValor == null || !pValor.contains(pIsto)) {
-            return null;
+            return pValor;
+
         }
         return pValor.substring(0, pValor.indexOf(pIsto));
     }

@@ -21,7 +21,6 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.List;
 import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
-import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 
 /**
  *

@@ -27,6 +27,7 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ComoDia
     private final Date dataHoraDisparo;
     private Date dataHoraResposta;
     private List<ERPTipoCanalComunicacao> canais = Lists.newArrayList(ERPTipoCanalComunicacao.AUTOMATICO);
+    private String paginaInstanciaID;
 
     public DialogoAbstrato() {
         dataHoraDisparo = new Date();
@@ -38,6 +39,14 @@ public abstract class DialogoAbstrato extends EntidadeSimples implements ComoDia
 
         }
 
+    }
+
+    public String getPaginaInstanciaID() {
+        return paginaInstanciaID;
+    }
+
+    public void setPaginaInstanciaID(String paginaInstanciaID) {
+        this.paginaInstanciaID = paginaInstanciaID;
     }
 
     @Override

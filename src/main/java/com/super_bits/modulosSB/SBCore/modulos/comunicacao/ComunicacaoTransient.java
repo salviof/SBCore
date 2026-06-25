@@ -31,6 +31,8 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
     private String assunto;
     private ItfRespostaComunicacao respostaEscolhida;
 
+    private String paginaInstanciaID;
+
     private long tempoAceitavelResposta = -1;
 
     public ComunicacaoTransient() {
@@ -150,6 +152,15 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
             return false;
         }
         return getMensagem().equals(getNome());
+    }
+
+    @Override
+    public String getPaginaInstanciaID() {
+        return paginaInstanciaID;
+    }
+
+    public void setPaginaInstanciaID(String paginaInstanciaID) {
+        this.paginaInstanciaID = paginaInstanciaID;
     }
 
 }

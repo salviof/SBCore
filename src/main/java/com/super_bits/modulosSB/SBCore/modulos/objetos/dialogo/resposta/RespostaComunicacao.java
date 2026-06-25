@@ -18,9 +18,13 @@ import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoRespostaComun
 @InfoObjetoSB(tags = "Resposta do dialogo", plural = "Respostas de dialogos")
 public class RespostaComunicacao extends EntidadeSimples implements ItfRespostaComunicacao {
 
-    private final ComoDialogo comunicacaoVinculada;
-    private final ComoTipoRespostaComunicacao tipoResposta;
-    private final BotaoResposta botaoResposta;
+    private ComoDialogo comunicacaoVinculada;
+    private ComoTipoRespostaComunicacao tipoResposta;
+    private BotaoResposta botaoResposta;
+
+    public RespostaComunicacao() {
+
+    }
 
     public RespostaComunicacao(ComoDialogo comunicacaoVinculada,
             ComoTipoRespostaComunicacao tipoResposta) {

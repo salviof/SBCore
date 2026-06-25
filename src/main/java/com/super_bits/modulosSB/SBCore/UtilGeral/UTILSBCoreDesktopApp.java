@@ -5,9 +5,24 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ItfMensagem;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogo;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoRespostaComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ItfRespostaComunicacao;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -35,6 +50,68 @@ public class UTILSBCoreDesktopApp {
             showMessageStopProcess(mensagem);
         }
 
+    }
+
+    public static ItfRespostaComunicacao exibirDialogo(ComoDialogo pDialogo) {
+        List<ItfRespostaComunicacao> respostas = pDialogo.getRepostasPossiveis();
+
+        // Painel principal
+        JPanel painel = new JPanel(new BorderLayout(10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Mensagem
+        JLabel lblMensagem = new JLabel("<html>" + pDialogo.getMensagem() + "</html>");
+        lblMensagem.setFont(new Font("Arial", Font.PLAIN, 14));
+        painel.add(lblMensagem, BorderLayout.CENTER);
+
+        // Painel de botões dinâmicos
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 0));
+
+        AtomicReference<ItfRespostaComunicacao> respostaEscolhida = new AtomicReference<>(null);
+        JDialog dialog = new JDialog((Frame) null, pDialogo.getAssunto(), true);
+
+        for (ItfRespostaComunicacao resposta : respostas) {
+            ComoTipoRespostaComunicacao tipo = resposta.getTipoResposta();
+
+            // Monta label com ícone FontAwesome (Unicode) + nome
+            String icone = UtilCRCDesktopFontWasome.toUnicode(tipo.getIcone(), "");  // ex: "\uf00c" para fa-check
+            String label = icone + "  " + resposta.getNome();
+
+            JButton botao = new JButton(label);
+            botao.setFont(new Font("FontAwesome", Font.PLAIN, 13)); // requer FontAwesome carregado
+            botao.setForeground(Color.WHITE);
+            botao.setBackground(hexParaColor(tipo.getCor())); // ex: "#28a745"
+            botao.setOpaque(true);
+            botao.setBorderPainted(false);
+            botao.setFocusPainted(false);
+            botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            botao.addActionListener(e -> {
+                respostaEscolhida.set(resposta);
+                dialog.dispose();
+            });
+
+            painelBotoes.add(botao);
+        }
+
+        painel.add(painelBotoes, BorderLayout.SOUTH);
+
+        dialog.setContentPane(painel);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+        dialog.setMinimumSize(new Dimension(400, 150));
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true); // bloqueia até dispose()
+
+        return respostaEscolhida.get(); // null se fechou sem escolher
+    }
+
+    private static Color hexParaColor(String hex) {
+        try {
+            return Color.decode(hex);
+        } catch (Exception e) {
+            return Color.GRAY;
+        }
     }
 
     /**
