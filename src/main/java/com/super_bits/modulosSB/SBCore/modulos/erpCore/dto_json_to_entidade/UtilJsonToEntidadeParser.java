@@ -13,6 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoDominioEntidadeGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,6 +97,15 @@ public class UtilJsonToEntidadeParser {
                                 //Tratado em valor.isObjetct
                                 break;
                             case OUTROS_OBJETOS:
+                                if (cpInstanciado.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.ENUM_FABRICA)) {
+                                    Class classeEnum = cpInstanciado.getComoEnumFabricaObjeto().getClasseEnumFab();
+                                    for (Object enumDaFabrica : classeEnum.getEnumConstants()) {
+                                        if (enumDaFabrica.toString().equals(valor.asText())) {
+                                            cpInstanciado.setValor(enumDaFabrica);
+                                        }
+                                    }
+                                }
+
                                 break;
                             default:
                                 throw new AssertionError();
