@@ -16,13 +16,35 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ErroSelandoDialogo;
 import java.util.ArrayList;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
  *
  * @author SalvioF
  */
 public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao {
+
+    private final Class classeServicoRepositorio;
+    private ComoArmazenamentoComunicacao armazenamento;
+
+    public CentralComunicaoAbstrato(Class servicoRepositorio) {
+        classeServicoRepositorio = servicoRepositorio;
+
+    }
+
+    @Override
+    public ComoArmazenamentoComunicacao getArmazenamento() {
+        if (armazenamento == null) {
+            try {
+                armazenamento = (ComoArmazenamentoComunicacao) classeServicoRepositorio.newInstance();
+            } catch (InstantiationException | IllegalAccessException ex) {
+                CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro defininindo serviço de repositório de comunicação", ex);
+            }
+        }
+        return armazenamento;
+    }
 
     @Override
     public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem) {

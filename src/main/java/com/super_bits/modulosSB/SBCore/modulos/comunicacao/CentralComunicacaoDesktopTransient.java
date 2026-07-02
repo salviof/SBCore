@@ -20,7 +20,7 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
     protected ComoArmazenamentoComunicacao armazenamento;
 
     public CentralComunicacaoDesktopTransient() {
-
+        super(ArmazenamentoComunicacaoTransient.class);
     }
 
     @Override
@@ -79,14 +79,6 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
             return FabTipoRespostaComunicacao.NAO;
         }
 
-    }
-
-    @Override
-    public ComoArmazenamentoComunicacao getArmazenamento() {
-        if (armazenamento == null) {
-            armazenamento = new ArmazenamentoComunicacaoTransient();
-        }
-        return armazenamento;
     }
 
     @Override

@@ -22,10 +22,8 @@ import java.util.List;
  */
 public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
 
-    private final ArmazenamentoComunicacaoTransient aramazenamento;
-
     public CentralComunicacaoApenasLogs() {
-        aramazenamento = new ArmazenamentoComunicacaoTransient();
+        super(ArmazenamentoComunicacaoTransient.class);
     }
 
     @Override
@@ -76,11 +74,6 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
 
         return FabTipoRespostaComunicacao.NAO;
 
-    }
-
-    @Override
-    public ComoArmazenamentoComunicacao getArmazenamento() {
-        return aramazenamento;
     }
 
     @Override

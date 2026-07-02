@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral;
 
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfCampoInstanciado;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeReflexivel;
 import java.lang.annotation.Annotation;
@@ -108,6 +109,9 @@ public abstract class UtilCRCReflexaoEntidade {
             // Último segmento -> é o campo que será retornado.
             String ultimoSegmento = segmentos[segmentos.length - 1];
             String nomeCampoFinal = getNomeCampoSemColchete(ultimoSegmento);
+            if (nomeCampoFinal.equals("nomeCurto")) {
+                return entidadeAtual.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME);
+            }
             ItfCampoInstanciado campoFinal = entidadeAtual.getCampoInstanciadoByNomeOuAnotacao(nomeCampoFinal);
             if (campoFinal.isCampoNaoInstanciado()) {
                 throw new ErroEntidade(pEntidade, "Ultima paarte do caminho " + nomeCampoFinal + " não encontrada revise " + pCaminho);

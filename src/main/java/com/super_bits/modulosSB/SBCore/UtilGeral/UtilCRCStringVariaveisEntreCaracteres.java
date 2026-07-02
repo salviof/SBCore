@@ -22,21 +22,14 @@ import java.util.stream.Collectors;
  */
 public class UtilCRCStringVariaveisEntreCaracteres {
 
-    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
-            "\\[([\\w.\\[\\]]+)\\]"
-            + // grupo 1: dentro de [ ... ]
-            "|([A-Za-z_]\\w*(?:\\[\\d*\\])?(?:\\.[A-Za-z_]\\w*(?:\\[\\d*\\])?)*)" // grupo 2: sem colchetes externos
-    );
+    private static final Pattern PLACEHOLDER_COLCHETES_REGEX = Pattern.compile("\\[([^\\[\\]]+)\\]");
 
     public static List<String> extrairVariaveisEntreColchete(String pValor) {
-        Matcher matcher = PLACEHOLDER_PATTERN.matcher(pValor);
+        Matcher matcher = PLACEHOLDER_COLCHETES_REGEX.matcher(pValor);
         LinkedHashSet<String> resultado = new LinkedHashSet<>();
-
         while (matcher.find()) {
-            String valor = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
-            resultado.add(valor.trim());
+            resultado.add(matcher.group(1).trim());
         }
-
         return resultado.stream().collect(Collectors.toList());
     }
 

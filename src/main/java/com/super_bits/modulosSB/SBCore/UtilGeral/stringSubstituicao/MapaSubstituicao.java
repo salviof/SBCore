@@ -70,7 +70,11 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
             if (!palavraChaveSubstituicao.contains("[link")) {
                 try {
                     ItfCampoInstanciado campoInstanciado = UtilCRCReflexaoEntidade.getCampoInstanciadoByCaminho(pEntidade, palavraChaveSubstituicao);
-                    adicionarPalavraChave("[" + palavraChaveSubstituicao + "]", campoInstanciado.getValorTextoFormatado());
+                    if (palavraChaveSubstituicao.endsWith("nomeCurto")) {
+                        adicionarPalavraChave("[" + palavraChaveSubstituicao + "]", campoInstanciado.getObjetoRaizDoAtributo().getNomeCurto());
+                    } else {
+                        adicionarPalavraChave("[" + palavraChaveSubstituicao + "]", campoInstanciado.getValorTextoFormatado());
+                    }
                     campoInstanciado.setIndiceValorLista(-1);
                 } catch (ErroEntidade ex) {
 
@@ -196,6 +200,12 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
     public final void adicionarPalavrasChaveDoObjeto(ComoEntidadeSimples pObjeto) {
         adicionarPalavrasChaveDoObjeto(null, pObjeto);
         adicionarPalavrasChaveDoObjeto(pObjeto.getClass().getSimpleName(), pObjeto);
+    }
+
+    public void adicionarComoEntidadeVinculada(ComoEntidadeSimples pEntidade) {
+        if (!entidadesVinculada.contains(this)) {
+            entidadesVinculada.add(pEntidade);
+        }
     }
 
     @Override
