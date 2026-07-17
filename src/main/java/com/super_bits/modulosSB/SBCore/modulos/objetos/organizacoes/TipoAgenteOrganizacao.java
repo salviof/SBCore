@@ -8,7 +8,6 @@ import com.super_bits.modulosSB.SBCore.modulos.erp.FabTipoAgenteOrganizacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
 
@@ -16,7 +15,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
  *
  * @author salvio
  */
-@InfoObjetoSB(tags = "Tipo Agente de regra de negócio", plural = "Tipos de agentes em regras de negócio", fabricaVinculada = FabTipoAgenteOrganizacao.class)
+@InfoObjetoSB(tags = "Tipo Agente de regra de negócio", plural = "Tipos de agentes em regras de negócio",
+        fabricaVinculada = FabTipoAgenteOrganizacao.class)
 public class TipoAgenteOrganizacao extends EntidadeSimples implements ComoEntidadeSimples {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)

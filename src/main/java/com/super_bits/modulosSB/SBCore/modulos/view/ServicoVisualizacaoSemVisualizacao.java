@@ -53,7 +53,7 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
 
     @Override
     public String getRemotoPastaResource() {
-        return "http://sistemanaoImplementado.superbits.org";
+        return "http://sistemanaoImplementado.caramelocode.com.br";
     }
 
     @Override
@@ -133,7 +133,7 @@ public class ServicoVisualizacaoSemVisualizacao extends ServicoVisualizacaoAbstr
 
     @Override
     public ItfEstruturaDeFormuario getEstruturaFormulario(ComoAcaoDoSistema pAcaop) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
 }

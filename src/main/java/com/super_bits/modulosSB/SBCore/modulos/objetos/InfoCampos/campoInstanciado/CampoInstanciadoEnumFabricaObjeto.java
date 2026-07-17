@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -93,18 +94,22 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
 
     @Override
     public List<ComoEntidadeSimplesSomenteLeitura> getListaOpcoesObjeto() {
+        try {
+            if (listaOpcoesObjeto == null) {
 
-        if (listaOpcoesObjeto == null) {
+                if (classeEnumFab.getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                    listaOpcoesObjeto = new ArrayList();
+                    for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
 
-            if (classeEnumFab.getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
-                listaOpcoesObjeto = new ArrayList();
-                for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
-
-                    listaOpcoesObjeto.add(new TipoAtributoObjetoSB(tipoAtr));
+                        listaOpcoesObjeto.add(new TipoAtributoObjetoSB(tipoAtr));
+                    }
+                } else {
+                    listaOpcoesObjeto = UtilCRCReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
                 }
-            } else {
-                listaOpcoesObjeto = UtilCRCReflexaoFabrica.getListaTodosRegistrosDaFabrica(classeEnumFab);
             }
+        } catch (Throwable t) {
+            CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, "FAlha listando opções do objeto", t);
+            return new ArrayList<>();
         }
         return listaOpcoesObjeto;
     }
@@ -116,30 +121,41 @@ public class CampoInstanciadoEnumFabricaObjeto implements ItfCampoInstanciadoEnu
 
     @Override
     public List<String> getListaOpcoesString() {
-        if (listaOpcoesString == null) {
-            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
-                listaOpcoesString = new ArrayList();
-                for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
+        try {
+            if (listaOpcoesString == null) {
+                if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                    listaOpcoesString = new ArrayList();
+                    for (FabTipoAtributoObjeto tipoAtr : FabTipoAtributoObjeto.class.getEnumConstants()) {
 
-                    listaOpcoesString.add(tipoAtr.toString());
+                        listaOpcoesString.add(tipoAtr.toString());
+                    }
+                } else {
+                    listaOpcoesString = UtilCRCReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
                 }
-            } else {
-                listaOpcoesString = UtilCRCReflexaoFabrica.getListaStringsDaFabrica(classeEnumFab);
             }
+        } catch (Throwable t) {
+            CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha litando itens de enum", t);
+            return new ArrayList<>();
         }
         return listaOpcoesString;
     }
 
     @Override
     public ComoEntidadeSimplesSomenteLeitura getBeanSelecionado() {
-        if (enumSelecionado != null) {
+        try {
+            if (enumSelecionado != null) {
 
-            if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
-                TipoAtributoObjetoSB tipoObj = new TipoAtributoObjetoSB((FabTipoAtributoObjeto) enumSelecionado);
-                beanSelecionado = tipoObj;
-            } else {
-                beanSelecionado = (ComoEntidadeSimplesSomenteLeitura) enumSelecionado.getRegistro();
+                if (enumSelecionado.getClass().getSimpleName().equals(FabTipoAtributoObjeto.class.getSimpleName())) {
+                    TipoAtributoObjetoSB tipoObj = new TipoAtributoObjetoSB((FabTipoAtributoObjeto) enumSelecionado);
+                    beanSelecionado = tipoObj;
+                } else {
+                    beanSelecionado = (ComoEntidadeSimplesSomenteLeitura) enumSelecionado.getRegistro();
+                }
             }
+
+        } catch (Throwable t) {
+            CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, "Falha localizando objeto por Enum", t);
+            return null;
         }
         return beanSelecionado;
     }

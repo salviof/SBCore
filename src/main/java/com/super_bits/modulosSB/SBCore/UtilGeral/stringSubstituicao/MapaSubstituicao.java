@@ -5,6 +5,7 @@
 package com.super_bits.modulosSB.SBCore.UtilGeral.stringSubstituicao;
 
 import com.google.common.collect.Lists;
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
@@ -103,45 +104,63 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                         chave = "[" + chave + "]";
                     }
                     if (chave.startsWith("[link:")) {
-                        String nomeAcao = chave.replace("[link:", "").replace("]", "");
+                        try {
+                            String nomeAcao = chave.replace("[link:", "").replace("]", "");
 
-                        ComoEntidadeSimples entidade = null;
+                            ComoEntidadeSimples entidade = null;
 
-                        ComoAcaoDoSistema acaoDOLink = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
-                        ItfEstruturaDeFormuario formulario = SBCore.getServicoVisualizacao().getEstruturaFormulario(acaoDOLink);
-                        Optional<ItfParametroRequisicao> pesquisaPArametro = formulario.getParametrosURL()
-                                .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
-                                && acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada().equals(pr.getTipoEntidade())).findFirst();
+                            ComoAcaoDoSistema acaoDOLink = MapaAcoesSistema.getAcaoDoSistemaByNomeUnico(nomeAcao);
+                            ItfEstruturaDeFormuario formulario = SBCore.getServicoVisualizacao().getEstruturaFormulario(acaoDOLink);
+                            if (formulario == null) {
+                                if (CarameloCode.isEmModoDesenvolvimento()) {
+                                    String linkHtml = "<a href='".concat("crmCode://testes/" + acaoDOLink.getNomeUnico()).concat("'>").concat(acaoDOLink.getNomeAcao()).concat("</a>");
+                                    novaString = novaString.replace(chave, linkHtml);
 
-                        if (!pesquisaPArametro.isPresent()) {
-                            pesquisaPArametro = formulario.getParametrosURL()
-                                    .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE) && pr.isUmParametoEntidadeMBPrincipal()
-                                    && UtilCRCReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
-                        }
+                                } else {
+                                    //Lançar execeção?
+                                    novaString = novaString.replace(chave, acaoDOLink.getNomeUnico());
+                                }
+                            } else {
+                                Optional<ItfParametroRequisicao> pesquisaPArametro = formulario.getParametrosURL()
+                                        .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
+                                        && acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada().equals(pr.getTipoEntidade())).findFirst();
 
-                        if (!pesquisaPArametro.isPresent()) {
-                            pesquisaPArametro = formulario.getParametrosURL()
-                                    .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
-                                    && UtilCRCReflexao.isClasseIgualOuExetende(pr.getTipoEntidade(), acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada())).findFirst();
-                        }
+                                if (!pesquisaPArametro.isPresent()) {
+                                    pesquisaPArametro = formulario.getParametrosURL()
+                                            .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE) && pr.isUmParametoEntidadeMBPrincipal()
+                                            && UtilCRCReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
+                                }
 
-                        if (pesquisaPArametro.isPresent()) {
-                            ItfParametroRequisicao parametro = pesquisaPArametro.get();
-                            Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilCRCReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
-                            if (pesquisaEntidade.isPresent()) {
-                                entidade = pesquisaEntidade.get();
+                                if (!pesquisaPArametro.isPresent()) {
+                                    pesquisaPArametro = formulario.getParametrosURL()
+                                            .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
+                                            && UtilCRCReflexao.isClasseIgualOuExetende(pr.getTipoEntidade(), acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada())).findFirst();
+                                }
+
+                                if (pesquisaPArametro.isPresent()) {
+                                    ItfParametroRequisicao parametro = pesquisaPArametro.get();
+                                    Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilCRCReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
+                                    if (pesquisaEntidade.isPresent()) {
+                                        entidade = pesquisaEntidade.get();
+                                    }
+                                }
+
+                                //formulario.getParametrosURL().stream().fo
+                                String link = null;
+                                if (entidade == null) {
+                                    link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema());
+                                } else {
+                                    link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema(), entidade);
+                                }
+                                String linkHtml = "<a href='".concat(link).concat("'>").concat(acaoDOLink.getNomeAcao()).concat("</a>");
+                                novaString = novaString.replace(chave, linkHtml);
                             }
+
+                        } catch (Throwable t) {
+                            CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, chave, t);
+                            novaString = novaString.replace(chave, "[HOUVE FALHA OBTENDO LINK]");
                         }
 
-                        //formulario.getParametrosURL().stream().fo
-                        String link = null;
-                        if (entidade == null) {
-                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema());
-                        } else {
-                            link = SBCore.getServicoVisualizacao().getEndrRemotoFormulario(acaoDOLink.getEnumAcaoDoSistema(), entidade);
-                        }
-                        String linkHtml = "<a href='".concat(link).concat("'>").concat(acaoDOLink.getNomeAcao()).concat("</a>");
-                        novaString = novaString.replace(chave, linkHtml);
                     } else {
                         String valorConformidade = chave.replaceAll("<[^>]*>", "");
                         if (mapaSubstituicao.containsKey(valorConformidade)) {
@@ -149,6 +168,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                             novaString = novaString.replace(valorConformidade, mapaSubstituicao.get(valorConformidade));
                         }
                     }
+
                 }
                 //if (!SBCore.isEmModoProducao()) {
                 //     System.out.println("Verificando substituição em [" + pString + "] por" + mapaSubstituicao.get(palavraChave));

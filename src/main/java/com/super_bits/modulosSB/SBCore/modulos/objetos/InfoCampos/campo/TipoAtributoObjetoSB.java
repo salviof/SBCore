@@ -436,7 +436,11 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
 
     @Override
     public boolean isTemCampoAnotado(FabTipoAtributoObjeto pCampo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (tipoCampo == null) {
+            return false;
+        }
+        return pCampo.equals(tipoCampo);
+
     }
 
     @Override

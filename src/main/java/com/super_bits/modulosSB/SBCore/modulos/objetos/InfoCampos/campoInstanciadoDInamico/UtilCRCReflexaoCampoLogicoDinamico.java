@@ -30,6 +30,7 @@ public class UtilCRCReflexaoCampoLogicoDinamico {
                     if (!nomeClasse.startsWith("ValorLogicoDD")) {
                         nomeClasse = "ValorLogicoDD" + nomeClasse;
                     }
+
                     classecanonica = "org.coletivoJava.fw.projetos.crm.plugin.valorLogicoCampoDinamico." + nomeClasse;
                 }
 

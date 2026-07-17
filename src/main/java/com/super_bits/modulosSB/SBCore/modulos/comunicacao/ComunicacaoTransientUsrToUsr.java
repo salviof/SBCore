@@ -18,7 +18,7 @@ public class ComunicacaoTransientUsrToUsr extends ComunicacaoTransient implement
     private String observacaoResposta;
 
     public ComunicacaoTransientUsrToUsr(ComoUsuario pUsuarioRemetente,
-            ComoUsuario destinatario, ItfTipoComunicacao tipoComunicacao) {
+            ComoUsuario destinatario, ComoTipoComunicacao tipoComunicacao) {
         super(pUsuarioRemetente, destinatario, tipoComunicacao);
         usuarioRementente = pUsuarioRemetente;
 

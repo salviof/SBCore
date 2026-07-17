@@ -113,8 +113,15 @@ public abstract class CampoInstanciadoBase implements ItfCampoInstanciadoBase {
 
                                     }
                                     return;
-                                }
-                                if (pValor instanceof Object[]) {
+                                } else if (tipoParametro.getSimpleName().equals(long.class.getSimpleName())
+                                        || tipoParametro.getSimpleName().equals(Long.class.getSimpleName())) {
+
+                                    if (pValor.getClass().getSimpleName().equals(String.class.getSimpleName())) {
+                                        metodo.invoke(getObjetoDoAtributo(), Long.parseLong(pValor.toString()));
+                                    } else {
+                                        metodo.invoke(getObjetoDoAtributo(), ((Number) pValor).longValue());
+                                    }
+                                } else if (pValor instanceof Object[]) {
                                     if (tipoParametro.getSimpleName().equals("List")) {
                                         List lista = new ArrayList();
                                         Object[] itens = (Object[]) pValor;

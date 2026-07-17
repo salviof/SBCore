@@ -3,6 +3,7 @@
 
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.dialogo.tipoResposta;
+//com.super_bits.modulosSB.SBCore.modulos.objetos.dialogo.tipoResposta
 
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.FabTipoRespostaComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
@@ -20,7 +21,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntid
  *
  * @author desenvolvedor
  */
-@InfoObjetoSB(tags = {"Resposta"}, plural = "respostas")
+@InfoObjetoSB(tags = {"Resposta"}, plural = "respostas", fabricaVinculada = FabTipoRespostaComunicacao.class)
 public class TipoRespostaComunicacao extends EntidadeSimples implements ComoTipoRespostaComunicacao, ComoEntidadeVinculadoAEnum {
 
     @InfoCampo(tipo = FabTipoAtributoObjeto.NOME)
@@ -29,7 +30,7 @@ public class TipoRespostaComunicacao extends EntidadeSimples implements ComoTipo
     @InfoCampo(tipo = FabTipoAtributoObjeto.ID)
     private Long id;
 
-    @InfoCampo(tipo = FabTipoAtributoObjeto.ENUM_FABRICA)
+    @InfoCampo(tipo = FabTipoAtributoObjeto.ENUM_FABRICA, fabricaDeOpcoes = FabTipoRespostaComunicacao.class)
     private FabTipoRespostaComunicacao fabricaTipoResposta;
 
     private ComoAcaoDoSistema botaoResposta;

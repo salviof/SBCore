@@ -8,6 +8,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametr
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoGerenciarEntidade;
 import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfAcaoFormularioEntidade;
 
 /**
  *
@@ -28,6 +29,15 @@ public interface ItfFormularioAcao extends ItfFormularioSimples {
     public String getIdAreaExbicaoAcaoSelecionada();
 
     public void executarAcaoSelecionada();
+
+    public List<ItfAcaoFormularioEntidade> getAcoesNovoRegistro();
+
+    public default boolean isTemAcoesMultiplasNovoRegistro() {
+        if (getAcoesNovoRegistro() == null) {
+            return false;
+        }
+        return getAcoesNovoRegistro().size() > 1;
+    }
 
     /**
      *

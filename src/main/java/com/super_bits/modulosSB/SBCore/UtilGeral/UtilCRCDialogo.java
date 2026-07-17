@@ -19,7 +19,7 @@ import static org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao.getTipoRespost
  */
 public class UtilCRCDialogo {
 
-    public static List<ItfRespostaComunicacao> getRespostaCOmunicacao(FabTipoComunicacao pTipoComunicacao, ComoDialogo cm) {
+    public static List<ItfRespostaComunicacao> getRespostasPossiveisComunicacao(FabTipoComunicacao pTipoComunicacao, ComoDialogo cm) {
         List<ItfRespostaComunicacao> respostas = new ArrayList<>();
 
         getTipoRespostas(pTipoComunicacao).stream().map((resposta)
@@ -33,9 +33,9 @@ public class UtilCRCDialogo {
 
     }
 
-    public static List<ItfRespostaComunicacao> getRespostaCOmunicacao(ComoDialogo pComunicacao) {
+    public static List<ItfRespostaComunicacao> getRespostasPossiveisComunicacao(ComoDialogo pComunicacao) {
 
-        return getRespostaCOmunicacao(pComunicacao.getTipoComunicacao().getFabTipoComunicacao(), pComunicacao);
+        return UtilCRCDialogo.getRespostasPossiveisComunicacao(pComunicacao.getTipoComunicacao().getFabTipoComunicacao(), pComunicacao);
 
     }
 

@@ -20,7 +20,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoA
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeNormal;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.List;
-import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.dialogo.tipoComunicacao.TipoComunicacao;
 
 /**
  *
@@ -32,7 +32,7 @@ import org.coletivojava.fw.api.objetoNativo.comunicacao.TipoComunicacao;
 public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ComoDialogoAcaoVinculada {
 
     private final ComoAcaoController acaoVinculada;
-    private final ItfTipoComunicacao tipoComunicacao;
+    private final ComoTipoComunicacao tipoComunicacao;
     private final List<ItfRespostaComunicacao> repostas;
     private final ComoEntidadeSimples beanVinculado;
     private final ItfDestinatario destinatario;
@@ -95,11 +95,11 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ComoDialo
         this.beanVinculado = pBeanVinculado;
         this.destinatario = new DestinatarioTransiente(SBCore.getUsuarioLogado());
 
-        this.repostas = UtilCRCDialogo.getRespostaCOmunicacao(this);
+        this.repostas = UtilCRCDialogo.getRespostasPossiveisComunicacao(this);
 
         if (this.repostas.isEmpty()) {
 
-            repostas.addAll(UtilCRCDialogo.getRespostaCOmunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
+            repostas.addAll(UtilCRCDialogo.getRespostasPossiveisComunicacao(FabTipoComunicacao.CONFIRMAR_CANCELAR, this));
 
         }
         String mensagemModeloPredefinida = pAcaoVinculada.getTipoComunicacao().getMensagemModeloPredefinida();
@@ -135,7 +135,7 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ComoDialo
     }
 
     @Override
-    public ItfTipoComunicacao getTipoComunicacao() {
+    public ComoTipoComunicacao getTipoComunicacao() {
         return tipoComunicacao;
     }
 

@@ -26,7 +26,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
     private final ComoUsuario usuarioRemetente;
     private final List<ItfRespostaComunicacao> respostasPossiveis;
 
-    private final ItfTipoComunicacao tipoComunicacao;
+    private final ComoTipoComunicacao tipoComunicacao;
     private String mensagem;
     private String assunto;
     private ItfRespostaComunicacao respostaEscolhida;
@@ -44,13 +44,13 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
     }
 
     public ComunicacaoTransient(ComoUsuario usuarioRemetente,
-            ComoUsuario destinatario, ItfTipoComunicacao tipoComunicacao
+            ComoUsuario destinatario, ComoTipoComunicacao tipoComunicacao
     ) {
         this.destinatario = new DestinatarioTransiente(destinatario);
         this.usuarioRemetente = usuarioRemetente;
 
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilCRCDialogo.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCDialogo.getRespostasPossiveisComunicacao(this);
         defineMensagem();
 
     }
@@ -61,12 +61,12 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
 
     }
 
-    public ComunicacaoTransient(ComoUsuario usuarioRemetente, ItfDestinatario destinatario, ItfTipoComunicacao tipoComunicacao
+    public ComunicacaoTransient(ComoUsuario usuarioRemetente, ItfDestinatario destinatario, ComoTipoComunicacao tipoComunicacao
     ) {
         this.destinatario = destinatario;
         this.usuarioRemetente = usuarioRemetente;
         this.tipoComunicacao = tipoComunicacao;
-        this.respostasPossiveis = UtilCRCDialogo.getRespostaCOmunicacao(this);
+        this.respostasPossiveis = UtilCRCDialogo.getRespostasPossiveisComunicacao(this);
 
         defineMensagem();
 
@@ -78,7 +78,7 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
     }
 
     @Override
-    public ItfTipoComunicacao getTipoComunicacao() {
+    public ComoTipoComunicacao getTipoComunicacao() {
         return tipoComunicacao;
     }
 
