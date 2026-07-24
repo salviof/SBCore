@@ -53,6 +53,9 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributos
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogico;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import org.coletivojava.fw.utilCoreBase.UtilCRCReflexaoSimples;
 
 /**
  *
@@ -557,6 +560,15 @@ public abstract class ComoEntidadeGenerica extends Object implements ComoDominio
                     + getInstancia().getClass().getSimpleName(), t);
         }
 
+    }
+
+    protected boolean isTemParametroDesteTipo(final Class pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
+        if (parametros == null) {
+            return false;
+
+        }
+
+        return Arrays.stream(parametros).filter(item -> UtilCRCReflexaoSimples.isClasseIgualOuExetende(item.getClass(), pTipoParametro)).findFirst().isPresent();
     }
 
     protected <Y> Y getParametroInicialEnviado(Class<Y> pTipoParametro, Object... parametros) throws ErroPreparandoObjeto {
