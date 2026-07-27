@@ -39,6 +39,8 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
         if (armazenamento == null) {
             try {
                 armazenamento = (ComoArmazenamentoComunicacao) classeServicoRepositorio.newInstance();
+
+                armazenamento.atualizarNotificacoesAtivas();
             } catch (InstantiationException | IllegalAccessException ex) {
                 CarameloCode.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro defininindo serviço de repositório de comunicação", ex);
             }

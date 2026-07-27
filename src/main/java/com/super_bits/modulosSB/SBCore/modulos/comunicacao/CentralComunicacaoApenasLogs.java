@@ -12,8 +12,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -74,6 +74,12 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
 
         return FabTipoRespostaComunicacao.NAO;
 
+    }
+
+    @Override
+    public boolean agendarNovoDisparo(String codigoSeloComunicacao, Date pDataAgendamento) {
+        CarameloCode.getServicoMensagemFireForget().enviarMsgAlertaAoUsuario("Agenda de novo disparo não foi implementado em " + this.getClass().getSimpleName());
+        return false;
     }
 
     @Override

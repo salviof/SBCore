@@ -27,6 +27,7 @@ public class ModeloPagina extends EntidadeSimples implements ItfModeloFormulario
     private String descricao;
     private String xhtmlVinculado;
     private List<String> areas;
+    private boolean umaSubPagina;
 
     public ModeloPagina() {
         areas = new ArrayList<>();
@@ -121,6 +122,14 @@ public class ModeloPagina extends EntidadeSimples implements ItfModeloFormulario
             throw new UnsupportedOperationException("Area extra3 não encontrada em" + getNomeModelo());
         }
         return areas.get(4);
+    }
+
+    public boolean isUmaSubPagina() {
+        return umaSubPagina;
+    }
+
+    public void setUmaSubPagina(boolean umaSubPagina) {
+        this.umaSubPagina = umaSubPagina;
     }
 
 }

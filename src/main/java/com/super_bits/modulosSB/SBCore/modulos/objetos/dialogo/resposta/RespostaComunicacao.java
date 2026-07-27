@@ -70,4 +70,9 @@ public class RespostaComunicacao extends EntidadeSimples implements ItfRespostaC
 
     }
 
+    @Override
+    public boolean isRespostaEmTelaPersonalizada() {
+        return ItfRespostaComunicacao.super.isRespostaEmTelaPersonalizada(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
 }

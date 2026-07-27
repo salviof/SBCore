@@ -4,12 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import javax.swing.JOptionPane;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
+import java.util.Date;
 
 /**
  *
@@ -116,6 +118,12 @@ public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato
             System.out.println("não");
             return false;
         }
+    }
+
+    @Override
+    public boolean agendarNovoDisparo(String codigoSeloComunicacao, Date pDataAgendamento) {
+        CarameloCode.getServicoMensagemFireForget().enviarMsgAlertaAoUsuario("Agenda de novo disparo não foi implementado em " + this.getClass().getSimpleName());
+        return false;
     }
 
 }
