@@ -37,9 +37,24 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     }
 
     @Override
+    public boolean removerBloqueioDeTelaDoDialogo(String pCodigoSelo) {
+        ComoDialogo dialogo = getDialogoAtivoByCodigoSelo(pCodigoSelo);
+        if (dialogo != null) {
+
+            if (dialogo.getCanais().contains(ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA)) {
+                dialogo.getCanais().remove(ERPTipoCanalComunicacao.INTRANET_BLOQUEIO_TELA);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<ComoDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
         List<ComoDialogo> dialogos = new ArrayList<>();
-        comunicacoesAtivas.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
+        comunicacoesAtivas.values().stream().filter(dlg
+                -> ((pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail()) && (pCanal == null || dlg.getCanais().contains(pCanal))))
+        ).forEach(dialogos::add);
         return dialogos;
     }
 

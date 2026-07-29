@@ -18,6 +18,7 @@ import java.util.List;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.EncGestaoRespostaPersonalizada;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 
 /**
@@ -153,7 +154,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta, ERPTipoCanalComunicacao pErpCanal) {
+    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta, ERPTipoCanalComunicacao pErpCanal) throws EncGestaoRespostaPersonalizada {
 
         return getArmazenamento().removerDialogoAtivo(codigoSeloComunicacao);
 
@@ -180,7 +181,7 @@ public abstract class CentralComunicaoAbstrato implements ComoServicoComunicacao
     }
 
     @Override
-    public List<ComoDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) {
+    public List<ComoDialogo> dispararNotificacaoAcaoSucesso(ComoAcaoDoSistema pAcao, ComoEntidadeSimples pEntidadeRetorno) throws ErroRegistrandoDialogo {
         return new ArrayList<>();
     }
 

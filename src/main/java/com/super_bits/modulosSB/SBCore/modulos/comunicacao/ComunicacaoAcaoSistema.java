@@ -217,4 +217,24 @@ public class ComunicacaoAcaoSistema extends DialogoAbstrato implements ComoDialo
 
     }
 
+    @Override
+    public boolean isUmaComunicacaoPersonalizada() {
+        return false;
+    }
+
+    @Override
+    public void setUmaComunicacaoPersonalizada(boolean pPersonalizada) {
+
+    }
+
+    @Override
+    public String getUrlRespostaPersonalizada() {
+        return null;
+    }
+
+    @Override
+    public void setUrlRespostaPersonalizada(String pUrl) {
+
+    }
+
 }

@@ -30,10 +30,12 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
     private String mensagem;
     private String assunto;
     private ItfRespostaComunicacao respostaEscolhida;
-
     private String paginaInstanciaID;
 
     private long tempoAceitavelResposta = -1;
+
+    private boolean umaComunicacaoPersonalizada;
+    private String urlRespostaPersonalizada;
 
     public ComunicacaoTransient() {
         this.destinatario = null;
@@ -161,6 +163,26 @@ public class ComunicacaoTransient extends DialogoAbstrato implements ComoDialogo
 
     public void setPaginaInstanciaID(String paginaInstanciaID) {
         this.paginaInstanciaID = paginaInstanciaID;
+    }
+
+    @Override
+    public boolean isUmaComunicacaoPersonalizada() {
+        return umaComunicacaoPersonalizada;
+    }
+
+    @Override
+    public void setUmaComunicacaoPersonalizada(boolean umaComunicacaoPersonalizada) {
+        this.umaComunicacaoPersonalizada = umaComunicacaoPersonalizada;
+    }
+
+    @Override
+    public String getUrlRespostaPersonalizada() {
+        return urlRespostaPersonalizada;
+    }
+
+    @Override
+    public void setUrlRespostaPersonalizada(String urlRespostaPersonalizada) {
+        this.urlRespostaPersonalizada = urlRespostaPersonalizada;
     }
 
 }
