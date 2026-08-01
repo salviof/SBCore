@@ -10,6 +10,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoEntidade;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringBuscaTrecho;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCStringVariaveisEntreCaracteres;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfParametroRequisicao;
@@ -28,6 +29,8 @@ import java.util.Optional;
 import org.coletivojava.fw.api.analiseDados.ComoMapaSubstituicao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.TratamentoDeErros.ErroEntidade;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeReflexivel;
 
 /**
@@ -121,16 +124,19 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                                     novaString = novaString.replace(chave, acaoDOLink.getNomeUnico());
                                 }
                             } else {
+                                //Verificando de algum parametro coincide com a entidade da alão executada
                                 Optional<ItfParametroRequisicao> pesquisaPArametro = formulario.getParametrosURL()
                                         .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
                                         && acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada().equals(pr.getTipoEntidade())).findFirst();
 
+                                //Verificando se o  parametro principal do formulário coincide com a entidade da ação executada levando em conta herança
                                 if (!pesquisaPArametro.isPresent()) {
                                     pesquisaPArametro = formulario.getParametrosURL()
                                             .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE) && pr.isUmParametoEntidadeMBPrincipal()
                                             && UtilCRCReflexao.isClasseIgualOuExetende(acaoDOLink.getComoAcaoDeEntidade().getClasseRelacionada(), pr.getTipoEntidade())).findFirst();
                                 }
 
+                                //Verificando se o  qualquer parametro  do formulário coincide com a entidade da ação executada levando em conta herança
                                 if (!pesquisaPArametro.isPresent()) {
                                     pesquisaPArametro = formulario.getParametrosURL()
                                             .stream().filter(pr -> pr.getTipoParametro().equals(TIPO_PARTE_URL.ENTIDADE)
@@ -142,6 +148,18 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                                     Optional<ComoEntidadeSimples> pesquisaEntidade = entidadesVinculada.stream().filter(et -> UtilCRCReflexao.isClasseIgualOuExetende(et.getClass(), parametro.getTipoEntidade())).findFirst();
                                     if (pesquisaEntidade.isPresent()) {
                                         entidade = pesquisaEntidade.get();
+                                    } else {
+                                        if (entidadesVinculada.size() == 1) {
+                                            ComoEntidadeSimples entidadePesquisa = entidadesVinculada.get(0);
+                                            Optional<ItfCampoInstanciado> pesquisaPrEmAtributos
+                                                    = entidadePesquisa.getCamposInstanciados().stream().filter(cp -> cp.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
+                                                    && !(cp.isVazio())
+                                                    && UtilCRCReflexao.isClasseIgualOuExetende(UtilCRCReflexaoObjeto.getClassExtraindoProxy(cp.getValor().getClass().getSimpleName()), parametro.getTipoEntidade())
+                                                    ).findFirst();
+                                            if (pesquisaPrEmAtributos.isPresent()) {
+                                                entidade = pesquisaPrEmAtributos.get().getValorComoEntidadeSimples();
+                                            }
+                                        }
                                     }
                                 }
 
@@ -164,8 +182,14 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                     } else {
                         String valorConformidade = chave.replaceAll("<[^>]*>", "");
                         if (mapaSubstituicao.containsKey(valorConformidade)) {
-
-                            novaString = novaString.replace(valorConformidade, mapaSubstituicao.get(valorConformidade));
+                            if (valorConformidade != null) {
+                                if (mapaSubstituicao.get(valorConformidade) != null) {
+                                    novaString = novaString.replace(valorConformidade, mapaSubstituicao.get(valorConformidade));
+                                } else {
+                                    System.out.println(valorConformidade + " tem valor nulo");
+                                    System.out.println("");
+                                }
+                            }
                         }
                     }
 

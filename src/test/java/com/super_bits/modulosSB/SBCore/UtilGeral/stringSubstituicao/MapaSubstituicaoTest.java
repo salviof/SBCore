@@ -38,6 +38,10 @@ public class MapaSubstituicaoTest {
                 + "[ItemExemploTestes.subitensPublicos[0].nome],  [subitensPublicos[1].nome] , [subItensExclusivos[2].itemPaisubItemPai.subitensPublicos[1].nome] ";
         List<String> valoresEncontradas = UtilCRCStringVariaveisEntreCaracteres.extrairVariaveisEntreColchete(textoComPalavrasChave);
         ItemExemploTestes itemExemplo = ItemExemploTestes.gerarExemploPadrao();
+
+        System.out.println(itemExemplo.getCPinst("itemPaisubItemPai").getNomeClasseAtributoDeclarado()
+        );
+
         mapa.adicionarPalavrasChavePorTextoModelo(itemExemplo, "[ItemExemploTestes.subitensPublicos[]]  [ItemExemploTestes.subitensPublicos[2]]");
         String teste = mapa.substituirEmString("[ItemExemploTestes.subitensPublicos[]]  [ItemExemploTestes.subitensPublicos[2]]");
         System.out.println(teste);
