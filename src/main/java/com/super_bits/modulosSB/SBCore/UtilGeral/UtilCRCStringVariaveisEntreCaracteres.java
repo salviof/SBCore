@@ -8,6 +8,7 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.CaminhoCampoReflexao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -25,6 +26,9 @@ public class UtilCRCStringVariaveisEntreCaracteres {
     private static final Pattern PLACEHOLDER_COLCHETES_REGEX = Pattern.compile("\\[([^\\[\\]]+)\\]");
 
     public static List<String> extrairVariaveisEntreColchete(String pValor) {
+        if (pValor == null) {
+            return new ArrayList<>();
+        }
         Matcher matcher = PLACEHOLDER_COLCHETES_REGEX.matcher(pValor);
         LinkedHashSet<String> resultado = new LinkedHashSet<>();
         while (matcher.find()) {

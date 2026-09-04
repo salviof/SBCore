@@ -13,7 +13,7 @@ import java.util.List;
 import org.coletivojava.fw.utilCoreBase.UtilCRCComunicacao;
 import org.coletivojava.fw.utilCoreBase.UtilCRCStringsCammelCaseSimples;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoRespostaComunicacao;
-import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoComunicacao;
+import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoTipoNotificacaoRegistrada;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeVinculadoAEnum;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
@@ -23,7 +23,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.registro.EntidadeSimples;
  * @author desenvolvedor
  */
 @InfoObjetoSB(tags = {"tipo comunicação"}, plural = "Tipos de Comunicação", fabricaVinculada = FabTipoComunicacao.class)
-public class TipoComunicacao extends EntidadeSimples implements ComoTipoComunicacao, ComoEntidadeVinculadoAEnum {
+public class TipoComunicacao extends EntidadeSimples implements ComoTipoNotificacaoRegistrada, ComoEntidadeVinculadoAEnum {
 
     public static final String MENSAGEM_PADRAO_COMUNICACAO = "Mensagem padrão (Falta Implementar)";
 

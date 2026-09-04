@@ -4,126 +4,14 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
-import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
-import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
-import org.coletivojava.fw.api.tratamentoErros.FabErro;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
-import javax.swing.JOptionPane;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
-import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoArmazenamentoComunicacao;
-import java.util.Date;
-
 /**
  *
  * @author salvioF
  */
-public class CentralComunicacaoDesktopTransient extends CentralComunicaoAbstrato {
-
-    protected ComoArmazenamentoComunicacao armazenamento;
+public class CentralComunicacaoDesktopTransient extends ServicoComunicacaoDesktop {
 
     public CentralComunicacaoDesktopTransient() {
         super(ArmazenamentoComunicacaoTransient.class);
-    }
-
-    @Override
-    public ComoDialogo gerarComunicacaoSistema_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuario, String mensagem, String pAssunto) {
-        try {
-            ComoDialogo comunicacao
-                    = new ComunicacaoTransient(new UsuarioAplicacaoEmExecucao(), pUsuario,
-                            tipocomunicacao.getRegistro());
-
-            comunicacao.setMensagem(mensagem);
-            comunicacao.setNome(mensagem);
-            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
-                return comunicacao;
-            } else {
-                return null;
-            }
-        } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando comunicação entre usuários", t);
-            return null;
-        }
-    }
-
-    @Override
-    public ComoDialogo gerarComunicacaoUsuario_Usuario(FabTipoComunicacao tipocomunicacao, ComoUsuario pUsuarioRemetente, ComoUsuario pUsuarioDestinatario, String pAssunto, String mensagem) {
-        try {
-            ComoDialogo comunicacao
-                    = new ComunicacaoTransient(pUsuarioRemetente, pUsuarioDestinatario,
-                            tipocomunicacao.getRegistro());
-
-            comunicacao.setMensagem(mensagem);
-            comunicacao.setNome(mensagem);
-            if (getArmazenamento().registrarDialogoAtivo(comunicacao)) {
-                return comunicacao;
-            } else {
-                return null;
-            }
-        } catch (Throwable t) {
-            SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, "Erro gerando comunicação entre usuários", t);
-            return null;
-        }
-    }
-
-    @Override
-    public FabTipoRespostaComunicacao aguardarRespostaComunicacao(ItfTipoCanalComunicacao pTransporte,
-            ComoDialogo pComunicacao, int tempoAguardar, FabTipoRespostaComunicacao pTipoRespostaTempoFinal) {
-        FabTipoComunicacao tipocomunicacao = pComunicacao.getTipoComunicacao().getFabTipoComunicacao();
-
-        int dialogResult
-                = JOptionPane.showConfirmDialog(null, pComunicacao.getMensagem(),
-                        "Deseja continuar?", JOptionPane.YES_OPTION);
-        if (dialogResult
-                == JOptionPane.YES_OPTION) {
-            return FabTipoRespostaComunicacao.SIM;
-        } else {
-            System.out.println("não");
-            return FabTipoRespostaComunicacao.NAO;
-        }
-
-    }
-
-    @Override
-    public String getTokenDispositivoNotificacao(ComoUsuario pUsuario) {
-        return null;
-    }
-
-    @Override
-    public ItffabricaCanalComunicacao getCanalPadrao() {
-        return ERPTipoCanalComunicacao.INTRANET_MENU;
-    }
-
-    @Override
-    public boolean responderComunicacao(String codigoSeloComunicacao, ItfRespostaComunicacao pResposta, ERPTipoCanalComunicacao pErpCanal) {
-        return getArmazenamento().removerDialogoAtivo(codigoSeloComunicacao);
-    }
-
-    @Override
-    public boolean notificarViaMenu(ComoDialogo pDialogo) {
-        System.out.println("Notificado via menu, para :" + pDialogo.getDestinatario().getUsuario().getNome());
-        System.out.println(pDialogo.getAssunto());
-        System.out.println(pDialogo.getMensagem());
-        return true;
-    }
-
-    @Override
-    public boolean notificarViaBloqueioTEla(ComoDialogo pDialogo) {
-        int dialogResult
-                = JOptionPane.showConfirmDialog(null, pDialogo.getMensagem(),
-                        "Olá, " + pDialogo.getDestinatario().getUsuario().getNome() + ". Deseja continuar?", JOptionPane.YES_OPTION);
-        if (dialogResult
-                == JOptionPane.YES_OPTION) {
-            return true;
-        } else {
-            System.out.println("não");
-            return false;
-        }
-    }
-
-    @Override
-    public boolean agendarNovoDisparo(String codigoSeloComunicacao, Date pDataAgendamento) {
-        CarameloCode.getServicoMensagemFireForget().enviarMsgAlertaAoUsuario("Agenda de novo disparo não foi implementado em " + this.getClass().getSimpleName());
-        return false;
     }
 
 }

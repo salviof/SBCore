@@ -109,25 +109,15 @@ public abstract class UtilCRCShellBasico {
                 temErro = true;
 
             }
+            if (pConsiderarErrorStreamErro) {
+                if (valorSaida != 0) {
 
-            if (valorSaida != 0) {
+                    if (temErro) {
 
-                if (temErro) {
-
-                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
-                } else {
-                    if (temSaida) {
-                        throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + output.toString());
+                        throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
                     }
-                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "]");
-                }
-
-            } else {
-                if (temErro && pConsiderarErrorStreamErro) {
-                    throw new UnsupportedOperationException("ERRO executando script:[" + Arrays.toString(pComando) + "] ->" + outputErro.toString());
                 }
             }
-
         } catch (IOException | InterruptedException e) {
             SBCore.RelatarErro(FabErro.SOLICITAR_REPARO, Arrays.toString(pComando), e);
         }

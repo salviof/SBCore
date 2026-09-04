@@ -22,6 +22,7 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.ComoMenusDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogoEntrePessoas;
+import javax.persistence.Entity;
 
 /**
  *
@@ -178,6 +179,7 @@ public class SessaoOffline implements ComoSessao {
     }
 
     public List<ComoDialogo> getUltimasComuniccoesAguardandoRespostaUsuarioSesso() {
+        ComoUsuario usuario = getUsuario();
 
         List<ComoDialogo> lista = new ArrayList();
         SBCore.getServicoComunicacao().getNotificacoesAtivasMenu()

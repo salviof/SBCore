@@ -5,6 +5,8 @@
 package com.super_bits.modulosSB.SBCore.modulos.comunicacao;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
+import com.super_bits.modulosSB.SBCore.modulos.erpCore.ErpCarameloCore;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -52,8 +54,11 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     @Override
     public List<ComoDialogo> getDialogos(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
         List<ComoDialogo> dialogos = new ArrayList<>();
+        if (pUsuario.getEmail() == null) {
+            return new ArrayList<>();
+        }
         comunicacoesAtivas.values().stream().filter(dlg
-                -> ((pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail()) && (pCanal == null || dlg.getCanais().contains(pCanal))))
+                -> (((pUsuario.getEmail() != null && pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())) && (pCanal == null || dlg.getCanais().contains(pCanal))))
         ).forEach(dialogos::add);
         return dialogos;
     }
@@ -61,6 +66,9 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     @Override
     public List<ComoDialogoEntrePessoas> getMensagemAguardandoMinhaResposta(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
         List<ComoDialogoEntrePessoas> dialogos = new ArrayList<>();
+        if (pUsuario.getEmail() == null) {
+            return new ArrayList<>();
+        }
         comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getDestinatario().getUsuario().getEmail())).forEach(dialogos::add);
         return dialogos;
     }
@@ -68,6 +76,9 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     @Override
     public List<ComoDialogoEntrePessoas> getMensagemAguardandoRespostaDeOutra(ComoUsuario pUsuario, ERPTipoCanalComunicacao pCanal) {
         List<ComoDialogoEntrePessoas> dialogos = new ArrayList<>();
+        if (pUsuario.getEmail() == null) {
+            return new ArrayList<>();
+        }
         comunicacoesAguardantoRespostaUrToUsr.values().stream().filter(dlg -> pUsuario.getEmail().equals(dlg.getComoDialogoEntrePesoas().getUsuarioRemetente().getEmail())).forEach(dialogos::add);
         return dialogos;
     }
@@ -91,6 +102,12 @@ public class ArmazenamentoComunicacaoTransient implements ComoArmazenamentoComun
     public boolean atualizarNotificacoesAtivas() {
         //Comunicação transiente não possui repositorio persistido
         return true;
+    }
+
+    @Override
+    public boolean isNotificacaoExiste(ComoTipoComunicacao pTipoNotificacao, ComoUsuario pUsuario, ComoEntidadeSimples entidade, ERPTipoCanalComunicacao... pCanal) {
+
+        throw new UnsupportedOperationException("Implemente RepositorioComunicacao como servico de armazenamento, para ter suporte a este método, os dialogos não armazenam a entidade e o ID da entidade vinculada");
     }
 
     private class OrdemComunicacaoMaisNovoPrimeiro implements Comparator<ComoDialogo> {

@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.calculos;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoGenerico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.ItfAtributoObjetoEditavel;
@@ -109,9 +110,9 @@ public class ValorLogicoCalculoGenerico implements ComoValorLogicoAtributoObjeto
 
     @Override
     public Object getValor(Object... pEntidade) {
-        if (!SBCore.isEmModoProducao()) {
+        if (!CarameloCode.isEmModoProducao()) {
 
-            SBCore.getServicoMensagens().enviarMsgAvisoAoDesenvolvedor("O valor logico para " + getCampoInst().getLabel() + "Não foi definido");
+            CarameloCode.getServicoMensagemFireForget().enviarMsgAvisoAoDesenvolvedor("O valor logico para " + getCampoInst().getLabel() + "Não foi definido");
         }
         return null;
     }
