@@ -154,6 +154,7 @@ public class MapaSubstituicao implements ComoMapaSubstituicao {
                                             Optional<ItfCampoInstanciado> pesquisaPrEmAtributos
                                                     = entidadePesquisa.getCamposInstanciados().stream().filter(cp -> cp.getFabricaTipoAtributo().equals(FabTipoAtributoObjeto.OBJETO_DE_UMA_LISTA)
                                                     && !(cp.isVazio())
+                                                    && (cp.getValor() instanceof ComoEntidadeSimples)
                                                     && UtilCRCReflexao.isClasseIgualOuExetende(UtilCRCReflexaoObjeto.getClassExtraindoProxy(cp.getValor().getClass().getSimpleName()), parametro.getTipoEntidade())
                                                     ).findFirst();
                                             if (pesquisaPrEmAtributos.isPresent()) {

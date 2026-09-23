@@ -25,6 +25,9 @@ import java.util.Map;
 public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
 
     public CentralLogEventosArqTextoGenerica() {
+        for (FabMensagens tipo : FabMensagens.values()) {
+            UtilCRCArquivoTexto.limparArquivoTexto(diretorioArquivoLog() + "/logAplicacao" + tipo + ".txt");
+        }
 
     }
 
@@ -38,8 +41,10 @@ public class CentralLogEventosArqTextoGenerica implements ItfCentralEventos {
 
     @Override
     public void registrarLogDeEvento(FabMensagens pTipoEvento, String mensagem) {
-        UtilCRCArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", "0000|" + new Date().toString() + "..|" + mensagem);
-        System.out.println("log " + pTipoEvento + "gerado em " + diretorioArquivoLog());
+        String texto = UtilCRCLogJson.gerarJson(pTipoEvento, mensagem);
+        UtilCRCArquivoTexto.escreverEmArquivo(diretorioArquivoLog() + "/logAplicacao" + pTipoEvento + ".txt", texto);
+        String textoConsole = UtilCRCLogJson.gerarTextoSystemOut(pTipoEvento, mensagem, true);
+        System.out.println(textoConsole);
     }
 
     @Override
