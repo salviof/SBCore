@@ -222,6 +222,15 @@ public class UtilCRCJson {
         return construtor.build();
     }
 
+    public static JsonObjectBuilder getJsonBuilderByMap(Map<String, Object> pMapa) throws ErroProcessandoJson {
+        if (pMapa == null || pMapa.isEmpty()) {
+            throw new ErroProcessandoJson("Nenhum parâmetro enviado");
+        }
+
+        JsonObjectBuilder construtor = Json.createObjectBuilder(pMapa);
+        return construtor;
+    }
+
     public static JsonObjectBuilder getJsonBuilderBySequenciaChaveValor(Object... pSequencia) throws ErroProcessandoJson {
         if (pSequencia.length == 0) {
             throw new ErroProcessandoJson("Nenhum parâmetro enviado");

@@ -48,6 +48,11 @@ public class UsuarioAnonimo extends EntidadeNormal implements ComoUsuario, Seria
         super();
     }
 
+    public UsuarioAnonimo(String pNome) {
+        nome = pNome;
+
+    }
+
     @Override
     public String getEmail() {
         return "suporte@casanovadigital.com.br";

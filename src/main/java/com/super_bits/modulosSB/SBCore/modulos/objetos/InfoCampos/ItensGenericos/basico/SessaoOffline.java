@@ -4,6 +4,7 @@
  */
 package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico;
 
+import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.ControllerAppAbstratoSBCore;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.permissoes.ItfPermissao;
@@ -22,7 +23,8 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuar
 import com.super_bits.modulosSB.SBCore.modulos.view.menu.ComoMenusDeSessao;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.acoes.ComoAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.comunicacao.ComoDialogoEntrePessoas;
-import javax.persistence.Entity;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.ComoEscutaJanelasChatNotificacao;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.NotificacaoUsuarioJanelaChat;
 
 /**
  *
@@ -37,6 +39,7 @@ public class SessaoOffline implements ComoSessao {
     private final List<ItfPermissao> acoesRealizadas;
     private final Map<String, ComoAcaoDoSistema> acoesPermitidas;
     private final Map<String, ComoAcaoDoSistema> acoesNegadas;
+    private NotificacaoUsuarioJanelaChat notificacaoJanelaChat = null;
 
     protected String pastaTempDeSessao;
 
@@ -157,6 +160,21 @@ public class SessaoOffline implements ComoSessao {
     public List<ComoDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoMinhaResposta() {
         List<ComoDialogoEntrePessoas> comunicacoesEncontradas = SBCore.getServicoComunicacao().getMsgColaboradorAguarandoMinhaResposta();
         return comunicacoesEncontradas;
+    }
+
+    @Override
+    public void atualizarJanelasChat(ComoEscutaJanelasChatNotificacao pEscuta) {
+        getNotificacoesJanelasChat();
+    }
+
+    @Override
+    public NotificacaoUsuarioJanelaChat getNotificacoesJanelasChat() {
+        if (notificacaoJanelaChat == null) {
+            if (isIdentificado()) {
+                notificacaoJanelaChat = CarameloCode.getServicoComunicacao().gerarGestaoNotificacaoChat(getUsuario().getEmail());
+            }
+        }
+        return notificacaoJanelaChat;
     }
 
     public List<ComoDialogoEntrePessoas> getMensagensEntreUsuariosAguardandoRespostaTerceiros() {

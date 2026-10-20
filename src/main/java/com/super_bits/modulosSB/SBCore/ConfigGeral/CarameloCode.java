@@ -20,10 +20,8 @@ import com.super_bits.modulosSB.SBCore.modulos.erp.FabPacotesCRCBase;
 import com.super_bits.modulosSB.SBCore.modulos.erp.ItfApiErpSuperBits;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
-import com.super_bits.modulosSB.SBCore.modulos.fabrica.UtilCRCReflexaoFabrica;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.logeventos.ItfCentralEventos;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.MapaObjetosProjetoAtual;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
 import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoAcao.ComoServicoAcoesDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.projeto.servicoAcao.ServicoAcoesDoSistemaProjetoAtual;
@@ -34,6 +32,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributos
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicacao;
 import com.super_bits.modulosSB.SBCore.modulos.view.ItfServicoVisualizacao;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoIA;
 
 /**
  *
@@ -47,6 +46,10 @@ public class CarameloCode {
 
     public static boolean isAmbienteCoreConfigurado() {
         return SBCore.isAmbienteCoreConfigurado();
+    }
+
+    public ComoServicoIA getSErvicoIA() {
+        return SBCore.getServicoIA();
     }
 
     public static boolean isEmModoDesenvolvimento() {
@@ -63,8 +66,8 @@ public class CarameloCode {
         return SBCore.isEmModoProducao();
     }
 
-    public static ItfConfiguracaoCoreSomenteLeitura getInfoAplicacao() {
-        return SBCore.getInfoAplicacao();
+    public static ComoContextoExecucao getInfoAplicacao() {
+        return SBCore.getContextoExecucao();
     }
 
     public static ArquivoConfiguracaoDistribuicao getArquivoDistribuicao() {

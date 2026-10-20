@@ -132,22 +132,22 @@ public abstract class EntidadeSimples extends ComoEntidadeGenerica implements
 
     @Override
     public boolean uploadFotoTamanhoGrande(InputStream pStream) {
-        return SBCore.getCentralDeArquivos().salvarImagemTodosOsFormatos(this, pStream);
+        return SBCore.getServicoArquivosDeEntidade().salvarImagemTodosOsFormatos(this, pStream);
     }
 
     @Override
     public boolean uploadFotoTamanhoMedio(InputStream pStream) {
-        return SBCore.getCentralDeArquivos().salvarImagemTamanhoMedio(this, pStream);
+        return SBCore.getServicoArquivosDeEntidade().salvarImagemTamanhoMedio(this, pStream);
     }
 
     @Override
     public boolean uploadFotoTamanhoPequeno(InputStream pStream) {
-        return SBCore.getCentralDeArquivos().salvarImagemTamanhoPequeno(this, pStream);
+        return SBCore.getServicoArquivosDeEntidade().salvarImagemTamanhoPequeno(this, pStream);
     }
 
     @Override
     public boolean uploadFotoTodosFormatos(InputStream pStream) {
-        return SBCore.getCentralDeArquivos().salvarImagemTodosOsFormatos(this, pStream);
+        return SBCore.getServicoArquivosDeEntidade().salvarImagemTodosOsFormatos(this, pStream);
     }
 
     @Override

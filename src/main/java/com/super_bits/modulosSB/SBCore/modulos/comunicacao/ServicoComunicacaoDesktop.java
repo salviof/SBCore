@@ -8,6 +8,8 @@ import com.super_bits.modulosSB.SBCore.ConfigGeral.CarameloCode;
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos.basico.UsuarioAplicacaoEmExecucao;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.ComoServicoChatNotificacoes;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.NotificacaoUsuarioJanelaChat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
@@ -121,6 +123,11 @@ public class ServicoComunicacaoDesktop extends CentralComunicaoAbstrato {
     public boolean agendarNovoDisparo(String codigoSeloComunicacao, Date pDataAgendamento) {
         CarameloCode.getServicoMensagemFireForget().enviarMsgAlertaAoUsuario("Agenda de novo disparo não foi implementado em " + this.getClass().getSimpleName());
         return false;
+    }
+
+    @Override
+    public NotificacaoUsuarioJanelaChat gerarGestaoNotificacaoChat(String pEmailAtendimento) {
+        return new NotificacaoUsuarioJanelaChat("http://chat.localhost:8080");
     }
 
 }

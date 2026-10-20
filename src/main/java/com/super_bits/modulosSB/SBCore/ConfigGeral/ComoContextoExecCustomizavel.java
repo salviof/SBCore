@@ -18,12 +18,13 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicac
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoIA;
 
 /**
  *
  * @author salvioF
  */
-public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSomenteLeitura {
+public interface ComoContextoExecCustomizavel extends ComoContextoExecucao {
 
     public void setCentralMEnsagens(Class<? extends ComoServicoMensagemFireAndForget> centralMEnsagens);
 
@@ -81,6 +82,8 @@ public interface ItfConfiguracaoCoreCustomizavel extends ItfConfiguracaoCoreSome
     public void setCentralAtributoDados(Class<? extends ComoServicoAtributosDeObjetos> pCentralAtributos);
 
     public void setCentralDados(Class<? extends ItfServicoRepositorioEntidades> pCentral);
+
+    public void setClasseServicoIA(Class<? extends ComoServicoIA> pServicoIA);
 
     public void setTipoProjeto(FabTipoProjeto pTipoProjeto);
 

@@ -93,6 +93,7 @@ public class ValorLogicoCalculoGenerico implements ComoValorLogicoAtributoObjeto
     }
 
     public void ativarCache(int pSegundos) {
+
         cacheAtivado = true;
         new Thread() {
             @Override

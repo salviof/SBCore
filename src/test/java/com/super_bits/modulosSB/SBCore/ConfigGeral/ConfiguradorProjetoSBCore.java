@@ -21,14 +21,14 @@ public class ConfiguradorProjetoSBCore extends ConfiguradorCoreDeProjetoJarAbstr
     }
 
     @Override
-    public void defineClassesBasicas(ItfConfiguracaoCoreCustomizavel pConfiguracao) {
+    public void defineClassesBasicas(ComoContextoExecCustomizavel pConfiguracao) {
         super.defineClassesBasicas(pConfiguracao);
         MapaObjetosProjetoAtual.adcionarObjeto(UsuarioAnonimo.class);
         MapaObjetosProjetoAtual.adcionarObjeto(ItemExemploTestes.class);
     }
 
     @Override
-    public void defineFabricasDeACao(ItfConfiguracaoCoreCustomizavel pConfig) {
+    public void defineFabricasDeACao(ComoContextoExecCustomizavel pConfig) {
         //pConfig.setFabricaDeAcoes(new Class[]{FabAcaoTemporariaTestes.class});
     }
 

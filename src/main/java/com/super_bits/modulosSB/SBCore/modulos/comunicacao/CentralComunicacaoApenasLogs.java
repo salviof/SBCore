@@ -12,6 +12,9 @@ import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.ItensGenericos
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimples;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoUsuario;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.ComoServicoChatNotificacoes;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.chat.NotificacaoUsuarioJanelaChat;
+import com.super_bits.modulosSB.SBCore.modulos.seguranca.FabConfigSeguranca;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,6 +116,11 @@ public class CentralComunicacaoApenasLogs extends CentralComunicaoAbstrato {
     public void atualizarGatilhosDeNotificacaoPorAcao() {
 
         System.out.println("Gatilhos de notificação por Ação não Implmentados em  " + this.getClass().getSimpleName());
+    }
+
+    @Override
+    public NotificacaoUsuarioJanelaChat gerarGestaoNotificacaoChat(String pEmailAtendimento) {
+        return new NotificacaoUsuarioJanelaChat("http://chat.localhost:8080");
     }
 
 }

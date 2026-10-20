@@ -19,6 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicac
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoIA;
 
 /**
  *
@@ -27,7 +28,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFire
  *
  * @author cristopher
  */
-public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
+public class ConfigCoreCustomizavel implements ComoContextoExecCustomizavel {
 
     private String nomeSocial;
     private Class<? extends ComoServicoMensagemFireAndForget> centralMEnsagens;
@@ -42,6 +43,7 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     private Class<? extends ComoServicoAtributosDeObjetos> classeCentralAtributos;
     private Class<? extends ItfServicoRepositorioEntidades> classeCentralDados;
     private Class<? extends ItfServicoController> classeServicoController;
+    private Class<? extends ComoServicoIA> classeServicoIA;
     private ItfCentralAdministrativa centralAdministrativa;
     private FabTipoProjeto tipoProjeto;
 
@@ -345,6 +347,16 @@ public class ConfigCoreCustomizavel implements ItfConfiguracaoCoreCustomizavel {
     @Override
     public Class<? extends ItfServicoController> getServicoController() {
         return classeServicoController;
+    }
+
+    @Override
+    public Class<? extends ComoServicoIA> getClasseServicoIA() {
+        return classeServicoIA;
+    }
+
+    @Override
+    public void setClasseServicoIA(Class<? extends ComoServicoIA> classeServicoIA) {
+        this.classeServicoIA = classeServicoIA;
     }
 
 }

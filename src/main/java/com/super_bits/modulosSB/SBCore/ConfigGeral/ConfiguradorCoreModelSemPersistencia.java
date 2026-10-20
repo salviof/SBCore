@@ -11,7 +11,7 @@ package com.super_bits.modulosSB.SBCore.ConfigGeral;
 public abstract class ConfiguradorCoreModelSemPersistencia extends ConfiguradorCoreDeProjetoJarAbstrato {
 
     @Override
-    public void defineClassesBasicas(ItfConfiguracaoCoreCustomizavel pConfiguracao) {
+    public void defineClassesBasicas(ComoContextoExecCustomizavel pConfiguracao) {
         super.defineClassesBasicas(pConfiguracao); //To change body of generated methods, choose Tools | Templates.
         pConfiguracao.setTipoProjeto(FabTipoProjeto.MODEL_E_CONTROLLER);
 

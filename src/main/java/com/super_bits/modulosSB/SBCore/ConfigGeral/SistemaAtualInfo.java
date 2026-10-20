@@ -46,7 +46,7 @@ public class SistemaAtualInfo extends EntidadeSimples {
 
     public String getEmpresa() {
         if (empresa == null) {
-            empresa = SBCore.getInfoAplicacao().getCliente();
+            empresa = SBCore.getContextoExecucao().getCliente();
         }
         return empresa;
     }

@@ -19,6 +19,7 @@ import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoComunicac
 import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoAtributosDeObjetos;
 import com.super_bits.modulosSB.SBCore.modulos.localizacao.CmoServicoLocalizacao;
 import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFireAndForget;
+import com.super_bits.modulosSB.SBCore.modulos.servicosCore.ComoServicoIA;
 
 /**
  *
@@ -28,7 +29,7 @@ import com.super_bits.modulosSB.SBCore.modulos.Mensagens.ComoServicoMensagemFire
  *
  * @author Salvio
  */
-public interface ItfConfiguracaoCoreSomenteLeitura {
+public interface ComoContextoExecucao {
 
     public String getNomeSocial();
 
@@ -148,4 +149,6 @@ public interface ItfConfiguracaoCoreSomenteLeitura {
     public Class<? extends ItfServicoRepositorioEntidades> getCentralDados();
 
     public FabTipoProjeto getTipoProjeto();
+
+    public Class<? extends ComoServicoIA> getClasseServicoIA();
 }

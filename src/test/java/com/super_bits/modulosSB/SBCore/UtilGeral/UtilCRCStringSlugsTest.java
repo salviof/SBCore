@@ -36,6 +36,9 @@ public class UtilCRCStringSlugsTest {
     @Test
     public void testGerarSlugCaixaAlta() {
 
+        String teste = UtilCRCStringSlugs.gerarSlugCaixaAlta("mail_Admin");
+        System.out.println(teste);
+
         String testeeee = "https://muffatosupermercados.vteximg.com.br/arquivos/ids/196246-500-500/21735-feijao-biju-cor-vermelho-500-g.jpg?v=635711724964800000";
         testeeee = testeeee.replace("-400-400", "-500-500");
         System.out.println(testeeee);

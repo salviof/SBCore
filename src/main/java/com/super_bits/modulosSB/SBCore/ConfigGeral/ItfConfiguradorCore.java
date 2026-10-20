@@ -26,7 +26,7 @@ import com.super_bits.modulosSB.SBCore.modulos.view.ServicoVisualizacaoSemVisual
  */
 public interface ItfConfiguradorCore {
 
-    public ItfConfiguracaoCoreSomenteLeitura getConfiguracaoCore(SBCore.ESTADO_APP pEstadoApp);
+    public ComoContextoExecucao getConfiguracaoCore(SBCore.ESTADO_APP pEstadoApp);
 
     public boolean isIgnorarConfiguracaoPermissoes();
 
@@ -70,7 +70,7 @@ public interface ItfConfiguradorCore {
 
     public class UtilConfiguracaoCore {
 
-        public static void setclassesPadraoJar(ItfConfiguracaoCoreCustomizavel pConfig) {
+        public static void setclassesPadraoJar(ComoContextoExecCustomizavel pConfig) {
             pConfig.setCentralDeEventos(CentralLogEventosArqTextoGenerica.class);
             pConfig.setCentralMEnsagens(CentralMensagemSystemout.class);
             pConfig.setClasseErro(InfoErroSBCoreDeveloperSopMessagem.class);
@@ -88,7 +88,7 @@ public interface ItfConfiguradorCore {
 
     public class UtilConfiguracaoCoreDesktopDeveloper {
 
-        public static void setclassesPadraoJar(ItfConfiguracaoCoreCustomizavel pConfig) {
+        public static void setclassesPadraoJar(ComoContextoExecCustomizavel pConfig) {
             pConfig.setCentralDeEventos(CentralLogEventosArqTextoGenerica.class);
             pConfig.setCentralMEnsagens(CentramMensagemProgramadorMsgStop.class);
             pConfig.setClasseErro(InfoErroSBCoreDeveloperSopMessagem.class);

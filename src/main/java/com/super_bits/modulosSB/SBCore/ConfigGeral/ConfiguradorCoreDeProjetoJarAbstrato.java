@@ -13,7 +13,7 @@ import com.super_bits.modulosSB.SBCore.modulos.comunicacao.CentralComunicacaoApe
 public abstract class ConfiguradorCoreDeProjetoJarAbstrato extends ConfiguradorCoreAbstrato {
 
     @Override
-    public void defineClassesBasicas(ItfConfiguracaoCoreCustomizavel pConfiguracao) {
+    public void defineClassesBasicas(ComoContextoExecCustomizavel pConfiguracao) {
         UtilConfiguracaoCore.setclassesPadraoJar(pConfiguracao);
         setIgnorarConfiguracaoAcoesDoSistema(true);
         setIgnorarConfiguracaoPermissoes(true);

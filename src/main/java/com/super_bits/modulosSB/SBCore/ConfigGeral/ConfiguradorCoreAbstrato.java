@@ -23,9 +23,9 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
     protected ArquivoConfiguracaoCliente arquivoConfiguradorCliente;
     protected ArquivoConfiguracaoDistribuicao arquivoConfiguradorDistribuicao;
 
-    public abstract void defineFabricasDeACao(ItfConfiguracaoCoreCustomizavel pConfig);
+    public abstract void defineFabricasDeACao(ComoContextoExecCustomizavel pConfig);
 
-    public abstract void defineClassesBasicas(ItfConfiguracaoCoreCustomizavel pConfiguracao);
+    public abstract void defineClassesBasicas(ComoContextoExecCustomizavel pConfiguracao);
 
     private void carregarArquivosConfiguracaoSecundario() throws IOException {
         arquivoConfiguradorCliente = new ArquivoConfiguracaoCliente(arquivoConfiguradorBase);
@@ -97,7 +97,7 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
      * @return
      */
     @Override
-    public final ItfConfiguracaoCoreSomenteLeitura getConfiguracaoCore(SBCore.ESTADO_APP pEstadoApp) {
+    public final ComoContextoExecucao getConfiguracaoCore(SBCore.ESTADO_APP pEstadoApp) {
 
         ConfigCoreCustomizavel configuracao = new ConfigCoreCustomizavel();
         //Configura estado do app antes de qualquer coisa,
@@ -118,7 +118,7 @@ public abstract class ConfiguradorCoreAbstrato implements ItfConfiguradorCore {
         return configuracao;
     }
 
-    protected void aplicarDadosArquivoConfiguracao(ItfConfiguracaoCoreCustomizavel pConfigurador) {
+    protected void aplicarDadosArquivoConfiguracao(ComoContextoExecCustomizavel pConfigurador) {
 
         if (isTemArqConfiguracaoBase()) {
             pConfigurador.setNomeProjeto(getArquivoConfiguradorBase().getNOME_PROJETO());
