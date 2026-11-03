@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.Controller;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.MapaAcoesSistema;
+import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexao;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.ItfRespostaAcaoDoSistema;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabricaAcoes;
@@ -61,9 +62,10 @@ public class ServicoControllerExecucaoLocal implements ItfServicoController {
 
         String tipoMetodoParametro = metodo.getParameterTypes()[0].getSimpleName();
         String tipoEntidadeSelecionada = pEntidade.getClass().getSimpleName();
+        ;
 
-        if (!tipoMetodoParametro.equals(tipoEntidadeSelecionada)) {
-            throw new ErroChamadaController("" + pAcao.getNomeUnico() + " não suporta  parametro  do tipo " + tipoMetodoParametro + " Apenas:" + tipoMetodoParametro);
+        if (!UtilCRCReflexao.isClasseIgualOuExetende(pEntidade.getClass(), metodo.getParameterTypes()[0])) {
+            throw new ErroChamadaController("" + pAcao.getNomeUnico() + " não suporta  parametro  do tipo " + pEntidade.getClass().getSimpleName() + " Apenas:" + tipoMetodoParametro);
         }
         try {
             return (ItfRespostaAcaoDoSistema) metodo.invoke(null, pEntidade);

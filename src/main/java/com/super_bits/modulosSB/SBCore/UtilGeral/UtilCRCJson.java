@@ -424,16 +424,23 @@ public class UtilCRCJson {
         return null;
     }
 
-    public static JsonObject gerarJsonByEntidadeSimplesLasyMode(ComoEntidadeSimples pEntididade) {
+    public static JsonObjectBuilder gerarJsonBuilderByEntidadeSimplesLasyMode(ComoEntidadeSimples pEntididade) {
         JsonObjectBuilder jb = Json.createObjectBuilder();
         JsonObjectBuilder jbMetadados = Json.createObjectBuilder();
         jbMetadados.add("tipoEntidade", UtilCRCReflexaoObjeto.getClassExtraindoProxy(pEntididade.getClass().getSimpleName()).getSimpleName());
         jbMetadados.add("nomeEntidade", pEntididade.getNomeDoObjeto());
         jbMetadados.add("pluralEntidade", pEntididade.getNomeDoObjetoPlural());
         jbMetadados.add("nomeUnicoSlug", pEntididade.getNomeUnicoSlug());
+        jbMetadados.add("icone", pEntididade.getIconeDaClasse());
         jb.add(pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getNomeCamponaClasse(), (Long) pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getValor());
         jb.add(pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.NOME).getNomeCamponaClasse(), (String) pEntididade.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.ID).getValor());
         jb.add("metadados", jbMetadados.build());
+        return jb;
+
+    }
+
+    public static JsonObject gerarJsonByEntidadeSimplesLasyMode(ComoEntidadeSimples pEntididade) {
+        JsonObjectBuilder jb = gerarJsonBuilderByEntidadeSimplesLasyMode(pEntididade);
         return jb.build();
     }
 }

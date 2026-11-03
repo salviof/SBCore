@@ -855,7 +855,7 @@ public class UtilCRCReflexaoCaminhoCampo {
     }
 
     public static ItfSelecaoObjetoDeUmaLista getSelecaoItem(final ItfCampoInstanciado pCampoInstanciado) {
-        Class classeSelecaoObjeto = SBCore.getCentralFonteDeDados().getClasseSelecaoItem();
+        Class classeSelecaoObjeto = SBCore.getServicoFonteDeDadosParaAtributos().getClasseSelecaoItem();
         try {
             Constructor c = classeSelecaoObjeto.getConstructor(ItfCampoInstanciado.class);
             ItfSelecaoObjetoDeUmaLista objetoAPartirDeLista = (ItfSelecaoObjetoDeUmaLista) c.newInstance(pCampoInstanciado);

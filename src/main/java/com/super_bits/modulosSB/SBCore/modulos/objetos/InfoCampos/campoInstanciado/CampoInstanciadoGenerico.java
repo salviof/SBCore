@@ -1098,13 +1098,12 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
                             ComoEntidadeReflexivel itemTextoFormatado = (ComoEntidadeReflexivel) valor;
                             if (((ComoDominioEntidadeSomenteLeitura) itemTextoFormatado).isTemCampoAnotado(FabTipoAtributoObjeto.DESCRITIVO)) {
 
-                                String descricao = itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor().toString();
-
-                                if (!UtilCRCStringValidador.isNuloOuEmbranco(descricao)) {
-                                    return descricao;
+                                if (!UtilCRCStringValidador.isNuloOuEmbranco(itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor())) {
+                                    return itemTextoFormatado.getCampoInstanciadoByAnotacao(FabTipoAtributoObjeto.DESCRITIVO).getValor().toString();
                                 }
 
                             }
+
                         }
 
                         return ((ComoEntidadeSimplesSomenteLeitura) valor).getNome();
