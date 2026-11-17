@@ -7,7 +7,6 @@ package com.super_bits.modulosSB.SBCore.modulos.geradorCodigo.model;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoDinamicoEntidade;
-import com.super_bits.modulosSB.SBCore.modulos.objetos.estrutura.ItfEstruturaCampoEntidade;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.AtributoObjetoSB;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo.FabTipoAtributoObjeto;
@@ -436,6 +435,11 @@ public class CalculoDeEntidade extends EntidadeSimples implements ItfEstruturaCa
     @Override
     public ComoFabrica getEnumVinculado() {
         return getFabricaTipoAtributo();
+    }
+
+    @Override
+    public boolean isVisivel() {
+        return true;
     }
 
 }

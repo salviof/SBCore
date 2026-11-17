@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campoInstanciado.CampoInstanciadoBase;
 
 /**
  *
@@ -38,6 +39,11 @@ public class ValorLogicoCalculoGenerico implements ComoValorLogicoAtributoObjeto
     public boolean isCacheAtivado() {
         return cacheAtivado;
 
+    }
+
+    @Override
+    public Boolean isVisivel() {
+        return ComoValorLogicoAtributoObjeto.super.isVisivel(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
     public Object getValorLogicoPorReflexao() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {

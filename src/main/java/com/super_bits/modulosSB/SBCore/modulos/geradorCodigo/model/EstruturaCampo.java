@@ -475,4 +475,9 @@ public class EstruturaCampo extends EntidadeSimples implements ItfEstruturaCampo
         return getFabricaTipoAtributo();
     }
 
+    @Override
+    public boolean isVisivel() {
+        return true;
+    }
+
 }

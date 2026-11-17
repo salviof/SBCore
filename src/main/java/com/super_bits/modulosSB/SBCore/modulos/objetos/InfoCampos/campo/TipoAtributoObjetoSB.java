@@ -468,4 +468,9 @@ public class TipoAtributoObjetoSB extends EntidadeSimples implements Serializabl
         return tipoCampo;
     }
 
+    @Override
+    public boolean isVisivel() {
+        return true;
+    }
+
 }

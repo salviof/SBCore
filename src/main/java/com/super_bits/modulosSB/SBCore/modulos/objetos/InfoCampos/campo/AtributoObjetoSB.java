@@ -6,6 +6,7 @@ package com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.campo;
 
 import com.super_bits.modulosSB.SBCore.ConfigGeral.SBCore;
 import com.super_bits.modulosSB.SBCore.UtilGeral.UtilCRCReflexaoObjeto;
+import com.super_bits.modulosSB.SBCore.modulos.Controller.Interfaces.calculos.ComoValorLogicoAtributoObjeto;
 import org.coletivojava.fw.api.tratamentoErros.FabErro;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampo;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.PropriedadesReflexaoCampo;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeSimplesSomenteLeitura;
 import com.super_bits.modulosSB.SBCore.modulos.fabrica.ComoFabrica;
+import com.super_bits.modulosSB.SBCore.modulos.objetos.InfoCampos.anotacoes.InfoCampoValorLogico;
 import com.super_bits.modulosSB.SBCore.modulos.objetos.entidade.basico.ComoEntidadeNormal;
 
 /**
@@ -519,6 +521,11 @@ public class AtributoObjetoSB extends AtributoObjetoSBAbstrato {
 
     public void setValidarSempreQuePersistir(boolean validarSempreQuePersistir) {
         this.validarSempreQuePersistir = validarSempreQuePersistir;
+    }
+
+    @Override
+    public boolean isVisivel() {
+        return true;
     }
 
 }

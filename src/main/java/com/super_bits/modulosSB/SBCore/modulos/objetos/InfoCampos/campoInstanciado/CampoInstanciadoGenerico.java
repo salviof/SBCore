@@ -365,8 +365,9 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             if (campoReflection.isPossuiValorDinamicoCalculado()) {
                 ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
                 ComoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();
-                if (calculo.isSomenteLeitura() != null) {
-                    return calculo.isSomenteLeitura();
+                Boolean somenteLeitura = calculo.isSomenteLeitura();
+                if (somenteLeitura != null) {
+                    return somenteLeitura;
                 }
             }
         }
@@ -375,6 +376,24 @@ public abstract class CampoInstanciadoGenerico extends CampoInstanciadoBase impl
             return true;
         }
         return atributoAssociado.isSomenteLeitura();
+    }
+
+    @Override
+    public boolean isVisivel() {
+        if (campoReflection.isPossuiValorDinamicoCalculado()) {
+            if (campoReflection.isPossuiValorDinamicoCalculado()) {
+                ItfCampoInstanciado prCampoinstanciado = (ItfCampoInstanciado) this;
+                ComoValorLogicoAtributoObjeto calculo = prCampoinstanciado.getValorLogicaEstrategia();
+                Boolean visivel = calculo.isVisivel();
+                if (visivel != null) {
+
+                    return visivel;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 
     /**

@@ -601,4 +601,9 @@ public class CampoInstanciadoSeparador implements ItfCampoInstanciado {
         return getValor();
     }
 
+    @Override
+    public boolean isVisivel() {
+        return true;
+    }
+
 }
